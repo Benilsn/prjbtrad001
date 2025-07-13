@@ -1,5 +1,29 @@
 {#fragment id=footer}
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!--
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      async function fetchPrices() {
+        try {
+          const response = await fetch('/');
+          if (!response.ok) throw new Error('Network response was not ok');
+          const data = await response.json();
+
+          document.getElementById('btc-price').textContent = `${btcData.currentPrice}`;
+          document.getElementById('eth-price').textContent = `${ethData.currentPrice}`;
+      } catch (error) {
+        console.error('Error fetching prices:', error);
+      }
+    }
+
+    fetchPrices();
+    setInterval(fetchPrices, 1000);
+  });
+</script>
+-->
+
 <footer class="cyber-footer mt-5 fixed-bottom">
     <div class="container text-center py-4">
         <p class="neon-text mb-1">CryptoBot &copy; 2025</p>
@@ -10,8 +34,5 @@
         </div>
     </div>
 </footer>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 {/fragment}

@@ -17,232 +17,252 @@
     <style>
 
 
-        /* General styling */
-        .neon-text {
-          color: #00fff7;
-          text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+        .text-neon {
+          color: #0ff;
+          text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+        }
+
+        .border-neon {
+          border: 2px solid #0ff;
+          box-shadow: 0 0 10px #0ff;
+        }
+
+        .bot-card {
+          margin-bottom: 2rem;
+          transition: transform 0.2s;
+        }
+
+        .bot-card:hover {
+          transform: scale(1.03);
+          box-shadow: 0 0 20px #0ff;
+        }
+
+      /* General styling */
+      .neon-text {
+        color: #00fff7;
+        text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+        font-size: 1rem;
+      }
+
+      .neon-text-logo {
+        color: #00fff7;
+        text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+        font-size: 1.5rem;
+      }
+
+      /* Trade log styling */
+      .trade-log-box {
+        background-color: rgba(13, 13, 13, 0.4);
+        border: 2px solid #00fff7;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #00fff7;
+        height: 500px;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      /* Glitch keyframes */
+      @keyframes glitch {
+        0% {
+          text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+          transform: translate(0, 0);
+          opacity: 1;
+        }
+        10% {
+          text-shadow: -1px -1px #00fff7, 1px 1px #00ff90;
+          transform: translate(-1px, 1px);
+          opacity: 0.9;
+        }
+        20% {
+          text-shadow: 1px -1px #00ff90, -1px 1px #00fff7;
+          transform: translate(1px, -1px);
+          opacity: 0.95;
+        }
+        30% {
+          text-shadow: -1px 1px #00fff7, 1px -1px #00ff90;
+          transform: translate(-1px, -1px);
+          opacity: 0.8;
+        }
+        40% {
+          text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+          transform: translate(1px, 1px);
+          opacity: 1;
+        }
+        100% {
+          text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+          transform: translate(0, 0);
+          opacity: 1;
+        }
+      }
+
+      /* Apply glitch effect */
+      .log-entry {
+        font-family: monospace;
+        color: #00ff90;
+        margin: 5px 0;
+        animation: glitch 3s infinite;
+        white-space: nowrap;
+      }
+
+      /* Custom neon scrollbar for WebKit browsers */
+      .trade-log-box::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      .trade-log-box::-webkit-scrollbar-track {
+        background: #111;
+        border-radius: 10px;
+      }
+
+      .trade-log-box::-webkit-scrollbar-thumb {
+        background: linear-gradient(#00fff7, #00ff90);
+        border-radius: 10px;
+        box-shadow: 0 0 6px #00fff7;
+      }
+
+      /* Optional hover effect */
+      .trade-log-box::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(#00ff90, #00fff7);
+        box-shadow: 0 0 10px #00fff7, 0 0 20px #00ff90;
+      }
+
+      /* Crypto cards */
+      .crypto-card {
+        background: #111111;
+        border: 2px solid #00fff7;
+        box-shadow: 0 0 10px #00fff7, 0 0 40px #00fff7 inset;
+        letter-spacing: 5px;
+        border-radius: 15px;
+        padding: 30px 20px;
+        transition: transform 0.3s ease;
+      }
+
+      .crypto-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 15px #00fff7, 0 0 50px #00fff7 inset;
+      }
+
+      .crypto-price {
+        font-size: 2rem;
+        font-weight: bold;
+        animation: glitch 5s infinite;
+      }
+
+      .green-text {
+        color: #00ff90;
+        text-shadow: 0 0 4px #00ff90, 0 0 10px #00ff90;
+      }
+
+      .crypto-subprice {
+        font-size: 1rem;
+        color: #bbbbbb;
+        margin-top: -10px;
+        margin-bottom: 10px;
+      }
+
+
+      /* ===========================
+         NAVBAR STYLE
+         =========================== */
+      body {
+        background-color: #0d0d0d;
+        font-family: 'Orbitron', sans-serif;
+      }
+
+      .cyber-navbar {
+        background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
+        border-bottom: 2px solid #00fff7;
+        box-shadow: 0 0 10px #00fff7;
+      }
+
+
+      .neon-link {
+        color: #ffffff;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      .neon-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: #00fff7;
+        transition: width 0.3s ease;
+        box-shadow: 0 0 5px #00fff7;
+      }
+
+      .neon-link:hover {
+        color: #00fff7;
+      }
+
+      .neon-link:hover::after {
+        width: 100%;
+      }
+
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='%2300fff7' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%2300fff7' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* ===========================
+         FOOTER STYLE
+         =========================== */
+
+
+      .cyber-footer {
+        background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
+        border-top: 2px solid #00fff7;
+        box-shadow: 0 0 10px #00fff7;
+        color: #ffffff;
+      }
+
+      .cyber-footer .social-icons a {
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+      }
+
+      .cyber-footer .social-icons a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: #00fff7;
+        box-shadow: 0 0 5px #00fff7;
+        transition: width 0.3s ease;
+      }
+
+      .cyber-footer .social-icons a:hover {
+        color: #00fff7;
+      }
+
+      .cyber-footer .social-icons a:hover::after {
+        width: 100%;
+      }
+
+      @media (max-width: 576px) {
+        .cyber-footer .neon-text {
           font-size: 1rem;
+      }
+
+      .cyber-footer .social-icons a {
+          font-size: 0.9rem;
         }
+      }
 
-        .neon-text-logo {
-          color: #00fff7;
-          text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
-          font-size: 1.5rem;
-        }
-
-        /* Trade log styling */
-        .trade-log-box {
-          background-color: rgba(13, 13, 13, 0.4);
-          border: 2px solid #00fff7;
-          border-radius: 10px;
-          box-shadow: 0 0 10px #00fff7;
-          height: 500px;
-          max-height: 600px;
-          overflow-y: auto;
-        }
-
-        /* Glitch keyframes */
-        @keyframes glitch {
-          0% {
-            text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-            transform: translate(0, 0);
-            opacity: 1;
-          }
-          10% {
-            text-shadow: -1px -1px #00fff7, 1px 1px #00ff90;
-            transform: translate(-1px, 1px);
-            opacity: 0.9;
-          }
-          20% {
-            text-shadow: 1px -1px #00ff90, -1px 1px #00fff7;
-            transform: translate(1px, -1px);
-            opacity: 0.95;
-          }
-          30% {
-            text-shadow: -1px 1px #00fff7, 1px -1px #00ff90;
-            transform: translate(-1px, -1px);
-            opacity: 0.8;
-          }
-          40% {
-            text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-            transform: translate(1px, 1px);
-            opacity: 1;
-          }
-          100% {
-            text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-            transform: translate(0, 0);
-            opacity: 1;
-          }
-        }
-
-        /* Apply glitch effect */
-        .log-entry {
-          font-family: monospace;
-          color: #00ff90;
-          margin: 5px 0;
-          animation: glitch 3s infinite;
-          white-space: nowrap;
-        }
-
-        /* Custom neon scrollbar for WebKit browsers */
-        .trade-log-box::-webkit-scrollbar {
-          width: 10px;
-        }
-
-        .trade-log-box::-webkit-scrollbar-track {
-          background: #111;
-          border-radius: 10px;
-        }
-
-        .trade-log-box::-webkit-scrollbar-thumb {
-          background: linear-gradient(#00fff7, #00ff90);
-          border-radius: 10px;
-          box-shadow: 0 0 6px #00fff7;
-        }
-
-        /* Optional hover effect */
-        .trade-log-box::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(#00ff90, #00fff7);
-          box-shadow: 0 0 10px #00fff7, 0 0 20px #00ff90;
-        }
-
-        /* Crypto cards */
-        .crypto-card {
-          background: #111111;
-          border: 2px solid #00fff7;
-          box-shadow: 0 0 10px #00fff7, 0 0 40px #00fff7 inset;
-          letter-spacing: 5px;
-          border-radius: 15px;
-          padding: 30px 20px;
-          transition: transform 0.3s ease;
-        }
-
-        .crypto-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 0 15px #00fff7, 0 0 50px #00fff7 inset;
-        }
-
-        .crypto-price {
-          font-size: 2rem;
-          font-weight: bold;
-          animation: glitch 5s infinite;
-        }
-
-        .green-text {
-          color: #00ff90;
-          text-shadow: 0 0 4px #00ff90, 0 0 10px #00ff90;
-        }
-
-        .crypto-subprice {
-          font-size: 1rem;
-          color: #bbbbbb;
-          margin-top: -10px;
-          margin-bottom: 10px;
-        }
-
-
-        /* ===========================
-           NAVBAR STYLE
-           =========================== */
-        body {
-          background-color: #0d0d0d;
-          font-family: 'Orbitron', sans-serif;
-        }
-
-        .cyber-navbar {
-          background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
-          border-bottom: 2px solid #00fff7;
-          box-shadow: 0 0 10px #00fff7;
-        }
-
-
-        .neon-link {
-          color: #ffffff;
-          transition: 0.3s;
-          position: relative;
-        }
-
-        .neon-link::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          height: 2px;
-          width: 0%;
-          background: #00fff7;
-          transition: width 0.3s ease;
-          box-shadow: 0 0 5px #00fff7;
-        }
-
-        .neon-link:hover {
-          color: #00fff7;
-        }
-
-        .neon-link:hover::after {
-          width: 100%;
-        }
-
-        .navbar-toggler-icon {
-          background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='%2300fff7' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%2300fff7' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-
-        /* ===========================
-           FOOTER STYLE
-           =========================== */
-
-
-        .cyber-footer {
-          background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
-          border-top: 2px solid #00fff7;
-          box-shadow: 0 0 10px #00fff7;
-          color: #ffffff;
-        }
-
-        .cyber-footer .social-icons a {
-          text-decoration: none;
-          font-weight: bold;
-          position: relative;
-        }
-
-        .cyber-footer .social-icons a::after {
-          content: '';
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          width: 0%;
-          height: 2px;
-          background: #00fff7;
-          box-shadow: 0 0 5px #00fff7;
-          transition: width 0.3s ease;
-        }
-
-        .cyber-footer .social-icons a:hover {
-          color: #00fff7;
-        }
-
-        .cyber-footer .social-icons a:hover::after {
-          width: 100%;
-        }
-
-        @media (max-width: 576px) {
-          .cyber-footer .neon-text {
-            font-size: 1rem;
-        }
-
-        .cyber-footer .social-icons a {
-            font-size: 0.9rem;
-          }
-        }
-
-        /* Trade log box */
-        .trade-log-box {
-          background-color: rgba(13, 13, 13, 0.4); /* Transparent */
-          border: 0px solid #00fff7;
-          border-radius: 10px;
-          box-shadow: 0 0 10px #00fff7;
-          max-height: 600px;
-          overflow-y: auto;
-        }
+      /* Trade log box */
+      .trade-log-box {
+        background-color: rgba(13, 13, 13, 0.4); /* Transparent */
+        border: 0px solid #00fff7;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #00fff7;
+        max-height: 600px;
+        overflow-y: auto;
+      }
 
     </style>
 </head>

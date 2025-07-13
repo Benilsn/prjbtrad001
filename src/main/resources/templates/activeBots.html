@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{#include 'fragments/head.html'/}
+
+{#include 'fragments/navbar.html'/}
+
+<body>
+
+<div class="container my-4">
+    <h2 class="text-neon text-center mb-4">Active Bots</h2>
+    <div class="row justify-content-center">
+        <!-- Bot 1 -->
+        <div class="col-md-4">
+            <div class="card bot-card bg-dark text-light border-neon">
+                <div class="card-body">
+                    <h5 class="card-title text-neon">BTC/USDT</h5>
+                    <p class="card-text">Status: <span class="text-success">Running</span></p>
+                    <p class="card-text">Buy Price: <span class="text-info">$60,500</span></p>
+                    <p class="card-text">Current Price: <span class="text-success">$61,250</span></p>
+                    <p class="card-text">Strategy: <span class="text-warning">Swing Trade</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bot 2 -->
+        <div class="col-md-4">
+            <div class="card bot-card bg-dark text-light border-neon">
+                <div class="card-body">
+                    <h5 class="card-title text-neon">ETH/USDT</h5>
+                    <p class="card-text">Status: <span class="text-success">Running</span></p>
+                    <p class="card-text">Buy Price: <span class="text-info">$3,200</span></p>
+                    <p class="card-text">Current Price: <span class="text-success">$3,290</span></p>
+                    <p class="card-text">Strategy: <span class="text-warning">Scalping</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+{#include 'fragments/footer.html'/}
+
+</html>

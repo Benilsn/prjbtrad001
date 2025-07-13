@@ -26,7 +26,7 @@
                 <h3 class="neon-text">Ethereum (ETH)</h3>
                 <p class="crypto-price green-text" id="eth-price">${ethData.currentPrice}</p>
                 <p class="crypto-subprice">24h ago: <span id="eth-price-prev">${ethData.last24hourPrice}</span></p>
-                <p class="crypto-subtext">Last updated: <span id="eth-updated">${ethData.lastUpdated}</span></p>
+                <p>Last updated: <span id="eth-updated">{ethData.lastUpdated}</span></p>
             </div>
 
         </div>
@@ -36,7 +36,7 @@
             <h4 class="neon-text">Trade Log</h4>
             <div id="trade-log-content">
                 {#for item in data}
-                    <p class="log-entry">{item}</p>
+                <p class="log-entry">{item}</p>
                 {/for}
 
             </div>
@@ -44,8 +44,6 @@
 
     </div>
 </div>
-
-
 
 
 </body>
