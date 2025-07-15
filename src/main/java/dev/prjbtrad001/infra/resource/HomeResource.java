@@ -26,6 +26,14 @@ public class HomeResource {
       .data("activeBots", botOrchestratorService.getActiveBots());
   }
 
+//  @GET()
+//  @Path("/refresh-data")
+//  public void refresh() {
+//    return TemplateInstance.Initializer().activeBots()
+//      .data("pageTitle", "Active Bots")
+//      .data("activeBots", botOrchestratorService.getActiveBots());
+//  }
+
   @GET()
   @Path("/activebots")
   public TemplateInstance activebots() {
