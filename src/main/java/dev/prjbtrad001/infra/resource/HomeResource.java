@@ -1,11 +1,15 @@
 package dev.prjbtrad001.infra.resource;
 
 import dev.prjbtrad001.app.BotOrchestratorService;
+import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.MediaType;
 
 @Path("/")
 public class HomeResource {
@@ -26,13 +30,12 @@ public class HomeResource {
       .data("activeBots", botOrchestratorService.getActiveBots());
   }
 
-//  @GET()
-//  @Path("/refresh-data")
-//  public void refresh() {
-//    return TemplateInstance.Initializer().activeBots()
-//      .data("pageTitle", "Active Bots")
-//      .data("activeBots", botOrchestratorService.getActiveBots());
-//  }
+  @GET()
+  @Path("/refresh-data")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Cripto refresh(@QueryParam("symbol") String symbol) {
+    return binanceService.getPrice(symbol);
+  }
 
   @GET()
   @Path("/activebots")

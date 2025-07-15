@@ -1,9 +1,8 @@
 package dev.prjbtrad001.app.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import dev.prjbtrad001.app.dto.Cripto;
 import jakarta.enterprise.context.ApplicationScoped;
-
-import java.math.BigDecimal;
 import java.net.http.HttpClient;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,22 +35,25 @@ public class BinanceService {
         .GET()
         .build();
 
-    Cripto cripto = Cripto.defaultData();
+    Cripto cripto = null;
 
     try {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
       if (response.statusCode() == 200) {
-        cripto = objectMapper.convertValue(response.body(), Cripto.class);
+        cripto = objectMapper.readValue(response.body(), new TypeReference<>() {});
+        cripto.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       } else {
         log.info("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
       e.printStackTrace();
+      cripto = Cripto.defaultData();
     }
 
     return cripto;
   }
+
 
   public List<String> getLogData() {
 
