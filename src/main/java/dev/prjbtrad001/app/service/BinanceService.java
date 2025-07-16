@@ -24,7 +24,6 @@ public class BinanceService {
 
   @Inject
   ObjectMapper objectMapper;
-  private final Random rdn = new Random();
   private static final String BASE_URL = "https://api.binance.com/api/v3/ticker/price?symbol=";
   private static final HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -55,23 +54,5 @@ public class BinanceService {
   }
 
 
-  public List<String> getLogData() {
-
-    List<String> listOfData = new ArrayList<>();
-    List<String> coins = List.of("BTC", "ETH", "XRP", "LTC", "BCH");
-    List<String> operation = List.of("Buy", "Sell");
-
-    for (int i = 0; i < rdn.nextInt(10, 99); i++) {
-      listOfData.add(
-        String.format("[%02d:%02d] %s %s at $%d",
-          rdn.nextInt(0, 24), // Hour
-          rdn.nextInt(0, 60), // Minute
-          operation.get(rdn.nextInt(operation.size())), // Buy/Sell
-          coins.get(rdn.nextInt(coins.size())), // Coin type
-          rdn.nextInt(1000, 100000) // Price
-        ));
-    }
-    return listOfData;
-  }
 
 }

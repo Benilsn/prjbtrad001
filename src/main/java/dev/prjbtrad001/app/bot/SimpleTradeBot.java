@@ -1,6 +1,5 @@
 package dev.prjbtrad001.app.bot;
 
-
 import dev.prjbtrad001.domain.config.BotConfig;
 import dev.prjbtrad001.domain.core.TradeBot;
 import lombok.extern.jbosslog.JBossLog;
@@ -8,13 +7,13 @@ import lombok.extern.jbosslog.JBossLog;
 @JBossLog
 public class SimpleTradeBot implements TradeBot, Runnable {
 
-  private final String symbol;
+  private final TradeBot.BotType botType;
   private final BotConfig config;
   private volatile boolean running = false;
   private Thread worker;
 
-  public SimpleTradeBot(String symbol, BotConfig config) {
-    this.symbol = symbol;
+  public SimpleTradeBot(TradeBot.BotType botType, BotConfig config) {
+    this.botType = botType;
     this.config = config;
   }
 
@@ -38,14 +37,14 @@ public class SimpleTradeBot implements TradeBot, Runnable {
   }
 
   @Override
-  public String getSymbol() {
-    return symbol;
+  public TradeBot.BotType getBotType() {
+    return botType;
   }
 
   @Override
   public void run() {
     while (running) {
-      log.info("[" + symbol + "] Checking market data...");
+      log.info("[" + botType + "] Checking market data...");
       // Simulate trade logic here
       try {
         Thread.sleep(config.pollingInterval * 1000L);

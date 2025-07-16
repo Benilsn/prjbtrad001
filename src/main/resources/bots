@@ -1,0 +1,2 @@
+{"botType":"SCALPING","config":{"symbol":"BTCUSDT","buyPrice":60250.0,"strategy":"fast-scalping"},"running":true}
+{"botType":"SWING","config":{"symbol":"ETHUSDT","buyPrice":3100.0,"strategy":"momentum"},"running":false}

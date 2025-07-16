@@ -7,8 +7,15 @@
 
 <body>
 
+<!-- Section to display running bots -->
 <div class="container my-4">
     <h2 class="text-neon text-center mb-4">Active Bots</h2>
+
+    <!-- Create Bot Button -->
+    <div class="text-center mb-4">
+        <a class="btn btn-create-neon" href="/bots/create">+ Create Bot</a>
+    </div>
+
     <div class="row justify-content-center">
         <!-- Bot 1 -->
         <div class="col-md-4">
@@ -19,6 +26,8 @@
                     <p class="card-text">Buy Price: <span class="text-info">$60,500</span></p>
                     <p class="card-text">Current Price: <span class="text-success">$61,250</span></p>
                     <p class="card-text">Strategy: <span class="text-warning">Swing Trade</span></p>
+                    <button class="btn btn-outline-danger btn-sm mt-2">Stop</button>
+                    <button class="btn btn-outline-secondary btn-sm mt-2">Pause</button>
                 </div>
             </div>
         </div>
@@ -32,12 +41,13 @@
                     <p class="card-text">Buy Price: <span class="text-info">$3,200</span></p>
                     <p class="card-text">Current Price: <span class="text-success">$3,290</span></p>
                     <p class="card-text">Strategy: <span class="text-warning">Scalping</span></p>
+                    <button class="btn btn-outline-danger btn-sm mt-2">Stop</button>
+                    <button class="btn btn-outline-secondary btn-sm mt-2">Pause</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 
