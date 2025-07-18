@@ -1,33 +1,28 @@
 package dev.prjbtrad001.app.service;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.prjbtrad001.app.bot.SimpleTradeBot;
-import dev.prjbtrad001.domain.config.BotConfig;
 import dev.prjbtrad001.domain.core.TradeBot;
-import jakarta.annotation.PreDestroy;
+import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
 @JBossLog
 @ApplicationScoped
 public class BotOrchestratorService {
 
   private final Random rdn = new Random();
+  @Inject private BotRepository botRepository;
+
+  public TradeBot createBot(TradeBot bot){
+    log.info("Creating bot: " + bot.getBotType());
+    botRepository.createBot(bot);
+    return bot;
+  }
+
 
 //  public void startBot(TradeBot.BotType botType, BotConfig config) {
 //    if (getActiveBots().containsKey(botType)) return;
@@ -40,29 +35,6 @@ public class BotOrchestratorService {
 //    TradeBot bot = getActiveBots().remove(symbol);
 //    if (bot != null) bot.stop();
 //  }
-
-//  public Map<TradeBot.BotType, TradeBot> getActiveBots() {
-//    Map<TradeBot.BotType, TradeBot> activeBots = new ConcurrentHashMap<>();
-//
-//    try {
-//      InputStream is = getClass().getClassLoader().getResourceAsStream("bots");
-//      if (is == null) throw new IllegalStateException("File 'bots' not found in resources");
-//
-//      try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-//        String line;
-//        while ((line = reader.readLine()) != null) {
-//          TradeBot bot = mapper.readValue(line, TradeBot.class);
-//          activeBots.add(bot);
-//        }
-//      }
-//
-//    } catch (Exception e) {
-//      log.error("Error reading bot configurations: " + e.getMessage());
-//    }
-//
-//    return activeBots;
-//  }
-
 
 //  @PreDestroy
 //  public void stopAllBots() {

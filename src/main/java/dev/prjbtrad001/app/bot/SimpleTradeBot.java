@@ -1,15 +1,24 @@
 package dev.prjbtrad001.app.bot;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.domain.config.BotConfig;
 import dev.prjbtrad001.domain.core.TradeBot;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 
 @JBossLog
+@Getter
+@Setter
+@NoArgsConstructor
 public class SimpleTradeBot implements TradeBot, Runnable {
 
-  private final TradeBot.BotType botType;
-  private final BotConfig config;
+  private TradeBot.BotType botType = BotType.BTCUSDT;
+  private BotConfig config;
   private volatile boolean running = false;
+
+  @JsonIgnore
   private Thread worker;
 
   public SimpleTradeBot(TradeBot.BotType botType, BotConfig config) {
@@ -47,7 +56,7 @@ public class SimpleTradeBot implements TradeBot, Runnable {
       log.info("[" + botType + "] Checking market data...");
       // Simulate trade logic here
       try {
-        Thread.sleep(config.pollingInterval * 1000L);
+        Thread.sleep(config.getInterval() * 1000L);
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       }

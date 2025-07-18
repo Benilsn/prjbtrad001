@@ -7,7 +7,74 @@
 
 <body>
 
+<div class="container my-5 pb-5">
+    <h2 class="text-neon text-center mb-4">Create New Bot</h2>
 
+    <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label text-neon">Symbol</label>
+                <select name="symbol" class="form-select">
+                    <option selected>BTCUSDT</option>
+                    <option>ETHUSDT</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-neon">Interval</label>
+                <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label text-neon">Volume Multiplier</label>
+                <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-neon">Support/Resistance Window</label>
+                <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 50">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label text-neon">Stop Loss (%)</label>
+                <input type="number" step="0.0001" name="stopLossPercent" class="form-control" placeholder="e.g. 0.005">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-neon">Take Profit (%)</label>
+                <input type="number" step="0.0001" name="takeProfitPercent" class="form-control"
+                       placeholder="e.g. 0.012">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label text-neon">RSI Purchase</label>
+                <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-neon">RSI Sale</label>
+                <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label class="form-label text-neon">Short SMA</label>
+                <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label text-neon">Long SMA</label>
+                <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
+            </div>
+            <div class="col-md-6 mt-4">
+                <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
+            </div>
+        </div>
+
+    </form>
+</div>
 
 </body>
 

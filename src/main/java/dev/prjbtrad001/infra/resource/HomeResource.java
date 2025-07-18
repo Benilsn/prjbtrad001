@@ -1,8 +1,8 @@
 package dev.prjbtrad001.infra.resource;
 
-import dev.prjbtrad001.app.service.BotOrchestratorService;
 import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
+import dev.prjbtrad001.app.service.BotOrchestratorService;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -10,8 +10,10 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import lombok.extern.jbosslog.JBossLog;
 
 @Path("/")
+@JBossLog
 public class HomeResource {
 
   @Inject
@@ -33,6 +35,7 @@ public class HomeResource {
   @Path("/refresh-data")
   @Produces(MediaType.APPLICATION_JSON)
   public Cripto refresh(@QueryParam("symbol") String symbol) {
+    log.info("Refreshing data for symbol: " + symbol);
     return binanceService.getPrice(symbol);
   }
 

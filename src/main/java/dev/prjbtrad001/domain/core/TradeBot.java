@@ -11,8 +11,8 @@ public interface TradeBot {
 
 
   enum BotType {
-    BTC,
-    ETH
+    BTCUSDT,
+    ETHUSDT
   }
 
 }
