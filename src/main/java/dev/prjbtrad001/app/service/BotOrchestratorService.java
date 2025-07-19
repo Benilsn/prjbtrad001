@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -15,12 +16,22 @@ import java.util.Random;
 public class BotOrchestratorService {
 
   private final Random rdn = new Random();
-  @Inject private BotRepository botRepository;
 
-  public TradeBot createBot(TradeBot bot){
+  @Inject
+  private BotRepository botRepository;
+
+  public TradeBot createBot(TradeBot bot) {
     log.info("Creating bot: " + bot.getBotType());
     botRepository.createBot(bot);
     return bot;
+  }
+
+  public List<TradeBot> getAllBots() {
+    return botRepository
+      .getAllBots()
+      .stream()
+      .sorted(Comparator.comparing(tradeBot -> !tradeBot.isRunning()))
+      .toList();
   }
 
 

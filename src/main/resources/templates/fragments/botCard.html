@@ -1,0 +1,32 @@
+{#fragment id=botCard}
+
+<div class="card-body">
+    <h5 class="card-title text-neon">{bot.botType}</h5>
+    {#if bot.running}
+    <p class="card-text">Status: <span class="text-success">RUNNING</span></p>
+    <p class="card-text">Last purchase price: <span class="text-info">${bot.config.formattedPurchasePrice}</span></p>
+    <p class="card-text">Last price: <span class="text-info">${bot.config.formattedLastPrice}</span></p>
+    <p class="card-text">Last RSI: <span class="text-success">${bot.config.lastRsi}</span></p>
+    <p class="card-text">Last SMA short: <span class="text-success">${bot.config.lastSmaShort}</span></p>
+    <p class="card-text">Actual Support: <span class="text-success">${bot.config.actualSupport}</span></p>
+    <p class="card-text">Actual Resistance: <span class="text-success">${bot.config.actualResistance}</span></p>
+    <p class="card-text">Last update: <span class="text-success">YYYY-MM-DD</span></p>
+    <p class="card-text">Strategy: <span class="text-warning">Swing Trade</span></p>
+
+    <button class="btn btn-danger btn-sm mt-2">Stop</button>
+    {#else}
+    <p class="card-text">Status: <span class="text-danger">IDLE</span></p>
+    <p class="card-text">Last purchase price: <span class="text-info">${bot.config.formattedPurchasePrice}</span></p>
+    <p class="card-text">Last price: <span class="text-info">${bot.config.formattedLastPrice}</span></p>
+    <p class="card-text">Last RSI: <span class="text-success">${bot.config.lastRsi}</span></p>
+    <p class="card-text">Last SMA short: <span class="text-success">${bot.config.lastSmaShort}</span></p>
+    <p class="card-text">Actual Support: <span class="text-success">${bot.config.actualSupport}</span></p>
+    <p class="card-text">Actual Resistance: <span class="text-success">${bot.config.actualResistance}</span></p>
+    <p class="card-text">Last update: <span class="text-success">YYYY-MM-DD</span></p>
+    <p class="card-text">Strategy: <span class="text-warning">Swing Trade</span></p>
+
+    <button class="btn btn-success btn-sm mt-2">Run</button>
+    {/if}
+</div>
+
+{/fragment}

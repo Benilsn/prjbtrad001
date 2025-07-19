@@ -1,6 +1,9 @@
 package dev.prjbtrad001.domain.core;
 
+import dev.prjbtrad001.infra.config.BotConfig;
+
 public interface TradeBot {
+
   void start();
 
   void stop();
@@ -9,6 +12,7 @@ public interface TradeBot {
 
   BotType getBotType();
 
+  BotConfig getConfig();
 
   enum BotType {
     BTCUSDT,

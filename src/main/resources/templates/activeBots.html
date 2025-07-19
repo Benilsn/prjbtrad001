@@ -24,7 +24,8 @@
             <div class="modal-content neon-glow border-0 rounded-4 px-3 py-2" style="background-color: #101010;">
 
                 <div class="modal-header border-0 pb-0">
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body text-center pt-2 pb-1">
@@ -46,35 +47,15 @@
     </div>
 
     <div class="row justify-content-center">
-        <!-- Bot 1 -->
-        <div class="col-md-4">
-            <div class="card bot-card bg-dark text-light border-neon">
-                <div class="card-body">
-                    <h5 class="card-title text-neon">BTC/USDT</h5>
-                    <p class="card-text">Status: <span class="text-success">Running</span></p>
-                    <p class="card-text">Buy Price: <span class="text-info">$60,500</span></p>
-                    <p class="card-text">Current Price: <span class="text-success">$61,250</span></p>
-                    <p class="card-text">Strategy: <span class="text-warning">Swing Trade</span></p>
-                    <button class="btn btn-outline-danger btn-sm mt-2">Stop</button>
-                    <button class="btn btn-outline-secondary btn-sm mt-2">Pause</button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Bot 2 -->
+        {#for bot in activeBots}
         <div class="col-md-4">
             <div class="card bot-card bg-dark text-light border-neon">
-                <div class="card-body">
-                    <h5 class="card-title text-neon">ETH/USDT</h5>
-                    <p class="card-text">Status: <span class="text-success">Running</span></p>
-                    <p class="card-text">Buy Price: <span class="text-info">$3,200</span></p>
-                    <p class="card-text">Current Price: <span class="text-success">$3,290</span></p>
-                    <p class="card-text">Strategy: <span class="text-warning">Scalping</span></p>
-                    <button class="btn btn-outline-danger btn-sm mt-2">Stop</button>
-                    <button class="btn btn-outline-secondary btn-sm mt-2">Pause</button>
-                </div>
+                {#include 'fragments/botCard.html'/}
             </div>
         </div>
+        {/for}
+
     </div>
 </div>
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.domain.core.TradeBot;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 
 import java.io.*;
@@ -18,8 +17,11 @@ public class BotRepository {
 
   private static final File botFile = Paths.get("src/main/resources/bots").toFile();
 
-  @Inject
   private ObjectMapper mapper;
+
+  public BotRepository(ObjectMapper mapper) {
+    this.mapper = mapper;
+  }
 
   public void createBot(TradeBot tradeBot) {
     try {
@@ -47,8 +49,7 @@ public class BotRepository {
           SimpleTradeBot bot = mapper.readValue(line, SimpleTradeBot.class);
           bots.add(bot);
         } catch (Exception e) {
-          // Log malformed JSON if needed
-          System.err.println("Skipping malformed line: " + line);
+          log.info("Skipping malformed line: " + line);
         }
       }
     } catch (IOException e) {

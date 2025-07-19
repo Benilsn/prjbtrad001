@@ -1,4 +1,4 @@
-package dev.prjbtrad001.domain.config;
+package dev.prjbtrad001.infra.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;

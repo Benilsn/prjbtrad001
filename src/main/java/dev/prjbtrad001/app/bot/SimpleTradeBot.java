@@ -1,8 +1,8 @@
 package dev.prjbtrad001.app.bot;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.prjbtrad001.domain.config.BotConfig;
 import dev.prjbtrad001.domain.core.TradeBot;
+import dev.prjbtrad001.infra.config.BotConfig;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,6 +48,11 @@ public class SimpleTradeBot implements TradeBot, Runnable {
   @Override
   public TradeBot.BotType getBotType() {
     return botType;
+  }
+
+  @Override
+  public BotConfig getConfig() {
+    return this.config;
   }
 
   @Override
