@@ -13,36 +13,55 @@
     <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Symbol</label>
+                <label class="form-label text-neon">
+                    Symbol
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Par de cripto para negociação, ex: BTCUSDT"></span>
+                </label>
                 <select name="symbol" class="form-select">
                     <option selected>BTCUSDT</option>
                     <option>ETHUSDT</option>
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Interval</label>
+                <label class="form-label text-neon">Interval
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Intervalo dos candles, ex: 1m (1 minuto), 5m, 15m."></span>
+                </label>
                 <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Volume Multiplier</label>
+                <label class="form-label text-neon">Volume Multiplier
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="O volume atual deve ser maior que a média × esse fator para ativar o trade."></span>
+                </label>
                 <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Support/Resistance Window</label>
+                <label class="form-label text-neon">Support/Resistance Window
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Número de candles usados para identificar suportes e resistências."></span>
+                </label>
                 <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 50">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Stop Loss (%)</label>
+                <label class="form-label text-neon">Stop Loss (%)
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Percentual de perda máxima antes de vender. Ex: 0.005 = 0.5%."></span>
+                </label>
                 <input type="number" step="0.0001" name="stopLossPercent" class="form-control" placeholder="e.g. 0.005">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Take Profit (%)</label>
+                <label class="form-label text-neon">Take Profit (%)
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Percentual de lucro desejado para encerrar a operação."></span>
+                </label>
                 <input type="number" step="0.0001" name="takeProfitPercent" class="form-control"
                        placeholder="e.g. 0.012">
             </div>
@@ -50,22 +69,34 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Purchase</label>
+                <label class="form-label text-neon">RSI Purchase
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Valor mínimo do RSI para considerar uma compra. Ex: 30."></span>
+                </label>
                 <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Sale</label>
+                <label class="form-label text-neon">RSI Sale
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="	Valor máximo do RSI para considerar uma venda. Ex: 70."></span>
+                </label>
                 <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-3">
-                <label class="form-label text-neon">Short SMA</label>
+                <label class="form-label text-neon">Short SMA
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Período da média móvel curta. Ex: 9 candles."></span>
+                </label>
                 <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">Long SMA</label>
+                <label class="form-label text-neon">Long SMA
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Período da média móvel longa. Ex: 21 candles."></span>
+                </label>
                 <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
             </div>
             <div class="col-md-6 mt-4">
