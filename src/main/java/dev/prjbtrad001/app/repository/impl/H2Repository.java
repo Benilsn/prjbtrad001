@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
-import lombok.extern.jbosslog.JBossLog;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

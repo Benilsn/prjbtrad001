@@ -2,13 +2,13 @@ package dev.prjbtrad001.app.bot;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.domain.core.TradeBot;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;

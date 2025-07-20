@@ -1,6 +1,5 @@
 package dev.prjbtrad001.app.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.Cripto;
@@ -8,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;

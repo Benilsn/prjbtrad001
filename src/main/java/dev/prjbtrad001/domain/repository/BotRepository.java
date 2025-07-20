@@ -2,6 +2,7 @@ package dev.prjbtrad001.domain.repository;
 
 import dev.prjbtrad001.domain.core.BotType;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
