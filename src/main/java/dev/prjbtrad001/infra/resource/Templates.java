@@ -9,4 +9,5 @@ public class Templates {
     public static native TemplateInstance home();
     public static native TemplateInstance activeBots();
     public static native TemplateInstance createBot();
+    public static native TemplateInstance tradeLog();
 }

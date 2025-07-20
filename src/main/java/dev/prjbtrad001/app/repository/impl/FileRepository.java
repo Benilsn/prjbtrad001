@@ -52,7 +52,7 @@ public class FileRepository implements BotRepository {
           SimpleTradeBot bot = mapper.readValue(line, SimpleTradeBot.class);
           bots.add(bot);
         } catch (Exception e) {
-          log.info("Skipping malformed line: " + line);
+          log.debug("Skipping malformed line: " + line);
         }
       }
     } catch (IOException e) {

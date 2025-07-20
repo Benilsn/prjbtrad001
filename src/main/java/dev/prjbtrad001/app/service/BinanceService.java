@@ -48,7 +48,7 @@ public class BinanceService {
         });
         cripto.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       } else {
-        log.info("Error: HTTP " + response.statusCode());
+        log.debug("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
       log.error(e.getMessage());
@@ -74,7 +74,7 @@ public class BinanceService {
         criptos = objectMapper.readerForListOf(Cripto.class).readValue(response.body());
         criptos.forEach(c -> c.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
       } else {
-        log.info("Error: HTTP " + response.statusCode());
+        log.error("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
       log.error(e.getMessage());

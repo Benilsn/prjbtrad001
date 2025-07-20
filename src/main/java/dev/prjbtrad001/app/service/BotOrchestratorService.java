@@ -20,14 +20,14 @@ public class BotOrchestratorService {
   private FileRepository fileRepository;
 
   public TradeBot createBot(TradeBot bot) {
-    log.info("Creating bot: " + bot.getParameters().getBotType());
+    log.debug("Creating bot: " + bot.getParameters().getBotType());
     fileRepository.createBot(bot);
     return bot;
   }
 
   public List<TradeBot> getAllBots() {
     List<TradeBot> bots = fileRepository.getAllBots();
-    log.info("Getting all " + bots.size() + " bots.");
+    log.debug("Getting all " + bots.size() + " bots.");
     return
       bots
         .stream()

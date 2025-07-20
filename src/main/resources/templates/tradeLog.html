@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{#include 'fragments/head.html'/}
+
+{#include 'fragments/navbar.html'/}
+
+<body>
+
+<div class="d-flex justify-content-center align-items-center my-5">
+    <div class="trade-log-box p-4" style="width: 35rem; height: 100vh; overflow-y: auto;">
+        <h4 class="neon-text text-center mb-5">Trade Log</h4>
+        <div id="trade-log-content">
+            {#for item in data.orEmpty}
+            <p class="log-entry">{item}</p>
+            {/for}
+        </div>
+    </div>
+</div>
+
+</body>
+
+{#include 'fragments/footer.html'/}
+
+</html>

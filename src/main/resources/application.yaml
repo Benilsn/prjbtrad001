@@ -4,7 +4,7 @@ quarkus:
   http:
     port: 8080
   log:
-    level: INFO
+    level: ERROR
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'

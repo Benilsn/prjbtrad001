@@ -30,9 +30,16 @@ public class BotResource {
   public TemplateInstance activebots(@QueryParam("message") String message) {
     return Templates.activeBots()
       .data("pageTitle", "Active Bots")
-      .data("data", botOrchestratorService.getLogData())
       .data("message", message)
       .data("activeBots", botOrchestratorService.getAllBots());
+  }
+
+  @GET()
+  @Path("/trade-log")
+  public TemplateInstance tradeLog() {
+    return Templates.tradeLog()
+      .data("pageTitle", "Trade Log")
+      .data("data", botOrchestratorService.getLogData());
   }
 
   @GET()
