@@ -3,6 +3,7 @@ package dev.prjbtrad001.infra.resource;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.service.BotOrchestratorService;
 import dev.prjbtrad001.app.bot.BotParameters;
+import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -77,6 +78,7 @@ public class BotResource {
         .build();
   }
 
+
   @POST
   @Path("/delete")
   public Response deleteBot(@FormParam("botId") UUID botId) {
@@ -88,5 +90,17 @@ public class BotResource {
           .build())
         .build();
   }
+
+  @GET
+  @Path("/details/{botId}")
+  public TemplateInstance botDetails(@PathParam("botId") UUID botId) {
+    TradeBot bot = botOrchestratorService.getBotById(botId);
+    return
+      Templates
+        .botDetail()
+        .data("pageTitle", "Bot Details")
+        .data("bot", bot);
+  }
+
 
 }

@@ -11,6 +11,7 @@ public interface BotRepository {
   void createBot(TradeBot tradeBot);
   List<TradeBot> getAllBots();
   Optional<TradeBot> getBotByType(BotType botType);
+  Optional<TradeBot> getBotById(UUID botId);
   void deleteBot(UUID botId);
 
 //  void updateBot(BotType botType);

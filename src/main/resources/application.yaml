@@ -16,4 +16,5 @@ bot:
     list:
       - BTCUSDT
       - ETHUSDT
+      - XRPUSDT
   parameters:

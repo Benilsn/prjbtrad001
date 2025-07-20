@@ -75,6 +75,15 @@ public class FileRepository implements BotRepository {
   }
 
   @Override
+  public Optional<TradeBot> getBotById(UUID botId) {
+    return
+      getAllBots()
+        .stream()
+        .filter(b -> ((SimpleTradeBot) b).getId().equals(botId))
+        .findFirst();
+  }
+
+  @Override
   public void deleteBot(UUID botId) {
     List<TradeBot> bots = getAllBots();
 

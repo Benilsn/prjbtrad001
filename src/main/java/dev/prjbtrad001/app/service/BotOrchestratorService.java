@@ -39,6 +39,14 @@ public class BotOrchestratorService {
     fileRepository.deleteBot(botId);
   }
 
+  public TradeBot getBotById(UUID botId) {
+    log.debug("Getting bot by ID: " + botId);
+    return
+      fileRepository
+        .getBotById(botId)
+        .orElseThrow(() -> new NoSuchElementException("Bot not found with ID: " + botId));
+  }
+
 
 //  public void startBot(TradeBot.BotType botType, BotConfig config) {
 //    if (getActiveBots().containsKey(botType)) return;
