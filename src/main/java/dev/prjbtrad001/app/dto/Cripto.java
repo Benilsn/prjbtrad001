@@ -27,7 +27,6 @@ public class Cripto {
   @JsonDeserialize(using = BigDecimal4ScaleDeserializer.class)
   private String price;
 
-
   private String last24hourPrice;
 
   private String lastUpdated;

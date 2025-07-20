@@ -1,4 +1,6 @@
 quarkus:
+  qute:
+    strict-rendering: false
   http:
     port: 8080
   log:
@@ -6,3 +8,12 @@ quarkus:
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
+
+bot:
+  limit: 2
+  symbol:
+    limit: 1
+    list:
+      - BTCUSDT
+      - ETHUSDT
+  parameters:

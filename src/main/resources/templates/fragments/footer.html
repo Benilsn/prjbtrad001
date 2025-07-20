@@ -7,14 +7,29 @@
     document.addEventListener("DOMContentLoaded", function () {
       async function fetchPrices() {
         try {
-          const btc = await fetch('/refresh-data?symbol=BTCUSDT');
-          const eth = await fetch('/refresh-data?symbol=ETHUSDT');
-          if (!btc.ok) throw new Error('Network btc was not ok');
-          const btcData = await btc.json();
-          const ethData = await eth.json();
+          const symbols = "{workingSymbols ?: ''}".split(',');
+          const params = new URLSearchParams({
+            symbols: JSON.stringify(symbols)
+          });
 
-          document.getElementById('btc-price').textContent = btcData.price;
-          document.getElementById('eth-price').textContent = ethData.price;
+          const response = await fetch('/refresh-data?' + params);
+          const data = await response.json();
+          console.log("Fetched data:", data);
+
+          const btcData = data.find(crypto => crypto.symbol === 'BTCUSDT');
+          console.log("BTC Data:", btcData);
+
+          const ethData = data.find(crypto => crypto.symbol === 'ETHUSDT');
+          console.log("ETH Data:", ethData);
+
+          if (btcData) {
+            document.getElementById('btc-price').textContent = btcData.price;
+            document.getElementById('btc-updated').textContent = btcData.lastUpdated;
+          }
+          if (ethData) {
+            document.getElementById('eth-price').textContent = ethData.price;
+            document.getElementById('eth-updated').textContent = ethData.lastUpdated;
+          }
       } catch (error) {
         console.error('Error fetching prices:', error);
       }

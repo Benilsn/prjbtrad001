@@ -1,22 +1,12 @@
 package dev.prjbtrad001.domain.core;
 
-import dev.prjbtrad001.infra.config.BotConfig;
+import dev.prjbtrad001.app.bot.BotParameters;
 
 public interface TradeBot {
 
   void start();
-
   void stop();
-
   boolean isRunning();
-
-  BotType getBotType();
-
-  BotConfig getConfig();
-
-  enum BotType {
-    BTCUSDT,
-    ETHUSDT
-  }
+  BotParameters getParameters();
 
 }

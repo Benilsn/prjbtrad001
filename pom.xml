@@ -44,10 +44,18 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
 
-    <!--    QUARKUS WEB     -->
+    <!--    QUARKUS     -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-config-yaml</artifactId>
     </dependency>
     <!--    QUARKUS TEMPLATE     -->
     <dependency>

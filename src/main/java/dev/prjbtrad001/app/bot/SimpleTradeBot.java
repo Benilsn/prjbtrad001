@@ -1,8 +1,8 @@
 package dev.prjbtrad001.app.bot;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
-import dev.prjbtrad001.infra.config.BotConfig;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,16 +14,14 @@ import lombok.extern.jbosslog.JBossLog;
 @NoArgsConstructor
 public class SimpleTradeBot implements TradeBot, Runnable {
 
-  private TradeBot.BotType botType = BotType.BTCUSDT;
-  private BotConfig config;
+  private BotParameters parameters;
   private volatile boolean running = false;
 
   @JsonIgnore
   private Thread worker;
 
-  public SimpleTradeBot(TradeBot.BotType botType, BotConfig config) {
-    this.botType = botType;
-    this.config = config;
+  public SimpleTradeBot(BotParameters parameters) {
+    this.parameters = parameters;
   }
 
   @Override
@@ -46,25 +44,20 @@ public class SimpleTradeBot implements TradeBot, Runnable {
   }
 
   @Override
-  public TradeBot.BotType getBotType() {
-    return botType;
-  }
-
-  @Override
-  public BotConfig getConfig() {
-    return this.config;
+  public BotParameters getParameters() {
+    return this.parameters;
   }
 
   @Override
   public void run() {
-    while (running) {
-      log.info("[" + botType + "] Checking market data...");
-      // Simulate trade logic here
-      try {
-        Thread.sleep(config.getInterval() * 1000L);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    }
+//    while (running) {
+//      log.info("[" + parameters.getBotType() + "] Checking market data...");
+//      // Simulate trade logic here
+//      try {
+//        Thread.sleep(parameters.getInterval() * 1000L);
+//      } catch (InterruptedException e) {
+//        Thread.currentThread().interrupt();
+//      }
+//    }
   }
 }

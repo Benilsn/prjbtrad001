@@ -3,17 +3,25 @@ package dev.prjbtrad001.infra.resource;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.service.BotOrchestratorService;
 import dev.prjbtrad001.domain.core.TradeBot;
-import dev.prjbtrad001.infra.config.BotConfig;
+import dev.prjbtrad001.app.bot.BotParameters;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 
+import jakarta.validation.Validator;
+
+import java.util.List;
+import java.util.Set;
+
 @Path("/bots")
 public class BotResource {
 
+  @Inject
+  Validator validator;
   @Inject
   BotOrchestratorService botOrchestratorService;
 
@@ -37,34 +45,24 @@ public class BotResource {
   @POST
   @Path("/save")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-  public Response saveBot(
-    @FormParam("symbol") String symbol,
-    @FormParam("interval") long interval,
-    @FormParam("stopLossPercent") double stopLossPercent,
-    @FormParam("takeProfitPercent") double takeProfitPercent,
-    @FormParam("rsiPurchase") double rsiPurchase,
-    @FormParam("rsiSale") double rsiSale,
-    @FormParam("volumeMultiplier") double volumeMultiplier,
-    @FormParam("smaShort") int smaShort,
-    @FormParam("smaLong") int smaLong,
-    @FormParam("windowResistanceSupport") int windowResistanceSupport) {
+  @Produces(MediaType.TEXT_HTML)
+  public Object saveBot(
+    @BeanParam BotParameters parameters) {
+    Set<ConstraintViolation<BotParameters>> violations = validator.validate(parameters);
 
-    TradeBot bot =
-      new SimpleTradeBot(
-        TradeBot.BotType.valueOf(symbol),
-        BotConfig.builder()
-          .interval(interval)
-          .stopLossPercent(stopLossPercent)
-          .takeProfitPercent(takeProfitPercent)
-          .rsiPurchase(rsiPurchase)
-          .rsiSale(rsiSale)
-          .volumeMultiplier(volumeMultiplier)
-          .smaShort(smaShort)
-          .smaLong(smaLong)
-          .windowResistanceSupport(windowResistanceSupport)
-          .build());
+    if (!violations.isEmpty()) {
+      List<String> errors = violations.stream()
+        .map(ConstraintViolation::getMessage)
+        .toList();
 
-    botOrchestratorService.createBot(bot);
+      return
+        createBot()
+          .data("errors", errors)
+          .data("parameters", parameters);
+    }
+
+    botOrchestratorService
+      .createBot(new SimpleTradeBot(parameters));
 
     return
       Response

@@ -1,11 +1,10 @@
 package dev.prjbtrad001.app.service;
 
 import dev.prjbtrad001.domain.core.TradeBot;
-import dev.prjbtrad001.domain.repository.BotRepository;
+import dev.prjbtrad001.app.repository.impl.FileRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -18,20 +17,22 @@ public class BotOrchestratorService {
   private final Random rdn = new Random();
 
   @Inject
-  private BotRepository botRepository;
+  private FileRepository fileRepository;
 
   public TradeBot createBot(TradeBot bot) {
-    log.info("Creating bot: " + bot.getBotType());
-    botRepository.createBot(bot);
+    log.info("Creating bot: " + bot.getParameters().getBotType());
+    fileRepository.createBot(bot);
     return bot;
   }
 
   public List<TradeBot> getAllBots() {
-    return botRepository
-      .getAllBots()
-      .stream()
-      .sorted(Comparator.comparing(tradeBot -> !tradeBot.isRunning()))
-      .toList();
+    List<TradeBot> bots = fileRepository.getAllBots();
+    log.info("Getting all " + bots.size() + " bots.");
+    return
+      bots
+        .stream()
+        .sorted(Comparator.comparing(tradeBot -> !tradeBot.isRunning()))
+        .toList();
   }
 
 
