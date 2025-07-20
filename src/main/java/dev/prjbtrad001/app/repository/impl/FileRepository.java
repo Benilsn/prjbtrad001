@@ -3,11 +3,11 @@ package dev.prjbtrad001.app.repository.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.domain.core.BotType;
-import dev.prjbtrad001.domain.core.TradeBot;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Default;
+import jakarta.inject.Named;
 import lombok.extern.jbosslog.JBossLog;
-
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Default
 @JBossLog
+@Named(value = "filedb")
 @ApplicationScoped
-public class FileRepository implements BotRepository {
+public class FileRepository implements BotRepository<SimpleTradeBot> {
 
-  private static final File botFile = Paths.get("src/main/resources/bots").toFile();
+  private static final File botFile = Paths.get("src/main/resources/data/bots").toFile();
 
   private ObjectMapper mapper;
 
@@ -28,7 +30,7 @@ public class FileRepository implements BotRepository {
   }
 
   @Override
-  public void createBot(TradeBot tradeBot) {
+  public void createBot(SimpleTradeBot tradeBot) {
     try {
       String jsonLine = mapper.writeValueAsString(tradeBot);
 
@@ -41,8 +43,8 @@ public class FileRepository implements BotRepository {
   }
 
   @Override
-  public List<TradeBot> getAllBots() {
-    List<TradeBot> bots = new ArrayList<>();
+  public List<SimpleTradeBot> getAllBots() {
+    List<SimpleTradeBot> bots = new ArrayList<>();
 
     if (!botFile.exists()) {
       return bots;
@@ -55,7 +57,7 @@ public class FileRepository implements BotRepository {
           SimpleTradeBot bot = mapper.readValue(line, SimpleTradeBot.class);
           bots.add(bot);
         } catch (Exception e) {
-          log.debug("Skipping malformed line: " + line);
+          log.error("Skipping malformed line: " + line);
         }
       }
     } catch (IOException e) {
@@ -66,7 +68,7 @@ public class FileRepository implements BotRepository {
   }
 
   @Override
-  public Optional<TradeBot> getBotByType(BotType botType) {
+  public Optional<SimpleTradeBot> getBotByType(BotType botType) {
     return
       getAllBots()
         .stream()
@@ -75,21 +77,21 @@ public class FileRepository implements BotRepository {
   }
 
   @Override
-  public Optional<TradeBot> getBotById(UUID botId) {
+  public Optional<SimpleTradeBot> getBotById(UUID botId) {
     return
       getAllBots()
         .stream()
-        .filter(b -> ((SimpleTradeBot) b).getId().equals(botId))
+        .filter(b -> b.getId().equals(botId))
         .findFirst();
   }
 
   @Override
   public void deleteBot(UUID botId) {
-    List<TradeBot> bots = getAllBots();
+    List<SimpleTradeBot> bots = getAllBots();
 
-    bots.removeIf(bot -> ((SimpleTradeBot) bot).getId().equals(botId));
+    bots.removeIf(bot -> bot.getId().equals(botId));
     try (FileWriter fw = new FileWriter(botFile, false)) {
-      for (TradeBot bot : bots) {
+      for (SimpleTradeBot bot : bots) {
         String jsonLine = mapper.writeValueAsString(bot);
         fw.write(jsonLine + System.lineSeparator());
       }

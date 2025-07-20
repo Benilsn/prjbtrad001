@@ -1,17 +1,17 @@
 package dev.prjbtrad001.domain.repository;
 
 import dev.prjbtrad001.domain.core.BotType;
-import dev.prjbtrad001.domain.core.TradeBot;
+import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface BotRepository {
+public interface BotRepository<T> extends PanacheRepositoryBase<T, UUID> {
 
-  void createBot(TradeBot tradeBot);
-  List<TradeBot> getAllBots();
-  Optional<TradeBot> getBotByType(BotType botType);
-  Optional<TradeBot> getBotById(UUID botId);
+  void createBot(T tradeBot);
+  List<T> getAllBots();
+  Optional<T> getBotByType(BotType botType);
+  Optional<T> getBotById(UUID botId);
   void deleteBot(UUID botId);
 
 //  void updateBot(BotType botType);

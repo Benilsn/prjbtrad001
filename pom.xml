@@ -57,6 +57,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-config-yaml</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-rest-jackson</artifactId>
+    </dependency>
+
     <!--    QUARKUS TEMPLATE     -->
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -66,9 +71,19 @@
       <groupId>io.quarkiverse.qute.web</groupId>
       <artifactId>quarkus-qute-web</artifactId>
     </dependency>
+
+    <!--    DATABASE     -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-rest-jackson</artifactId>
+      <artifactId>quarkus-jdbc-h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
     </dependency>
 
 

@@ -3,6 +3,9 @@ package dev.prjbtrad001.app.bot;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.infra.validation.ValidSymbol;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,11 +19,17 @@ import java.util.Locale;
 @Getter
 @Setter
 @Builder
+@Embeddable
 @AllArgsConstructor
 public class BotParameters{
 
-  @JsonIgnore @Getter(AccessLevel.NONE) private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
-  @JsonIgnore @Getter(AccessLevel.NONE) private DecimalFormat formatter = new DecimalFormat("#,###.00", symbols);
+  @Transient
+  @JsonIgnore @Getter(AccessLevel.NONE)
+  private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
+
+  @Transient
+  @JsonIgnore @Getter(AccessLevel.NONE)
+  private DecimalFormat formatter = new DecimalFormat("#,###.00", symbols);
 
   @ValidSymbol
   @FormParam("symbol")
@@ -28,6 +37,7 @@ public class BotParameters{
 
   @Pattern(regexp = "\\d+[mhd]", message = "Interval must be like 1m, 5m, 1h")
   @FormParam("interval")
+  @Column(name = "\"interval\"")
   private String interval;
 
   // Current state

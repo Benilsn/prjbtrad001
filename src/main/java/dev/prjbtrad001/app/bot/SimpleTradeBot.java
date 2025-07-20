@@ -1,27 +1,37 @@
 package dev.prjbtrad001.app.bot;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+@Entity
 @JBossLog
 @Getter
 @Setter
 @NoArgsConstructor
-public class SimpleTradeBot implements TradeBot, Runnable {
+public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runnable {
 
+  @Id
   @Setter(AccessLevel.NONE)
-  private final UUID id = UUID.randomUUID();
+  @GeneratedValue(generator = "uuid")
+  @UuidGenerator(style = UuidGenerator.Style.AUTO)
+  private UUID id;
+
+  @Embedded
   private BotParameters parameters;
 
   private volatile boolean running = false;
+
+  @Transient
   @JsonIgnore
   private Thread worker;
 

@@ -3,18 +3,35 @@ quarkus:
     strict-rendering: false
   http:
     port: 8080
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    db-kind: h2
+    jdbc:
+      url: jdbc:h2:file:./target/data/h2db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      driver: org.h2.Driver
+      username: sa
+      password: sa
+  hibernate-orm:
+    log:
+      sql: true
+    database:
+        generation: update
   log:
-    level: ERROR
+    level: DEBUG
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
-  limit: 2
+  limit: 4
+  data:
+    strategy: h2db
   symbol:
     limit: 1
     list:
       - BTCUSDT
       - ETHUSDT
       - XRPUSDT
-  parameters:

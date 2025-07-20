@@ -1,11 +1,14 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.domain.core.TradeBot;
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.domain.repository.BotRepository;
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.literal.NamedLiteral;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
-
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.util.*;
 
 @JBossLog
@@ -14,17 +17,23 @@ public class BotOrchestratorService {
 
   private final Random rdn = new Random();
 
-  @Inject
-  private BotRepository botRepository;
+  private BotRepository<SimpleTradeBot> botRepository;
 
-  public TradeBot createBot(TradeBot bot) {
+  @Inject
+  Instance<BotRepository<SimpleTradeBot>> repositories;
+
+  @ConfigProperty(name = "bot.data.strategy")
+  String dataStrategy;
+
+
+  public SimpleTradeBot createBot(SimpleTradeBot bot) {
     log.debug("Creating bot: " + bot.getParameters().getBotType());
     botRepository.createBot(bot);
     return bot;
   }
 
-  public List<TradeBot> getAllBots() {
-    List<TradeBot> bots = botRepository.getAllBots();
+  public List<SimpleTradeBot> getAllBots() {
+    List<SimpleTradeBot> bots = botRepository.getAllBots();
     log.debug("Getting all " + bots.size() + " bots.");
     return
       bots
@@ -38,7 +47,7 @@ public class BotOrchestratorService {
     botRepository.deleteBot(botId);
   }
 
-  public TradeBot getBotById(UUID botId) {
+  public SimpleTradeBot getBotById(UUID botId) {
     log.debug("Getting bot by ID: " + botId);
     return
       botRepository
@@ -85,6 +94,14 @@ public class BotOrchestratorService {
         ));
     }
     return listOfData;
+  }
+
+  @PostConstruct
+  public void init() {
+    this.botRepository =
+      repositories
+        .select(NamedLiteral.of(dataStrategy))
+        .get();
   }
 
 
