@@ -2,6 +2,7 @@ package dev.prjbtrad001.app.repository.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -11,6 +12,8 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @JBossLog
 @ApplicationScoped
@@ -60,6 +63,30 @@ public class FileRepository implements BotRepository {
     }
 
     return bots;
+  }
+
+  @Override
+  public Optional<TradeBot> getBotByType(BotType botType) {
+    return
+      getAllBots()
+        .stream()
+        .filter(b -> b.getParameters().getBotType().equals(botType))
+        .findFirst();
+  }
+
+  @Override
+  public void deleteBot(UUID botId) {
+    List<TradeBot> bots = getAllBots();
+
+    bots.removeIf(bot -> ((SimpleTradeBot) bot).getId().equals(botId));
+    try (FileWriter fw = new FileWriter(botFile, false)) {
+      for (TradeBot bot : bots) {
+        String jsonLine = mapper.writeValueAsString(bot);
+        fw.write(jsonLine + System.lineSeparator());
+      }
+    } catch (Exception e) {
+      log.error("Error deleting bot: " + e.getMessage());
+    }
   }
 
 

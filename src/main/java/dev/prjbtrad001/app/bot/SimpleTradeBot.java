@@ -3,10 +3,13 @@ package dev.prjbtrad001.app.bot;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
+
+import java.util.UUID;
 
 @JBossLog
 @Getter
@@ -14,9 +17,11 @@ import lombok.extern.jbosslog.JBossLog;
 @NoArgsConstructor
 public class SimpleTradeBot implements TradeBot, Runnable {
 
+  @Setter(AccessLevel.NONE)
+  private final UUID id = UUID.randomUUID();
   private BotParameters parameters;
-  private volatile boolean running = false;
 
+  private volatile boolean running = false;
   @JsonIgnore
   private Thread worker;
 

@@ -2,7 +2,6 @@ package dev.prjbtrad001.infra.resource;
 
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.service.BotOrchestratorService;
-import dev.prjbtrad001.domain.core.TradeBot;
 import dev.prjbtrad001.app.bot.BotParameters;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
@@ -11,11 +10,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
-
 import jakarta.validation.Validator;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Path("/bots")
 public class BotResource {
@@ -25,16 +24,15 @@ public class BotResource {
   @Inject
   BotOrchestratorService botOrchestratorService;
 
-  @GET()
-  @Path("/running")
-  public TemplateInstance activebots(@QueryParam("message") String message) {
-    return Templates.activeBots()
-      .data("pageTitle", "Active Bots")
+  @GET
+  public TemplateInstance allBots(@QueryParam("message") String message) {
+    return Templates.allBots()
+      .data("pageTitle", "All Bots")
       .data("message", message)
-      .data("activeBots", botOrchestratorService.getAllBots());
+      .data("allBots", botOrchestratorService.getAllBots());
   }
 
-  @GET()
+  @GET
   @Path("/trade-log")
   public TemplateInstance tradeLog() {
     return Templates.tradeLog()
@@ -42,7 +40,7 @@ public class BotResource {
       .data("data", botOrchestratorService.getLogData());
   }
 
-  @GET()
+  @GET
   @Path("/create")
   public TemplateInstance createBot() {
     return Templates.createBot()
@@ -73,8 +71,20 @@ public class BotResource {
 
     return
       Response
-        .seeOther(UriBuilder.fromPath("/bots/running")
+        .seeOther(UriBuilder.fromPath("/bots")
           .queryParam("message", "Bot created successfully!")
+          .build())
+        .build();
+  }
+
+  @POST
+  @Path("/delete")
+  public Response deleteBot(@FormParam("botId") UUID botId) {
+    botOrchestratorService.deleteBot(botId);
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Bot deleted successfully!")
           .build())
         .build();
   }

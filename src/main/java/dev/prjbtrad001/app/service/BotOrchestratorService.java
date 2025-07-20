@@ -1,14 +1,13 @@
 package dev.prjbtrad001.app.service;
 
+import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
 import dev.prjbtrad001.app.repository.impl.FileRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 @JBossLog
 @ApplicationScoped
@@ -33,6 +32,11 @@ public class BotOrchestratorService {
         .stream()
         .sorted(Comparator.comparing(tradeBot -> !tradeBot.isRunning()))
         .toList();
+  }
+
+  public void deleteBot(UUID botId) {
+    log.debug("Deleting bot: " + botId);
+    fileRepository.deleteBot(botId);
   }
 
 
