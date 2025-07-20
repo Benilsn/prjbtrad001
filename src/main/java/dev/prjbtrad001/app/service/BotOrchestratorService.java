@@ -1,8 +1,7 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradeBot;
-import dev.prjbtrad001.app.repository.impl.FileRepository;
+import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
@@ -16,16 +15,16 @@ public class BotOrchestratorService {
   private final Random rdn = new Random();
 
   @Inject
-  private FileRepository fileRepository;
+  private BotRepository botRepository;
 
   public TradeBot createBot(TradeBot bot) {
     log.debug("Creating bot: " + bot.getParameters().getBotType());
-    fileRepository.createBot(bot);
+    botRepository.createBot(bot);
     return bot;
   }
 
   public List<TradeBot> getAllBots() {
-    List<TradeBot> bots = fileRepository.getAllBots();
+    List<TradeBot> bots = botRepository.getAllBots();
     log.debug("Getting all " + bots.size() + " bots.");
     return
       bots
@@ -36,13 +35,13 @@ public class BotOrchestratorService {
 
   public void deleteBot(UUID botId) {
     log.debug("Deleting bot: " + botId);
-    fileRepository.deleteBot(botId);
+    botRepository.deleteBot(botId);
   }
 
   public TradeBot getBotById(UUID botId) {
     log.debug("Getting bot by ID: " + botId);
     return
-      fileRepository
+      botRepository
         .getBotById(botId)
         .orElseThrow(() -> new NoSuchElementException("Bot not found with ID: " + botId));
   }

@@ -32,8 +32,8 @@
 
             <!-- Controls -->
             <div class="d-flex flex-wrap gap-2 mt-5">
-                <button class="btn btn-{bot.running ? 'danger' : 'success'} btn-sm"> {bot.running ? 'Stop' : 'Run'} </button>
-                <a href="/bots/edit/{bot.id}" class="btn btn-outline-neon btn-sm">Edit</a>
+                <button class="btn btn-outline-neon-{bot.running ? 'red' : 'green'} btn-sm "> {bot.running ? 'Stop' : 'Run'} </button>
+                <!--<a href="/bots/edit/{bot.id}" class="btn btn-outline-neon btn-sm">Edit</a>-->
                 <a href="/bots/details/{bot.id}" class="btn btn-outline-neon btn-sm">More Info</a>
             </div>
         </div>
