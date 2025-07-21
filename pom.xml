@@ -9,14 +9,14 @@
 
   <properties>
     <compiler-plugin.version>3.14.0</compiler-plugin.version>
-    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.version>3.24.3</quarkus.platform.version>
     <skipITs>true</skipITs>
-    <surefire-plugin.version>3.5.3</surefire-plugin.version>
+    <surefire-plugin.version>3.2.5</surefire-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -103,9 +103,9 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>${quarkus.platform.group-id}</groupId>
+        <groupId>io.quarkus</groupId>
         <artifactId>quarkus-maven-plugin</artifactId>
-        <version>${quarkus.platform.version}</version>
+        <version>3.24.3</version>
         <extensions>true</extensions>
         <executions>
           <execution>
@@ -135,7 +135,6 @@
         <configuration>
           <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-            <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
         </configuration>
       </plugin>

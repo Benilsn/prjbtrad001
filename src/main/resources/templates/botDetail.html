@@ -2,93 +2,100 @@
 <html lang="en">
 
 {#include 'fragments/head.html'/}
-
 {#include 'fragments/navbar.html'/}
 
-<body>
-<div class="container mb-5">
-    <h2 class="text-neon text-center m-4 fs-5"> Bot Details: <p class="neon-label">{bot.id}</p></h2>
+<body class="bg-light text-dark">
 
-    <div class="card bg-dark border-neon p-4 mx-auto bot-card" style="max-width: 500px;">
-        <div class="row mb-4">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Status:</p>
-                <span class="{bot.running ? 'text-success' : 'text-danger'} fw-bold">{bot.running ? 'RUNNING' : 'IDLE'}</span>
-            </div>
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Bot Type:</p>
-                <span class="text-neon-glow">{bot.parameters.botType}</span>
-            </div>
-        </div>
+<div class="container my-5">
 
-        <div class="row mb-4">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Resistance:</p>
-                <span class="text-neon-glow">${bot.parameters.actualResistance}</span>
-            </div>
-            <div class="col-6 col-md-6 col-lg-6 ">
-                <p class="neon-label mb-1">Interval:</p>
-                <span class="text-neon-glow">{bot.parameters.interval}</span>
-            </div>
-        </div>
+    <h2 class="text-center mb-4 fw-bold" style="letter-spacing: 0.05em;">
+        Bot Details: <span class="text-primary">{bot.id}</span>
+    </h2>
 
-        <div class="row mb-4">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Purchase Price:</p>
-                <span class="text-glow-green">${bot.parameters.purchasePrice}</span>
-            </div>
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Last Price:</p>
-                <span class="text-glow-green">${bot.parameters.lastPrice}</span>
-            </div>
-        </div>
+    <div class="card mx-auto shadow-sm rounded" style="max-width: 500px;">
+        <div class="card-body">
 
-        <div class="row mb-4">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">RSI (Sell):</p>
-                <span class="text-neon-glow">{bot.parameters.rsiSale}</span>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Status:</p>
+                    <span class="{bot.running ? 'text-success' : 'text-danger'} fw-bold">{bot.running ? 'RUNNING' : 'IDLE'}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Bot Type:</p>
+                    <span class="text-primary fw-semibold">{bot.parameters.botType}</span>
+                </div>
             </div>
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">RSI (Buy):</p>
-                <span class="text-neon-glow">{bot.parameters.rsiPurchase}</span>
-            </div>
-        </div>
 
-        <div class="row mb-4">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">SMA Short:</p>
-                <span class="text-neon-glow">{bot.parameters.smaShort}</span>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Resistance:</p>
+                    <span class="fw-semibold">${bot.parameters.actualResistance}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Interval:</p>
+                    <span class="fw-semibold">{bot.parameters.interval}</span>
+                </div>
             </div>
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">SMA Long:</p>
-                <span class="text-neon-glow">{bot.parameters.smaLong}</span>
-            </div>
-        </div>
 
-        <div class="row mb-5">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Stop Loss %:</p>
-                <span class="text-neon-glow">{bot.parameters.stopLossPercent}</span>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Purchase Price:</p>
+                    <span class="text-success fw-semibold">${bot.parameters.purchasePrice}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Last Price:</p>
+                    <span class="text-success fw-semibold">${bot.parameters.lastPrice}</span>
+                </div>
             </div>
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Take Profit %:</p>
-                <span class="text-neon-glow">{bot.parameters.takeProfitPercent}</span>
-            </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col-6 col-md-6 col-lg-6">
-                <p class="neon-label mb-1">Support:</p>
-                <span class="text-neon-glow">${bot.parameters.actualSupport}</span>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">RSI (Sell):</p>
+                    <span class="fw-semibold">{bot.parameters.rsiSale}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">RSI (Buy):</p>
+                    <span class="fw-semibold">{bot.parameters.rsiPurchase}</span>
+                </div>
             </div>
-        </div>
 
-        <div class="text-center">
-            <a href="/bots" class="btn btn-create-neon ml-3 px-5 py-2">← Back to Bots</a>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">SMA Short:</p>
+                    <span class="fw-semibold">{bot.parameters.smaShort}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">SMA Long:</p>
+                    <span class="fw-semibold">{bot.parameters.smaLong}</span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Stop Loss %:</p>
+                    <span class="fw-semibold">{bot.parameters.stopLossPercent}</span>
+                </div>
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Take Profit %:</p>
+                    <span class="fw-semibold">{bot.parameters.takeProfitPercent}</span>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-6">
+                    <p class="mb-1 fw-semibold text-muted">Support:</p>
+                    <span class="fw-semibold">${bot.parameters.actualSupport}</span>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="/bots" class="btn btn-outline-primary px-4 py-2 fw-semibold">← Back to Bots</a>
+            </div>
+
         </div>
     </div>
-</div>
 
+</div>
 
 </body>
 

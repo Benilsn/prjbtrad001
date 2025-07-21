@@ -1,435 +1,337 @@
-{#fragment id=head}
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>{pageTitle}</title>
-
-    <link rel="icon" href="/images/btc-neon.png" type="image"/>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/btc-neon.png" type="image/png"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7STJrJtW/sGJ7LAD9j+nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-
-    <!-- Custom Styles -->
     <style>
-
-        .text-neon {
-          color: #0ff;
-          text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --bg-light: #ffffff;
+            --bg-dark: #212529;
+            --border-light: #dee2e6;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
         }
 
-        .border-neon {
-          border: 2px solid #0ff;
-          box-shadow: 0 0 10px #0ff;
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
 
+        /* Reusable Text & Border Styles */
+        .text-primary-light {
+            color: var(--primary-color);
+        }
+
+        .text-success {
+            color: var(--success-color);
+        }
+
+        .text-danger {
+            color: var(--danger-color);
+        }
+
+        .border-subtle {
+            border: 1px solid var(--border-light);
+            border-radius: 8px; /* Slightly rounded corners */
+        }
+
+        /* Buttons */
+        .btn-outline-primary-custom {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background-color: transparent;
+            transition: all 0.2s ease;
+            border-radius: 5px;
+        }
+
+        .btn-outline-primary-custom:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .btn-outline-success-custom {
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            background-color: transparent;
+            transition: all 0.2s ease;
+            border-radius: 5px;
+        }
+
+        .btn-outline-success-custom:hover {
+            background-color: var(--success-color);
+            color: var(--text-light);
+            box-shadow: 0 4px 8px rgba(40, 167, 69, 0.2);
+        }
+
+        .btn-outline-danger-custom {
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+            background-color: transparent;
+            transition: all 0.2s ease;
+            border-radius: 5px;
+        }
+
+        .btn-outline-danger-custom:hover {
+            background-color: var(--danger-color);
+            color: var(--text-light);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+
+        /* Specific Elements */
         .bot-card {
-          margin-bottom: 2rem;
-          transition: transform 0.2s;
+            margin-bottom: 1.5rem;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Soft shadow */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            padding: 20px;
         }
 
         .bot-card:hover {
-          transform: scale(1.03);
-          box-shadow: 0 0 20px #0ff;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* Slightly lifted shadow on hover */
         }
 
-        .btn-outline-danger, .btn-outline-secondary {
-          margin-right: 5px;
-          border-color: #0ff;
-          color: #0ff;
+        .btn-create-primary {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+            transition: 0.3s ease-in-out;
         }
 
-        .btn-outline-danger:hover, .btn-outline-secondary:hover {
-          background-color: #0ff;
-          color: #000;
+        .btn-create-primary:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+            transform: translateY(-1px);
         }
 
-        .btn-create-neon {
-          background-color: transparent;
-          border: 2px solid #0ff;
-          color: #0ff;
-          padding: 10px 20px;
-          font-size: 1.1rem;
-          font-weight: bold;
-          border-radius: 5px;
-          box-shadow: 0 0 8px #0ff;
-          transition: 0.3s ease-in-out;
+        .logo-text {
+            color: var(--text-dark);
+            font-size: 1.6rem;
+            font-weight: 600;
         }
 
-        .btn-create-neon:hover {
-          background-color: #0ff;
-          color: #000;
-          box-shadow: 0 0 20px #0ff;
+        .trade-log-box {
+            background-color: var(--bg-dark); /* Dark background for log */
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+            border-radius: 8px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* Soft inner shadow */
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 15px;
+            font-family: 'Roboto Mono', monospace; /* Monospaced font for logs */
         }
 
-            /* General styling */
-            .neon-text {
-              color: #00fff7;
-              text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
-              font-size: 1rem;
+        .log-entry {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 3px 0;
+            line-height: 1.4;
+        }
+
+        /* Custom Scrollbar for WebKit (for dark mode) */
+        .trade-log-box::-webkit-scrollbar { width: 8px; }
+        .trade-log-box::-webkit-scrollbar-track { background: var(--bg-dark); border-radius: 10px; }
+        .trade-log-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .trade-log-box::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Crypto Cards */
+        .crypto-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            padding: 25px 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-align: center; /* Center content for clean look */
+        }
+
+        .crypto-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .crypto-price {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .crypto-last-updated {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+        }
+
+        /* Navbar Styling */
+        .app-navbar {
+            background-color: var(--bg-light);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar-brand .logo-text {
+            font-size: 1.8rem;
+        }
+
+        .nav-link-custom {
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+            position: relative;
+            padding: 8px 0; /* Adjust padding for underline effect */
+        }
+
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: var(--primary-color);
+            transition: width 0.2s ease;
+        }
+
+        .nav-link-custom:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%23343a40' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Footer Styling */
+        .app-footer {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .app-footer .footer-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .app-footer .social-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .app-footer .social-link:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 576px) {
+            .app-footer .footer-text {
+                font-size: 0.8rem;
             }
-
-            .neon-text-logo {
-              color: #00fff7;
-              text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
-              font-size: 1.5rem;
-            }
-
-            /* Trade log styling */
-            .trade-log-box {
-              background-color: rgba(13, 13, 13, 0.4);
-              border: 2px solid #00fff7;
-              border-radius: 10px;
-              box-shadow: 0 0 10px #00fff7;
-              height: 500px;
-              max-height: 600px;
-              overflow-y: auto;
-            }
-
-            /* Glitch keyframes */
-            @keyframes glitch {
-              0% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-                transform: translate(0, 0);
-                opacity: 1;
-              }
-              10% {
-                text-shadow: -1px -1px #00fff7, 1px 1px #00ff90;
-                transform: translate(-1px, 1px);
-                opacity: 0.9;
-              }
-              20% {
-                text-shadow: 1px -1px #00ff90, -1px 1px #00fff7;
-                transform: translate(1px, -1px);
-                opacity: 0.95;
-              }
-              30% {
-                text-shadow: -1px 1px #00fff7, 1px -1px #00ff90;
-                transform: translate(-1px, -1px);
-                opacity: 0.8;
-              }
-              40% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-                transform: translate(1px, 1px);
-                opacity: 1;
-              }
-              100% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-                transform: translate(0, 0);
-                opacity: 1;
-              }
-            }
-
-            /* Apply glitch effect */
-            .log-entry {
-              font-family: monospace;
-              color: #00ff90;
-              margin: 5px 0;
-              animation: glitch 3s infinite;
-              white-space: nowrap;
-            }
-
-            /* Custom neon scrollbar for WebKit browsers */
-            .trade-log-box::-webkit-scrollbar {
-              width: 10px;
-            }
-
-            .trade-log-box::-webkit-scrollbar-track {
-              background: #111;
-              border-radius: 10px;
-            }
-
-            .trade-log-box::-webkit-scrollbar-thumb {
-              background: linear-gradient(#00fff7, #00ff90);
-              border-radius: 10px;
-              box-shadow: 0 0 6px #00fff7;
-            }
-
-            /* Optional hover effect */
-            .trade-log-box::-webkit-scrollbar-thumb:hover {
-              background: linear-gradient(#00ff90, #00fff7);
-              box-shadow: 0 0 10px #00fff7, 0 0 20px #00ff90;
-            }
-
-            /* Crypto cards */
-            .crypto-card {
-              background: #111111;
-              border: 2px solid #00fff7;
-              box-shadow: 0 0 10px #00fff7, 0 0 40px #00fff7 inset;
-              letter-spacing: 5px;
-              border-radius: 15px;
-              padding: 30px 20px;
-              transition: transform 0.3s ease;
-            }
-
-            .crypto-card:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 0 15px #00fff7, 0 0 50px #00fff7 inset;
-            }
-
-            .crypto-price {
-              font-size: 2rem;
-              font-weight: bold;
-              animation: glitch 5s infinite;
-            }
-
-            .green-text {
-              color: #00ff90;
-              text-shadow: 0 0 4px #00ff90, 0 0 10px #00ff90;
-            }
-
-            .crypto-last-updated {
-              font-size: 1rem;
-              color: #bbbbbb;
-              margin-top: -10px;
-              margin-bottom: 10px;
-            }
-
-
-            /* ===========================
-               NAVBAR STYLE
-               =========================== */
-            body {
-              background-color: #0d0d0d;
-              font-family: 'Orbitron', sans-serif;
-            }
-
-            .cyber-navbar {
-              background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
-              border-bottom: 2px solid #00fff7;
-              box-shadow: 0 0 10px #00fff7;
-            }
-
-
-            .neon-link {
-              color: #ffffff;
-              transition: 0.3s;
-              position: relative;
-            }
-
-            .neon-link::after {
-              content: '';
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 2px;
-              width: 0%;
-              background: #00fff7;
-              transition: width 0.3s ease;
-              box-shadow: 0 0 5px #00fff7;
-            }
-
-            .neon-link:hover {
-              color: #00fff7;
-            }
-
-            .neon-link:hover::after {
-              width: 100%;
-            }
-
-            .navbar-toggler-icon {
-              background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='%2300fff7' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%2300fff7' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-            }
-
-            /* ===========================
-               FOOTER STYLE
-               =========================== */
-
-
-            .cyber-footer {
-              background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
-              border-top: 2px solid #00fff7;
-              box-shadow: 0 0 10px #00fff7;
-              color: #ffffff;
-            }
-
-            .cyber-footer .social-icons a {
-              text-decoration: none;
-              font-weight: bold;
-              position: relative;
-            }
-
-            .cyber-footer .social-icons a::after {
-              content: '';
-              position: absolute;
-              bottom: -2px;
-              left: 0;
-              width: 0%;
-              height: 2px;
-              background: #00fff7;
-              box-shadow: 0 0 5px #00fff7;
-              transition: width 0.3s ease;
-            }
-
-            .cyber-footer .social-icons a:hover {
-              color: #00fff7;
-            }
-
-            .cyber-footer .social-icons a:hover::after {
-              width: 100%;
-            }
-
-            @media (max-width: 576px) {
-              .cyber-footer .neon-text {
-                font-size: 1rem;
-            }
-
-            .cyber-footer .social-icons a {
+            .app-footer .social-link {
                 font-size: 0.9rem;
-              }
             }
-
-            /* Trade log box */
-            .trade-log-box {
-              background-color: rgba(13, 13, 13, 0.4); /* Transparent */
-              border: 0px solid #00fff7;
-              border-radius: 10px;
-              box-shadow: 0 0 10px #00fff7;
-              max-height: 600px;
-              overflow-y: auto;
-            }
+        }
 
         .info-icon {
-          width: 20px;
-          height: 20px;
-          background-color: #00f5ff;
-          color: #2f4f4f;
-          text-align: center;
-          line-height: 20px;
-          border-radius: 50%;
-          font-weight: bold;
-          cursor: pointer;
-          box-shadow: 0 0 6px #00f5ff, 0 0 12px #00f5ff;
-          transition: transform 0.2s ease;
+            width: 22px;
+            height: 22px;
+            background-color: var(--info-color);
+            color: var(--text-light);
+            text-align: center;
+            line-height: 22px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(23, 162, 184, 0.2);
+            transition: transform 0.2s ease;
         }
 
         .info-icon:hover {
-          transform: scale(1.2);
-          box-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
         }
 
-        .btn-neon-red {
-          color: #ff003c;
-          background-color: transparent;
-          font-size: 1.4rem;
-          line-height: 1;
-          box-shadow:
-            0 0 5px #ff003c,
-          transition: all 0.2s ease-in-out;
+        .label-modern {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
         }
 
-        .btn-neon-red:hover {
-          background-color: #ff003c;
-          color: black;
-          box-shadow:
-            0 0 10px #ff003c,
-            0 0 20px #ff003c,
-            0 0 40px #ff003c;
-        }
+        /* Tema Dark */
+body.dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
 
-        .btn-outline-info,
-        .btn-outline-secondary {
-          border-color: #00ffff;
-          color: #00ffff;
-        }
+body.dark-mode .app-navbar {
+    background-color: #1f1f1f !important;
+    border-color: #333 !important;
+    box-shadow: none !important;
+}
 
-        .btn-outline-info:hover,
-        .btn-outline-secondary:hover {
-          background-color: #00ffff;
-          color: #000;
-          box-shadow: 0 0 6px #00ffff;
-        }
+body.dark-mode .bot-card,
+body.dark-mode .crypto-card,
+body.dark-mode .trade-log-box {
+    background-color: #1f1f1f !important;
+    border-color: #333 !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+    color: #ddd !important;
+}
 
-        .text-neon-glow {
-          color: #00f6ff;
-          text-shadow: 0 0 15px #00f6ff, 0 0 15px #00f6ff;
-        }
+body.dark-mode a.nav-link-custom {
+    color: #bbb !important;
+}
 
-        .text-glow-green {
-          color: #00ff9c;
-          text-shadow: 0 0 15px #00ff9c;
-        }
+body.dark-mode a.nav-link-custom:hover {
+    color: #4dabf7 !important; /* cor clara azul */
+}
 
-        .text-glow-red {
-          color: #ff4e4e;
-          text-shadow: 0 0 15px #ff4e4e;
-        }
+body.dark-mode .btn-outline-primary-custom {
+    border-color: #4dabf7 !important;
+    color: #4dabf7 !important;
+}
 
-        .btn-outline-neon {
-          border: 1px solid #00f6ff;
-          color: #00f6ff;
-          background-color: transparent;
-          transition: all 0.2s ease;
-        }
+body.dark-mode .btn-outline-primary-custom:hover {
+    background-color: #4dabf7 !important;
+    color: #121212 !important;
+}
 
-        .btn-outline-neon:hover {
-          background-color: #00f6ff;
-          color: #000;
-          box-shadow: 0 0 6px #00f6ff;
-        }
-
-        .btn-outline-neon-green {
-          border: 1px solid #00ff9c;
-          color: #00ff9c;
-          background-color: transparent;
-          transition: all 0.2s ease;
-        }
-
-        .btn-outline-neon-green:hover {
-          background-color:  #00ff9c;
-          color: #000;
-          box-shadow: 0 0 12px #00f6ff;
-        }
-
-        .btn-outline-neon-red {
-          border: 1px solid #ff4e4e;
-          color: #ff4e4e;
-          background-color: transparent;
-          transition: all 0.2s ease;
-        }
-
-        .btn-outline-neon-red:hover {
-          background-color: #ff4e4e;
-          color: #000;
-          box-shadow: 0 0 12px #00f6ff;
-        }
-
-        .neon-label {
-          color: #ffffff;
-          text-shadow: 0 0 15px #ffffff, 0 0 5px #ffffff;
-          font-weight: 500;
-        }
-
-        .text-neon-blue {
-          color: #00f6ff;
-          text-shadow: 0 0 4px #00f6ff, 0 0 6px #00f6ff;
-        }
-
-        .btn-outline-neon {
-          border: 1px solid #00f6ff;
-          color: #00f6ff;
-          background-color: transparent;
-          transition: all 0.1s ease;
-        }
-
-        .btn-outline-neon:hover {
-          background-color: #00f6ff;
-          color: #000;
-          box-shadow: 0 0 6px #00f6ff;
-        }
-
-        .text-neon-white {
-          color: #cfffff;
-          text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
-          font-weight: 600;
-        }
-
+body.dark-mode .app-footer {
+    background-color: #121212 !important;
+    color: #bbb !important;
+}
     </style>
 </head>
-
-{/fragment}

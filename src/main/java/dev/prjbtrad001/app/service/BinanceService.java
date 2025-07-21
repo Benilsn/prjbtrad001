@@ -1,6 +1,7 @@
 package dev.prjbtrad001.app.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.Cripto;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @JBossLog
@@ -83,5 +85,30 @@ public class BinanceService {
     return criptos;
   }
 
+  public List<String> getAllSymbols() throws IOException, InterruptedException {
+    HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(BASE_URL + "/exchangeInfo"))
+            .GET()
+            .build();
 
+    HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+    if (response.statusCode() == 200) {
+      JsonNode root = objectMapper.readTree(response.body());
+      JsonNode symbols = root.path("symbols");
+
+      List<String> symbolList = new ArrayList<>();
+      for (JsonNode s : symbols) {
+        String symbol = s.path("symbol").asText();
+        // Você pode filtrar só pares USDT, por exemplo:
+        if (symbol.endsWith("USDT")) {
+          symbolList.add(symbol);
+        }
+      }
+      return symbolList;
+    } else {
+      log.error("Error fetching exchangeInfo from Binance: " + response.statusCode());
+      return Collections.emptyList();
+    }
+  }
 }

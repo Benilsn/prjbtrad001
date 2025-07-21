@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+{#include 'fragments/head.html'/}
+{#include 'fragments/navbar.html'/}
+
+<body>
+<div class="container my-5">
+    <h1 class="mb-4">{pageTitle}</h1>
+
+    <form method="get" action="/cryptos/prices" class="row g-3 align-items-center">
+        <div class="col-auto">
+            <label for="symbol" class="col-form-label">Selecione uma moeda:</label>
+        </div>
+        <div class="col-auto">
+            <select name="symbols" id="symbol" class="form-select">
+                {#for symbol in symbols}
+                <option value="{symbol}">{symbol}</option>
+                {/for}
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Buscar Preço</button>
+        </div>
+    </form>
+</div>
+
+{#include 'fragments/footer.html'/}
+</body>
+</html>

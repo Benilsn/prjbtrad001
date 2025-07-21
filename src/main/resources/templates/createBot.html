@@ -2,17 +2,17 @@
 <html lang="en">
 
 {#include 'fragments/head.html'/}
-
 {#include 'fragments/navbar.html'/}
 
-<body>
+<body class="bg-light text-dark">
 
 <div class="container my-5 pb-5">
-    <h2 class="text-neon text-center mb-4">Create New Bot</h2>
+
+    <h2 class="text-center mb-4 fw-bold" style="letter-spacing: 0.05em;">Create New Bot</h2>
 
     {#if errors}
-    <div class="alert alert-danger">
-        <ul>
+    <div class="alert alert-danger shadow-sm rounded">
+        <ul class="mb-0">
             {#for err in errors}
             <li>{err}</li>
             {/for}
@@ -20,24 +20,24 @@
     </div>
     {/if}
 
-    <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
+    <form method="post" action="/bots/save" class="bg-white p-4 rounded shadow-sm border">
+
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Par de cripto para negociação, ex: BTCUSDT">
                     Symbol
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Par de cripto para negociação, ex: BTCUSDT"></span>
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
-                <select name="symbol" class="form-select">
+                <select name="symbol" class="form-select" required>
                     {#for symbol in workingSymbols}
-                        <option>{symbol}</option>
+                    <option>{symbol}</option>
                     {/for}
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Interval
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Intervalo dos candles, ex: 1m (1 minuto), 5m, 15m."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Intervalo dos candles, ex: 1m (1 minuto), 5m, 15m.">
+                    Interval
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
             </div>
@@ -45,16 +45,16 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Volume Multiplier
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="O volume atual deve ser maior que a média × esse fator para ativar o trade."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="O volume atual deve ser maior que a média × esse fator para ativar o trade.">
+                    Volume Multiplier
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Support/Resistance Window
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Número de candles usados para identificar suportes e resistências."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Número de candles usados para identificar suportes e resistências.">
+                    Support/Resistance Window
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 50">
             </div>
@@ -62,61 +62,67 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Stop Loss (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de perda máxima antes de vender. Ex: 0.005 = 0.5%."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Percentual de perda máxima antes de vender. Ex: 0.005 = 0.5%.">
+                    Stop Loss (%)
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" step="0.0001" name="stopLossPercent" class="form-control" placeholder="e.g. 0.005">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Take Profit (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de lucro desejado para encerrar a operação."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Percentual de lucro desejado para encerrar a operação.">
+                    Take Profit (%)
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
-                <input type="number" step="0.0001" name="takeProfitPercent" class="form-control"
-                       placeholder="e.g. 0.012">
+                <input type="number" step="0.0001" name="takeProfitPercent" class="form-control" placeholder="e.g. 0.012">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Purchase
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Valor mínimo do RSI para considerar uma compra. Ex: 30."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Valor mínimo do RSI para considerar uma compra. Ex: 30.">
+                    RSI Purchase
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Sale
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="	Valor máximo do RSI para considerar uma venda. Ex: 70."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Valor máximo do RSI para considerar uma venda. Ex: 70.">
+                    RSI Sale
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-4">
             <div class="col-md-3">
-                <label class="form-label text-neon">Short SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel curta. Ex: 9 candles."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Período da média móvel curta. Ex: 9 candles.">
+                    Short SMA
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">Long SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel longa. Ex: 21 candles."></span>
+                <label class="form-label fw-semibold d-flex align-items-center gap-1" data-bs-toggle="tooltip" data-bs-placement="right" title="Período da média móvel longa. Ex: 21 candles.">
+                    Long SMA
+                    <i class="fas fa-circle-info text-muted"></i>
                 </label>
                 <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
             </div>
-            <div class="col-md-6 mt-4">
-                <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
+            <div class="col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100 fw-semibold">Create Bot</button>
             </div>
         </div>
 
     </form>
 </div>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
 </body>
 

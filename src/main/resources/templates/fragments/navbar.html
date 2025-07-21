@@ -1,30 +1,59 @@
 {#fragment id=navbar}
+<nav class="navbar navbar-expand-lg app-navbar py-3">
+    <div class="container d-flex align-items-center">
 
-<nav class="navbar navbar-expand-lg cyber-navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand neon-text-logo" href="/">btrad001</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon text-neon"></span>
+        <a class="navbar-brand logo-text fw-bold me-auto" href="/">btrad001</a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link neon-link" href="/bots">Active bots</a>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item me-4">
+                    <a class="nav-link nav-link-custom fw-semibold" href="/bots">Active bots</a>
+                </li>
+                <li class="nav-item me-4">
+                    <a class="nav-link nav-link-custom fw-semibold" href="/bots/trade-log">Trade log</a>
+                </li>
+                <li class="nav-item me-4">
+                    <a class="nav-link nav-link-custom fw-semibold" href="/cryptos/list">Cryptos List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link neon-link" href="/bots/trade-log">Trade log</a>
+                    <button id="darkModeToggle" type="button"
+                            class="btn btn-outline-primary-custom me-3 d-flex align-items-center gap-2 px-3 py-2"
+                            style="font-weight: 600; font-size: 0.9rem;">
+                        <span class="fs-5">🌙</span> Dark Mode
+                    </button>
                 </li>
-                <!--
-                <li class="nav-item">
-                    <a class="nav-link neon-link" href="#">Strategies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link neon-link" href="#">Settings</a>
-                </li>
-                -->
             </ul>
         </div>
     </div>
+
 </nav>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButton = document.getElementById('darkModeToggle');
+      const body = document.body;
+
+      if(localStorage.getItem('darkMode') === 'enabled'){
+        body.classList.add('dark-mode');
+        toggleButton.textContent = '☀️ Light Mode';
+      }
+
+      toggleButton.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+
+        if(body.classList.contains('dark-mode')){
+          localStorage.setItem('darkMode', 'enabled');
+          toggleButton.textContent = '☀️ Light Mode';
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+          toggleButton.textContent = '🌙 Dark Mode';
+        }
+      });
+    });
+</script>
 {/fragment}

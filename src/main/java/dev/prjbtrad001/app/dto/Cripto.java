@@ -33,7 +33,7 @@ public class Cripto {
   private String lastUpdated;
 
   @Getter(AccessLevel.NONE)
-  private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
+  private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
   @Getter(AccessLevel.NONE)
   private static final DecimalFormat formatter = new DecimalFormat("#,###.00000", symbols);
 

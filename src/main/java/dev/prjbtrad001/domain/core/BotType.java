@@ -3,15 +3,18 @@ package dev.prjbtrad001.domain.core;
 public enum BotType {
   BTCUSDT,
   ETHUSDT,
-  XRPUSDT;
+  XRPUSDT,
+  BNBUSDT;
 
   public boolean isValid(String symbol) {
-    for (BotType type : BotType.values()) {
-      if (type.name().equalsIgnoreCase(symbol)) {
-        return true;
-      }
+    if (symbol == null) {
+      return false;
     }
-    return false;
+    try {
+      BotType.valueOf(symbol.toUpperCase());
+      return true;
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
   }
-
 }

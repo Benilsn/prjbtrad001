@@ -2,21 +2,67 @@
 <html lang="en">
 
 {#include 'fragments/head.html'/}
-
 {#include 'fragments/navbar.html'/}
 
-<body>
+<body class="text-light">
 
-<div class="d-flex justify-content-center align-items-center my-5">
-    <div class="trade-log-box p-4" style="width: 35rem; height: 100vh; overflow-y: auto;">
-        <h4 class="neon-text text-center mb-5">Trade Log</h4>
-        <div id="trade-log-content">
+<div class="container my-5 d-flex justify-content-center flex-column align-items-center" style="max-width: 800px;">
+    <h4 class="text-center mb-4 fw-bold text-info" style="letter-spacing: 0.05em;">Trade Log</h4>
+    <input type="text" id="filterInput" placeholder="Filter trade entries..." class="form-control mb-4" style="max-width: 300px;">
+
+    <div class="trade-log-box bg-dark rounded shadow-lg p-4 w-100" style="height: 70vh; overflow-y: auto; border: 1px solid #2a2a2a;">
+
+        <div id="trade-log-content" class="fs-6" style="font-family: monospace; white-space: pre-wrap;">
+            {#if data.orEmpty && data.orEmpty.length === 0}
+            <p class="text-muted text-center">No trade entries available.</p>
+            {/if}
             {#for item in data.orEmpty}
-            <p class="log-entry">{item}</p>
+            <p class="mb-2 border-bottom border-secondary pb-2">{item}</p>
             {/for}
         </div>
+
     </div>
+
 </div>
+
+<style>
+    .trade-log-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .trade-log-box::-webkit-scrollbar-thumb {
+      background-color: #0dcaf0;
+      border-radius: 4px;
+    }
+    .trade-log-box::-webkit-scrollbar-track {
+      background: #1c1c1c;
+      border-radius: 4px;
+    }
+    .trade-log-box {
+      scrollbar-width: thin;
+      scrollbar-color: #0dcaf0 #1c1c1c;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterInput = document.getElementById('filterInput');
+      const tradeLogContent = document.getElementById('trade-log-content');
+      const logEntries = tradeLogContent.getElementsByTagName('p');
+
+      filterInput.addEventListener('input', function() {
+        const filterText = this.value.toLowerCase();
+
+        Array.from(logEntries).forEach(p => {
+          const text = p.textContent.toLowerCase();
+          if (text.includes(filterText)) {
+            p.style.display = '';
+          } else {
+            p.style.display = 'none';
+          }
+        });
+      });
+    });
+</script>
 
 </body>
 

@@ -1,46 +1,28 @@
 {#fragment id=botCard}
-
 {#for bot in allBots}
 <div class="col-md-4 mb-4">
-    <div class="card bot-card bg-dark text-light border-neon-neon position-relative p-3">
-
-        <!-- Delete Button (Top-Right) -->
-        <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2">
-            <input type="hidden" name="botId" value="{bot.id}">
-            <button type="submit" class="btn btn-neon-red btn-sm">✖</button>
-        </form>
+    <div class="card bot-card position-relative p-3"> <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2">
+        <input type="hidden" name="botId" value="{bot.id}">
+        <button type="submit" class="btn btn-danger-custom btn-sm rounded-circle" style="width: 30px; height: 30px; padding: 0; line-height: 1;">
+            <i class="fas fa-times"></i> </button>
+    </form>
 
         <div class="card-body">
-            <h5 class="card-title text-neon-glow text-uppercase mb-4">{bot.parameters.botType}</h5>
-
-            <!-- Status -->
-            <p class="neon-label">
-                Status:
-                <span class="{bot.running ? 'text-glow-green' : 'text-glow-red'} fw-bold">
-                    {bot.running ? 'RUNNING' : 'IDLE'}
+            <h5 class="card-title text-primary-light text-uppercase mb-4 fw-bold">{bot.parameters.botType}</h5> <p class="mb-2"> Status:
+            <span class="{bot.running ? 'text-success' : 'text-danger'} fw-semibold"> {bot.running ? 'RUNNING' : 'IDLE'}
                 </span>
-            </p>
+        </p>
 
-            <!-- Bot Info -->
-            <p class="neon-label">Last RSI: <span class="text-neon-glow">{bot.parameters.lastRsi}</span></p>
-            <p class="neon-label">Last SMA short: <span class="text-neon-glow">{bot.parameters.lastSmaShort}</span></p>
-            <p class="neon-label">Actual Support: <span class="text-neon-glow">{bot.parameters.actualSupport}</span></p>
-            <p class="neon-label">Actual Resistance: <span class="text-neon-glow">{bot.parameters.actualResistance}</span></p>
-            <p class="neon-label">Last price: <span class="text-glow-green">${bot.parameters.lastPrice}</span></p>
-            <p class="neon-label">Last purchase price: <span class="text-glow-green">${bot.parameters.purchasePrice}</span></p>
-            <p class="neon-label">Last update: <span class="text-neon-glow">YYYY-MM-DD</span></p>
-
-            <!-- Controls -->
-            <div class="d-flex flex-wrap gap-2 mt-5">
-                <button class="btn btn-outline-neon-{bot.running ? 'red' : 'green'} btn-sm "> {bot.running ? 'Stop' : 'Run'} </button>
-                <!--<a href="/bots/edit/{bot.id}" class="btn btn-outline-neon btn-sm">Edit</a>-->
-                <a href="/bots/details/{bot.id}" class="btn btn-outline-neon btn-sm">More Info</a>
-            </div>
+            <p class="mb-1 small">Last RSI: <span class="text-secondary">{bot.parameters.lastRsi}</span></p> <p class="mb-1 small">Last SMA short: <span class="text-secondary">{bot.parameters.lastSmaShort}</span></p>
+            <p class="mb-1 small">Actual Support: <span class="text-secondary">{bot.parameters.actualSupport}</span></p>
+            <p class="mb-1 small">Actual Resistance: <span class="text-secondary">{bot.parameters.actualResistance}</span></p>
+            <p class="mb-1 small">Last price: <span class="text-primary-light">${bot.parameters.lastPrice}</span></p> <p class="mb-1 small">Last purchase price: <span class="text-primary-light">${bot.parameters.purchasePrice}</span></p>
+            <p class="mb-1 small">Last update: <span class="text-secondary">YYYY-MM-DD</span></p> <div class="d-flex flex-wrap gap-2 mt-4 justify-content-end"> <button class="btn btn-outline-{bot.running ? 'danger' : 'success'}-custom btn-sm"> {bot.running ? 'Stop' : 'Run'}
+        </button>
+            <a href="/bots/details/{bot.id}" class="btn btn-outline-primary-custom btn-sm">More Info</a>
+        </div>
         </div>
     </div>
 </div>
 {/for}
-
-
-
 {/fragment}
