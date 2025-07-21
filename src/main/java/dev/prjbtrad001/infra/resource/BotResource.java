@@ -12,6 +12,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,9 @@ public class BotResource {
   Validator validator;
   @Inject
   BotOrchestratorService botOrchestratorService;
+
+  @ConfigProperty(name = "bot.symbol.list")
+  private String workingSymbols;
 
   @GET
   public TemplateInstance allBots(@QueryParam("message") String message) {
@@ -45,6 +49,7 @@ public class BotResource {
   @Path("/create")
   public TemplateInstance createBot() {
     return Templates.createBot()
+      .data("workingSymbols", workingSymbols.split(","))
       .data("pageTitle", "Create Bot");
   }
 
@@ -77,7 +82,6 @@ public class BotResource {
           .build())
         .build();
   }
-
 
   @POST
   @Path("/delete")

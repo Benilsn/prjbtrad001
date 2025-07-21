@@ -29,8 +29,9 @@
                           title="Par de cripto para negociação, ex: BTCUSDT"></span>
                 </label>
                 <select name="symbol" class="form-select">
-                    <option selected>BTCUSDT</option>
-                    <option>ETHUSDT</option>
+                    {#for symbol in workingSymbols}
+                        <option>{symbol}</option>
+                    {/for}
                 </select>
             </div>
             <div class="col-md-6">

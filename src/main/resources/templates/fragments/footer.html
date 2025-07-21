@@ -19,16 +19,23 @@
           const btcData = data.find(crypto => crypto.symbol === 'BTCUSDT');
           console.log("BTC Data:", btcData);
 
-          const ethData = data.find(crypto => crypto.symbol === 'ETHUSDT');
-          console.log("ETH Data:", ethData);
+          for (const crypto of data) {
+            const symbol = crypto.symbol;
+            const price = crypto.price;
+            const lastUpdated = crypto.lastUpdated;
+            const label = crypto.description;
 
-          if (btcData) {
-            document.getElementById('btc-price').textContent = btcData.price;
-            document.getElementById('btc-updated').textContent = btcData.lastUpdated;
-          }
-          if (ethData) {
-            document.getElementById('eth-price').textContent = ethData.price;
-            document.getElementById('eth-updated').textContent = ethData.lastUpdated;
+            const labelEl = document.getElementById(symbol + '-label');
+            const priceEl = document.getElementById(symbol + '-price');
+            const updatedEl = document.getElementById(symbol + '-updated');
+
+            if (priceEl && updatedEl && labelEl) {
+              labelEl.textContent = 'Price for ' + symbol;
+              priceEl.textContent = price;
+              updatedEl.textContent = lastUpdated;
+            } else {
+              console.warn("No element found for symbol: " + symbol);
+            }
           }
       } catch (error) {
         console.error('Error fetching prices:', error);

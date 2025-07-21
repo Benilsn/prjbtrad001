@@ -6,9 +6,6 @@ import dev.prjbtrad001.infra.validation.ValidSymbol;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.FormParam;
 import lombok.*;
@@ -51,16 +48,12 @@ public class BotParameters{
   @FormParam("takeProfitPercent")
   private double takeProfitPercent;
 
-  // Technical parameters
-  @Min(0) @Max(100)
   @FormParam("rsiPurchase")
   private double rsiPurchase;
 
-  @Min(0) @Max(100)
   @FormParam("rsiSale")
   private double rsiSale;
 
-  @DecimalMin(value = "0.0", inclusive = false, message = "Volume multiplier must be greater than 0")
   @FormParam("volumeMultiplier")
   private double volumeMultiplier;
 

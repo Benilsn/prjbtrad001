@@ -32,6 +32,7 @@ public class HomeResource {
     return Templates.home()
       .data("pageTitle", "btrad001")
       .data("workingSymbols", workingSymbols)
+      .data("criptos", workingSymbols.split(","))
       .data("data", botOrchestratorService.getLogData());
   }
 

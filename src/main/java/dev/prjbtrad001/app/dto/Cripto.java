@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -18,8 +18,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+@Getter
+@Setter
 @NoArgsConstructor
-@RegisterForReflection
 public class Cripto {
 
   private String symbol;
@@ -52,38 +53,6 @@ public class Cripto {
     );
   }
 
-  public String getSymbol() {
-    return symbol;
-  }
-
-  public void setSymbol(String symbol) {
-    this.symbol = symbol;
-  }
-
-  public String getPrice() {
-    return price;
-  }
-
-  public void setPrice(String price) {
-    this.price = price;
-  }
-
-  public String getLast24hourPrice() {
-    return last24hourPrice;
-  }
-
-  public void setLast24hourPrice(String last24hourPrice) {
-    this.last24hourPrice = last24hourPrice;
-  }
-
-  public String getLastUpdated() {
-    return lastUpdated;
-  }
-
-  public void setLastUpdated(String lastUpdated) {
-    this.lastUpdated = lastUpdated;
-  }
-
   private static class BigDecimal4ScaleDeserializer extends JsonDeserializer<String> {
     @Override
     public String deserialize(JsonParser p, DeserializationContext deserializationContext) throws IOException {
@@ -92,6 +61,5 @@ public class Cripto {
       formatter.setParseBigDecimal(true);
       return formatter.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
     }
-
   }
 }
