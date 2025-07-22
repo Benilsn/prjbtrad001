@@ -6,6 +6,7 @@ quarkus:
   h2:
     console:
       enabled: true
+      path: /h2
   datasource:
     db-kind: h2
     jdbc:

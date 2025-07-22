@@ -26,7 +26,7 @@
                 <label class="form-label text-neon">
                     Symbol
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Par de cripto para negociação, ex: BTCUSDT"></span>
+                          title="Crypto symbol for trading, e.g. BTCUSDT"></span>
                 </label>
                 <select name="symbol" class="form-select">
                     {#for symbol in workingSymbols}
@@ -37,7 +37,7 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">Interval
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Intervalo dos candles, ex: 1m (1 minuto), 5m, 15m."></span>
+                          title="Candle interval, e.g.: 1m (1 minute), 5m, 15m."></span>
                 </label>
                 <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
             </div>
@@ -47,14 +47,14 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">Volume Multiplier
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="O volume atual deve ser maior que a média × esse fator para ativar o trade."></span>
+                          title="Current volume must be greater than the average × volume multiplier to make a buy. E.g. 1.5"></span>
                 </label>
                 <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
             </div>
             <div class="col-md-6">
                 <label class="form-label text-neon">Support/Resistance Window
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Número de candles usados para identificar suportes e resistências."></span>
+                          title="Number of candles used to identify supports and resistances."></span>
                 </label>
                 <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 50">
             </div>
@@ -64,14 +64,14 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">Stop Loss (%)
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de perda máxima antes de vender. Ex: 0.005 = 0.5%."></span>
+                          title="Percentage of maximum loss before selling. E.g. 0.005 = 0.5%."></span>
                 </label>
                 <input type="number" step="0.0001" name="stopLossPercent" class="form-control" placeholder="e.g. 0.005">
             </div>
             <div class="col-md-6">
                 <label class="form-label text-neon">Take Profit (%)
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de lucro desejado para encerrar a operação."></span>
+                          title="Percentage of profit desired to end the operation.   E.g. 0.020 = 2.0%."></span>
                 </label>
                 <input type="number" step="0.0001" name="takeProfitPercent" class="form-control"
                        placeholder="e.g. 0.012">
@@ -82,14 +82,14 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">RSI Purchase
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Valor mínimo do RSI para considerar uma compra. Ex: 30."></span>
+                          title="RSI = Relative Strength Index. RSI < 30 → Oversold asset (with an upward trend)"></span>
                 </label>
                 <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
             </div>
             <div class="col-md-6">
                 <label class="form-label text-neon">RSI Sale
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="	Valor máximo do RSI para considerar uma venda. Ex: 70."></span>
+                          title="RSI = Relative Strength Index.  RSI > 70 → Overbought asset (with a downward trend)"></span>
                 </label>
                 <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
             </div>
@@ -99,14 +99,14 @@
             <div class="col-md-3">
                 <label class="form-label text-neon">Short SMA
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel curta. Ex: 9 candles."></span>
+                          title="Short moving average period. E.g. 9 candles."></span>
                 </label>
                 <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
             </div>
             <div class="col-md-3">
                 <label class="form-label text-neon">Long SMA
                     <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel longa. Ex: 21 candles."></span>
+                          title="Long moving average period. E.g. 21 candles."></span>
                 </label>
                 <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
             </div>
