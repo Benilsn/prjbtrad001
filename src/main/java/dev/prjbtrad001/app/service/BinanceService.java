@@ -3,6 +3,8 @@ package dev.prjbtrad001.app.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.Cripto;
+import dev.prjbtrad001.app.dto.Kline;
+import dev.prjbtrad001.app.utils.CriptoUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
@@ -28,7 +30,8 @@ public class BinanceService {
   ObjectMapper objectMapper;
 
   @ConfigProperty(name = "binance.api.base-url", defaultValue = "https://api.binance.com/api/v3")
-  private static final String BASE_URL = "https://api.binance.com/api/v3";
+  private String BASE_URL;
+
   private static final HttpClient httpClient = HttpClient.newHttpClient();
 
   public Cripto getPrice(String symbol) {
@@ -81,6 +84,31 @@ public class BinanceService {
     }
 
     return criptos;
+  }
+
+  public List<Kline> getCandles(String symbol, String interval, int limit) {
+
+    HttpRequest request =
+      HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/klines?symbol=" + symbol + "&interval=" + interval + "&limit=" + limit))
+        .GET()
+        .build();
+
+    List<Kline> candles = new ArrayList<>();
+
+    try {
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        candles = CriptoUtils.parseKlines(objectMapper, response.body());
+      } else {
+        log.error("Error: HTTP " + response.statusCode());
+      }
+    } catch (Exception e) {
+      log.error(e.getMessage());
+    }
+
+    return candles;
   }
 
 

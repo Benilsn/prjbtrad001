@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import dev.prjbtrad001.app.utils.FormatterUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import static dev.prjbtrad001.app.utils.FormatterUtils.formatter;
+import static dev.prjbtrad001.app.utils.FormatterUtils.symbols;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,11 +35,6 @@ public class Cripto {
   private String last24hourPrice;
 
   private String lastUpdated;
-
-  @Getter(AccessLevel.NONE)
-  private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
-  @Getter(AccessLevel.NONE)
-  private static final DecimalFormat formatter = new DecimalFormat("#,###.00000", symbols);
 
   public Cripto(String symbol, String price, String last24hourPrice, String lastUpdated) {
     this.symbol = symbol;
@@ -56,9 +55,7 @@ public class Cripto {
   private static class BigDecimal4ScaleDeserializer extends JsonDeserializer<String> {
     @Override
     public String deserialize(JsonParser p, DeserializationContext deserializationContext) throws IOException {
-      symbols.setDecimalSeparator(',');
-      symbols.setGroupingSeparator('.');
-      formatter.setParseBigDecimal(true);
+      FormatterUtils.setFormatter();
       return formatter.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
     }
   }

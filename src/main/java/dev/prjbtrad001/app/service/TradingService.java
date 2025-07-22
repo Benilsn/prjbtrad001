@@ -1,28 +1,33 @@
-package dev.prjbtrad001;
+package dev.prjbtrad001.app.service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
-import org.json.*;
+import dev.prjbtrad001.app.dto.Kline;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class BotAnaliseBTC {
+//TODO Finish and test
+@ApplicationScoped
+public class TradingService {
 
-  public static void main(String[] args) throws Exception {
+  @Inject
+  BinanceService binanceService;
+
+  public void analyzeMarket() {
     List<Double> closes = new ArrayList<>();
     List<Double> volumes = new ArrayList<>();
 
     // 1. Obter candles de 1m (últimos 50)
-    JSONArray candles = getCandles("BTCUSDT", "1m", 50);
+    List<Kline> klines = binanceService.getCandles("BTCUSDT", "1m", 50);
 
-    for (int i = 0; i < candles.length(); i++) {
-      JSONArray candle = candles.getJSONArray(i);
-      double close = Double.parseDouble(candle.getString(4));
-      double volume = Double.parseDouble(candle.getString(5));
-      closes.add(close);
-      volumes.add(volume);
-    }
+//    for (int i = 0; i < candles.length(); i++) {
+//      JSONArray candle = candles.getJSONArray(i);
+//      double close = Double.parseDouble(candle.getString(4));
+//      double volume = Double.parseDouble(candle.getString(5));
+//      closes.add(close);
+//      volumes.add(volume);
+//    }
 
     // 2. Indicadores
     double rsi = calcularRSI(closes);
@@ -73,18 +78,4 @@ public class BotAnaliseBTC {
     return valores.stream().mapToDouble(v -> v).average().orElse(0);
   }
 
-  // ========== Binance API ==========
-  public static JSONArray getCandles(String symbol, String interval, int limit) throws Exception {
-    String url = "https://api.binance.com/api/v3/klines?symbol=" + symbol + "&interval=" + interval + "&limit=" + limit;
-    HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-    con.setRequestMethod("GET");
-
-    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-    StringBuilder resposta = new StringBuilder();
-    String linha;
-    while ((linha = in.readLine()) != null) resposta.append(linha);
-    in.close();
-
-    return new JSONArray(resposta.toString());
-  }
 }
