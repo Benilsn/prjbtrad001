@@ -3,11 +3,13 @@ package dev.prjbtrad001.app.service;
 import dev.prjbtrad001.app.dto.Kline;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import lombok.extern.jbosslog.JBossLog;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-//TODO Finish and test
+@JBossLog
 @ApplicationScoped
 public class TradingService {
 
@@ -15,67 +17,84 @@ public class TradingService {
   BinanceService binanceService;
 
   public void analyzeMarket() {
-    List<Double> closes = new ArrayList<>();
+    List<Double> closePrices = new ArrayList<>();
     List<Double> volumes = new ArrayList<>();
 
-    // 1. Obter candles de 1m (últimos 50)
-    List<Kline> klines = binanceService.getCandles("BTCUSDT", "1m", 50);
+    // 1. Get 1-minute candles (last 50)
+    List<Kline> klines = binanceService.getCandles("BTCUSDT", "1m", 100);
 
-//    for (int i = 0; i < candles.length(); i++) {
-//      JSONArray candle = candles.getJSONArray(i);
-//      double close = Double.parseDouble(candle.getString(4));
-//      double volume = Double.parseDouble(candle.getString(5));
-//      closes.add(close);
-//      volumes.add(volume);
-//    }
+    klines.forEach(kline -> {
+      closePrices.add(Double.parseDouble(kline.getClosePrice()));
+      volumes.add(Double.parseDouble(kline.getVolume()));
+    });
 
-    // 2. Indicadores
-    double rsi = calcularRSI(closes);
-    double sma9 = calcularMedia(closes.subList(closes.size() - 9, closes.size()));
-    double sma21 = calcularMedia(closes.subList(closes.size() - 21, closes.size()));
-    double volumeAtual = volumes.get(volumes.size() - 1);
-    double volumeMedio = calcularMedia(volumes);
-    double suporte = Collections.min(closes.subList(closes.size() - 10, closes.size()));
-    double resistencia = Collections.max(closes.subList(closes.size() - 10, closes.size()));
-    double precoAtual = closes.get(closes.size() - 1);
+    // 2. Indicators
+    double rsi = calculateRSI(closePrices, 14);
+    double sma9 = calculateAverage(last(closePrices, 9));
+    double sma21 = calculateAverage(last(closePrices, 21));
+    double currentVolume = volumes.getLast();
+    double averageVolume = calculateAverage(volumes.subList(volumes.size() - 50, volumes.size()));
+    double support = Collections.min(last(closePrices, 30));
+    double resistance = Collections.max(last(closePrices, 30));
+    double currentPrice = closePrices.getLast();
 
-    // 3. Decisão de compra
-    System.out.println("RSI: " + rsi);
-    System.out.println("SMA9: " + sma9 + ", SMA21: " + sma21);
-    System.out.println("Volume atual: " + volumeAtual + ", Volume médio: " + volumeMedio);
-    System.out.println("Suporte: " + suporte + ", Resistência: " + resistencia);
-    System.out.println("Preço atual: " + precoAtual);
+    // 3. Decision
+    log.info("RSI: " + rsi);
+    log.info("SMA9: " + sma9 + ", SMA21: " + sma21);
+    log.info("Current Volume: " + currentVolume + ", Average Volume: " + averageVolume);
+    log.info("Support: " + support + ", Resistance: " + resistance);
+    log.info("Current Price: " + currentPrice);
 
-    if (rsi < 30 && precoAtual > suporte && sma9 > sma21 && volumeAtual > volumeMedio * 1.2) {
-      System.out.println("🔵 Sinal de COMPRA detectado!");
-    } else if (rsi > 70 || precoAtual >= resistencia) {
-      System.out.println("🔴 Sinal de VENDA detectado!");
+    boolean rsiOversold = rsi < 30;
+    boolean touchedSupport = currentPrice >= support;
+    boolean bullishTrend = sma9 > sma21;
+    boolean strongVolume = currentVolume > averageVolume * 1.2;
+
+    if (rsiOversold && touchedSupport && bullishTrend && strongVolume) {
+      log.info("🔵 BUY signal detected!");
+    }
+
+    boolean rsiOverbought = rsi > 70;
+    boolean touchedResistance = currentPrice >= resistance;
+    boolean bearishTrend = sma9 < sma21;
+
+    if ((rsiOverbought || touchedResistance) && bearishTrend && strongVolume) {
+      log.info("🔴 SELL signal detected!");
     } else {
-      System.out.println("🟡 Nenhuma ação recomendada no momento.");
+      log.info("🟡 No action recommended at this time.");
     }
   }
 
-  // ========== Indicadores ==========
-  public static double calcularRSI(List<Double> closes) {
-    int periodo = 14;
-    double ganho = 0, perda = 0;
+  public static double calculateRSI(List<Double> closePrices, int period) {
+    double gain = 0, loss = 0;
 
-    for (int i = 1; i <= periodo; i++) {
-      double diff = closes.get(i) - closes.get(i - 1);
-      if (diff > 0) ganho += diff;
-      else perda += -diff;
+    for (int i = 1; i <= period; i++) {
+      double diff = closePrices.get(i) - closePrices.get(i - 1);
+      if (diff > 0) gain += diff;
+      else loss += -diff;
     }
 
-    double mediaGanho = ganho / periodo;
-    double mediaPerda = perda / periodo;
+    double averageGain = gain / period;
+    double averageLoss = loss / period;
 
-    if (mediaPerda == 0) return 100;
-    double rs = mediaGanho / mediaPerda;
+    if (averageLoss == 0) return 100;
+    double rs = averageGain / averageLoss;
     return 100 - (100 / (1 + rs));
   }
 
-  public static double calcularMedia(List<Double> valores) {
-    return valores.stream().mapToDouble(v -> v).average().orElse(0);
+  public static double calculateAverage(List<Double> values) {
+    return
+      values
+        .stream()
+        .mapToDouble(v -> v)
+        .average()
+        .orElse(0);
+  }
+
+  public static List<Double> last(List<Double> list, int n) {
+    return
+      list
+        .subList(list.size() - n, list.size());
   }
 
 }

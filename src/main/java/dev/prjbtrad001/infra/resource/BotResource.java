@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static dev.prjbtrad001.app.utils.FormatterUtils.getLastFiveCharacters;
+
 @Path("/bots")
 public class BotResource {
 
@@ -104,6 +106,30 @@ public class BotResource {
         .botDetail()
         .data("pageTitle", "Bot Details")
         .data("bot", bot);
+  }
+
+  @GET
+  @Path("/start/{botId}")
+  public Response startBot(@PathParam("botId") UUID botId) {
+    botOrchestratorService.startBot(botId);
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Bot  " + getLastFiveCharacters(botId.toString()) + "  STARTED!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/stop/{botId}")
+  public Response stopBot(@PathParam("botId") UUID botId) {
+    botOrchestratorService.stopBot(botId);
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Bot  " + getLastFiveCharacters(botId.toString()) + "  \nSTOPPED!")
+          .build())
+        .build();
   }
 
 

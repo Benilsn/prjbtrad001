@@ -1,4 +1,6 @@
 quarkus:
+  scheduler:
+    enabled: true
   qute:
     strict-rendering: false
   http:
@@ -16,11 +18,11 @@ quarkus:
       password: sa
   hibernate-orm:
     log:
-      sql: true
+      sql: false
     database:
-        generation: drop-and-create
+        generation: update
   log:
-    level: DEBUG
+    level: INFO
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'

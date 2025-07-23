@@ -1,9 +1,11 @@
 package dev.prjbtrad001.app.bot;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,28 +31,30 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
   @Embedded
   private BotParameters parameters;
 
-  private volatile boolean running = false;
-
-  @Transient
-  @JsonIgnore
-  private Thread worker;
+  private boolean running = false;
 
   public SimpleTradeBot(BotParameters parameters) {
     this.parameters = parameters;
   }
 
   @Override
+  public void run() {
+    if (!running) return;
+    try {
+      log.info("[" + parameters.getBotType() + " - " + id + "] Checking market data...");
+    } catch (Exception e) {
+      log.error("Error while running bot", e);
+    }
+  }
+
+  @Override
   public void start() {
-    if (running) return;
-    running = true;
-    worker = new Thread(this);
-    worker.start();
+    this.running = true;
   }
 
   @Override
   public void stop() {
-    running = false;
-    if (worker != null) worker.interrupt();
+    this.running = false;
   }
 
   @Override
@@ -60,19 +64,6 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
 
   @Override
   public BotParameters getParameters() {
-    return this.parameters;
-  }
-
-  @Override
-  public void run() {
-//    while (running) {
-//      log.info("[" + parameters.getBotType() + "] Checking market data...");
-//      // Simulate trade logic here
-//      try {
-//        Thread.sleep(parameters.getInterval() * 1000L);
-//      } catch (InterruptedException e) {
-//        Thread.currentThread().interrupt();
-//      }
-//    }
+    return parameters;
   }
 }

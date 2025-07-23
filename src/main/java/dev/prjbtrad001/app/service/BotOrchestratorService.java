@@ -3,14 +3,17 @@ package dev.prjbtrad001.app.service;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.literal.NamedLiteral;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 @JBossLog
 @ApplicationScoped
@@ -26,6 +29,8 @@ public class BotOrchestratorService {
   @ConfigProperty(name = "bot.data.strategy")
   String dataStrategy;
 
+  private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
+  private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
 
   public SimpleTradeBot createBot(SimpleTradeBot bot) {
     log.debug("Creating bot: " + bot.getParameters().getBotType());
@@ -57,26 +62,52 @@ public class BotOrchestratorService {
   }
 
 
-//  public void startBot(TradeBot.BotType botType, BotConfig config) {
-//    if (getActiveBots().containsKey(botType)) return;
-//    TradeBot bot = new SimpleTradeBot(botType, config);
-//    ((Runnable) bot).run();
-//    getActiveBots().put(botType, bot);
-//  }
-//
-//  public void stopBot(String symbol) {
-//    TradeBot bot = getActiveBots().remove(symbol);
-//    if (bot != null) bot.stop();
-//  }
+  @Transactional
+  public void startBot(UUID botId) {
+    SimpleTradeBot bot = getBotById(botId);
 
-//  @PreDestroy
-//  public void stopAllBots() {
-//    for (TradeBot bot : getActiveBots().values()) {
-//      bot.stop();
-//    }
-//    getActiveBots().clear();
-//  }
+    if (runningBots.containsKey(bot.getId())) {
+      log.warn("Bot " + bot.getId() + " is already running.");
+      return;
+    }
 
+    // TODO - Validate bot parameters before starting
+    int interval = 60;
+    bot.start();
+    bot.persist();
+
+    ScheduledFuture<?> future =
+      scheduler
+        .scheduleAtFixedRate(bot, 0, interval, TimeUnit.SECONDS);
+
+    runningBots.put(bot.getId(), future);
+    log.info("Started bot " + bot.getId() + " with interval " + interval + "s");
+  }
+
+  @Transactional
+  public void stopBot(UUID botId) {
+    SimpleTradeBot bot = getBotById(botId);
+
+    ScheduledFuture<?> future = runningBots.remove(bot.getId());
+    if (future != null) {
+      future.cancel(true);
+    }
+
+    bot.stop();
+    log.info("Stopped bot " + bot.getId());
+  }
+
+  @PreDestroy
+  @Transactional
+  public void shutdownAll() {
+    runningBots
+      .values()
+      .forEach(future -> future.cancel(true));
+
+    runningBots.clear();
+    scheduler.shutdown();
+    log.info("All bots stopped and scheduler shut down.");
+  }
 
   public List<String> getLogData() {
 
