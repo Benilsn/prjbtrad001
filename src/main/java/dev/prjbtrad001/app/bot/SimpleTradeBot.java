@@ -1,5 +1,6 @@
 package dev.prjbtrad001.app.bot;
 
+import dev.prjbtrad001.app.service.TradingService;
 import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Embedded;
@@ -14,6 +15,8 @@ import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
+
+import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @Entity
 @JBossLog
@@ -41,9 +44,22 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
   public void run() {
     if (!running) return;
     try {
-      log.info("[" + parameters.getBotType() + " - " + id + "] Checking market data...");
+      long processTime = System.currentTimeMillis();
+
+      log("[" + parameters.getBotType() + " - " + id + "] Checking market data...");
+      TradingService.analyzeMarket(
+        parameters.getBotType(),
+        parameters.getInterval(),
+        parameters.getWindowResistanceSupport(),
+        parameters.getSmaShort(),
+        parameters.getSmaLong(),
+        parameters.getRsiPurchase(),
+        parameters.getRsiSale(),
+        parameters.getVolumeMultiplier());
+
+      log(String.format("[%s] - %d", parameters.getBotType(), System.currentTimeMillis() - processTime) + "ms to process bot: " + id);
     } catch (Exception e) {
-      log.error("Error while running bot", e);
+      log("Error while running bot: " + e.getMessage());
     }
   }
 

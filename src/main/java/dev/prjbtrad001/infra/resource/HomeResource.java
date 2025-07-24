@@ -3,7 +3,6 @@ package dev.prjbtrad001.infra.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
-import dev.prjbtrad001.app.service.BotOrchestratorService;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -13,7 +12,6 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import java.util.List;
 
 @Path("/")
@@ -21,7 +19,6 @@ import java.util.List;
 public class HomeResource {
 
   @Inject BinanceService binanceService;
-  @Inject BotOrchestratorService botOrchestratorService;
   @Inject ObjectMapper mapper;
 
   @ConfigProperty(name = "bot.symbol.list")
@@ -32,8 +29,7 @@ public class HomeResource {
     return Templates.home()
       .data("pageTitle", "btrad001")
       .data("workingSymbols", workingSymbols)
-      .data("criptos", workingSymbols.split(","))
-      .data("data", botOrchestratorService.getLogData());
+      .data("criptos", workingSymbols.split(","));
   }
 
   @GET()

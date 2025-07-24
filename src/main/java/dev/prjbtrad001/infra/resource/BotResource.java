@@ -39,13 +39,6 @@ public class BotResource {
       .data("allBots", botOrchestratorService.getAllBots());
   }
 
-  @GET
-  @Path("/trade-log")
-  public TemplateInstance tradeLog() {
-    return Templates.tradeLog()
-      .data("pageTitle", "Trade Log")
-      .data("data", botOrchestratorService.getLogData());
-  }
 
   @GET
   @Path("/create")

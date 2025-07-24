@@ -15,11 +15,13 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static dev.prjbtrad001.app.utils.LogUtils.LOG_DATA;
+import static dev.prjbtrad001.app.utils.LogUtils.log;
+
 @JBossLog
 @ApplicationScoped
 public class BotOrchestratorService {
 
-  private final Random rdn = new Random();
 
   private BotRepository<SimpleTradeBot> botRepository;
 
@@ -33,14 +35,14 @@ public class BotOrchestratorService {
   private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
 
   public SimpleTradeBot createBot(SimpleTradeBot bot) {
-    log.debug("Creating bot: " + bot.getParameters().getBotType());
+    BotOrchestratorService.log.debug("Creating bot: " + bot.getParameters().getBotType());
     botRepository.createBot(bot);
     return bot;
   }
 
   public List<SimpleTradeBot> getAllBots() {
     List<SimpleTradeBot> bots = botRepository.getAllBots();
-    log.debug("Getting all " + bots.size() + " bots.");
+    BotOrchestratorService.log.debug("Getting all " + bots.size() + " bots.");
     return
       bots
         .stream()
@@ -49,12 +51,12 @@ public class BotOrchestratorService {
   }
 
   public void deleteBot(UUID botId) {
-    log.debug("Deleting bot: " + botId);
+    BotOrchestratorService.log.debug("Deleting bot: " + botId);
     botRepository.deleteBot(botId);
   }
 
   public SimpleTradeBot getBotById(UUID botId) {
-    log.debug("Getting bot by ID: " + botId);
+    BotOrchestratorService.log.debug("Getting bot by ID: " + botId);
     return
       botRepository
         .getBotById(botId)
@@ -67,12 +69,12 @@ public class BotOrchestratorService {
     SimpleTradeBot bot = getBotById(botId);
 
     if (runningBots.containsKey(bot.getId())) {
-      log.warn("Bot " + bot.getId() + " is already running.");
+      log("Bot " + bot.getId() + " is already running.");
       return;
     }
 
-    // TODO - Validate bot parameters before starting
-    int interval = 60;
+    int interval = (Integer.parseInt(bot.getParameters().getInterval().replaceAll("[mhd]", "")) * 60) + 1;
+
     bot.start();
     bot.persist();
 
@@ -81,7 +83,7 @@ public class BotOrchestratorService {
         .scheduleAtFixedRate(bot, 0, interval, TimeUnit.SECONDS);
 
     runningBots.put(bot.getId(), future);
-    log.info("Started bot " + bot.getId() + " with interval " + interval + "s");
+    log("Started bot " + bot.getId() + " with interval " + interval + "s");
   }
 
   @Transactional
@@ -94,7 +96,7 @@ public class BotOrchestratorService {
     }
 
     bot.stop();
-    log.info("Stopped bot " + bot.getId());
+    log("Stopped bot " + bot.getId());
   }
 
   @PreDestroy
@@ -104,28 +106,14 @@ public class BotOrchestratorService {
       .values()
       .forEach(future -> future.cancel(true));
 
+    LOG_DATA.clear();
     runningBots.clear();
     scheduler.shutdown();
-    log.info("All bots stopped and scheduler shut down.");
+    log("All bots stopped and scheduler shut down.");
   }
 
   public List<String> getLogData() {
-
-    List<String> listOfData = new ArrayList<>();
-    List<String> coins = List.of("BTC", "ETH", "XRP", "LTC", "BCH");
-    List<String> operation = List.of("Buy", "Sell");
-
-    for (int i = 0; i < rdn.nextInt(10, 99); i++) {
-      listOfData.add(
-        String.format("[%02d:%02d] %s %s at $%d",
-          rdn.nextInt(0, 24), // Hour
-          rdn.nextInt(0, 60), // Minute
-          operation.get(rdn.nextInt(operation.size())), // Buy/Sell
-          coins.get(rdn.nextInt(coins.size())), // Coin type
-          rdn.nextInt(1000, 100000) // Price
-        ));
-    }
-    return listOfData;
+    return LOG_DATA;
   }
 
   @PostConstruct

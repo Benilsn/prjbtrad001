@@ -7,8 +7,16 @@
 
 <body>
 
-<div class="d-flex justify-content-center align-items-center my-5">
-    <div class="trade-log-box p-4" style="width: 35rem; height: 100vh; overflow-y: auto;">
+
+
+<div class="d-flex flex-column align-items-center my-5">
+    <!-- Input centralizado acima -->
+    <div class="mb-4" style="width: 80%;">
+        <input type="text" id="log-filter" class="form-control neon-input w-100" placeholder="🔎 Log filter..."/>
+    </div>
+
+    <!-- Caixa de log -->
+    <div class="trade-log-box p-4" style="width: 80%; height: 100vh; overflow-y: auto;">
         <h4 class="neon-text text-center mb-5">Trade Log</h4>
         <div id="trade-log-content">
             {#for item in data.orEmpty}
@@ -17,6 +25,7 @@
         </div>
     </div>
 </div>
+
 
 </body>
 

@@ -1,69 +1,80 @@
 package dev.prjbtrad001.app.service;
 
 import dev.prjbtrad001.app.dto.Kline;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import dev.prjbtrad001.domain.core.BotType;
+import lombok.experimental.UtilityClass;
 import lombok.extern.jbosslog.JBossLog;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static dev.prjbtrad001.app.utils.LogUtils.log;
+
 @JBossLog
-@ApplicationScoped
+@UtilityClass
 public class TradingService {
 
-  @Inject
-  BinanceService binanceService;
-
-  public void analyzeMarket() {
+  public static void analyzeMarket(BotType botType, String interval, int limit, int smaShort, int smaLong, double rsiPurchase, double rsiSale, double volumeMultiplier) {
     List<Double> closePrices = new ArrayList<>();
     List<Double> volumes = new ArrayList<>();
 
-    // 1. Get 1-minute candles (last 50)
-    List<Kline> klines = binanceService.getCandles("BTCUSDT", "1m", 100);
+    List<Kline> klines = BinanceService.getCandles(botType.toString(), interval, limit);
 
     klines.forEach(kline -> {
       closePrices.add(Double.parseDouble(kline.getClosePrice()));
       volumes.add(Double.parseDouble(kline.getVolume()));
     });
 
-    // 2. Indicators
-    double rsi = calculateRSI(closePrices, 14);
-    double sma9 = calculateAverage(last(closePrices, 9));
-    double sma21 = calculateAverage(last(closePrices, 21));
+    double rsi = calculateRSI(last(closePrices, 15), 14);
+    double sma9 = calculateAverage(last(closePrices, smaShort));
+    double sma21 = calculateAverage(last(closePrices, smaLong));
     double currentVolume = volumes.getLast();
-    double averageVolume = calculateAverage(volumes.subList(volumes.size() - 50, volumes.size()));
+    double averageVolume = calculateAverage(volumes);
+
     double support = Collections.min(last(closePrices, 30));
     double resistance = Collections.max(last(closePrices, 30));
     double currentPrice = closePrices.getLast();
 
-    // 3. Decision
-    log.info("RSI: " + rsi);
-    log.info("SMA9: " + sma9 + ", SMA21: " + sma21);
-    log.info("Current Volume: " + currentVolume + ", Average Volume: " + averageVolume);
-    log.info("Support: " + support + ", Resistance: " + resistance);
-    log.info("Current Price: " + currentPrice);
+    String botTypeName = "[" + botType + "] - ";
+    double range = resistance - support;
+    double tolerance = range * 0.1;
 
-    boolean rsiOversold = rsi < 30;
-    boolean touchedSupport = currentPrice >= support;
+    boolean rsiOversold = rsi < rsiPurchase;
+    boolean touchedSupport = currentPrice <= support + tolerance;
     boolean bullishTrend = sma9 > sma21;
-    boolean strongVolume = currentVolume > averageVolume * 1.2;
+    boolean strongVolumeBuy = currentVolume >= averageVolume * volumeMultiplier;
 
-    if (rsiOversold && touchedSupport && bullishTrend && strongVolume) {
-      log.info("🔵 BUY signal detected!");
-    }
+    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " < " + rsiPurchase + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
+    log(botTypeName + "🟢 Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
+    log(botTypeName + "📊 Volume for Buy: " + strongVolumeBuy + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
-    boolean rsiOverbought = rsi > 70;
-    boolean touchedResistance = currentPrice >= resistance;
+    boolean shouldBuy = ((rsiOversold && touchedSupport) || (bullishTrend && touchedSupport)) && strongVolumeBuy;
+
+    boolean rsiOverbought = rsi > rsiSale;
+    boolean touchedResistance = currentPrice >= resistance - tolerance;
     boolean bearishTrend = sma9 < sma21;
+    boolean strongVolumeSell = currentVolume >= averageVolume * 0.9;
 
-    if ((rsiOverbought || touchedResistance) && bearishTrend && strongVolume) {
-      log.info("🔴 SELL signal detected!");
+    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " > " + rsiSale + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
+    log(botTypeName + "🔴 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
+    log(botTypeName + "📊 Volume for Sell: " + strongVolumeSell + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * 0.9 + ")");
+
+    boolean shouldSell = ((rsiOverbought && touchedResistance) || (bearishTrend && touchedResistance)) && strongVolumeSell;
+
+    if (bullishTrend && shouldBuy && !shouldSell) {
+      log(botTypeName + "🔵 BUY signal detected!");
+    } else if (bearishTrend && shouldSell && !shouldBuy) {
+      log(botTypeName + "🔴 SELL signal detected!");
+    } else if (!bullishTrend && !bearishTrend && shouldBuy && shouldSell) {
+      log(botTypeName + "🟡 Both BUY and SELL conditions met, but no clear trend.");
     } else {
-      log.info("🟡 No action recommended at this time.");
+      log(botTypeName + "🟡 No action recommended at this time.");
     }
   }
+
 
   public static double calculateRSI(List<Double> closePrices, int period) {
     double gain = 0, loss = 0;
@@ -96,5 +107,6 @@ public class TradingService {
       list
         .subList(list.size() - n, list.size());
   }
+
 
 }

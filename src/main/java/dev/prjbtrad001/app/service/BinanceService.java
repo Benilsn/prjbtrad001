@@ -8,8 +8,6 @@ import dev.prjbtrad001.app.utils.CriptoUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -22,6 +20,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
+
 @JBossLog
 @ApplicationScoped
 public class BinanceService {
@@ -29,8 +29,7 @@ public class BinanceService {
   @Inject
   ObjectMapper objectMapper;
 
-  @ConfigProperty(name = "binance.api.base-url", defaultValue = "https://api.binance.com/api/v3")
-  private String BASE_URL;
+  private static final String BASE_URL = "https://api.binance.com/api/v3";
 
   private static final HttpClient httpClient = HttpClient.newHttpClient();
 
@@ -86,7 +85,7 @@ public class BinanceService {
     return criptos;
   }
 
-  public List<Kline> getCandles(String symbol, String interval, int limit) {
+  public static List<Kline> getCandles(String symbol, String interval, int limit) {
 
     HttpRequest request =
       HttpRequest.newBuilder()
@@ -100,7 +99,7 @@ public class BinanceService {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
       if (response.statusCode() == 200) {
-        candles = CriptoUtils.parseKlines(objectMapper, response.body());
+        candles = CriptoUtils.parseKlines(MAPPER, response.body());
       } else {
         log.error("Error: HTTP " + response.statusCode());
       }

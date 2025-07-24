@@ -94,36 +94,37 @@
             /* Glitch keyframes */
             @keyframes glitch {
               0% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
                 transform: translate(0, 0);
                 opacity: 1;
               }
               10% {
-                text-shadow: -1px -1px #00fff7, 1px 1px #00ff90;
-                transform: translate(-1px, 1px);
-                opacity: 0.9;
+                text-shadow: -0.5px -0.5px #00fff7, 0.5px 0.5px #00ff90;
+                transform: translate(-0.3px, 0.3px);
+                opacity: 0.97;
               }
               20% {
-                text-shadow: 1px -1px #00ff90, -1px 1px #00fff7;
-                transform: translate(1px, -1px);
+                text-shadow: 0.5px -0.5px #00ff90, -0.5px 0.5px #00fff7;
+                transform: translate(0.3px, -0.3px);
                 opacity: 0.95;
               }
               30% {
-                text-shadow: -1px 1px #00fff7, 1px -1px #00ff90;
-                transform: translate(-1px, -1px);
-                opacity: 0.8;
+                text-shadow: -0.5px 0.5px #00fff7, 0.5px -0.5px #00ff90;
+                transform: translate(-0.3px, -0.3px);
+                opacity: 0.96;
               }
               40% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-                transform: translate(1px, 1px);
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
+                transform: translate(0.3px, 0.3px);
                 opacity: 1;
               }
               100% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
                 transform: translate(0, 0);
                 opacity: 1;
               }
             }
+
 
             /* Apply glitch effect */
             .log-entry {
@@ -427,6 +428,28 @@
           color: #cfffff;
           text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
           font-weight: 600;
+        }
+
+        .neon-input {
+          background-color: #111;
+          border: 2px solid #0ff;
+          color: #0ff;
+          font-family: 'Courier New', monospace;
+          padding: 10px;
+          border-radius: 8px;
+          box-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+        }
+
+        .neon-input::placeholder {
+          color: #0ff9;
+        }
+
+        .log-entry {
+          transition: opacity 0.2s ease;
+        }
+
+        .hidden-log {
+          display: none;
         }
 
     </style>
