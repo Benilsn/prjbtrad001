@@ -16,6 +16,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @Entity
@@ -58,6 +59,7 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
         parameters.getVolumeMultiplier());
 
       log(String.format("[%s] - %d", parameters.getBotType(), System.currentTimeMillis() - processTime) + "ms to process bot: " + id);
+      log(LINE_SEPARATOR, false);
     } catch (Exception e) {
       log("Error while running bot: " + e.getMessage());
     }

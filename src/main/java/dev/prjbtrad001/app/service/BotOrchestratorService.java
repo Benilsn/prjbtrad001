@@ -1,6 +1,7 @@
 package dev.prjbtrad001.app.service;
 
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.utils.LogUtils;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -15,13 +16,11 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static dev.prjbtrad001.app.utils.LogUtils.LOG_DATA;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @JBossLog
 @ApplicationScoped
 public class BotOrchestratorService {
-
 
   private BotRepository<SimpleTradeBot> botRepository;
 
@@ -107,14 +106,10 @@ public class BotOrchestratorService {
       .values()
       .forEach(future -> future.cancel(true));
 
-    LOG_DATA.clear();
+    LogUtils.shutdown();
     runningBots.clear();
     scheduler.shutdown();
     log("All bots stopped and scheduler shut down.");
-  }
-
-  public List<String> getLogData() {
-    return LOG_DATA;
   }
 
   @PostConstruct

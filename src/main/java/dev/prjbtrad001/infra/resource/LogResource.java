@@ -7,7 +7,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import java.util.List;
+import java.util.Queue;
 
 @Path("/")
 @ApplicationScoped
@@ -23,7 +23,7 @@ public class LogResource {
   @GET()
   @Path("/refresh-log-data")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<String> refreshLogData() {
+  public Queue<String> refreshLogData() {
     return LogUtils.LOG_DATA;
   }
 
