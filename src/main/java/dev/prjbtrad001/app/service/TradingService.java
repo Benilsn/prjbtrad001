@@ -1,10 +1,14 @@
 package dev.prjbtrad001.app.service;
 
+import dev.prjbtrad001.app.bot.BotParameters;
+import dev.prjbtrad001.app.bot.PurchaseStrategy;
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.bot.Status;
 import dev.prjbtrad001.app.dto.Kline;
-import dev.prjbtrad001.domain.core.BotType;
 import lombok.experimental.UtilityClass;
 import lombok.extern.jbosslog.JBossLog;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,11 +19,12 @@ import static dev.prjbtrad001.app.utils.LogUtils.log;
 @UtilityClass
 public class TradingService {
 
-  public static void analyzeMarket(BotType botType, String interval, int limit, int smaShort, int smaLong, double rsiPurchase, double rsiSale, double volumeMultiplier) {
+  public static void analyzeMarket(SimpleTradeBot bot) {
+    BotParameters parameters = bot.getParameters();
     List<Double> closePrices = new ArrayList<>();
     List<Double> volumes = new ArrayList<>();
 
-    List<Kline> klines = BinanceService.getCandles(botType.toString(), interval, limit);
+    List<Kline> klines = BinanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
 
     klines.forEach(kline -> {
       closePrices.add(Double.parseDouble(kline.getClosePrice()));
@@ -27,8 +32,8 @@ public class TradingService {
     });
 
     double rsi = calculateRSI(last(closePrices, 15), 14);
-    double sma9 = calculateAverage(last(closePrices, smaShort));
-    double sma21 = calculateAverage(last(closePrices, smaLong));
+    double sma9 = calculateAverage(last(closePrices, parameters.getSmaShort()));
+    double sma21 = calculateAverage(last(closePrices, parameters.getSmaLong()));
     double currentVolume = volumes.getLast();
     double averageVolume = calculateAverage(volumes);
 
@@ -36,49 +41,101 @@ public class TradingService {
     double resistance = Collections.max(last(closePrices, 30));
     double currentPrice = closePrices.getLast();
 
-    String botTypeName = "[" + botType + "] - ";
+    String botTypeName = "[" + parameters.getBotType() + "] - ";
     double range = resistance - support;
     double tolerance = range * 0.1;
 
-    boolean rsiOversold = rsi <= rsiPurchase;
+    boolean rsiOversold = rsi <= parameters.getRsiPurchase();
     boolean touchedSupport = currentPrice <= support + tolerance;
     boolean bullishTrend = (sma9 > sma21) || currentPrice > sma9 && currentPrice > sma21;
-    boolean strongVolume = currentVolume >= averageVolume * volumeMultiplier;
+    boolean strongVolume = currentVolume >= averageVolume * parameters.getVolumeMultiplier();
     boolean weakVolume = currentVolume < averageVolume;
 
-    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " < " + rsiPurchase + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * parameters.getVolumeMultiplier() + ")");
+    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " <= " + parameters.getRsiPurchase() + ")" + " - RSI: " + rsi);
     log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
     log(botTypeName + "\uD83D\uDEE1\uFE0F Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
 
     double buyPoints = 0;
     if (rsiOversold) buyPoints += 1.0;
     if (bullishTrend) buyPoints += 1.0;
-    if (touchedSupport) buyPoints += 0.4;
-    if (strongVolume)  buyPoints += 0.4;
+    if (touchedSupport) buyPoints += 0.75;
+    if (strongVolume) buyPoints += 0.4;
 
-    boolean shouldBuy = buyPoints >= 1.8;
+    boolean shouldBuy = buyPoints >= 1.75;
 
-    boolean rsiOverbought = rsi >= rsiSale;
+    if (shouldBuy) {
+      log(botTypeName + "🔵 BUY signal detected!");
+
+      double quantity = parameters.getPurchaseAmount();
+      if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
+        quantity = (bot.getWallet() * parameters.getPurchaseAmount()) / 100;
+      }
+
+      bot.setStatus(
+        Status.builder()
+          .isLong(true)
+          .purchasePrice(currentPrice)
+          .purchaseTime(Instant.now())
+          .quantity(quantity)
+          .lastPrice(currentPrice)
+          .lastRsi(rsi)
+          .lastSmaShort(sma9)
+          .lastSmaLong(sma21)
+          .actualSupport(support)
+          .actualResistance(resistance)
+          .lastVolume(currentVolume)
+          .build()
+      );
+
+      bot.buy(quantity);
+      return;
+    }
+
+    boolean rsiOverbought = rsi >= parameters.getRsiSale();
     boolean touchedResistance = currentPrice >= resistance - tolerance;
     boolean bearishTrend = sma9 < sma21;
 
-    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " > " + rsiSale + ")" + " - RSI: " + rsi);
+    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " >= " + parameters.getRsiSale() + ")" + " - RSI: " + rsi);
     log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
     log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
-    log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
     double sellPoints = 0;
     if (rsiOverbought) sellPoints += 1.0;
     if (bearishTrend) sellPoints += 1.0;
     if (touchedResistance) sellPoints += 0.4;
-    if (weakVolume)  sellPoints += 0.4;
+    if (weakVolume) sellPoints += 0.4;
+    boolean reachedStopLoss = false;
+    boolean reachedTakeProfit = false;
+    boolean isLong = bot.getStatus().isLong();
 
-    boolean shouldSell = sellPoints >= 1.8;
+    if (isLong) {
+      double purchasePrice = bot.getStatus().getPurchasePrice();
+      double priceChangePercent = ((currentPrice - purchasePrice) / purchasePrice) * 100;
 
-    if (shouldBuy) {
-      log(botTypeName + "🔵 BUY signal detected!");
-    } else if (shouldSell) {
+      reachedStopLoss = priceChangePercent <= -parameters.getStopLossPercent();
+      reachedTakeProfit = priceChangePercent >= parameters.getTakeProfitPercent();
+
+      log(botTypeName + "📉 Price change: " + String.format("%.2f", priceChangePercent) + "%");
+      log(botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
+      log(botTypeName + "💰 Take Profit reached: " + reachedTakeProfit);
+    }
+
+    boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
+
+    if (shouldSell) {
       log(botTypeName + "🔴 SELL signal detected!");
+
+      if (!isLong) {
+        log(botTypeName + "🟡 No position to sell.");
+        return;
+      }
+
+      double criptoAmount = bot.getStatus().getQuantity() / bot.getStatus().getPurchasePrice();
+      double realizedProfit = criptoAmount * currentPrice;
+
+      bot.sell(realizedProfit);
+
     } else {
       log(botTypeName + "🟡 No action recommended at this time.");
     }

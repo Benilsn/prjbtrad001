@@ -26,20 +26,16 @@
         const data = await response.json();
         console.log("Fetched data:", data);
 
-        const btcData = data.find(crypto => crypto.symbol === 'BTCUSDT');
-        console.log("BTC Data:", btcData);
-
         for (const crypto of data) {
           const symbol = crypto.symbol;
           const price = crypto.price;
           const lastUpdated = crypto.lastUpdated;
-          const label = crypto.description;
 
           const labelEl = document.getElementById(symbol + '-label');
           const priceEl = document.getElementById(symbol + '-price');
           const updatedEl = document.getElementById(symbol + '-updated');
 
-          if (priceEl && updatedEl && labelEl) {
+          if (labelEl && priceEl && updatedEl) {
             labelEl.textContent = 'Price for ' + symbol;
             priceEl.textContent = price;
             updatedEl.textContent = lastUpdated;
@@ -58,60 +54,86 @@
     }
 
     /* ----------------------------------
-     * 3. Trade Log Handling
+     * 3. Trade Log Handling + Auto-scroll
      * ---------------------------------- */
+    const logContainer = document.getElementById('log-container');
+    const logContent = document.getElementById('trade-log-content');
+
+    function scrollToBottom() {
+      if (logContainer) {
+        logContainer.scrollTop = logContainer.scrollHeight;
+      }
+    }
+
     async function refreshTradeLog() {
       try {
         const response = await fetch('/refresh-log-data');
         if (!response.ok) throw new Error('Failed to fetch log data');
+
         const logData = await response.json();
 
-        const container = document.getElementById('trade-log-content');
-        container.innerHTML = ''; // clear old entries
+        if (logContent) {
+          logContent.innerHTML = ''; // Clear old entries
+          logData.forEach(item => {
+            const p = document.createElement('p');
+            p.className = 'log-entry';
+            p.textContent = item;
+            logContent.appendChild(p);
+          });
 
-        logData.forEach(item => {
-          const p = document.createElement('p');
-          p.className = 'log-entry';
-          p.textContent = item;
-          container.appendChild(p);
-        });
+          scrollToBottom();
+        }
       } catch (error) {
         console.error('Error fetching trade log:', error);
       }
     }
 
     refreshTradeLog();
-    setInterval(refreshTradeLog, 10000); // Refresh every 10 seconds
+    setInterval(refreshTradeLog, 10000);
+
+    if (logContainer) {
+      const observer = new MutationObserver(scrollToBottom);
+      observer.observe(logContainer, { childList: true, subtree: true });
+    }
 
     /* ----------------------------------
-     * 4. Auto-scroll Trade Log
+     * 4. Trade Log Filter
      * ---------------------------------- */
-    const logContainer = document.getElementById('log-container');
+    const logFilter = document.getElementById('log-filter');
+    if (logFilter) {
+      logFilter.addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        const entries = document.querySelectorAll('#trade-log-content .log-entry');
 
-    const scrollToBottom = () => {
-      logContainer.scrollTop = logContainer.scrollHeight;
-    };
+        entries.forEach(entry => {
+          const text = entry.textContent.toLowerCase();
+          if (text.includes(query)) {
+            entry.classList.remove('hidden-log');
+          } else {
+            entry.classList.add('hidden-log');
+          }
+        });
+      });
+    }
 
-    scrollToBottom(); // Initial scroll
+    /* ----------------------------------
+     * 5. Symbol Prefix for Purchase Amount
+     * ---------------------------------- */
+    const strategySelect = document.querySelector('select[name="purchaseStrategy"]');
+    const amountSymbol = document.getElementById('amountSymbol');
 
-    const observer = new MutationObserver(scrollToBottom);
-    observer.observe(logContainer, { childList: true });
-    });
-
-  document.getElementById('log-filter').addEventListener('input', function () {
-    const query = this.value.toLowerCase();
-    const entries = document.querySelectorAll('#trade-log-content .log-entry');
-
-    entries.forEach(entry => {
-      const text = entry.textContent.toLowerCase();
-      if (text.includes(query)) {
-        entry.classList.remove('hidden-log');
-      } else {
-        entry.classList.add('hidden-log');
+    if (strategySelect && amountSymbol) {
+      function updateSymbol() {
+        const strategy = strategySelect.value;
+        amountSymbol.textContent = strategy === 'PERCENTAGE' ? '%' : '$';
       }
-    });
+
+      strategySelect.addEventListener('change', updateSymbol);
+      updateSymbol(); // Initial set
+    }
   });
 </script>
+
 
 
 

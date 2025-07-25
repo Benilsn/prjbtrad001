@@ -9,7 +9,6 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.FormParam;
 import lombok.*;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -19,6 +18,7 @@ import java.util.Locale;
 @Builder
 @Embeddable
 @AllArgsConstructor
+@NoArgsConstructor
 public class BotParameters{
 
   @Transient
@@ -38,9 +38,6 @@ public class BotParameters{
   @Column(name = "\"interval\"")
   private String interval;
 
-  // Current state
-  private boolean isLong;
-  private double purchasePrice;
 
   @FormParam("stopLossPercent")
   private double stopLossPercent;
@@ -66,19 +63,19 @@ public class BotParameters{
   @FormParam("windowResistanceSupport")
   private int windowResistanceSupport;
 
-  // Status
-  private double lastPrice;
-  private double lastRsi;
-  private double lastSmaShort;
-  private double actualSupport;
-  private double actualResistance;
+  @FormParam("purchaseAmount")
+  private double purchaseAmount;
 
+  @JsonIgnore
+  @Transient
+  @FormParam("purchaseStrategy")
+  private PurchaseStrategy purchaseStrategy;
 
-  public BotParameters() {
-    symbols.setDecimalSeparator(',');
-    symbols.setGroupingSeparator('.');
-    formatter.setParseBigDecimal(true);
-  }
+//  public BotParameters() {
+//    symbols.setDecimalSeparator(',');
+//    symbols.setGroupingSeparator('.');
+//    formatter.setParseBigDecimal(true);
+//  }
 
 //  public String getFormattedPurchasePrice(){
 //    return formatter.format(new BigDecimal(purchasePrice).setScale(2, RoundingMode.UNNECESSARY));

@@ -110,9 +110,31 @@
                 </label>
                 <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
             </div>
-            <div class="col-md-6 mt-4">
-                <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
+            <div class="col-md-3">
+                <label class="form-label text-neon">
+                    Purchase Strategy
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Symbol for trading strategy, e.g. AMOUNT"></span>
+                </label>
+                <select name="purchaseStrategy" class="form-select">
+                    <option>AMOUNT</option>
+                    <option>PERCENTAGE</option>
+                </select>
             </div>
+            <div class="col-md-3">
+                <label class="form-label text-neon">Amount
+                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
+                          title="Amount for given 'Purchase Strategy'. E.g. 21."></span>
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text" id="amountSymbol">$</span>
+                    <input type="number" name="purchaseAmount" class="form-control" placeholder="e.g. 50" aria-describedby="amountSymbol">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
         </div>
 
     </form>

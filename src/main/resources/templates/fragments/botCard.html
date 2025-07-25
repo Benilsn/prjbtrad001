@@ -22,13 +22,13 @@
             </p>
 
             <!-- Bot Info -->
-            <p class="neon-label">Last RSI: <span class="text-neon-glow">{bot.parameters.lastRsi}</span></p>
-            <p class="neon-label">Last SMA short: <span class="text-neon-glow">{bot.parameters.lastSmaShort}</span></p>
-            <p class="neon-label">Actual Support: <span class="text-neon-glow">{bot.parameters.actualSupport}</span></p>
-            <p class="neon-label">Actual Resistance: <span class="text-neon-glow">{bot.parameters.actualResistance}</span></p>
-            <p class="neon-label">Last price: <span class="text-glow-green">${bot.parameters.lastPrice}</span></p>
-            <p class="neon-label">Last purchase price: <span class="text-glow-green">${bot.parameters.purchasePrice}</span></p>
-            <p class="neon-label">Last update: <span class="text-neon-glow">YYYY-MM-DD</span></p>
+            <p class="neon-label">Last RSI: <span class="text-neon-glow">{bot.status.lastRsi ?: 'N/A'}</span></p>
+            <p class="neon-label">Last SMA short: <span class="text-neon-glow">{bot.status.lastSmaShort ?: 'N/A'}</span></p>
+            <p class="neon-label">Actual Support: <span class="text-neon-glow">{bot.status.actualSupport ?: 'N/A'}</span></p>
+            <p class="neon-label">Actual Resistance: <span class="text-neon-glow">{bot.status.actualResistance ?: 'N/A'}</span></p>
+            <p class="neon-label">Last price: <span class="text-glow-green">${bot.status.lastPrice ?: 'N/A'}</span></p>
+            <p class="neon-label">Last purchase price: <span class="text-glow-green">${bot.status.purchasePrice ?: 'N/A'}</span></p>
+            <p class="neon-label">Last update: <span class="text-neon-glow">${bot.status.purchaseTime ?: 'N/A'}</span></p>
 
             <!-- Controls -->
             <div class="d-flex flex-wrap gap-2 mt-5">

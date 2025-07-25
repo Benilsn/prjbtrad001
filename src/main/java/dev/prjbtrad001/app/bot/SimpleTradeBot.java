@@ -1,12 +1,10 @@
 package dev.prjbtrad001.app.bot;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.app.service.TradingService;
 import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,10 +33,18 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
   @Embedded
   private BotParameters parameters;
 
+  @Embedded
+  private Status status;
+
+  @Transient
+  @JsonIgnore
+  private double wallet = 1000;
+
   private boolean running = false;
 
   public SimpleTradeBot(BotParameters parameters) {
     this.parameters = parameters;
+    this.status = new Status();
   }
 
   @Override
@@ -48,15 +54,7 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
       long processTime = System.currentTimeMillis();
 
       log("[" + parameters.getBotType() + " - " + id + "] Checking market data...");
-      TradingService.analyzeMarket(
-        parameters.getBotType(),
-        parameters.getInterval(),
-        parameters.getWindowResistanceSupport(),
-        parameters.getSmaShort(),
-        parameters.getSmaLong(),
-        parameters.getRsiPurchase(),
-        parameters.getRsiSale(),
-        parameters.getVolumeMultiplier());
+      TradingService.analyzeMarket(this);
 
       log(String.format("[%s] - %d", parameters.getBotType(), System.currentTimeMillis() - processTime) + "ms to process bot: " + id);
       log(LINE_SEPARATOR, false);
@@ -83,5 +81,29 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
   @Override
   public BotParameters getParameters() {
     return parameters;
+  }
+
+  public void buy(double quantity) {
+    if (quantity <= 0) {
+      log("Cannot buy with zero or negative quantity.");
+      return;
+    }
+    if (wallet < quantity) {
+      log("Insufficient funds to buy: " + quantity);
+      return;
+    }
+    wallet -= quantity;
+    this.status.setLong(true);
+    log("Bought " + quantity + " units. Remaining wallet balance: " + wallet);
+  }
+
+  public void sell(double quantity) {
+    if (quantity <= 0) {
+      log("Cannot sell with zero or negative quantity.");
+      return;
+    }
+    wallet += quantity;
+    this.status.setLong(false);
+    log("Sold " + quantity + " units. New wallet balance: " + wallet);
   }
 }
