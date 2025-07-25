@@ -48,7 +48,7 @@ public class TradingService {
 
     log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " < " + rsiPurchase + ")" + " - RSI: " + rsi);
     log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
-    log(botTypeName + "🟢 Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
+    log(botTypeName + "\uD83D\uDEE1\uFE0F Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
 
     boolean shouldBuy = (rsiOversold || (bullishTrend && touchedSupport)) && strongVolume;
 
@@ -58,7 +58,7 @@ public class TradingService {
 
     log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " > " + rsiSale + ")" + " - RSI: " + rsi);
     log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
-    log(botTypeName + "🔴 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
+    log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
     log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
     boolean shouldSell = rsiOverbought || ((bearishTrend && touchedResistance) && weakVolume);
