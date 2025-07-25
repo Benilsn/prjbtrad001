@@ -40,36 +40,33 @@ public class TradingService {
     double range = resistance - support;
     double tolerance = range * 0.1;
 
-    boolean rsiOversold = rsi < rsiPurchase;
+    boolean rsiOversold = rsi <= rsiPurchase;
     boolean touchedSupport = currentPrice <= support + tolerance;
-    boolean bullishTrend = sma9 > sma21;
-    boolean strongVolumeBuy = currentVolume >= averageVolume * volumeMultiplier;
+    boolean bullishTrend = (sma9 > sma21) || currentPrice > sma9 && currentPrice > sma21;
+    boolean strongVolume = currentVolume >= averageVolume * volumeMultiplier;
+    boolean weakVolume = currentVolume < averageVolume;
 
     log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " < " + rsiPurchase + ")" + " - RSI: " + rsi);
     log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
     log(botTypeName + "🟢 Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
-    log(botTypeName + "📊 Volume for Buy: " + strongVolumeBuy + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
-    boolean shouldBuy = ((rsiOversold && touchedSupport) || (bullishTrend && touchedSupport)) && strongVolumeBuy;
+    boolean shouldBuy = (rsiOversold || (bullishTrend && touchedSupport)) && strongVolume;
 
-    boolean rsiOverbought = rsi > rsiSale;
+    boolean rsiOverbought = rsi >= rsiSale;
     boolean touchedResistance = currentPrice >= resistance - tolerance;
     boolean bearishTrend = sma9 < sma21;
-    boolean strongVolumeSell = currentVolume >= averageVolume * 0.9;
 
     log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " > " + rsiSale + ")" + " - RSI: " + rsi);
     log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
     log(botTypeName + "🔴 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
-    log(botTypeName + "📊 Volume for Sell: " + strongVolumeSell + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * 0.9 + ")");
+    log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
-    boolean shouldSell = ((rsiOverbought && touchedResistance) || (bearishTrend && touchedResistance)) && strongVolumeSell;
+    boolean shouldSell = rsiOverbought || ((bearishTrend && touchedResistance) && weakVolume);
 
-    if (bullishTrend && shouldBuy && !shouldSell) {
+    if (shouldBuy) {
       log(botTypeName + "🔵 BUY signal detected!");
-    } else if (bearishTrend && shouldSell && !shouldBuy) {
+    } else if (shouldSell) {
       log(botTypeName + "🔴 SELL signal detected!");
-    } else if (!bullishTrend && !bearishTrend && shouldBuy && shouldSell) {
-      log(botTypeName + "🟡 Both BUY and SELL conditions met, but no clear trend.");
     } else {
       log(botTypeName + "🟡 No action recommended at this time.");
     }
@@ -103,9 +100,8 @@ public class TradingService {
   }
 
   public static List<Double> last(List<Double> list, int n) {
-    return
-      list
-        .subList(list.size() - n, list.size());
+    if (list.size() < n) throw new IllegalArgumentException("List too short");
+    return list.subList(list.size() - n, list.size());
   }
 
 

@@ -452,6 +452,17 @@
           display: none;
         }
 
+        @keyframes moveText {
+          0%   { transform: translateX(0); }
+          50%  { transform: translateX(2px); }
+          100% { transform: translateX(0); }
+        }
+
+        .animate-running {
+          display: inline-block;
+          animation: moveText 0.8s ease-in-out infinite;
+        }
+
     </style>
 </head>
 

@@ -52,6 +52,7 @@ public class BotOrchestratorService {
 
   public void deleteBot(UUID botId) {
     BotOrchestratorService.log.debug("Deleting bot: " + botId);
+    stopBot(botId);
     botRepository.deleteBot(botId);
   }
 
