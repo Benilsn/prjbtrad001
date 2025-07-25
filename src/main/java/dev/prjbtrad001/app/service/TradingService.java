@@ -50,7 +50,13 @@ public class TradingService {
     log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
     log(botTypeName + "\uD83D\uDEE1\uFE0F Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support + tolerance) + ")");
 
-    boolean shouldBuy = (rsiOversold || (bullishTrend && touchedSupport)) && strongVolume;
+    double buyPoints = 0;
+    if (rsiOversold) buyPoints += 1.0;
+    if (bullishTrend) buyPoints += 1.0;
+    if (touchedSupport) buyPoints += 0.4;
+    if (strongVolume)  buyPoints += 0.4;
+
+    boolean shouldBuy = buyPoints >= 1.8;
 
     boolean rsiOverbought = rsi >= rsiSale;
     boolean touchedResistance = currentPrice >= resistance - tolerance;
@@ -61,7 +67,13 @@ public class TradingService {
     log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance - tolerance) + ")");
     log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume * volumeMultiplier + ")");
 
-    boolean shouldSell = rsiOverbought || ((bearishTrend && touchedResistance) && weakVolume);
+    double sellPoints = 0;
+    if (rsiOverbought) sellPoints += 1.0;
+    if (bearishTrend) sellPoints += 1.0;
+    if (touchedResistance) sellPoints += 0.4;
+    if (weakVolume)  sellPoints += 0.4;
+
+    boolean shouldSell = sellPoints >= 1.8;
 
     if (shouldBuy) {
       log(botTypeName + "🔵 BUY signal detected!");
