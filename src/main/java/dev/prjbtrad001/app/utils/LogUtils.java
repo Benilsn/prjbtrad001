@@ -19,7 +19,7 @@ public class LogUtils {
 
   public final Queue<String> LOG_DATA = new ConcurrentLinkedQueue<>();
   private final ExecutorService executor = Executors.newSingleThreadExecutor();
-  public static final String LINE_SEPARATOR = "_________________________________________________________________________________________________________________";
+  public static final String LINE_SEPARATOR = "______________________________________________________________________________________________________________________________________________________________";
   private final String logFilePath = "C:\\Workspace\\JAVA\\prjbtrad001\\trade-log\\" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".log";
   private final File file = new File(logFilePath);
 

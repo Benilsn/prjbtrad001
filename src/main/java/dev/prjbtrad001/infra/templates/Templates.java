@@ -1,4 +1,4 @@
-package dev.prjbtrad001.infra.resource;
+package dev.prjbtrad001.infra.templates;
 
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;

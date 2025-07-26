@@ -1,6 +1,7 @@
 package dev.prjbtrad001.infra.resource;
 
 import dev.prjbtrad001.app.utils.LogUtils;
+import dev.prjbtrad001.infra.templates.Templates;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.GET;

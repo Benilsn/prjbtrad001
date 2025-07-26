@@ -1,6 +1,5 @@
 package dev.prjbtrad001.app.bot;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.prjbtrad001.app.service.TradingService;
 import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -11,9 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
-
 import java.util.UUID;
-
 import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
@@ -35,10 +32,6 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
 
   @Embedded
   private Status status;
-
-  @Transient
-  @JsonIgnore
-  private double wallet = 1000;
 
   private boolean running = false;
 
@@ -88,13 +81,13 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
       log("Cannot buy with zero or negative quantity.");
       return;
     }
-    if (wallet < quantity) {
+    if (Wallet.get() < quantity) {
       log("Insufficient funds to buy: " + quantity);
       return;
     }
-    wallet -= quantity;
+    Wallet.withdraw(quantity);
     this.status.setLong(true);
-    log("Bought " + quantity + " units. Remaining wallet balance: " + wallet);
+    log("Bought " + quantity + " units. Remaining wallet balance: " + Wallet.get());
   }
 
   public void sell(double quantity) {
@@ -102,8 +95,8 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
       log("Cannot sell with zero or negative quantity.");
       return;
     }
-    wallet += quantity;
+    Wallet.deposit(quantity);
     this.status.setLong(false);
-    log("Sold " + quantity + " units. New wallet balance: " + wallet);
+    log("Sold " + quantity + " units. New wallet balance: " + Wallet.get());
   }
 }

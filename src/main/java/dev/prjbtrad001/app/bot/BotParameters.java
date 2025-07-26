@@ -66,8 +66,6 @@ public class BotParameters{
   @FormParam("purchaseAmount")
   private double purchaseAmount;
 
-  @JsonIgnore
-  @Transient
   @FormParam("purchaseStrategy")
   private PurchaseStrategy purchaseStrategy;
 

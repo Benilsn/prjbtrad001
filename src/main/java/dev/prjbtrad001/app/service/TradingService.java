@@ -1,18 +1,13 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.app.bot.BotParameters;
-import dev.prjbtrad001.app.bot.PurchaseStrategy;
-import dev.prjbtrad001.app.bot.SimpleTradeBot;
-import dev.prjbtrad001.app.bot.Status;
+import dev.prjbtrad001.app.bot.*;
 import dev.prjbtrad001.app.dto.Kline;
 import lombok.experimental.UtilityClass;
 import lombok.extern.jbosslog.JBossLog;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @JBossLog
@@ -59,7 +54,7 @@ public class TradingService {
     double buyPoints = 0;
     if (rsiOversold) buyPoints += 1.0;
     if (bullishTrend) buyPoints += 1.0;
-    if (touchedSupport) buyPoints += 0.75;
+    if (touchedSupport) buyPoints += 0.8;
     if (strongVolume) buyPoints += 0.4;
 
     boolean shouldBuy = buyPoints >= 1.75;
@@ -69,13 +64,13 @@ public class TradingService {
 
       double quantity = parameters.getPurchaseAmount();
       if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
-        quantity = (bot.getWallet() * parameters.getPurchaseAmount()) / 100;
+        quantity = (Wallet.get() * parameters.getPurchaseAmount()) / 100;
       }
 
+      double purchasePrice = currentPrice + bot.getStatus().getPurchasePrice();
       bot.setStatus(
         Status.builder()
-          .isLong(true)
-          .purchasePrice(currentPrice)
+          .purchasePrice(purchasePrice)
           .purchaseTime(Instant.now())
           .quantity(quantity)
           .lastPrice(currentPrice)
@@ -85,8 +80,7 @@ public class TradingService {
           .actualSupport(support)
           .actualResistance(resistance)
           .lastVolume(currentVolume)
-          .build()
-      );
+          .build());
 
       bot.buy(quantity);
       return;
@@ -124,12 +118,11 @@ public class TradingService {
     boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
 
     if (shouldSell) {
-      log(botTypeName + "🔴 SELL signal detected!");
-
       if (!isLong) {
-        log(botTypeName + "🟡 No position to sell.");
+        log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
         return;
       }
+      log(botTypeName + "🔴 SELL signal detected!");
 
       double criptoAmount = bot.getStatus().getQuantity() / bot.getStatus().getPurchasePrice();
       double realizedProfit = criptoAmount * currentPrice;

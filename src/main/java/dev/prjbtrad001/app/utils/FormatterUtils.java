@@ -12,13 +12,14 @@ import java.util.regex.Pattern;
 public class FormatterUtils {
 
   @Getter public static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
-  @Getter public static final DecimalFormat formatter = new DecimalFormat("#,###.00000", symbols);
+  @Getter public static final DecimalFormat FORMATTER1 = new DecimalFormat("#,###.00000", symbols);
+  @Getter public static final DecimalFormat FORMATTER2 = new DecimalFormat("#,###.00", symbols);
 
   public static void setFormatter() {
     symbols.setDecimalSeparator(',');
     symbols.setGroupingSeparator('.');
-    formatter.setParseBigDecimal(true);
-    formatter.setRoundingMode(RoundingMode.UNNECESSARY);
+    FORMATTER1.setParseBigDecimal(true);
+    FORMATTER1.setRoundingMode(RoundingMode.UNNECESSARY);
   }
 
   public static String getLastFiveCharacters(String str) {

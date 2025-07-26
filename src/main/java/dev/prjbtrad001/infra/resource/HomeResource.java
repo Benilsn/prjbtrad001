@@ -3,6 +3,7 @@ package dev.prjbtrad001.infra.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
+import dev.prjbtrad001.infra.templates.Templates;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

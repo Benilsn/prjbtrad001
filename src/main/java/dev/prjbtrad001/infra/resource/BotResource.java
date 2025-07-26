@@ -4,6 +4,7 @@ import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.service.BotOrchestratorService;
 import dev.prjbtrad001.domain.core.TradeBot;
+import dev.prjbtrad001.infra.templates.Templates;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
@@ -13,7 +14,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -38,7 +38,6 @@ public class BotResource {
       .data("message", message)
       .data("allBots", botOrchestratorService.getAllBots());
   }
-
 
   @GET
   @Path("/create")

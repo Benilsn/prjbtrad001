@@ -30,12 +30,12 @@
 
         .bot-card {
           margin-bottom: 2rem;
-          transition: transform 0.2s;
+          transition: transform 0.1s ease, box-shadow 0.3s ease;
         }
 
         .bot-card:hover {
           transform: scale(1.03);
-          box-shadow: 0 0 20px #0ff;
+          box-shadow: 0 0 10px #0ff;
         }
 
         .btn-outline-danger, .btn-outline-secondary {
@@ -461,6 +461,26 @@
         .animate-running {
           display: inline-block;
           animation: moveText 0.8s ease-in-out infinite;
+        }
+
+        .neon-cyan {
+          color: #00ffff;
+          text-shadow: 0 0  #00ffff, 0 0 2px #00ffff;
+        }
+
+        .neon-yellow {
+          color: #ffff33;
+          text-shadow: 0 0 5px #ffff33, 0 0 2px #ffff33;
+        }
+
+        .neon-green {
+          color: #00ff66;
+          text-shadow: 0 0 5px #00ff66, 0 0 2px #00ff66;
+        }
+
+        .neon-orange {
+          color: #ff9900;
+          text-shadow: 0 0 5px #ff9900, 0 0 2px #ff6600;
         }
 
     </style>

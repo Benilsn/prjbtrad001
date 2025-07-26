@@ -8,14 +8,14 @@ import dev.prjbtrad001.app.utils.FormatterUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static dev.prjbtrad001.app.utils.FormatterUtils.formatter;
+import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER1;
+
 
 @Getter
 @Setter
@@ -51,7 +51,7 @@ public class Cripto {
     @Override
     public String deserialize(JsonParser p, DeserializationContext deserializationContext) throws IOException {
       FormatterUtils.setFormatter();
-      return formatter.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
+      return FORMATTER1.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
     }
   }
 }

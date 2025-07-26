@@ -1,0 +1,1488 @@
+[26-07-2025 00:04:48] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:04:48] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:04:48] - Started bot 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da with interval 61s
+[26-07-2025 00:04:48] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:04:48] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.09875 >= Average Volume: 7.06328376)
+[26-07-2025 00:04:48] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 252.0148 >= Average Volume: 618.2614775999999)
+[26-07-2025 00:04:48] - [BTCUSDT] - 🔻 RSI Oversold: false (41.11063739074806 <= 35.0) - RSI: 41.11063739074806
+[26-07-2025 00:04:48] - [ETHUSDT] - 🔻 RSI Oversold: true (22.594142259414525 <= 35.0) - RSI: 22.594142259414525
+[26-07-2025 00:04:48] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117540.27888888889 >  SMA21: 117540.63333333333)
+[26-07-2025 00:04:48] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3739.248888888889 >  SMA21: 3741.6880952380952)
+[26-07-2025 00:04:48] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.27 <= Support: 117482.274)
+[26-07-2025 00:04:48] - [ETHUSDT] - 🛡️ Touched Support: true (Current Price: 3733.37 <= Support: 3733.838)
+[26-07-2025 00:04:48] - [BTCUSDT] - 🔺 RSI Overbought: false (41.11063739074806 >= 65.0) - RSI: 41.11063739074806
+[26-07-2025 00:04:48] - [ETHUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:04:48] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117540.27888888889 < SMA21: 117540.63333333333)
+[26-07-2025 00:04:48] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.27 >= Resistance: 117589.586)
+[26-07-2025 00:04:48] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:04:48] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:04:48] - [ETHUSDT] - 431ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+[26-07-2025 00:04:48] - [BTCUSDT] - 535ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+[26-07-2025 00:05:49] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:05:49] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:05:49] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.09862 >= Average Volume: 7.05990252)
+[26-07-2025 00:05:49] - [BTCUSDT] - 🔻 RSI Oversold: false (46.303355704698696 <= 35.0) - RSI: 46.303355704698696
+[26-07-2025 00:05:49] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117551.79777777777 >  SMA21: 117542.3942857143)
+[26-07-2025 00:05:49] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 305.1089 >= Average Volume: 621.877272)
+[26-07-2025 00:05:49] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117554.47 <= Support: 117482.274)
+[26-07-2025 00:05:49] - [ETHUSDT] - 🔻 RSI Oversold: true (23.362906632868942 <= 35.0) - RSI: 23.362906632868942
+[26-07-2025 00:05:49] - [BTCUSDT] - 🔺 RSI Overbought: false (46.303355704698696 >= 65.0) - RSI: 46.303355704698696
+[26-07-2025 00:05:49] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3738.232222222222 >  SMA21: 3741.2914285714282)
+[26-07-2025 00:05:49] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117551.79777777777 < SMA21: 117542.3942857143)
+[26-07-2025 00:05:49] - [ETHUSDT] - 🛡️ Touched Support: true (Current Price: 3733.39 <= Support: 3733.838)
+[26-07-2025 00:05:49] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117554.47 >= Resistance: 117589.586)
+[26-07-2025 00:05:49] - [ETHUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:05:49] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:05:49] - Bought 90.0 units. Remaining wallet balance: 810.0
+[26-07-2025 00:05:49] - [BTCUSDT] - 414ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+[26-07-2025 00:05:49] - [ETHUSDT] - 422ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+[26-07-2025 00:06:35] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:06:35] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:06:35] - Started bot 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da with interval 61s
+[26-07-2025 00:06:35] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:06:35] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 82.4092 >= Average Volume: 622.6832436000001)
+[26-07-2025 00:06:35] - [ETHUSDT] - 🔻 RSI Oversold: true (27.473853580049166 <= 35.0) - RSI: 27.473853580049166
+[26-07-2025 00:06:35] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3737.3655555555556 >  SMA21: 3741.0128571428572)
+[26-07-2025 00:06:35] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3735.03 <= Support: 3733.838)
+[26-07-2025 00:06:35] - [ETHUSDT] - 🔺 RSI Overbought: false (27.473853580049166 >= 65.0) - RSI: 27.473853580049166
+[26-07-2025 00:06:35] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3737.3655555555556 < SMA21: 3741.0128571428572)
+[26-07-2025 00:06:35] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3735.03 >= Resistance: 3745.502)
+[26-07-2025 00:06:36] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:06:36] - [ETHUSDT] - 313ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+[26-07-2025 00:06:36] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.11882 >= Average Volume: 7.07255676)
+_________________________________________________________________________________________________________________
+[26-07-2025 00:06:36] - [BTCUSDT] - 🔻 RSI Oversold: false (52.23063162240358 <= 35.0) - RSI: 52.23063162240358
+[26-07-2025 00:06:36] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117558.82222222221 >  SMA21: 117544.45666666667)
+[26-07-2025 00:06:36] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117571.77 <= Support: 117482.274)
+[26-07-2025 00:06:36] - [BTCUSDT] - 🔺 RSI Overbought: false (52.23063162240358 >= 65.0) - RSI: 52.23063162240358
+[26-07-2025 00:06:36] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117558.82222222221 < SMA21: 117544.45666666667)
+[26-07-2025 00:06:36] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117571.77 >= Resistance: 117589.586)
+[26-07-2025 00:06:36] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:06:36] - [BTCUSDT] - 338ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:07:22] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:07:22] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:07:22] - Started bot 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da with interval 61s
+[26-07-2025 00:07:22] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:07:23] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.44375 >= Average Volume: 7.063506)
+[26-07-2025 00:07:23] - [BTCUSDT] - 🔻 RSI Oversold: false (55.12984372276899 <= 35.0) - RSI: 55.12984372276899
+[26-07-2025 00:07:23] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117560.78 >  SMA21: 117547.11285714286)
+[26-07-2025 00:07:23] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117571.77 <= Support: 117482.4)
+[26-07-2025 00:07:23] - [BTCUSDT] - 🔺 RSI Overbought: false (55.12984372276899 >= 65.0) - RSI: 55.12984372276899
+[26-07-2025 00:07:23] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117560.78 < SMA21: 117547.11285714286)
+[26-07-2025 00:07:23] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117571.77 >= Resistance: 117589.6)
+[26-07-2025 00:07:23] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:07:23] - [BTCUSDT] - 578ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+[26-07-2025 00:07:23] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 13.9319 >= Average Volume: 623.4365796)
+_________________________________________________________________________________________________________________
+[26-07-2025 00:07:23] - [ETHUSDT] - 🔻 RSI Oversold: true (31.67866616142487 <= 35.0) - RSI: 31.67866616142487
+[26-07-2025 00:07:23] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3737.1388888888887 >  SMA21: 3741.0)
+[26-07-2025 00:07:23] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3737.29 <= Support: 3733.838)
+[26-07-2025 00:07:23] - [ETHUSDT] - 🔺 RSI Overbought: false (31.67866616142487 >= 65.0) - RSI: 31.67866616142487
+[26-07-2025 00:07:23] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3737.1388888888887 < SMA21: 3741.0)
+[26-07-2025 00:07:23] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3737.29 >= Resistance: 3745.502)
+[26-07-2025 00:07:23] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:07:23] - [ETHUSDT] - 551ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+_________________________________________________________________________________________________________________
+[26-07-2025 00:08:23] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:08:23] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:08:24] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.1126 >= Average Volume: 7.067979479999999)
+[26-07-2025 00:08:24] - [BTCUSDT] - 🔻 RSI Oversold: false (63.674976915975094 <= 35.0) - RSI: 63.674976915975094
+[26-07-2025 00:08:24] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117563.15444444446 >  SMA21: 117550.13571428572)
+[26-07-2025 00:08:24] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117588.87 <= Support: 117482.4)
+[26-07-2025 00:08:24] - [BTCUSDT] - 🔺 RSI Overbought: false (63.674976915975094 >= 65.0) - RSI: 63.674976915975094
+[26-07-2025 00:08:24] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117563.15444444446 < SMA21: 117550.13571428572)
+[26-07-2025 00:08:24] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117588.87 >= Resistance: 117589.6)
+[26-07-2025 00:08:24] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 20.5093 >= Average Volume: 625.6639764)
+[26-07-2025 00:08:24] - [ETHUSDT] - 🔻 RSI Oversold: false (39.601139601140396 <= 35.0) - RSI: 39.601139601140396
+[26-07-2025 00:08:24] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:08:24] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3736.772222222222 >  SMA21: 3740.8033333333333)
+[26-07-2025 00:08:24] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3737.07 <= Support: 3733.838)
+[26-07-2025 00:08:24] - [BTCUSDT] - 316ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+[26-07-2025 00:08:24] - [ETHUSDT] - 🔺 RSI Overbought: false (39.601139601140396 >= 65.0) - RSI: 39.601139601140396
+[26-07-2025 00:08:24] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3736.772222222222 < SMA21: 3740.8033333333333)
+_________________________________________________________________________________________________________________
+[26-07-2025 00:08:24] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3737.07 >= Resistance: 3745.502)
+[26-07-2025 00:08:24] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:08:24] - [ETHUSDT] - 299ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+_________________________________________________________________________________________________________________
+[26-07-2025 00:09:24] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:09:24] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:09:25] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 4.2754 >= Average Volume: 625.9180092)
+[26-07-2025 00:09:25] - [ETHUSDT] - 🔻 RSI Oversold: true (34.28425878756994 <= 35.0) - RSI: 34.28425878756994
+[26-07-2025 00:09:25] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3736.248888888889 >  SMA21: 3740.5185714285712)
+[26-07-2025 00:09:25] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3736.92 <= Support: 3733.838)
+[26-07-2025 00:09:25] - [ETHUSDT] - 🔺 RSI Overbought: false (34.28425878756994 >= 65.0) - RSI: 34.28425878756994
+[26-07-2025 00:09:25] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3736.248888888889 < SMA21: 3740.5185714285712)
+[26-07-2025 00:09:25] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.0238 >= Average Volume: 7.0639308)
+[26-07-2025 00:09:25] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3736.92 >= Resistance: 3745.502)
+[26-07-2025 00:09:25] - [BTCUSDT] - 🔻 RSI Oversold: false (62.54261272271168 <= 35.0) - RSI: 62.54261272271168
+[26-07-2025 00:09:25] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117558.28111111111 >  SMA21: 117550.46142857142)
+[26-07-2025 00:09:25] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:09:25] - [ETHUSDT] - 395ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+[26-07-2025 00:09:25] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117574.0 <= Support: 117482.4)
+[26-07-2025 00:09:25] - [BTCUSDT] - 🔺 RSI Overbought: false (62.54261272271168 >= 65.0) - RSI: 62.54261272271168
+_________________________________________________________________________________________________________________
+[26-07-2025 00:09:25] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117558.28111111111 < SMA21: 117550.46142857142)
+[26-07-2025 00:09:25] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117574.0 >= Resistance: 117589.6)
+[26-07-2025 00:09:25] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:09:25] - [BTCUSDT] - 447ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:10:25] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:10:25] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:10:26] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.17006 >= Average Volume: 7.033822079999999)
+[26-07-2025 00:10:26] - [BTCUSDT] - 🔻 RSI Oversold: false (62.03981369233624 <= 35.0) - RSI: 62.03981369233624
+[26-07-2025 00:10:26] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117552.39444444445 >  SMA21: 117548.64904761904)
+[26-07-2025 00:10:26] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117544.48 <= Support: 117482.4)
+[26-07-2025 00:10:26] - [BTCUSDT] - 🔺 RSI Overbought: false (62.03981369233624 >= 65.0) - RSI: 62.03981369233624
+[26-07-2025 00:10:26] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 24.7605 >= Average Volume: 627.6681708)
+[26-07-2025 00:10:26] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117552.39444444445 < SMA21: 117548.64904761904)
+[26-07-2025 00:10:26] - [ETHUSDT] - 🔻 RSI Oversold: true (32.52427184465945 <= 35.0) - RSI: 32.52427184465945
+[26-07-2025 00:10:26] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117544.48 >= Resistance: 117589.6)
+[26-07-2025 00:10:26] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3735.707777777778 >  SMA21: 3740.0123809523807)
+[26-07-2025 00:10:26] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:10:26] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3735.47 <= Support: 3733.838)
+[26-07-2025 00:10:26] - [BTCUSDT] - 312ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+[26-07-2025 00:10:26] - [ETHUSDT] - 🔺 RSI Overbought: false (32.52427184465945 >= 65.0) - RSI: 32.52427184465945
+_________________________________________________________________________________________________________________
+[26-07-2025 00:10:26] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3735.707777777778 < SMA21: 3740.0123809523807)
+[26-07-2025 00:10:26] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3735.47 >= Resistance: 3745.502)
+[26-07-2025 00:10:26] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:10:26] - [ETHUSDT] - 288ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+_________________________________________________________________________________________________________________
+[26-07-2025 00:11:26] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:11:26] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:11:27] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.10926 >= Average Volume: 7.05487344)
+[26-07-2025 00:11:27] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 41.7705 >= Average Volume: 626.6953224)
+[26-07-2025 00:11:27] - [BTCUSDT] - 🔻 RSI Oversold: false (59.71503484440632 <= 35.0) - RSI: 59.71503484440632
+[26-07-2025 00:11:27] - [ETHUSDT] - 🔻 RSI Oversold: true (31.363636363635408 <= 35.0) - RSI: 31.363636363635408
+[26-07-2025 00:11:27] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117557.63888888889 >  SMA21: 117547.57285714285)
+[26-07-2025 00:11:27] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3735.431111111111 >  SMA21: 3739.528571428572)
+[26-07-2025 00:11:27] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117564.87 <= Support: 117482.4)
+[26-07-2025 00:11:27] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3736.0 <= Support: 3733.838)
+[26-07-2025 00:11:27] - [BTCUSDT] - 🔺 RSI Overbought: false (59.71503484440632 >= 65.0) - RSI: 59.71503484440632
+[26-07-2025 00:11:27] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117557.63888888889 < SMA21: 117547.57285714285)
+[26-07-2025 00:11:27] - [ETHUSDT] - 🔺 RSI Overbought: false (31.363636363635408 >= 65.0) - RSI: 31.363636363635408
+[26-07-2025 00:11:27] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117564.87 >= Resistance: 117589.6)
+[26-07-2025 00:11:27] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:11:27] - [BTCUSDT] - 319ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+[26-07-2025 00:11:27] - [ETHUSDT] - 📈 Bearish Trend: true (SMA9: 3735.431111111111 < SMA21: 3739.528571428572)
+_________________________________________________________________________________________________________________
+[26-07-2025 00:11:27] - [ETHUSDT] - 🚀 Touched Resistance: false (Current Price: 3736.0 >= Resistance: 3745.502)
+[26-07-2025 00:11:27] - [ETHUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:11:27] - [ETHUSDT] - 296ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+_________________________________________________________________________________________________________________
+[26-07-2025 00:12:17] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:12:17] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:12:17] - Started bot 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da with interval 61s
+[26-07-2025 00:12:17] - [ETHUSDT - 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da] Checking market data...
+[26-07-2025 00:12:18] - [ETHUSDT] - 📊 Volume: WEAK (Current Volume: 111.1887 >= Average Volume: 627.5283408)
+[26-07-2025 00:12:18] - [ETHUSDT] - 🔻 RSI Oversold: true (34.91379310344725 <= 35.0) - RSI: 34.91379310344725
+[26-07-2025 00:12:18] - [ETHUSDT] - 📉 Bullish Trend: false (SMA9: 3735.551111111111 >  SMA21: 3739.5799999999995)
+[26-07-2025 00:12:18] - [ETHUSDT] - 🛡️ Touched Support: false (Current Price: 3737.08 <= Support: 3733.838)
+[26-07-2025 00:12:18] - [ETHUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:12:18] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:12:18] - [ETHUSDT] - 513ms to process bot: 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+[26-07-2025 00:12:18] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.0 >= Average Volume: 7.0503915600000004)
+_________________________________________________________________________________________________________________
+[26-07-2025 00:12:18] - [BTCUSDT] - 🔻 RSI Oversold: false (54.11787819253278 <= 35.0) - RSI: 54.11787819253278
+[26-07-2025 00:12:18] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117565.34777777776 >  SMA21: 117547.73285714287)
+[26-07-2025 00:12:18] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117575.12 <= Support: 117482.4)
+[26-07-2025 00:12:18] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:12:18] - Bought 100.0 units. Remaining wallet balance: 800.0
+[26-07-2025 00:12:18] - [BTCUSDT] - 533ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:12:20] - Stopped bot 2b4c11cb-2e8b-4e94-8e1b-9e994334a1da
+[26-07-2025 00:12:46] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:12:46] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:12:46] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.16829 >= Average Volume: 7.0644110399999995)
+[26-07-2025 00:12:46] - [BTCUSDT] - 🔻 RSI Oversold: false (54.6999262908786 <= 35.0) - RSI: 54.6999262908786
+[26-07-2025 00:12:46] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117565.7111111111 >  SMA21: 117547.88857142857)
+[26-07-2025 00:12:46] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117578.39 <= Support: 117482.4)
+[26-07-2025 00:12:46] - [BTCUSDT] - 🔺 RSI Overbought: false (54.6999262908786 >= 65.0) - RSI: 54.6999262908786
+[26-07-2025 00:12:46] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117565.7111111111 < SMA21: 117547.88857142857)
+[26-07-2025 00:12:46] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117578.39 >= Resistance: 117589.6)
+[26-07-2025 00:12:46] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:12:46] - [BTCUSDT] - 313ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:13:01] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:13:01] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:13:01] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.69558 >= Average Volume: 7.094738519999999)
+[26-07-2025 00:13:01] - [BTCUSDT] - 🔻 RSI Oversold: false (52.36882129277411 <= 35.0) - RSI: 52.36882129277411
+[26-07-2025 00:13:01] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.40333333332 >  SMA21: 117547.3280952381)
+[26-07-2025 00:13:01] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117566.62 <= Support: 117482.4)
+[26-07-2025 00:13:01] - [BTCUSDT] - 🔺 RSI Overbought: false (52.36882129277411 >= 65.0) - RSI: 52.36882129277411
+[26-07-2025 00:13:01] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.40333333332 < SMA21: 117547.3280952381)
+[26-07-2025 00:13:01] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117566.62 >= Resistance: 117589.6)
+[26-07-2025 00:13:01] - [BTCUSDT] - 🟡 SELL signal detected, but no position to sell!
+[26-07-2025 00:13:01] - [BTCUSDT] - 343ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:13:25] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:13:25] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:13:26] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.84584 >= Average Volume: 7.0891154400000005)
+[26-07-2025 00:13:26] - [BTCUSDT] - 🔻 RSI Oversold: false (48.86113152094011 <= 35.0) - RSI: 48.86113152094011
+[26-07-2025 00:13:26] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117565.75111111111 >  SMA21: 117547.85380952382)
+[26-07-2025 00:13:26] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117566.61 <= Support: 117482.4)
+[26-07-2025 00:13:26] - [BTCUSDT] - 🔺 RSI Overbought: false (48.86113152094011 >= 65.0) - RSI: 48.86113152094011
+[26-07-2025 00:13:26] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117565.75111111111 < SMA21: 117547.85380952382)
+[26-07-2025 00:13:26] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117566.61 >= Resistance: 117589.6)
+[26-07-2025 00:13:26] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:13:26] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:13:45] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:13:45] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:13:46] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.09474 >= Average Volume: 7.10410224)
+[26-07-2025 00:13:46] - [BTCUSDT] - 🔻 RSI Oversold: false (46.17877396705407 <= 35.0) - RSI: 46.17877396705407
+[26-07-2025 00:13:46] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.17 >  SMA21: 117547.1761904762)
+[26-07-2025 00:13:46] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117552.38 <= Support: 117482.4)
+[26-07-2025 00:13:46] - [BTCUSDT] - 🔺 RSI Overbought: false (46.17877396705407 >= 65.0) - RSI: 46.17877396705407
+[26-07-2025 00:13:46] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.17 < SMA21: 117547.1761904762)
+[26-07-2025 00:13:46] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117552.38 >= Resistance: 117589.6)
+[26-07-2025 00:13:46] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:13:46] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:14:46] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:14:47] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.41698 >= Average Volume: 7.09820928)
+[26-07-2025 00:14:47] - [BTCUSDT] - 🔻 RSI Oversold: false (38.44556896328123 <= 35.0) - RSI: 38.44556896328123
+[26-07-2025 00:14:47] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117563.62444444446 >  SMA21: 117547.80047619047)
+[26-07-2025 00:14:47] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117549.57 <= Support: 117482.4)
+[26-07-2025 00:14:47] - [BTCUSDT] - 🔺 RSI Overbought: false (38.44556896328123 >= 65.0) - RSI: 38.44556896328123
+[26-07-2025 00:14:47] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117563.62444444446 < SMA21: 117547.80047619047)
+[26-07-2025 00:14:47] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117549.57 >= Resistance: 117589.6)
+[26-07-2025 00:14:47] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:14:47] - [BTCUSDT] - 310ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:15:47] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:15:48] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.22111 >= Average Volume: 7.124185079999999)
+[26-07-2025 00:15:48] - [BTCUSDT] - 🔻 RSI Oversold: false (55.703193123780125 <= 35.0) - RSI: 55.703193123780125
+[26-07-2025 00:15:48] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117567.59111111112 >  SMA21: 117552.91809523808)
+[26-07-2025 00:15:48] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117597.63 <= Support: 117482.4)
+[26-07-2025 00:15:48] - [BTCUSDT] - 🔺 RSI Overbought: false (55.703193123780125 >= 65.0) - RSI: 55.703193123780125
+[26-07-2025 00:15:48] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117567.59111111112 < SMA21: 117552.91809523808)
+[26-07-2025 00:15:48] - [BTCUSDT] - 🚀 Touched Resistance: true (Current Price: 117597.63 >= Resistance: 117589.6)
+[26-07-2025 00:15:48] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:15:48] - [BTCUSDT] - 281ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:16:48] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:16:49] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.47134 >= Average Volume: 7.063583759999999)
+[26-07-2025 00:16:49] - [BTCUSDT] - 🔻 RSI Oversold: false (63.91074756678135 <= 35.0) - RSI: 63.91074756678135
+[26-07-2025 00:16:49] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117567.56444444445 >  SMA21: 117556.73809523809)
+[26-07-2025 00:16:49] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117586.93 <= Support: 117482.4)
+[26-07-2025 00:16:49] - [BTCUSDT] - 🔺 RSI Overbought: false (63.91074756678135 >= 65.0) - RSI: 63.91074756678135
+[26-07-2025 00:16:49] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117567.56444444445 < SMA21: 117556.73809523809)
+[26-07-2025 00:16:49] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117586.93 >= Resistance: 117589.6)
+[26-07-2025 00:16:49] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:16:49] - [BTCUSDT] - 318ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:17:17] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:17:17] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:17:17] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.34302 >= Average Volume: 7.07404392)
+[26-07-2025 00:17:17] - [BTCUSDT] - 🔻 RSI Oversold: false (57.60955803425584 <= 35.0) - RSI: 57.60955803425584
+[26-07-2025 00:17:17] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117565.21666666666 >  SMA21: 117555.73190476191)
+[26-07-2025 00:17:17] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117565.8 <= Support: 117482.4)
+[26-07-2025 00:17:17] - [BTCUSDT] - 🔺 RSI Overbought: false (57.60955803425584 >= 65.0) - RSI: 57.60955803425584
+[26-07-2025 00:17:17] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117565.21666666666 < SMA21: 117555.73190476191)
+[26-07-2025 00:17:17] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117565.8 >= Resistance: 117589.6)
+[26-07-2025 00:17:17] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:17:17] - [BTCUSDT] - 366ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:17:59] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:17:59] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:17:59] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.67282 >= Average Volume: 6.9804838799999995)
+[26-07-2025 00:18:00] - [BTCUSDT] - 🔻 RSI Oversold: false (62.639537243756855 <= 35.0) - RSI: 62.639537243756855
+[26-07-2025 00:18:00] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.30555555556 >  SMA21: 117560.34190476191)
+[26-07-2025 00:18:00] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117565.81 <= Support: 117482.4)
+[26-07-2025 00:18:00] - [BTCUSDT] - 🔺 RSI Overbought: false (62.639537243756855 >= 65.0) - RSI: 62.639537243756855
+[26-07-2025 00:18:00] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.30555555556 < SMA21: 117560.34190476191)
+[26-07-2025 00:18:00] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117565.81 >= Resistance: 117589.6)
+[26-07-2025 00:18:00] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:00] - [BTCUSDT] - 400ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:18:11] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:18:11] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:18:11] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.04768 >= Average Volume: 6.9849822)
+[26-07-2025 00:18:11] - [BTCUSDT] - 🔻 RSI Oversold: false (62.639537243756855 <= 35.0) - RSI: 62.639537243756855
+[26-07-2025 00:18:11] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.30555555556 >  SMA21: 117560.34190476191)
+[26-07-2025 00:18:11] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117565.81 <= Support: 117482.4)
+[26-07-2025 00:18:11] - [BTCUSDT] - 🔺 RSI Overbought: false (62.639537243756855 >= 65.0) - RSI: 62.639537243756855
+[26-07-2025 00:18:11] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.30555555556 < SMA21: 117560.34190476191)
+[26-07-2025 00:18:11] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117565.81 >= Resistance: 117589.6)
+[26-07-2025 00:18:11] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:11] - [BTCUSDT] - 308ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:18:22] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:18:22] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:18:23] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.11688 >= Average Volume: 6.961552800000001)
+[26-07-2025 00:18:23] - [BTCUSDT] - 🔻 RSI Oversold: false (53.57503152584997 <= 35.0) - RSI: 53.57503152584997
+[26-07-2025 00:18:23] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117566.42777777779 >  SMA21: 117563.06809523811)
+[26-07-2025 00:18:23] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117565.81 <= Support: 117482.4)
+[26-07-2025 00:18:23] - [BTCUSDT] - 🔺 RSI Overbought: false (53.57503152584997 >= 65.0) - RSI: 53.57503152584997
+[26-07-2025 00:18:23] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117566.42777777779 < SMA21: 117563.06809523811)
+[26-07-2025 00:18:23] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117565.81 >= Resistance: 117589.6)
+[26-07-2025 00:18:23] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:23] - [BTCUSDT] - 305ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:18:28] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:18:28] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:18:29] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.99729 >= Average Volume: 6.97211772)
+[26-07-2025 00:18:29] - [BTCUSDT] - 🔻 RSI Oversold: false (48.95137128370616 <= 35.0) - RSI: 48.95137128370616
+[26-07-2025 00:18:29] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.76333333335 >  SMA21: 117562.35476190477)
+[26-07-2025 00:18:29] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117550.83 <= Support: 117482.4)
+[26-07-2025 00:18:29] - [BTCUSDT] - 🔺 RSI Overbought: false (48.95137128370616 >= 65.0) - RSI: 48.95137128370616
+[26-07-2025 00:18:29] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.76333333335 < SMA21: 117562.35476190477)
+[26-07-2025 00:18:29] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117550.83 >= Resistance: 117589.6)
+[26-07-2025 00:18:29] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:29] - [BTCUSDT] - 323ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:18:38] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:18:38] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:18:38] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.10363 >= Average Volume: 6.973393799999999)
+[26-07-2025 00:18:38] - [BTCUSDT] - 🔻 RSI Oversold: false (48.94855101688251 <= 35.0) - RSI: 48.94855101688251
+[26-07-2025 00:18:38] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.76222222223 >  SMA21: 117562.35428571429)
+[26-07-2025 00:18:38] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117550.82 <= Support: 117482.4)
+[26-07-2025 00:18:38] - [BTCUSDT] - 🔺 RSI Overbought: false (48.94855101688251 >= 65.0) - RSI: 48.94855101688251
+[26-07-2025 00:18:38] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.76222222223 < SMA21: 117562.35428571429)
+[26-07-2025 00:18:38] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117550.82 >= Resistance: 117589.6)
+[26-07-2025 00:18:38] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:38] - [BTCUSDT] - 324ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:18:43] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:18:43] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:18:44] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.63349 >= Average Volume: 6.979752120000001)
+[26-07-2025 00:18:44] - [BTCUSDT] - 🔻 RSI Oversold: false (48.95137128370616 <= 35.0) - RSI: 48.95137128370616
+[26-07-2025 00:18:44] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117564.76333333335 >  SMA21: 117562.35476190477)
+[26-07-2025 00:18:44] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117550.83 <= Support: 117482.4)
+[26-07-2025 00:18:44] - [BTCUSDT] - 🔺 RSI Overbought: false (48.95137128370616 >= 65.0) - RSI: 48.95137128370616
+[26-07-2025 00:18:44] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117564.76333333335 < SMA21: 117562.35476190477)
+[26-07-2025 00:18:44] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117550.83 >= Resistance: 117589.6)
+[26-07-2025 00:18:44] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:18:44] - [BTCUSDT] - 351ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:19:22] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:19:22] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:19:22] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.04715 >= Average Volume: 7.05481008)
+[26-07-2025 00:19:22] - [BTCUSDT] - 🔻 RSI Oversold: false (41.016203409908876 <= 35.0) - RSI: 41.016203409908876
+[26-07-2025 00:19:22] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117553.78333333334 >  SMA21: 117557.92714285715)
+[26-07-2025 00:19:22] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117512.0 <= Support: 117482.4)
+[26-07-2025 00:19:22] - [BTCUSDT] - 🔺 RSI Overbought: false (41.016203409908876 >= 65.0) - RSI: 41.016203409908876
+[26-07-2025 00:19:22] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117553.78333333334 < SMA21: 117557.92714285715)
+[26-07-2025 00:19:22] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117512.0 >= Resistance: 117589.6)
+[26-07-2025 00:19:22] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:19:22] - [BTCUSDT] - 840ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:19:37] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:19:37] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:19:38] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.16711 >= Average Volume: 7.056249599999999)
+[26-07-2025 00:19:38] - [BTCUSDT] - 🔻 RSI Oversold: false (41.016203409908876 <= 35.0) - RSI: 41.016203409908876
+[26-07-2025 00:19:38] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117553.78333333334 >  SMA21: 117557.92714285715)
+[26-07-2025 00:19:38] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117512.0 <= Support: 117482.4)
+[26-07-2025 00:19:38] - [BTCUSDT] - 🔺 RSI Overbought: false (41.016203409908876 >= 65.0) - RSI: 41.016203409908876
+[26-07-2025 00:19:38] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117553.78333333334 < SMA21: 117557.92714285715)
+[26-07-2025 00:19:38] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117512.0 >= Resistance: 117589.6)
+[26-07-2025 00:19:38] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:19:38] - [BTCUSDT] - 314ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:19:54] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:19:54] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:19:54] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.33298 >= Average Volume: 7.05824004)
+[26-07-2025 00:19:54] - [BTCUSDT] - 🔻 RSI Oversold: false (41.0137079032005 <= 35.0) - RSI: 41.0137079032005
+[26-07-2025 00:19:54] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117553.78222222223 >  SMA21: 117557.92666666667)
+[26-07-2025 00:19:54] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117511.99 <= Support: 117482.4)
+[26-07-2025 00:19:54] - [BTCUSDT] - 🔺 RSI Overbought: false (41.0137079032005 >= 65.0) - RSI: 41.0137079032005
+[26-07-2025 00:19:54] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117553.78222222223 < SMA21: 117557.92666666667)
+[26-07-2025 00:19:54] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117511.99 >= Resistance: 117589.6)
+[26-07-2025 00:19:54] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:19:54] - [BTCUSDT] - 314ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:20:47] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:20:47] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:20:47] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.30905 >= Average Volume: 6.94991124)
+[26-07-2025 00:20:47] - [BTCUSDT] - 🔻 RSI Oversold: false (45.933997750804835 <= 35.0) - RSI: 45.933997750804835
+[26-07-2025 00:20:47] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117555.39333333334 >  SMA21: 117558.75666666667)
+[26-07-2025 00:20:47] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117550.81 <= Support: 117482.4)
+[26-07-2025 00:20:47] - [BTCUSDT] - 🔺 RSI Overbought: false (45.933997750804835 >= 65.0) - RSI: 45.933997750804835
+[26-07-2025 00:20:47] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117555.39333333334 < SMA21: 117558.75666666667)
+[26-07-2025 00:20:47] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117550.81 >= Resistance: 117589.6)
+[26-07-2025 00:20:47] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:20:47] - [BTCUSDT] - 327ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:20:54] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:20:54] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:20:54] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.78498 >= Average Volume: 6.9556224)
+[26-07-2025 00:20:54] - [BTCUSDT] - 🔻 RSI Oversold: false (47.79059316956226 <= 35.0) - RSI: 47.79059316956226
+[26-07-2025 00:20:54] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117556.41222222222 >  SMA21: 117559.19333333333)
+[26-07-2025 00:20:54] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117559.98 <= Support: 117482.4)
+[26-07-2025 00:20:54] - [BTCUSDT] - 🔺 RSI Overbought: false (47.79059316956226 >= 65.0) - RSI: 47.79059316956226
+[26-07-2025 00:20:54] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117556.41222222222 < SMA21: 117559.19333333333)
+[26-07-2025 00:20:54] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117559.98 >= Resistance: 117589.6)
+[26-07-2025 00:20:54] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:20:54] - [BTCUSDT] - 334ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:21:55] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:21:55] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.89069 >= Average Volume: 6.758380439999999)
+[26-07-2025 00:21:55] - [BTCUSDT] - 🔻 RSI Oversold: false (44.034955768058445 <= 35.0) - RSI: 44.034955768058445
+[26-07-2025 00:21:55] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117553.80666666667 >  SMA21: 117556.34380952382)
+[26-07-2025 00:21:55] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117543.15 <= Support: 117482.4)
+[26-07-2025 00:21:55] - [BTCUSDT] - 🔺 RSI Overbought: false (44.034955768058445 >= 65.0) - RSI: 44.034955768058445
+[26-07-2025 00:21:55] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117553.80666666667 < SMA21: 117556.34380952382)
+[26-07-2025 00:21:55] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117543.15 >= Resistance: 117589.6)
+[26-07-2025 00:21:55] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:21:55] - [BTCUSDT] - 298ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:22:01] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:22:01] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:22:01] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.89918 >= Average Volume: 6.75848232)
+[26-07-2025 00:22:01] - [BTCUSDT] - 🔻 RSI Oversold: false (44.034955768058445 <= 35.0) - RSI: 44.034955768058445
+[26-07-2025 00:22:01] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117553.80666666667 >  SMA21: 117556.34380952382)
+[26-07-2025 00:22:01] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117543.15 <= Support: 117482.4)
+[26-07-2025 00:22:01] - [BTCUSDT] - 🔺 RSI Overbought: false (44.034955768058445 >= 65.0) - RSI: 44.034955768058445
+[26-07-2025 00:22:01] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117553.80666666667 < SMA21: 117556.34380952382)
+[26-07-2025 00:22:01] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117543.15 >= Resistance: 117589.6)
+[26-07-2025 00:22:01] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:22:01] - [BTCUSDT] - 322ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:22:13] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:22:13] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:22:13] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.46772 >= Average Volume: 6.7653048)
+[26-07-2025 00:22:13] - [BTCUSDT] - 🔻 RSI Oversold: false (41.527341507074894 <= 35.0) - RSI: 41.527341507074894
+[26-07-2025 00:22:13] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117551.93333333332 >  SMA21: 117555.54095238095)
+[26-07-2025 00:22:13] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117526.29 <= Support: 117482.4)
+[26-07-2025 00:22:13] - [BTCUSDT] - 🔺 RSI Overbought: false (41.527341507074894 >= 65.0) - RSI: 41.527341507074894
+[26-07-2025 00:22:13] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117551.93333333332 < SMA21: 117555.54095238095)
+[26-07-2025 00:22:13] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117526.29 >= Resistance: 117589.6)
+[26-07-2025 00:22:13] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:22:13] - [BTCUSDT] - 346ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:22:18] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:22:18] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:22:18] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 8.9E-4 >= Average Volume: 6.629594399999999)
+[26-07-2025 00:22:18] - [BTCUSDT] - 🔻 RSI Oversold: false (41.87583012635181 <= 35.0) - RSI: 41.87583012635181
+[26-07-2025 00:22:18] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117549.03666666668 >  SMA21: 117553.45238095238)
+[26-07-2025 00:22:18] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117526.3 <= Support: 117482.4)
+[26-07-2025 00:22:18] - [BTCUSDT] - 🔺 RSI Overbought: false (41.87583012635181 >= 65.0) - RSI: 41.87583012635181
+[26-07-2025 00:22:18] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117549.03666666668 < SMA21: 117553.45238095238)
+[26-07-2025 00:22:18] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117526.3 >= Resistance: 117589.6)
+[26-07-2025 00:22:18] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:22:18] - [BTCUSDT] - 393ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:22:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:22:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:22:27] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.01494 >= Average Volume: 6.629763)
+[26-07-2025 00:22:27] - [BTCUSDT] - 🔻 RSI Oversold: false (41.87385055513977 <= 35.0) - RSI: 41.87385055513977
+[26-07-2025 00:22:27] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117549.03555555556 >  SMA21: 117553.45190476191)
+[26-07-2025 00:22:27] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117526.29 <= Support: 117482.4)
+[26-07-2025 00:22:27] - [BTCUSDT] - 🔺 RSI Overbought: false (41.87385055513977 >= 65.0) - RSI: 41.87385055513977
+[26-07-2025 00:22:27] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117549.03555555556 < SMA21: 117553.45190476191)
+[26-07-2025 00:22:27] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117526.29 >= Resistance: 117589.6)
+[26-07-2025 00:22:27] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:22:27] - [BTCUSDT] - 316ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:23:28] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:23:28] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.15944 >= Average Volume: 6.5794854)
+[26-07-2025 00:23:28] - [BTCUSDT] - 🔻 RSI Oversold: false (42.01982228298123 <= 35.0) - RSI: 42.01982228298123
+[26-07-2025 00:23:28] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117539.51333333335 >  SMA21: 117550.62)
+[26-07-2025 00:23:28] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117500.0 <= Support: 117482.4)
+[26-07-2025 00:23:28] - [BTCUSDT] - 🔺 RSI Overbought: false (42.01982228298123 >= 65.0) - RSI: 42.01982228298123
+[26-07-2025 00:23:28] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117539.51333333335 < SMA21: 117550.62)
+[26-07-2025 00:23:28] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117500.0 >= Resistance: 117589.6)
+[26-07-2025 00:23:28] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:23:28] - [BTCUSDT] - 280ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:24:29] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:24:29] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.04867 >= Average Volume: 6.59330004)
+[26-07-2025 00:24:29] - [BTCUSDT] - 🔻 RSI Oversold: false (42.48567650947565 <= 35.0) - RSI: 42.48567650947565
+[26-07-2025 00:24:29] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117533.33888888889 >  SMA21: 117551.35142857142)
+[26-07-2025 00:24:29] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117515.67 <= Support: 117482.4)
+[26-07-2025 00:24:29] - [BTCUSDT] - 🔺 RSI Overbought: false (42.48567650947565 >= 65.0) - RSI: 42.48567650947565
+[26-07-2025 00:24:29] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117533.33888888889 < SMA21: 117551.35142857142)
+[26-07-2025 00:24:29] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117515.67 >= Resistance: 117589.6)
+[26-07-2025 00:24:29] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:24:29] - [BTCUSDT] - 304ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:25:30] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:25:30] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.7196 >= Average Volume: 6.630902999999999)
+[26-07-2025 00:25:30] - [BTCUSDT] - 🔻 RSI Oversold: false (37.526985286792886 <= 35.0) - RSI: 37.526985286792886
+[26-07-2025 00:25:30] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117526.34000000001 >  SMA21: 117548.89142857141)
+[26-07-2025 00:25:30] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117500.01 <= Support: 117482.4)
+[26-07-2025 00:25:30] - [BTCUSDT] - 🔺 RSI Overbought: false (37.526985286792886 >= 65.0) - RSI: 37.526985286792886
+[26-07-2025 00:25:30] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117526.34000000001 < SMA21: 117548.89142857141)
+[26-07-2025 00:25:30] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117500.01 >= Resistance: 117589.6)
+[26-07-2025 00:25:30] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:25:30] - [BTCUSDT] - 300ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:26:05] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:26:05] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:26:05] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.9208 >= Average Volume: 6.6453174)
+[26-07-2025 00:26:05] - [BTCUSDT] - 🔻 RSI Oversold: false (36.666017653169725 <= 35.0) - RSI: 36.666017653169725
+[26-07-2025 00:26:05] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117525.55444444444 >  SMA21: 117548.55476190476)
+[26-07-2025 00:26:05] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117492.94 <= Support: 117482.4)
+[26-07-2025 00:26:05] - [BTCUSDT] - 🔺 RSI Overbought: false (36.666017653169725 >= 65.0) - RSI: 36.666017653169725
+[26-07-2025 00:26:05] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117525.55444444444 < SMA21: 117548.55476190476)
+[26-07-2025 00:26:05] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117492.94 >= Resistance: 117589.6)
+[26-07-2025 00:26:05] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:26:05] - [BTCUSDT] - 313ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:27:06] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:27:06] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.26865 >= Average Volume: 6.651302159999999)
+[26-07-2025 00:27:06] - [BTCUSDT] - 🔻 RSI Oversold: true (34.245620415834395 <= 35.0) - RSI: 34.245620415834395
+[26-07-2025 00:27:06] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117513.77333333333 >  SMA21: 117544.04523809525)
+[26-07-2025 00:27:06] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117462.65 <= Support: 117476.685)
+[26-07-2025 00:27:06] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:27:06] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:27:06] - [BTCUSDT] - 316ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:28:07] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:28:07] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.81063 >= Average Volume: 6.621904079999999)
+[26-07-2025 00:28:07] - [BTCUSDT] - 🔻 RSI Oversold: false (39.61572832886614 <= 35.0) - RSI: 39.61572832886614
+[26-07-2025 00:28:07] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.84444444446 >  SMA21: 117539.80095238095)
+[26-07-2025 00:28:07] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117482.65 <= Support: 117476.685)
+[26-07-2025 00:28:07] - [BTCUSDT] - 🔺 RSI Overbought: false (39.61572832886614 >= 65.0) - RSI: 39.61572832886614
+[26-07-2025 00:28:07] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117511.84444444446 < SMA21: 117539.80095238095)
+[26-07-2025 00:28:07] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117482.65 >= Resistance: 117588.965)
+[26-07-2025 00:28:07] - [BTCUSDT] - 📉 Price change: 0,02%
+[26-07-2025 00:28:07] - [BTCUSDT] - ⛔ Stop Loss reached: false
+[26-07-2025 00:28:07] - [BTCUSDT] - 💰 Take Profit reached: true
+[26-07-2025 00:28:07] - [BTCUSDT] - 🔴 SELL signal detected!
+[26-07-2025 00:28:07] - Sold 100.0170266889092 units. New wallet balance: 1000.0170266889093
+[26-07-2025 00:28:07] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:29:08] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:29:08] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.96228 >= Average Volume: 6.59389308)
+[26-07-2025 00:29:08] - [BTCUSDT] - 🔻 RSI Oversold: false (47.487176830217116 <= 35.0) - RSI: 47.487176830217116
+[26-07-2025 00:29:08] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117512.23222222223 >  SMA21: 117538.74523809523)
+[26-07-2025 00:29:08] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117540.02 <= Support: 117476.685)
+[26-07-2025 00:29:08] - [BTCUSDT] - 🔺 RSI Overbought: false (47.487176830217116 >= 65.0) - RSI: 47.487176830217116
+[26-07-2025 00:29:08] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117512.23222222223 < SMA21: 117538.74523809523)
+[26-07-2025 00:29:08] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117540.02 >= Resistance: 117588.965)
+[26-07-2025 00:29:08] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:29:08] - [BTCUSDT] - 315ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:30:09] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:30:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.93312 >= Average Volume: 6.597790559999999)
+[26-07-2025 00:30:09] - [BTCUSDT] - 🔻 RSI Oversold: false (45.60603214640348 <= 35.0) - RSI: 45.60603214640348
+[26-07-2025 00:30:09] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117511.58444444445 >  SMA21: 117537.79999999999)
+[26-07-2025 00:30:09] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117554.17 <= Support: 117476.685)
+[26-07-2025 00:30:09] - [BTCUSDT] - 🔺 RSI Overbought: false (45.60603214640348 >= 65.0) - RSI: 45.60603214640348
+[26-07-2025 00:30:09] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117511.58444444445 < SMA21: 117537.79999999999)
+[26-07-2025 00:30:09] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117554.17 >= Resistance: 117588.965)
+[26-07-2025 00:30:09] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:30:09] - [BTCUSDT] - 301ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:31:10] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:31:10] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.15092 >= Average Volume: 6.483507599999999)
+[26-07-2025 00:31:10] - [BTCUSDT] - 🔻 RSI Oversold: false (45.13824334015093 <= 35.0) - RSI: 45.13824334015093
+[26-07-2025 00:31:10] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.90555555554 >  SMA21: 117536.9657142857)
+[26-07-2025 00:31:10] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117529.19 <= Support: 117475.07699999999)
+[26-07-2025 00:31:10] - [BTCUSDT] - 🔺 RSI Overbought: false (45.13824334015093 >= 65.0) - RSI: 45.13824334015093
+[26-07-2025 00:31:10] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117511.90555555554 < SMA21: 117536.9657142857)
+[26-07-2025 00:31:10] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117529.19 >= Resistance: 117574.493)
+[26-07-2025 00:31:10] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:31:10] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:32:11] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:32:11] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.4381 >= Average Volume: 6.4658844)
+[26-07-2025 00:32:11] - [BTCUSDT] - 🔻 RSI Oversold: false (47.63341361389331 <= 35.0) - RSI: 47.63341361389331
+[26-07-2025 00:32:11] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117517.14111111111 >  SMA21: 117536.35285714286)
+[26-07-2025 00:32:11] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.13 <= Support: 117475.07699999999)
+[26-07-2025 00:32:11] - [BTCUSDT] - 🔺 RSI Overbought: false (47.63341361389331 >= 65.0) - RSI: 47.63341361389331
+[26-07-2025 00:32:11] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117517.14111111111 < SMA21: 117536.35285714286)
+[26-07-2025 00:32:11] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.13 >= Resistance: 117574.493)
+[26-07-2025 00:32:11] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:32:11] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:33:12] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:33:12] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.40406 >= Average Volume: 6.4123356000000005)
+[26-07-2025 00:33:12] - [BTCUSDT] - 🔻 RSI Oversold: false (57.1698055800649 <= 35.0) - RSI: 57.1698055800649
+[26-07-2025 00:33:12] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117520.63666666666 >  SMA21: 117535.02047619049)
+[26-07-2025 00:33:12] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.14 <= Support: 117475.07699999999)
+[26-07-2025 00:33:12] - [BTCUSDT] - 🔺 RSI Overbought: false (57.1698055800649 >= 65.0) - RSI: 57.1698055800649
+[26-07-2025 00:33:12] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117520.63666666666 < SMA21: 117535.02047619049)
+[26-07-2025 00:33:12] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.14 >= Resistance: 117574.493)
+[26-07-2025 00:33:12] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:33:12] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:34:05] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:34:05] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:34:05] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.31842 >= Average Volume: 6.29208288)
+[26-07-2025 00:34:05] - [BTCUSDT] - 🔻 RSI Oversold: false (49.34144234921494 <= 35.0) - RSI: 49.34144234921494
+[26-07-2025 00:34:05] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117523.82222222221 >  SMA21: 117534.09333333334)
+[26-07-2025 00:34:05] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.14 <= Support: 117475.07699999999)
+[26-07-2025 00:34:05] - [BTCUSDT] - 🔺 RSI Overbought: false (49.34144234921494 >= 65.0) - RSI: 49.34144234921494
+[26-07-2025 00:34:05] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117523.82222222221 < SMA21: 117534.09333333334)
+[26-07-2025 00:34:05] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.14 >= Resistance: 117574.493)
+[26-07-2025 00:34:05] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:34:05] - [BTCUSDT] - 509ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:34:21] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:34:21] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:34:21] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.04437 >= Average Volume: 6.1692922800000005)
+[26-07-2025 00:34:21] - [BTCUSDT] - 🔻 RSI Oversold: false (47.60699665053976 <= 35.0) - RSI: 47.60699665053976
+[26-07-2025 00:34:21] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117530.16222222222 >  SMA21: 117533.84333333334)
+[26-07-2025 00:34:21] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.13 <= Support: 117475.07699999999)
+[26-07-2025 00:34:21] - [BTCUSDT] - 🔺 RSI Overbought: false (47.60699665053976 >= 65.0) - RSI: 47.60699665053976
+[26-07-2025 00:34:21] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117530.16222222222 < SMA21: 117533.84333333334)
+[26-07-2025 00:34:21] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.13 >= Resistance: 117574.493)
+[26-07-2025 00:34:21] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:34:21] - [BTCUSDT] - 398ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:34:28] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:34:28] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:34:28] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.09586 >= Average Volume: 6.16991016)
+[26-07-2025 00:34:28] - [BTCUSDT] - 🔻 RSI Oversold: false (47.608946447842506 <= 35.0) - RSI: 47.608946447842506
+[26-07-2025 00:34:28] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117530.16333333333 >  SMA21: 117533.84380952382)
+[26-07-2025 00:34:28] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.14 <= Support: 117475.07699999999)
+[26-07-2025 00:34:28] - [BTCUSDT] - 🔺 RSI Overbought: false (47.608946447842506 >= 65.0) - RSI: 47.608946447842506
+[26-07-2025 00:34:28] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117530.16333333333 < SMA21: 117533.84380952382)
+[26-07-2025 00:34:28] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.14 >= Resistance: 117574.493)
+[26-07-2025 00:34:28] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:34:28] - [BTCUSDT] - 304ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:34:34] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:34:34] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:34:34] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.19161 >= Average Volume: 6.17105916)
+[26-07-2025 00:34:34] - [BTCUSDT] - 🔻 RSI Oversold: false (47.608946447842506 <= 35.0) - RSI: 47.608946447842506
+[26-07-2025 00:34:34] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117530.16333333333 >  SMA21: 117533.84380952382)
+[26-07-2025 00:34:34] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117547.14 <= Support: 117475.07699999999)
+[26-07-2025 00:34:34] - [BTCUSDT] - 🔺 RSI Overbought: false (47.608946447842506 >= 65.0) - RSI: 47.608946447842506
+[26-07-2025 00:34:34] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117530.16333333333 < SMA21: 117533.84380952382)
+[26-07-2025 00:34:34] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117547.14 >= Resistance: 117574.493)
+[26-07-2025 00:34:34] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:34:34] - [BTCUSDT] - 298ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:35:35] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:35:35] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.15035 >= Average Volume: 6.117588840000001)
+[26-07-2025 00:35:35] - [BTCUSDT] - 🔻 RSI Oversold: false (56.79644946540277 <= 35.0) - RSI: 56.79644946540277
+[26-07-2025 00:35:35] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117540.97777777778 >  SMA21: 117533.87047619047)
+[26-07-2025 00:35:35] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117559.98 <= Support: 117475.07699999999)
+[26-07-2025 00:35:35] - [BTCUSDT] - 🔺 RSI Overbought: false (56.79644946540277 >= 65.0) - RSI: 56.79644946540277
+[26-07-2025 00:35:35] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117540.97777777778 < SMA21: 117533.87047619047)
+[26-07-2025 00:35:35] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117559.98 >= Resistance: 117574.493)
+[26-07-2025 00:35:35] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:35:35] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:36:36] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:36:36] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.09197 >= Average Volume: 6.11401008)
+[26-07-2025 00:36:36] - [BTCUSDT] - 🔻 RSI Oversold: false (65.73803163295707 <= 35.0) - RSI: 65.73803163295707
+[26-07-2025 00:36:36] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117551.15222222224 >  SMA21: 117533.94523809524)
+[26-07-2025 00:36:36] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117574.24 <= Support: 117475.07699999999)
+[26-07-2025 00:36:36] - [BTCUSDT] - 🔺 RSI Overbought: true (65.73803163295707 >= 65.0) - RSI: 65.73803163295707
+[26-07-2025 00:36:36] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117551.15222222224 < SMA21: 117533.94523809524)
+[26-07-2025 00:36:36] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117574.24 >= Resistance: 117574.493)
+[26-07-2025 00:36:36] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:36:36] - [BTCUSDT] - 287ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:37:37] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:37:37] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.50243 >= Average Volume: 6.14671644)
+[26-07-2025 00:37:37] - [BTCUSDT] - 🔻 RSI Oversold: false (49.93013006557035 <= 35.0) - RSI: 49.93013006557035
+[26-07-2025 00:37:37] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117543.67555555556 >  SMA21: 117529.51285714286)
+[26-07-2025 00:37:37] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117515.29 <= Support: 117475.07699999999)
+[26-07-2025 00:37:37] - [BTCUSDT] - 🔺 RSI Overbought: false (49.93013006557035 >= 65.0) - RSI: 49.93013006557035
+[26-07-2025 00:37:37] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117543.67555555556 < SMA21: 117529.51285714286)
+[26-07-2025 00:37:37] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117515.29 >= Resistance: 117574.493)
+[26-07-2025 00:37:37] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:37:37] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:38:38] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:38:38] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.88628 >= Average Volume: 6.02788452)
+[26-07-2025 00:38:38] - [BTCUSDT] - 🔻 RSI Oversold: false (52.22179732313486 <= 35.0) - RSI: 52.22179732313486
+[26-07-2025 00:38:38] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.64555555556 >  SMA21: 117528.51714285713)
+[26-07-2025 00:38:38] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117530.09 <= Support: 117475.07699999999)
+[26-07-2025 00:38:38] - [BTCUSDT] - 🔺 RSI Overbought: false (52.22179732313486 >= 65.0) - RSI: 52.22179732313486
+[26-07-2025 00:38:38] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.64555555556 < SMA21: 117528.51714285713)
+[26-07-2025 00:38:38] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117530.09 >= Resistance: 117574.493)
+[26-07-2025 00:38:38] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:38:38] - [BTCUSDT] - 296ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:39:39] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:39:39] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.51316 >= Average Volume: 6.0251896799999995)
+[26-07-2025 00:39:39] - [BTCUSDT] - 🔻 RSI Oversold: false (57.24736715169986 <= 35.0) - RSI: 57.24736715169986
+[26-07-2025 00:39:39] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.95555555557 >  SMA21: 117530.03952380952)
+[26-07-2025 00:39:39] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117526.12 <= Support: 117475.07699999999)
+[26-07-2025 00:39:39] - [BTCUSDT] - 🔺 RSI Overbought: false (57.24736715169986 >= 65.0) - RSI: 57.24736715169986
+[26-07-2025 00:39:39] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.95555555557 < SMA21: 117530.03952380952)
+[26-07-2025 00:39:39] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117526.12 >= Resistance: 117574.493)
+[26-07-2025 00:39:39] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:39:39] - [BTCUSDT] - 312ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:40:40] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:40:40] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:40:40] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 4.23224 >= Average Volume: 6.06800796)
+[26-07-2025 00:40:40] - [BTCUSDT] - 🔻 RSI Oversold: false (61.58436391939872 <= 35.0) - RSI: 61.58436391939872
+[26-07-2025 00:40:40] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.42333333334 >  SMA21: 117527.92238095238)
+[26-07-2025 00:40:40] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117516.23 <= Support: 117475.07699999999)
+[26-07-2025 00:40:40] - [BTCUSDT] - 🔺 RSI Overbought: false (61.58436391939872 >= 65.0) - RSI: 61.58436391939872
+[26-07-2025 00:40:40] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117538.42333333334 < SMA21: 117527.92238095238)
+[26-07-2025 00:40:40] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117516.23 >= Resistance: 117574.493)
+[26-07-2025 00:40:40] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:40:40] - [BTCUSDT] - 351ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:40:49] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:40:49] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:40:49] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 4.72799 >= Average Volume: 6.073956959999999)
+[26-07-2025 00:40:49] - [BTCUSDT] - 🔻 RSI Oversold: false (61.58602499243528 <= 35.0) - RSI: 61.58602499243528
+[26-07-2025 00:40:49] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.42444444445 >  SMA21: 117527.92285714285)
+[26-07-2025 00:40:49] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117516.24 <= Support: 117475.07699999999)
+[26-07-2025 00:40:49] - [BTCUSDT] - 🔺 RSI Overbought: false (61.58602499243528 >= 65.0) - RSI: 61.58602499243528
+[26-07-2025 00:40:49] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117538.42444444445 < SMA21: 117527.92285714285)
+[26-07-2025 00:40:49] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117516.24 >= Resistance: 117574.493)
+[26-07-2025 00:40:49] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:40:49] - [BTCUSDT] - 318ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:41:47] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:41:47] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:41:48] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.03359 >= Average Volume: 6.08434224)
+[26-07-2025 00:41:48] - [BTCUSDT] - 🔻 RSI Oversold: false (50.72225869993479 <= 35.0) - RSI: 50.72225869993479
+[26-07-2025 00:41:48] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117531.38222222222 >  SMA21: 117524.29285714285)
+[26-07-2025 00:41:48] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117500.0 <= Support: 117475.07699999999)
+[26-07-2025 00:41:48] - [BTCUSDT] - 🔺 RSI Overbought: false (50.72225869993479 >= 65.0) - RSI: 50.72225869993479
+[26-07-2025 00:41:48] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117531.38222222222 < SMA21: 117524.29285714285)
+[26-07-2025 00:41:48] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117500.0 >= Resistance: 117574.493)
+[26-07-2025 00:41:48] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:41:48] - [BTCUSDT] - 349ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:42:48] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:42:49] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.39144 >= Average Volume: 6.069100079999999)
+[26-07-2025 00:42:49] - [BTCUSDT] - 🔻 RSI Oversold: false (40.490484821022605 <= 35.0) - RSI: 40.490484821022605
+[26-07-2025 00:42:49] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117527.57444444444 >  SMA21: 117523.65333333332)
+[26-07-2025 00:42:49] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117506.43 <= Support: 117475.07699999999)
+[26-07-2025 00:42:49] - [BTCUSDT] - 🔺 RSI Overbought: false (40.490484821022605 >= 65.0) - RSI: 40.490484821022605
+[26-07-2025 00:42:49] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117527.57444444444 < SMA21: 117523.65333333332)
+[26-07-2025 00:42:49] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117506.43 >= Resistance: 117574.493)
+[26-07-2025 00:42:49] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:42:49] - [BTCUSDT] - 299ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:43:07] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:43:07] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:43:08] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.50291 >= Average Volume: 6.07043772)
+[26-07-2025 00:43:08] - [BTCUSDT] - 🔻 RSI Oversold: false (40.49385512827948 <= 35.0) - RSI: 40.49385512827948
+[26-07-2025 00:43:08] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117527.57555555555 >  SMA21: 117523.6538095238)
+[26-07-2025 00:43:08] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117506.44 <= Support: 117475.07699999999)
+[26-07-2025 00:43:08] - [BTCUSDT] - 🔺 RSI Overbought: false (40.49385512827948 >= 65.0) - RSI: 40.49385512827948
+[26-07-2025 00:43:08] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117527.57555555555 < SMA21: 117523.6538095238)
+[26-07-2025 00:43:08] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117506.44 >= Resistance: 117574.493)
+[26-07-2025 00:43:08] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:43:08] - [BTCUSDT] - 314ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:43:26] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:43:26] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:43:26] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.44795 >= Average Volume: 6.04504764)
+[26-07-2025 00:43:26] - [BTCUSDT] - 🔻 RSI Oversold: false (42.587836730231245 <= 35.0) - RSI: 42.587836730231245
+[26-07-2025 00:43:26] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117525.34000000001 >  SMA21: 117524.93999999999)
+[26-07-2025 00:43:26] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117527.03 <= Support: 117475.07699999999)
+[26-07-2025 00:43:26] - [BTCUSDT] - 🔺 RSI Overbought: false (42.587836730231245 >= 65.0) - RSI: 42.587836730231245
+[26-07-2025 00:43:26] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117525.34000000001 < SMA21: 117524.93999999999)
+[26-07-2025 00:43:26] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117527.03 >= Resistance: 117574.493)
+[26-07-2025 00:43:26] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:43:26] - [BTCUSDT] - 310ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:43:38] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:43:38] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:43:38] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.50132 >= Average Volume: 6.04568808)
+[26-07-2025 00:43:38] - [BTCUSDT] - 🔻 RSI Oversold: false (42.59097366407671 <= 35.0) - RSI: 42.59097366407671
+[26-07-2025 00:43:38] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117525.34111111112 >  SMA21: 117524.94047619047)
+[26-07-2025 00:43:38] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117527.04 <= Support: 117475.07699999999)
+[26-07-2025 00:43:38] - [BTCUSDT] - 🔺 RSI Overbought: false (42.59097366407671 >= 65.0) - RSI: 42.59097366407671
+[26-07-2025 00:43:38] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117525.34111111112 < SMA21: 117524.94047619047)
+[26-07-2025 00:43:38] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117527.04 >= Resistance: 117574.493)
+[26-07-2025 00:43:38] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:43:38] - [BTCUSDT] - 296ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:43:42] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:43:42] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:43:43] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.58959 >= Average Volume: 6.04674732)
+[26-07-2025 00:43:43] - [BTCUSDT] - 🔻 RSI Oversold: false (43.501640049470346 <= 35.0) - RSI: 43.501640049470346
+[26-07-2025 00:43:43] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117525.66888888889 >  SMA21: 117525.08095238096)
+[26-07-2025 00:43:43] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117529.99 <= Support: 117475.07699999999)
+[26-07-2025 00:43:43] - [BTCUSDT] - 🔺 RSI Overbought: false (43.501640049470346 >= 65.0) - RSI: 43.501640049470346
+[26-07-2025 00:43:43] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117525.66888888889 < SMA21: 117525.08095238096)
+[26-07-2025 00:43:43] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117529.99 >= Resistance: 117574.493)
+[26-07-2025 00:43:43] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:43:43] - [BTCUSDT] - 299ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:43:53] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:43:53] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:43:53] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.71816 >= Average Volume: 6.0482901600000005)
+[26-07-2025 00:43:53] - [BTCUSDT] - 🔻 RSI Oversold: false (43.501640049470346 <= 35.0) - RSI: 43.501640049470346
+[26-07-2025 00:43:53] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117525.66888888889 >  SMA21: 117525.08095238096)
+[26-07-2025 00:43:53] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117529.99 <= Support: 117475.07699999999)
+[26-07-2025 00:43:53] - [BTCUSDT] - 🔺 RSI Overbought: false (43.501640049470346 >= 65.0) - RSI: 43.501640049470346
+[26-07-2025 00:43:53] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117525.66888888889 < SMA21: 117525.08095238096)
+[26-07-2025 00:43:53] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117529.99 >= Resistance: 117574.493)
+[26-07-2025 00:43:53] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:43:53] - [BTCUSDT] - 304ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:44:01] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:44:01] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:44:01] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.9742 >= Average Volume: 6.05136264)
+[26-07-2025 00:44:01] - [BTCUSDT] - 🔻 RSI Oversold: false (46.80538679627088 <= 35.0) - RSI: 46.80538679627088
+[26-07-2025 00:44:01] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117526.95222222223 >  SMA21: 117525.63095238095)
+[26-07-2025 00:44:01] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117541.54 <= Support: 117475.07699999999)
+[26-07-2025 00:44:01] - [BTCUSDT] - 🔺 RSI Overbought: false (46.80538679627088 >= 65.0) - RSI: 46.80538679627088
+[26-07-2025 00:44:01] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117526.95222222223 < SMA21: 117525.63095238095)
+[26-07-2025 00:44:01] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117541.54 >= Resistance: 117574.493)
+[26-07-2025 00:44:01] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:44:01] - [BTCUSDT] - 325ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:44:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:44:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:44:27] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.13975 >= Average Volume: 6.0118645200000005)
+[26-07-2025 00:44:27] - [BTCUSDT] - 🔻 RSI Oversold: false (55.66502463054271 <= 35.0) - RSI: 55.66502463054271
+[26-07-2025 00:44:27] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117524.58444444445 >  SMA21: 117527.40428571428)
+[26-07-2025 00:44:27] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117549.66 <= Support: 117475.07699999999)
+[26-07-2025 00:44:27] - [BTCUSDT] - 🔺 RSI Overbought: false (55.66502463054271 >= 65.0) - RSI: 55.66502463054271
+[26-07-2025 00:44:27] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117524.58444444445 < SMA21: 117527.40428571428)
+[26-07-2025 00:44:27] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117549.66 >= Resistance: 117574.493)
+[26-07-2025 00:44:27] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:44:27] - [BTCUSDT] - 297ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:44:38] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:44:38] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:44:39] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.23249 >= Average Volume: 6.0129774000000005)
+[26-07-2025 00:44:39] - [BTCUSDT] - 🔻 RSI Oversold: false (57.80879641822434 <= 35.0) - RSI: 57.80879641822434
+[26-07-2025 00:44:39] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117525.60444444444 >  SMA21: 117527.84142857142)
+[26-07-2025 00:44:39] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117558.84 <= Support: 117475.07699999999)
+[26-07-2025 00:44:39] - [BTCUSDT] - 🔺 RSI Overbought: false (57.80879641822434 >= 65.0) - RSI: 57.80879641822434
+[26-07-2025 00:44:39] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117525.60444444444 < SMA21: 117527.84142857142)
+[26-07-2025 00:44:39] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117558.84 >= Resistance: 117574.493)
+[26-07-2025 00:44:39] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:44:39] - [BTCUSDT] - 300ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:45:39] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:45:40] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.35307 >= Average Volume: 6.000299399999999)
+[26-07-2025 00:45:40] - [BTCUSDT] - 🔻 RSI Oversold: false (58.493108094103526 <= 35.0) - RSI: 58.493108094103526
+[26-07-2025 00:45:40] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117532.67111111112 >  SMA21: 117531.49857142856)
+[26-07-2025 00:45:40] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117579.91 <= Support: 117474.37599999999)
+[26-07-2025 00:45:40] - [BTCUSDT] - 🔺 RSI Overbought: false (58.493108094103526 >= 65.0) - RSI: 58.493108094103526
+[26-07-2025 00:45:40] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117532.67111111112 < SMA21: 117531.49857142856)
+[26-07-2025 00:45:40] - [BTCUSDT] - 🚀 Touched Resistance: true (Current Price: 117579.91 >= Resistance: 117568.18400000001)
+[26-07-2025 00:45:40] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:45:40] - [BTCUSDT] - 558ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:46:23] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:46:23] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:46:23] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.108 >= Average Volume: 5.98128744)
+[26-07-2025 00:46:23] - [BTCUSDT] - 🔻 RSI Oversold: false (58.49007720607495 <= 35.0) - RSI: 58.49007720607495
+[26-07-2025 00:46:23] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.20777777776 >  SMA21: 117535.77761904763)
+[26-07-2025 00:46:23] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117579.91 <= Support: 117474.377)
+[26-07-2025 00:46:23] - [BTCUSDT] - 🔺 RSI Overbought: false (58.49007720607495 >= 65.0) - RSI: 58.49007720607495
+[26-07-2025 00:46:23] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117538.20777777776 < SMA21: 117535.77761904763)
+[26-07-2025 00:46:23] - [BTCUSDT] - 🚀 Touched Resistance: true (Current Price: 117579.91 >= Resistance: 117568.193)
+[26-07-2025 00:46:23] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:46:23] - [BTCUSDT] - 378ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:46:35] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:46:35] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:46:36] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.77197 >= Average Volume: 6.001255079999999)
+[26-07-2025 00:46:36] - [BTCUSDT] - 🔻 RSI Oversold: false (54.110541201283574 <= 35.0) - RSI: 54.110541201283574
+[26-07-2025 00:46:36] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117536.47222222222 >  SMA21: 117535.03380952381)
+[26-07-2025 00:46:36] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117564.29 <= Support: 117474.377)
+[26-07-2025 00:46:36] - [BTCUSDT] - 🔺 RSI Overbought: false (54.110541201283574 >= 65.0) - RSI: 54.110541201283574
+[26-07-2025 00:46:36] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117536.47222222222 < SMA21: 117535.03380952381)
+[26-07-2025 00:46:36] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117564.29 >= Resistance: 117568.193)
+[26-07-2025 00:46:36] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:46:36] - [BTCUSDT] - 324ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:46:45] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:46:45] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:46:45] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.85981 >= Average Volume: 6.002309159999999)
+[26-07-2025 00:46:45] - [BTCUSDT] - 🔻 RSI Oversold: false (54.11313518696198 <= 35.0) - RSI: 54.11313518696198
+[26-07-2025 00:46:45] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117536.47333333333 >  SMA21: 117535.03428571427)
+[26-07-2025 00:46:45] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117564.3 <= Support: 117474.377)
+[26-07-2025 00:46:45] - [BTCUSDT] - 🔺 RSI Overbought: false (54.11313518696198 >= 65.0) - RSI: 54.11313518696198
+[26-07-2025 00:46:45] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117536.47333333333 < SMA21: 117535.03428571427)
+[26-07-2025 00:46:45] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117564.3 >= Resistance: 117568.193)
+[26-07-2025 00:46:45] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:46:45] - [BTCUSDT] - 295ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:47:21] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:47:21] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:47:21] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.0526 >= Average Volume: 5.95151508)
+[26-07-2025 00:47:21] - [BTCUSDT] - 🔻 RSI Oversold: false (51.3931888544882 <= 35.0) - RSI: 51.3931888544882
+[26-07-2025 00:47:21] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117537.16777777778 >  SMA21: 117538.82238095238)
+[26-07-2025 00:47:21] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117553.25 <= Support: 117474.377)
+[26-07-2025 00:47:21] - [BTCUSDT] - 🔺 RSI Overbought: false (51.3931888544882 >= 65.0) - RSI: 51.3931888544882
+[26-07-2025 00:47:21] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117537.16777777778 < SMA21: 117538.82238095238)
+[26-07-2025 00:47:21] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117553.25 >= Resistance: 117568.193)
+[26-07-2025 00:47:21] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:47:21] - [BTCUSDT] - 361ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:47:29] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:47:29] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:47:29] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.11899 >= Average Volume: 5.95231176)
+[26-07-2025 00:47:29] - [BTCUSDT] - 🔻 RSI Oversold: false (51.3931888544882 <= 35.0) - RSI: 51.3931888544882
+[26-07-2025 00:47:29] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117537.16777777778 >  SMA21: 117538.82238095238)
+[26-07-2025 00:47:29] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117553.25 <= Support: 117474.377)
+[26-07-2025 00:47:29] - [BTCUSDT] - 🔺 RSI Overbought: false (51.3931888544882 >= 65.0) - RSI: 51.3931888544882
+[26-07-2025 00:47:29] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117537.16777777778 < SMA21: 117538.82238095238)
+[26-07-2025 00:47:29] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117553.25 >= Resistance: 117568.193)
+[26-07-2025 00:47:29] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:47:29] - [BTCUSDT] - 314ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:47:42] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:47:42] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:47:42] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.11222 >= Average Volume: 5.96423052)
+[26-07-2025 00:47:42] - [BTCUSDT] - 🔻 RSI Oversold: false (53.0374345664889 <= 35.0) - RSI: 53.0374345664889
+[26-07-2025 00:47:42] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.02222222222 >  SMA21: 117539.18857142857)
+[26-07-2025 00:47:42] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.94 <= Support: 117474.377)
+[26-07-2025 00:47:42] - [BTCUSDT] - 🔺 RSI Overbought: false (53.0374345664889 >= 65.0) - RSI: 53.0374345664889
+[26-07-2025 00:47:42] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117538.02222222222 < SMA21: 117539.18857142857)
+[26-07-2025 00:47:42] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.94 >= Resistance: 117568.193)
+[26-07-2025 00:47:42] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:47:42] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:47:49] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:47:49] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:47:49] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.33131 >= Average Volume: 5.966859599999999)
+[26-07-2025 00:47:49] - [BTCUSDT] - 🔻 RSI Oversold: false (53.0374345664889 <= 35.0) - RSI: 53.0374345664889
+[26-07-2025 00:47:49] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.02222222222 >  SMA21: 117539.18857142857)
+[26-07-2025 00:47:49] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.94 <= Support: 117474.377)
+[26-07-2025 00:47:49] - [BTCUSDT] - 🔺 RSI Overbought: false (53.0374345664889 >= 65.0) - RSI: 53.0374345664889
+[26-07-2025 00:47:49] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117538.02222222222 < SMA21: 117539.18857142857)
+[26-07-2025 00:47:49] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.94 >= Resistance: 117568.193)
+[26-07-2025 00:47:49] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:47:49] - [BTCUSDT] - 300ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:48:09] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:48:09] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:48:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.22486 >= Average Volume: 5.9775822)
+[26-07-2025 00:48:09] - [BTCUSDT] - 🔻 RSI Oversold: false (53.0374345664889 <= 35.0) - RSI: 53.0374345664889
+[26-07-2025 00:48:09] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.02222222222 >  SMA21: 117539.18857142857)
+[26-07-2025 00:48:09] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.94 <= Support: 117474.377)
+[26-07-2025 00:48:09] - [BTCUSDT] - 🔺 RSI Overbought: false (53.0374345664889 >= 65.0) - RSI: 53.0374345664889
+[26-07-2025 00:48:09] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117538.02222222222 < SMA21: 117539.18857142857)
+[26-07-2025 00:48:09] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.94 >= Resistance: 117568.193)
+[26-07-2025 00:48:09] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:48:09] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:48:21] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:48:21] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:48:21] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.03588 >= Average Volume: 5.9403938400000005)
+[26-07-2025 00:48:21] - [BTCUSDT] - 🔻 RSI Oversold: false (53.03330253838253 <= 35.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:21] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.98777777777 >  SMA21: 117542.2361904762)
+[26-07-2025 00:48:21] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.93 <= Support: 117474.377)
+[26-07-2025 00:48:21] - [BTCUSDT] - 🔺 RSI Overbought: false (53.03330253838253 >= 65.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:21] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.98777777777 < SMA21: 117542.2361904762)
+[26-07-2025 00:48:21] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.93 >= Resistance: 117568.193)
+[26-07-2025 00:48:21] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:48:21] - [BTCUSDT] - 370ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:48:32] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:48:32] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:48:32] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.07027 >= Average Volume: 5.94080652)
+[26-07-2025 00:48:32] - [BTCUSDT] - 🔻 RSI Oversold: false (53.035368643322926 <= 35.0) - RSI: 53.035368643322926
+[26-07-2025 00:48:32] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.98888888888 >  SMA21: 117542.23666666665)
+[26-07-2025 00:48:32] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.94 <= Support: 117474.377)
+[26-07-2025 00:48:32] - [BTCUSDT] - 🔺 RSI Overbought: false (53.035368643322926 >= 65.0) - RSI: 53.035368643322926
+[26-07-2025 00:48:32] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.98888888888 < SMA21: 117542.23666666665)
+[26-07-2025 00:48:32] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.94 >= Resistance: 117568.193)
+[26-07-2025 00:48:32] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:48:32] - [BTCUSDT] - 351ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:48:39] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:48:39] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:48:39] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.08708 >= Average Volume: 5.9410082399999995)
+[26-07-2025 00:48:39] - [BTCUSDT] - 🔻 RSI Oversold: false (53.03330253838253 <= 35.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:39] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.98777777777 >  SMA21: 117542.2361904762)
+[26-07-2025 00:48:39] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.93 <= Support: 117474.377)
+[26-07-2025 00:48:39] - [BTCUSDT] - 🔺 RSI Overbought: false (53.03330253838253 >= 65.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:39] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.98777777777 < SMA21: 117542.2361904762)
+[26-07-2025 00:48:39] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.93 >= Resistance: 117568.193)
+[26-07-2025 00:48:39] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:48:39] - [BTCUSDT] - 307ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:48:45] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:48:45] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:48:45] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.10266 >= Average Volume: 5.9411952)
+[26-07-2025 00:48:45] - [BTCUSDT] - 🔻 RSI Oversold: false (53.03330253838253 <= 35.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:45] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.98777777777 >  SMA21: 117542.2361904762)
+[26-07-2025 00:48:45] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.93 <= Support: 117474.377)
+[26-07-2025 00:48:45] - [BTCUSDT] - 🔺 RSI Overbought: false (53.03330253838253 >= 65.0) - RSI: 53.03330253838253
+[26-07-2025 00:48:45] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.98777777777 < SMA21: 117542.2361904762)
+[26-07-2025 00:48:45] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.93 >= Resistance: 117568.193)
+[26-07-2025 00:48:45] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:48:45] - [BTCUSDT] - 320ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:49:15] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:49:15] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:49:16] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.50158 >= Average Volume: 5.945982239999999)
+[26-07-2025 00:49:16] - [BTCUSDT] - 🔻 RSI Oversold: false (53.035368643322926 <= 35.0) - RSI: 53.035368643322926
+[26-07-2025 00:49:16] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.98888888888 >  SMA21: 117542.23666666665)
+[26-07-2025 00:49:16] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.94 <= Support: 117474.377)
+[26-07-2025 00:49:16] - [BTCUSDT] - 🔺 RSI Overbought: false (53.035368643322926 >= 65.0) - RSI: 53.035368643322926
+[26-07-2025 00:49:16] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.98888888888 < SMA21: 117542.23666666665)
+[26-07-2025 00:49:16] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.94 >= Resistance: 117568.193)
+[26-07-2025 00:49:16] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:49:16] - [BTCUSDT] - 315ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:49:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:49:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:49:27] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.18507 >= Average Volume: 5.84161056)
+[26-07-2025 00:49:27] - [BTCUSDT] - 🔻 RSI Oversold: false (46.67865348116977 <= 35.0) - RSI: 46.67865348116977
+[26-07-2025 00:49:27] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.75777777779 >  SMA21: 117543.23238095238)
+[26-07-2025 00:49:27] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117560.93 <= Support: 117474.377)
+[26-07-2025 00:49:27] - [BTCUSDT] - 🔺 RSI Overbought: false (46.67865348116977 >= 65.0) - RSI: 46.67865348116977
+[26-07-2025 00:49:27] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.75777777779 < SMA21: 117543.23238095238)
+[26-07-2025 00:49:27] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117560.93 >= Resistance: 117568.193)
+[26-07-2025 00:49:27] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:49:27] - [BTCUSDT] - 295ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:49:31] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:49:31] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:49:31] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.52195 >= Average Volume: 5.85765312)
+[26-07-2025 00:49:31] - [BTCUSDT] - 🔻 RSI Oversold: false (42.89910951987416 <= 35.0) - RSI: 42.89910951987416
+[26-07-2025 00:49:31] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117547.79777777777 >  SMA21: 117542.39238095237)
+[26-07-2025 00:49:31] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117543.29 <= Support: 117474.377)
+[26-07-2025 00:49:31] - [BTCUSDT] - 🔺 RSI Overbought: false (42.89910951987416 >= 65.0) - RSI: 42.89910951987416
+[26-07-2025 00:49:31] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117547.79777777777 < SMA21: 117542.39238095237)
+[26-07-2025 00:49:31] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117543.29 >= Resistance: 117568.193)
+[26-07-2025 00:49:31] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:49:31] - [BTCUSDT] - 299ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:49:57] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:49:57] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:49:57] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 5.72267 >= Average Volume: 5.90806176)
+[26-07-2025 00:49:57] - [BTCUSDT] - 🔻 RSI Oversold: false (40.12019746726717 <= 35.0) - RSI: 40.12019746726717
+[26-07-2025 00:49:57] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117546.12111111109 >  SMA21: 117541.67380952381)
+[26-07-2025 00:49:57] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117528.2 <= Support: 117474.377)
+[26-07-2025 00:49:57] - [BTCUSDT] - 🔺 RSI Overbought: false (40.12019746726717 >= 65.0) - RSI: 40.12019746726717
+[26-07-2025 00:49:57] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117546.12111111109 < SMA21: 117541.67380952381)
+[26-07-2025 00:49:57] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117528.2 >= Resistance: 117568.193)
+[26-07-2025 00:49:57] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:49:57] - [BTCUSDT] - 326ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:50:16] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:50:16] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:50:16] - [BTCUSDT] - 📊 Volume: STRONG (Current Volume: 6.45286 >= Average Volume: 5.91682404)
+[26-07-2025 00:50:16] - [BTCUSDT] - 🔻 RSI Oversold: false (40.12019746726717 <= 35.0) - RSI: 40.12019746726717
+[26-07-2025 00:50:16] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117546.12111111109 >  SMA21: 117541.67380952381)
+[26-07-2025 00:50:16] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117528.2 <= Support: 117474.377)
+[26-07-2025 00:50:16] - [BTCUSDT] - 🔺 RSI Overbought: false (40.12019746726717 >= 65.0) - RSI: 40.12019746726717
+[26-07-2025 00:50:16] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117546.12111111109 < SMA21: 117541.67380952381)
+[26-07-2025 00:50:16] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117528.2 >= Resistance: 117568.193)
+[26-07-2025 00:50:16] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:50:16] - [BTCUSDT] - 290ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:50:25] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:50:25] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:50:26] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.08919 >= Average Volume: 5.9058303599999995)
+[26-07-2025 00:50:26] - [BTCUSDT] - 🔻 RSI Oversold: false (49.086134453782485 <= 35.0) - RSI: 49.086134453782485
+[26-07-2025 00:50:26] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117548.53777777779 >  SMA21: 117540.43666666666)
+[26-07-2025 00:50:26] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117528.19 <= Support: 117474.377)
+[26-07-2025 00:50:26] - [BTCUSDT] - 🔺 RSI Overbought: false (49.086134453782485 >= 65.0) - RSI: 49.086134453782485
+[26-07-2025 00:50:26] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117548.53777777779 < SMA21: 117540.43666666666)
+[26-07-2025 00:50:26] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117528.19 >= Resistance: 117568.193)
+[26-07-2025 00:50:26] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:50:26] - [BTCUSDT] - 301ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:50:33] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:50:33] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:50:34] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.96925 >= Average Volume: 5.91639108)
+[26-07-2025 00:50:34] - [BTCUSDT] - 🔻 RSI Oversold: false (51.139112903226945 <= 35.0) - RSI: 51.139112903226945
+[26-07-2025 00:50:34] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.42666666668 >  SMA21: 117540.81761904762)
+[26-07-2025 00:50:34] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.19 <= Support: 117474.377)
+[26-07-2025 00:50:34] - [BTCUSDT] - 🔺 RSI Overbought: false (51.139112903226945 >= 65.0) - RSI: 51.139112903226945
+[26-07-2025 00:50:34] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.42666666668 < SMA21: 117540.81761904762)
+[26-07-2025 00:50:34] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.19 >= Resistance: 117568.193)
+[26-07-2025 00:50:34] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:50:34] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:50:40] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:50:40] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:50:41] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.99635 >= Average Volume: 5.91671628)
+[26-07-2025 00:50:41] - [BTCUSDT] - 🔻 RSI Oversold: false (51.139112903226945 <= 35.0) - RSI: 51.139112903226945
+[26-07-2025 00:50:41] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.42666666668 >  SMA21: 117540.81761904762)
+[26-07-2025 00:50:41] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.19 <= Support: 117474.377)
+[26-07-2025 00:50:41] - [BTCUSDT] - 🔺 RSI Overbought: false (51.139112903226945 >= 65.0) - RSI: 51.139112903226945
+[26-07-2025 00:50:41] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.42666666668 < SMA21: 117540.81761904762)
+[26-07-2025 00:50:41] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.19 >= Resistance: 117568.193)
+[26-07-2025 00:50:41] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:50:41] - [BTCUSDT] - 306ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:50:45] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:50:45] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:50:45] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.00272 >= Average Volume: 5.916792719999999)
+[26-07-2025 00:50:45] - [BTCUSDT] - 🔻 RSI Oversold: false (51.136650032762596 <= 35.0) - RSI: 51.136650032762596
+[26-07-2025 00:50:45] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.42555555556 >  SMA21: 117540.81714285715)
+[26-07-2025 00:50:45] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.18 <= Support: 117474.377)
+[26-07-2025 00:50:45] - [BTCUSDT] - 🔺 RSI Overbought: false (51.136650032762596 >= 65.0) - RSI: 51.136650032762596
+[26-07-2025 00:50:45] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.42555555556 < SMA21: 117540.81714285715)
+[26-07-2025 00:50:45] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.18 >= Resistance: 117568.193)
+[26-07-2025 00:50:45] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:50:45] - [BTCUSDT] - 315ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:51:01] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:51:01] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:51:01] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.23414 >= Average Volume: 5.91956976)
+[26-07-2025 00:51:01] - [BTCUSDT] - 🔻 RSI Oversold: false (51.139112903226945 <= 35.0) - RSI: 51.139112903226945
+[26-07-2025 00:51:01] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.42666666668 >  SMA21: 117540.81761904762)
+[26-07-2025 00:51:01] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.19 <= Support: 117474.377)
+[26-07-2025 00:51:01] - [BTCUSDT] - 🔺 RSI Overbought: false (51.139112903226945 >= 65.0) - RSI: 51.139112903226945
+[26-07-2025 00:51:01] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.42666666668 < SMA21: 117540.81761904762)
+[26-07-2025 00:51:01] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.19 >= Resistance: 117568.193)
+[26-07-2025 00:51:01] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:51:01] - [BTCUSDT] - 320ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:51:12] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:51:12] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:51:13] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.56504 >= Average Volume: 5.92354056)
+[26-07-2025 00:51:13] - [BTCUSDT] - 🔻 RSI Oversold: false (51.136650032762596 <= 35.0) - RSI: 51.136650032762596
+[26-07-2025 00:51:13] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117549.42555555556 >  SMA21: 117540.81714285715)
+[26-07-2025 00:51:13] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.18 <= Support: 117474.377)
+[26-07-2025 00:51:13] - [BTCUSDT] - 🔺 RSI Overbought: false (51.136650032762596 >= 65.0) - RSI: 51.136650032762596
+[26-07-2025 00:51:13] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117549.42555555556 < SMA21: 117540.81714285715)
+[26-07-2025 00:51:13] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.18 >= Resistance: 117568.193)
+[26-07-2025 00:51:13] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:51:13] - [BTCUSDT] - 327ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:51:18] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:51:18] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:51:19] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 6.8E-4 >= Average Volume: 5.84276148)
+[26-07-2025 00:51:19] - [BTCUSDT] - 🔻 RSI Oversold: false (51.54963926430406 <= 35.0) - RSI: 51.54963926430406
+[26-07-2025 00:51:19] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117552.73222222223 >  SMA21: 117541.15047619048)
+[26-07-2025 00:51:19] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.19 <= Support: 117474.377)
+[26-07-2025 00:51:19] - [BTCUSDT] - 🔺 RSI Overbought: false (51.54963926430406 >= 65.0) - RSI: 51.54963926430406
+[26-07-2025 00:51:19] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117552.73222222223 < SMA21: 117541.15047619048)
+[26-07-2025 00:51:19] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.19 >= Resistance: 117568.193)
+[26-07-2025 00:51:19] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:51:19] - [BTCUSDT] - 304ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:51:25] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:51:25] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:51:25] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.05317 >= Average Volume: 5.843391359999999)
+[26-07-2025 00:51:25] - [BTCUSDT] - 🔻 RSI Oversold: false (51.547177480818426 <= 35.0) - RSI: 51.547177480818426
+[26-07-2025 00:51:25] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117552.73111111112 >  SMA21: 117541.15)
+[26-07-2025 00:51:25] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.18 <= Support: 117474.377)
+[26-07-2025 00:51:25] - [BTCUSDT] - 🔺 RSI Overbought: false (51.547177480818426 >= 65.0) - RSI: 51.547177480818426
+[26-07-2025 00:51:25] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117552.73111111112 < SMA21: 117541.15)
+[26-07-2025 00:51:25] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.18 >= Resistance: 117568.193)
+[26-07-2025 00:51:25] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:51:25] - [BTCUSDT] - 298ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:51:46] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:51:46] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:51:47] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.24726 >= Average Volume: 5.84572044)
+[26-07-2025 00:51:47] - [BTCUSDT] - 🔻 RSI Oversold: false (51.547177480818426 <= 35.0) - RSI: 51.547177480818426
+[26-07-2025 00:51:47] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117552.73111111112 >  SMA21: 117541.15)
+[26-07-2025 00:51:47] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.18 <= Support: 117474.377)
+[26-07-2025 00:51:47] - [BTCUSDT] - 🔺 RSI Overbought: false (51.547177480818426 >= 65.0) - RSI: 51.547177480818426
+[26-07-2025 00:51:47] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117552.73111111112 < SMA21: 117541.15)
+[26-07-2025 00:51:47] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.18 >= Resistance: 117568.193)
+[26-07-2025 00:51:47] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:51:47] - [BTCUSDT] - 307ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:52:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:52:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:52:28] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.23333 >= Average Volume: 5.742562680000001)
+[26-07-2025 00:52:28] - [BTCUSDT] - 🔻 RSI Oversold: false (50.06021888254593 <= 35.0) - RSI: 50.06021888254593
+[26-07-2025 00:52:28] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117551.77444444444 >  SMA21: 117540.62904761905)
+[26-07-2025 00:52:28] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117536.18 <= Support: 117474.377)
+[26-07-2025 00:52:28] - [BTCUSDT] - 🔺 RSI Overbought: false (50.06021888254593 >= 65.0) - RSI: 50.06021888254593
+[26-07-2025 00:52:28] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117551.77444444444 < SMA21: 117540.62904761905)
+[26-07-2025 00:52:28] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117536.18 >= Resistance: 117568.193)
+[26-07-2025 00:52:28] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:52:28] - [BTCUSDT] - 590ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:52:39] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:52:39] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:52:40] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.40311 >= Average Volume: 5.76860004)
+[26-07-2025 00:52:40] - [BTCUSDT] - 🔻 RSI Oversold: false (54.67465183706474 <= 35.0) - RSI: 54.67465183706474
+[26-07-2025 00:52:40] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117553.93444444443 >  SMA21: 117541.55476190476)
+[26-07-2025 00:52:40] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117555.62 <= Support: 117474.377)
+[26-07-2025 00:52:40] - [BTCUSDT] - 🔺 RSI Overbought: false (54.67465183706474 >= 65.0) - RSI: 54.67465183706474
+[26-07-2025 00:52:40] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117553.93444444443 < SMA21: 117541.55476190476)
+[26-07-2025 00:52:40] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117555.62 >= Resistance: 117568.193)
+[26-07-2025 00:52:40] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:52:40] - [BTCUSDT] - 340ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:53:03] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:53:03] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:53:04] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 5.55799 >= Average Volume: 5.8064586)
+[26-07-2025 00:53:04] - [BTCUSDT] - 🔻 RSI Oversold: false (49.6442851949952 <= 35.0) - RSI: 49.6442851949952
+[26-07-2025 00:53:04] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117551.59666666665 >  SMA21: 117540.55285714284)
+[26-07-2025 00:53:04] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117534.58 <= Support: 117474.377)
+[26-07-2025 00:53:04] - [BTCUSDT] - 🔺 RSI Overbought: false (49.6442851949952 >= 65.0) - RSI: 49.6442851949952
+[26-07-2025 00:53:04] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117551.59666666665 < SMA21: 117540.55285714284)
+[26-07-2025 00:53:04] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117534.58 >= Resistance: 117568.193)
+[26-07-2025 00:53:04] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:53:04] - [BTCUSDT] - 334ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:53:25] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:53:25] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:53:25] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.16275 >= Average Volume: 5.7988102800000005)
+[26-07-2025 00:53:25] - [BTCUSDT] - 🔻 RSI Oversold: false (55.30807058143139 <= 35.0) - RSI: 55.30807058143139
+[26-07-2025 00:53:25] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117547.19555555556 >  SMA21: 117539.95523809524)
+[26-07-2025 00:53:25] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117534.58 <= Support: 117474.377)
+[26-07-2025 00:53:25] - [BTCUSDT] - 🔺 RSI Overbought: false (55.30807058143139 >= 65.0) - RSI: 55.30807058143139
+[26-07-2025 00:53:25] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117547.19555555556 < SMA21: 117539.95523809524)
+[26-07-2025 00:53:25] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117534.58 >= Resistance: 117568.193)
+[26-07-2025 00:53:25] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:53:25] - [BTCUSDT] - 305ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:53:39] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:53:39] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:53:39] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.30107 >= Average Volume: 5.8124701199999995)
+[26-07-2025 00:53:39] - [BTCUSDT] - 🔻 RSI Oversold: false (56.03369763205819 <= 35.0) - RSI: 56.03369763205819
+[26-07-2025 00:53:39] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117547.51222222221 >  SMA21: 117540.09095238095)
+[26-07-2025 00:53:39] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.43 <= Support: 117474.377)
+[26-07-2025 00:53:39] - [BTCUSDT] - 🔺 RSI Overbought: false (56.03369763205819 >= 65.0) - RSI: 56.03369763205819
+[26-07-2025 00:53:39] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117547.51222222221 < SMA21: 117540.09095238095)
+[26-07-2025 00:53:39] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.43 >= Resistance: 117568.193)
+[26-07-2025 00:53:39] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:53:39] - [BTCUSDT] - 334ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:54:09] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:54:09] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:54:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 3.5219 >= Average Volume: 5.83912008)
+[26-07-2025 00:54:09] - [BTCUSDT] - 🔻 RSI Oversold: false (56.03369763205819 <= 35.0) - RSI: 56.03369763205819
+[26-07-2025 00:54:09] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117547.51222222221 >  SMA21: 117540.09095238095)
+[26-07-2025 00:54:09] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.43 <= Support: 117474.377)
+[26-07-2025 00:54:09] - [BTCUSDT] - 🔺 RSI Overbought: false (56.03369763205819 >= 65.0) - RSI: 56.03369763205819
+[26-07-2025 00:54:09] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117547.51222222221 < SMA21: 117540.09095238095)
+[26-07-2025 00:54:09] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.43 >= Resistance: 117568.193)
+[26-07-2025 00:54:09] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:54:09] - [BTCUSDT] - 333ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:54:28] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:54:28] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:54:29] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.024 >= Average Volume: 5.795438399999999)
+[26-07-2025 00:54:29] - [BTCUSDT] - 🔻 RSI Oversold: false (61.737221699591444 <= 35.0) - RSI: 61.737221699591444
+[26-07-2025 00:54:29] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.78999999998 >  SMA21: 117539.62857142856)
+[26-07-2025 00:54:29] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.43 <= Support: 117474.377)
+[26-07-2025 00:54:29] - [BTCUSDT] - 🔺 RSI Overbought: false (61.737221699591444 >= 65.0) - RSI: 61.737221699591444
+[26-07-2025 00:54:29] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.78999999998 < SMA21: 117539.62857142856)
+[26-07-2025 00:54:29] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.43 >= Resistance: 117568.193)
+[26-07-2025 00:54:29] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:54:29] - [BTCUSDT] - 309ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:54:58] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:54:58] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:54:58] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.40873 >= Average Volume: 5.80005516)
+[26-07-2025 00:54:58] - [BTCUSDT] - 🔻 RSI Oversold: false (61.730950141112444 <= 35.0) - RSI: 61.730950141112444
+[26-07-2025 00:54:58] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.78777777779 >  SMA21: 117539.62761904762)
+[26-07-2025 00:54:58] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.41 <= Support: 117474.377)
+[26-07-2025 00:54:58] - [BTCUSDT] - 🔺 RSI Overbought: false (61.730950141112444 >= 65.0) - RSI: 61.730950141112444
+[26-07-2025 00:54:58] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.78777777779 < SMA21: 117539.62761904762)
+[26-07-2025 00:54:58] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.41 >= Resistance: 117568.193)
+[26-07-2025 00:54:58] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:54:58] - [BTCUSDT] - 310ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:55:08] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:55:08] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:55:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.48135 >= Average Volume: 5.8009265999999995)
+[26-07-2025 00:55:09] - [BTCUSDT] - 🔻 RSI Oversold: false (61.730950141112444 <= 35.0) - RSI: 61.730950141112444
+[26-07-2025 00:55:09] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.78777777779 >  SMA21: 117539.62761904762)
+[26-07-2025 00:55:09] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.41 <= Support: 117474.377)
+[26-07-2025 00:55:09] - [BTCUSDT] - 🔺 RSI Overbought: false (61.730950141112444 >= 65.0) - RSI: 61.730950141112444
+[26-07-2025 00:55:09] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.78777777779 < SMA21: 117539.62761904762)
+[26-07-2025 00:55:09] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.41 >= Resistance: 117568.193)
+[26-07-2025 00:55:09] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:55:09] - [BTCUSDT] - 329ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:55:14] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:55:14] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:55:14] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.48657 >= Average Volume: 5.800989240000001)
+[26-07-2025 00:55:14] - [BTCUSDT] - 🔻 RSI Oversold: false (61.73482187656834 <= 35.0) - RSI: 61.73482187656834
+[26-07-2025 00:55:14] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117542.7888888889 >  SMA21: 117539.62809523809)
+[26-07-2025 00:55:14] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.42 <= Support: 117474.377)
+[26-07-2025 00:55:14] - [BTCUSDT] - 🔺 RSI Overbought: false (61.73482187656834 >= 65.0) - RSI: 61.73482187656834
+[26-07-2025 00:55:14] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117542.7888888889 < SMA21: 117539.62809523809)
+[26-07-2025 00:55:14] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.42 >= Resistance: 117568.193)
+[26-07-2025 00:55:14] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:55:14] - [BTCUSDT] - 306ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:55:30] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:55:30] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:55:30] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.08592 >= Average Volume: 5.70539004)
+[26-07-2025 00:55:30] - [BTCUSDT] - 🔻 RSI Oversold: false (60.12285975689864 <= 35.0) - RSI: 60.12285975689864
+[26-07-2025 00:55:30] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117541.02777777778 >  SMA21: 117539.1642857143)
+[26-07-2025 00:55:30] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.41 <= Support: 117474.377)
+[26-07-2025 00:55:30] - [BTCUSDT] - 🔺 RSI Overbought: false (60.12285975689864 >= 65.0) - RSI: 60.12285975689864
+[26-07-2025 00:55:30] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117541.02777777778 < SMA21: 117539.1642857143)
+[26-07-2025 00:55:30] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.41 >= Resistance: 117568.193)
+[26-07-2025 00:55:30] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:55:30] - [BTCUSDT] - 299ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:55:35] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:55:35] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:55:36] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.09714 >= Average Volume: 5.70552468)
+[26-07-2025 00:55:36] - [BTCUSDT] - 🔻 RSI Oversold: false (60.12546559498413 <= 35.0) - RSI: 60.12546559498413
+[26-07-2025 00:55:36] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117541.02888888889 >  SMA21: 117539.16476190476)
+[26-07-2025 00:55:36] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117537.42 <= Support: 117474.377)
+[26-07-2025 00:55:36] - [BTCUSDT] - 🔺 RSI Overbought: false (60.12546559498413 >= 65.0) - RSI: 60.12546559498413
+[26-07-2025 00:55:36] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117541.02888888889 < SMA21: 117539.16476190476)
+[26-07-2025 00:55:36] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117537.42 >= Resistance: 117568.193)
+[26-07-2025 00:55:36] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:55:36] - [BTCUSDT] - 298ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:55:49] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:55:49] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:55:50] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.40843 >= Average Volume: 5.73326016)
+[26-07-2025 00:55:50] - [BTCUSDT] - 🔻 RSI Oversold: false (53.42314615876219 <= 35.0) - RSI: 53.42314615876219
+[26-07-2025 00:55:50] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.89555555556 >  SMA21: 117538.25047619047)
+[26-07-2025 00:55:50] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117518.22 <= Support: 117474.377)
+[26-07-2025 00:55:50] - [BTCUSDT] - 🔺 RSI Overbought: false (53.42314615876219 >= 65.0) - RSI: 53.42314615876219
+[26-07-2025 00:55:50] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117538.89555555556 < SMA21: 117538.25047619047)
+[26-07-2025 00:55:50] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117518.22 >= Resistance: 117568.193)
+[26-07-2025 00:55:50] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:55:50] - [BTCUSDT] - 302ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:56:09] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:56:09] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:56:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.99902 >= Average Volume: 5.74034724)
+[26-07-2025 00:56:09] - [BTCUSDT] - 🔻 RSI Oversold: false (53.42004412960583 <= 35.0) - RSI: 53.42004412960583
+[26-07-2025 00:56:09] - [BTCUSDT] - 📉 Bullish Trend: true (SMA9: 117538.89444444445 >  SMA21: 117538.25)
+[26-07-2025 00:56:09] - [BTCUSDT] - 🛡️ Touched Support: false (Current Price: 117518.21 <= Support: 117474.377)
+[26-07-2025 00:56:09] - [BTCUSDT] - 🔺 RSI Overbought: false (53.42004412960583 >= 65.0) - RSI: 53.42004412960583
+[26-07-2025 00:56:09] - [BTCUSDT] - 📈 Bearish Trend: false (SMA9: 117538.89444444445 < SMA21: 117538.25)
+[26-07-2025 00:56:09] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117518.21 >= Resistance: 117568.193)
+[26-07-2025 00:56:09] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:56:09] - [BTCUSDT] - 310ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:56:40] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:56:40] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:56:41] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.17798 >= Average Volume: 5.728379879999999)
+[26-07-2025 00:56:41] - [BTCUSDT] - 🔻 RSI Oversold: false (48.31425270454829 <= 35.0) - RSI: 48.31425270454829
+[26-07-2025 00:56:41] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117532.12555555554 >  SMA21: 117534.7157142857)
+[26-07-2025 00:56:41] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117500.01 <= Support: 117505.22)
+[26-07-2025 00:56:41] - [BTCUSDT] - 🔺 RSI Overbought: false (48.31425270454829 >= 65.0) - RSI: 48.31425270454829
+[26-07-2025 00:56:41] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117532.12555555554 < SMA21: 117534.7157142857)
+[26-07-2025 00:56:41] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117500.01 >= Resistance: 117571.62)
+[26-07-2025 00:56:41] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:56:41] - [BTCUSDT] - 314ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:57:05] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:57:05] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:57:05] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.59263 >= Average Volume: 5.73335568)
+[26-07-2025 00:57:05] - [BTCUSDT] - 🔻 RSI Oversold: false (45.81445147154079 <= 35.0) - RSI: 45.81445147154079
+[26-07-2025 00:57:05] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117530.97111111111 >  SMA21: 117534.22095238096)
+[26-07-2025 00:57:05] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117489.62 <= Support: 117498.65)
+[26-07-2025 00:57:05] - [BTCUSDT] - 🔺 RSI Overbought: false (45.81445147154079 >= 65.0) - RSI: 45.81445147154079
+[26-07-2025 00:57:05] - [BTCUSDT] - 📈 Bearish Trend: true (SMA9: 117530.97111111111 < SMA21: 117534.22095238096)
+[26-07-2025 00:57:05] - [BTCUSDT] - 🚀 Touched Resistance: false (Current Price: 117489.62 >= Resistance: 117570.89)
+[26-07-2025 00:57:05] - [BTCUSDT] - 🟡 No action recommended at this time.
+[26-07-2025 00:57:05] - [BTCUSDT] - 329ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:57:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:57:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:57:27] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.06938 >= Average Volume: 5.59399788)
+[26-07-2025 00:57:27] - [BTCUSDT] - 🔻 RSI Oversold: true (33.01526717556891 <= 35.0) - RSI: 33.01526717556891
+[26-07-2025 00:57:27] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117523.04777777777 >  SMA21: 117532.21857142856)
+[26-07-2025 00:57:27] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117489.62 <= Support: 117498.65)
+[26-07-2025 00:57:27] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:57:27] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:57:27] - [BTCUSDT] - 305ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:57:43] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:57:43] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:57:43] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.43516 >= Average Volume: 5.59838724)
+[26-07-2025 00:57:43] - [BTCUSDT] - 🔻 RSI Oversold: true (31.57306016719329 <= 35.0) - RSI: 31.57306016719329
+[26-07-2025 00:57:43] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117522.22333333333 >  SMA21: 117531.86523809524)
+[26-07-2025 00:57:43] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117482.2 <= Support: 117491.972)
+[26-07-2025 00:57:43] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:57:43] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:57:43] - [BTCUSDT] - 296ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:57:59] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:57:59] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:57:59] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 1.17515 >= Average Volume: 5.60726712)
+[26-07-2025 00:57:59] - [BTCUSDT] - 🔻 RSI Oversold: true (29.502695566065995 <= 35.0) - RSI: 29.502695566065995
+[26-07-2025 00:57:59] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117520.8988888889 >  SMA21: 117531.29761904762)
+[26-07-2025 00:57:59] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117470.28 <= Support: 117481.244)
+[26-07-2025 00:57:59] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:57:59] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:57:59] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:58:05] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:58:05] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:58:05] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.44531 >= Average Volume: 5.62250904)
+[26-07-2025 00:58:05] - [BTCUSDT] - 🔻 RSI Oversold: true (31.792044578809637 <= 35.0) - RSI: 31.792044578809637
+[26-07-2025 00:58:05] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117522.35333333333 >  SMA21: 117531.92095238094)
+[26-07-2025 00:58:05] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117483.37 <= Support: 117493.025)
+[26-07-2025 00:58:05] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:58:05] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:58:05] - [BTCUSDT] - 336ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:58:26] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:58:26] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:58:26] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.0313 >= Average Volume: 5.60141796)
+[26-07-2025 00:58:26] - [BTCUSDT] - 🔻 RSI Oversold: true (18.211198797443103 <= 35.0) - RSI: 18.211198797443103
+[26-07-2025 00:58:26] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117518.76000000001 >  SMA21: 117530.29047619048)
+[26-07-2025 00:58:26] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117489.61 <= Support: 117498.641)
+[26-07-2025 00:58:26] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:58:26] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:58:26] - [BTCUSDT] - 300ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:58:55] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:58:55] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:58:56] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.75852 >= Average Volume: 5.6101446)
+[26-07-2025 00:58:56] - [BTCUSDT] - 🔻 RSI Oversold: true (18.57837635615624 <= 35.0) - RSI: 18.57837635615624
+[26-07-2025 00:58:56] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117518.82666666666 >  SMA21: 117530.31904761905)
+[26-07-2025 00:58:56] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117490.21 <= Support: 117498.641)
+[26-07-2025 00:58:56] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:58:56] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:58:56] - [BTCUSDT] - 303ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:59:27] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:59:27] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:59:28] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.12584 >= Average Volume: 5.3832536399999995)
+[26-07-2025 00:59:28] - [BTCUSDT] - 🔻 RSI Oversold: true (13.667577346227361 <= 35.0) - RSI: 13.667577346227361
+[26-07-2025 00:59:28] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.78555555556 >  SMA21: 117527.31238095238)
+[26-07-2025 00:59:28] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117481.51 <= Support: 117491.351)
+[26-07-2025 00:59:28] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:59:28] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:59:28] - [BTCUSDT] - 344ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:59:44] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:59:44] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:59:44] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.31287 >= Average Volume: 5.385498)
+[26-07-2025 00:59:44] - [BTCUSDT] - 🔻 RSI Oversold: true (13.66656822208833 <= 35.0) - RSI: 13.66656822208833
+[26-07-2025 00:59:44] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.78444444445 >  SMA21: 117527.3119047619)
+[26-07-2025 00:59:44] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117481.5 <= Support: 117491.342)
+[26-07-2025 00:59:44] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:59:44] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:59:44] - [BTCUSDT] - 295ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 00:59:54] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 00:59:54] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 00:59:54] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.33644 >= Average Volume: 5.38578084)
+[26-07-2025 00:59:54] - [BTCUSDT] - 🔻 RSI Oversold: true (13.667577346227361 <= 35.0) - RSI: 13.667577346227361
+[26-07-2025 00:59:54] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.78555555556 >  SMA21: 117527.31238095238)
+[26-07-2025 00:59:54] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117481.51 <= Support: 117491.351)
+[26-07-2025 00:59:54] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 00:59:54] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 00:59:54] - [BTCUSDT] - 300ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 01:00:09] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 01:00:09] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 01:00:09] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 0.57417 >= Average Volume: 5.3886336)
+[26-07-2025 01:00:09] - [BTCUSDT] - 🔻 RSI Oversold: true (13.667577346227361 <= 35.0) - RSI: 13.667577346227361
+[26-07-2025 01:00:09] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117511.78555555556 >  SMA21: 117527.31238095238)
+[26-07-2025 01:00:09] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117481.51 <= Support: 117491.351)
+[26-07-2025 01:00:09] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 01:00:09] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 01:00:09] - [BTCUSDT] - 367ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 01:00:32] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 01:00:32] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 01:00:32] - [BTCUSDT] - 📊 Volume: WEAK (Current Volume: 2.41331 >= Average Volume: 5.32874556)
+[26-07-2025 01:00:32] - [BTCUSDT] - 🔻 RSI Oversold: true (13.583327218020244 <= 35.0) - RSI: 13.583327218020244
+[26-07-2025 01:00:32] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117499.91888888889 >  SMA21: 117523.17714285714)
+[26-07-2025 01:00:32] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117454.0 <= Support: 117466.592)
+[26-07-2025 01:00:32] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 01:00:32] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 01:00:32] - [BTCUSDT] - 365ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
+[26-07-2025 01:01:00] - Started bot 48197400-cd64-4455-b49a-be01750265ef with interval 61s
+[26-07-2025 01:01:00] - [BTCUSDT - 48197400-cd64-4455-b49a-be01750265ef] Checking market data...
+[26-07-2025 01:01:00] - [BTCUSDT] - 📊 Volume: STRONG (Current Volume: 7.0912 >= Average Volume: 5.384880239999999)
+[26-07-2025 01:01:00] - [BTCUSDT] - 🔻 RSI Oversold: true (13.878683362071982 <= 35.0) - RSI: 13.878683362071982
+[26-07-2025 01:01:00] - [BTCUSDT] - 📉 Bullish Trend: false (SMA9: 117500.2411111111 >  SMA21: 117523.31523809524)
+[26-07-2025 01:01:00] - [BTCUSDT] - 🛡️ Touched Support: true (Current Price: 117456.9 <= Support: 117469.20199999999)
+[26-07-2025 01:01:00] - [BTCUSDT] - 🔵 BUY signal detected!
+[26-07-2025 01:01:00] - Bought 100.0 units. Remaining wallet balance: 900.0
+[26-07-2025 01:01:00] - [BTCUSDT] - 359ms to process bot: 48197400-cd64-4455-b49a-be01750265ef
+_________________________________________________________________________________________________________________
