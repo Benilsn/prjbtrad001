@@ -1,6 +1,7 @@
 package dev.prjbtrad001.infra.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.prjbtrad001.app.bot.Wallet;
 import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
 import dev.prjbtrad001.infra.templates.Templates;
@@ -14,6 +15,8 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.util.List;
+
+import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
 
 @Path("/")
 @JBossLog
@@ -36,9 +39,16 @@ public class HomeResource {
   @GET()
   @Path("/refresh-data")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Cripto> refresh(@QueryParam("symbols") String symbolsJson) {
+  public List<Cripto> refreshCriptoData(@QueryParam("symbols") String symbolsJson) {
     log.info("Refreshing data for symbols: " + symbolsJson);
     return binanceService.getPrices(symbolsJson);
+  }
+
+  @GET()
+  @Path("/refresh-wallet")
+  public String refreshWallet() {
+    log.info("Refreshing wallet data...");
+    return FORMATTER2.format(String.format("R$%s", Wallet.get()));
   }
 
 

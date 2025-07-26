@@ -7,10 +7,27 @@
       /* ----------------------------------
        * 1. Initialize Bootstrap Tooltips
        * ---------------------------------- */
+      fetchWallet();
+      setInterval(fetchWallet, 5000);
       const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
       tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
       });
+
+    async function fetchWallet() {
+      try {
+        const response = await fetch('/refresh-wallet');
+        if (!response.ok) throw new Error("Failed to fetch wallet balance");
+
+        const data = await response.text();
+        console.log("Fetched wallet:", data);
+
+        const walletElement = document.getElementById('wallet-balance');
+        walletElement.textContent = data;
+      } catch (error) {
+        console.error('Error fetching wallet:', error);
+      }
+    }
 
       /* ----------------------------------
        * 2. Fetch and Update Prices
@@ -18,7 +35,7 @@
       async function fetchPrices() {
         try {
           const symbols = "{workingSymbols ?: ''}".split(',');
-        const params = new URLSearchParams({
+          const params = new URLSearchParams({
           symbols: JSON.stringify(symbols)
         });
 
