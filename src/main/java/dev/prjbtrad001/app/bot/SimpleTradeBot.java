@@ -1,13 +1,7 @@
 package dev.prjbtrad001.app.bot;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.prjbtrad001.app.service.BotOrchestratorService;
-import dev.prjbtrad001.app.service.TradingService;
-import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.persistence.*;
-import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +11,6 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @Entity
@@ -25,7 +18,7 @@ import static dev.prjbtrad001.app.utils.LogUtils.log;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runnable {
+public class SimpleTradeBot extends PanacheEntityBase {
 
   @Id
   @Setter(AccessLevel.NONE)
@@ -41,46 +34,12 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
 
   private boolean running = false;
 
+
   public SimpleTradeBot(BotParameters parameters) {
     this.parameters = parameters;
     this.status = new Status();
   }
 
-  @Override
-  public void run() {
-    if (!running) return;
-    try {
-      long processTime = System.currentTimeMillis();
-
-      log("[" + parameters.getBotType() + " - " + id + "] Checking market data...");
-      TradingService.analyzeMarket(this);
-
-      log(String.format("[%s] - %d", parameters.getBotType(), System.currentTimeMillis() - processTime) + "ms to process bot: " + id);
-      log(LINE_SEPARATOR, false);
-    } catch (Exception e) {
-      log("Error while running bot: " + e.getMessage());
-    }
-  }
-
-  @Override
-  public void start() {
-    this.running = true;
-  }
-
-  @Override
-  public void stop() {
-    this.running = false;
-  }
-
-  @Override
-  public boolean isRunning() {
-    return running;
-  }
-
-  @Override
-  public BotParameters getParameters() {
-    return parameters;
-  }
 
   public void buy(BigDecimal quantity) {
     if (quantity.compareTo(BigDecimal.ZERO) <= 0) {

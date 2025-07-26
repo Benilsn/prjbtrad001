@@ -92,7 +92,7 @@ public class BotResource {
   @GET
   @Path("/details/{botId}")
   public TemplateInstance botDetails(@PathParam("botId") UUID botId) {
-    TradeBot bot = botOrchestratorService.getBotById(botId);
+    SimpleTradeBot bot = botOrchestratorService.getBotById(botId);
     return
       Templates
         .botDetail()

@@ -1,5 +1,6 @@
 package dev.prjbtrad001.app.service;
 
+import dev.prjbtrad001.app.bot.BotTask;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.utils.LogUtils;
 import dev.prjbtrad001.domain.repository.BotRepository;
@@ -29,6 +30,9 @@ public class BotOrchestratorService {
 
   @ConfigProperty(name = "bot.data.strategy")
   String dataStrategy;
+
+  @Inject
+  BotRunnerService botRunnerService;
 
   private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
   private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
@@ -75,12 +79,13 @@ public class BotOrchestratorService {
 
     int interval = (Integer.parseInt(bot.getParameters().getInterval().replaceAll("[mhd]", "")) * 60) + 1;
 
-    bot.start();
+    bot.setRunning(true);
     persist(bot);
 
+    BotTask task = new BotTask(bot, botRunnerService);
     ScheduledFuture<?> future =
       scheduler
-        .scheduleAtFixedRate(bot, 0, interval, TimeUnit.SECONDS);
+        .scheduleAtFixedRate(task, 0, interval, TimeUnit.SECONDS);
 
     runningBots.put(bot.getId(), future);
     log("Started bot " + bot.getId() + " with interval " + interval + "s");
@@ -95,7 +100,7 @@ public class BotOrchestratorService {
       future.cancel(true);
     }
 
-    bot.stop();
+    bot.setRunning(false);
     log("Stopped bot " + bot.getId());
   }
 
