@@ -4,15 +4,11 @@ import dev.prjbtrad001.app.bot.BotTask;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.utils.LogUtils;
 import dev.prjbtrad001.domain.repository.BotRepository;
-import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
-import jakarta.enterprise.inject.literal.NamedLiteral;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -23,13 +19,8 @@ import static dev.prjbtrad001.app.utils.LogUtils.log;
 @ApplicationScoped
 public class BotOrchestratorService {
 
-  private BotRepository<SimpleTradeBot> botRepository;
-
   @Inject
-  Instance<BotRepository<SimpleTradeBot>> repositories;
-
-  @ConfigProperty(name = "bot.data.strategy")
-  String dataStrategy;
+  private BotRepository botRepository;
 
   @Inject
   BotRunnerService botRunnerService;
@@ -116,19 +107,18 @@ public class BotOrchestratorService {
       .values()
       .forEach(future -> future.cancel(true));
 
+    SimpleTradeBot
+      .findAll()
+      .stream()
+      .map(entity -> (SimpleTradeBot) entity)
+      .map(SimpleTradeBot::getId)
+      .toList()
+      .forEach(this::stopBot);
+
     LogUtils.shutdown();
     runningBots.clear();
     scheduler.shutdown();
     log("All bots stopped and scheduler shut down.");
   }
-
-  @PostConstruct
-  public void init() {
-    this.botRepository =
-      repositories
-        .select(NamedLiteral.of(dataStrategy))
-        .get();
-  }
-
 
 }

@@ -1,6 +1,9 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.app.bot.*;
+import dev.prjbtrad001.app.bot.BotParameters;
+import dev.prjbtrad001.app.bot.PurchaseStrategy;
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.bot.Wallet;
 import dev.prjbtrad001.app.dto.Kline;
 import lombok.Builder;
 import lombok.experimental.UtilityClass;
@@ -8,7 +11,8 @@ import lombok.extern.jbosslog.JBossLog;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +48,8 @@ public class TradingService {
         .tolerance(Collections.max(last(closePrices, 30)).subtract(Collections.min(last(closePrices, 30))).multiply(BigDecimal.valueOf(0.1)))
         .build();
 
-    if (!analyzeBuy(marketTrend, bot))     analyzeSell(marketTrend, bot);
+    if (!analyzeBuy(marketTrend, bot))
+      analyzeSell(marketTrend, bot);
   }
 
   private static boolean analyzeBuy(MarketTrend marketTrend, SimpleTradeBot bot) {
@@ -102,7 +107,7 @@ public class TradingService {
       }
 
       bot.getStatus().setPurchasePrice(marketTrend.currentPrice);
-      bot.getStatus().setPurchaseTime(Instant.now());
+      bot.getStatus().setPurchaseTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       bot.getStatus().setLastPrice(marketTrend.currentPrice);
       bot.getStatus().setLastRsi(marketTrend.rsi);
       bot.getStatus().setLastSmaShort(marketTrend.smaShort);
@@ -110,6 +115,7 @@ public class TradingService {
       bot.getStatus().setActualSupport(marketTrend.support);
       bot.getStatus().setActualResistance(marketTrend.resistance);
       bot.getStatus().setLastVolume(marketTrend.currentVolume);
+      bot.getStatus().setQuantity(quantity);
 
       bot.buy(valueToBuy);
       bought = true;
@@ -149,7 +155,9 @@ public class TradingService {
     if (isLong) {
       BigDecimal purchasePrice = bot.getStatus().getPurchasePrice();
       BigDecimal priceChangePercent =
-        ((marketTrend.currentPrice.subtract(purchasePrice)).divide(purchasePrice, 8, RoundingMode.HALF_UP)).multiply(BigDecimal.valueOf(100));
+        ((marketTrend.currentPrice.subtract(purchasePrice))
+          .divide(purchasePrice, 8, RoundingMode.HALF_UP))
+          .multiply(BigDecimal.valueOf(100));
 
       reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
       reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
@@ -167,8 +175,14 @@ public class TradingService {
       }
       log(marketTrend.botTypeName + "🔴 SELL signal detected!");
 
-      BigDecimal criptoAmount = bot.getStatus().getQuantity().divide(bot.getStatus().getPurchasePrice(), 8, RoundingMode.HALF_UP);
-      BigDecimal realizedProfit = criptoAmount.multiply(marketTrend.currentPrice);
+      BigDecimal criptoAmount =
+        bot.getStatus()
+          .getQuantity()
+          .divide(bot.getStatus().getPurchasePrice(), 8, RoundingMode.HALF_UP);
+
+      BigDecimal realizedProfit =
+        criptoAmount
+          .multiply(marketTrend.currentPrice);
 
       bot.sell(realizedProfit);
     } else {

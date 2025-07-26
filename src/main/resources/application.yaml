@@ -29,8 +29,6 @@ quarkus:
 
 bot:
   limit: 4
-  data:
-    strategy: h2db
   symbol:
     limit: 1
     list:

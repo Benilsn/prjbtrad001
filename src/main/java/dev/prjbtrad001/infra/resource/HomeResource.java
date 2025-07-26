@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.Wallet;
 import dev.prjbtrad001.app.dto.Cripto;
 import dev.prjbtrad001.app.service.BinanceService;
-import dev.prjbtrad001.infra.templates.Templates;
+import dev.prjbtrad001.app.utils.LogUtils;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -14,7 +14,9 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import java.util.List;
+import java.util.Queue;
 
 import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
 
@@ -49,6 +51,20 @@ public class HomeResource {
   public String refreshWallet() {
     log.info("Refreshing wallet data...");
     return String.format("R$%s", FORMATTER2.format(Wallet.get()));
+  }
+
+  @GET
+  @Path("/trade-log")
+  public TemplateInstance tradeLog() {
+    return Templates.tradeLog()
+      .data("pageTitle", "Trade Log");
+  }
+
+  @GET()
+  @Path("/refresh-log-data")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Queue<String> refreshLogData() {
+    return LogUtils.LOG_DATA;
   }
 
 

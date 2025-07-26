@@ -4,18 +4,14 @@ import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Default;
-import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Default
-@Named(value = "h2db")
 @ApplicationScoped
-public class H2Repository implements BotRepository<SimpleTradeBot> {
+public class H2Repository implements BotRepository {
 
   @Override
   @Transactional

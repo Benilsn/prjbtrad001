@@ -4,7 +4,6 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ public class Status {
   // Current state
   private boolean isLong;
   private BigDecimal purchasePrice;
-  private Instant purchaseTime;
+  private String purchaseTime;
   private BigDecimal quantity;
 
   // Status

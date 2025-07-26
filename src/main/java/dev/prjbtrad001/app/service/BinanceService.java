@@ -8,6 +8,7 @@ import dev.prjbtrad001.app.utils.CriptoUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;

@@ -34,11 +34,95 @@
             <div class="d-flex flex-wrap gap-2 mt-5">
                 <a href="/bots/{bot.running ? 'stop' : 'start'}/{bot.id}" methods="" class="btn btn-outline-neon-{bot.running ? 'red' : 'green'} btn-sm "> {bot.running ? 'Stop' : 'Run'} </a>
                 <!--<a href="/bots/edit/{bot.id}" class="btn btn-outline-neon btn-sm">Edit</a>-->
-                <a href="/bots/details/{bot.id}" class="btn btn-outline-neon btn-sm">More Info</a>
+                <a href="#" class="btn btn-outline-neon btn-sm" data-bs-toggle="modal" data-bs-target="#botModal-{bot.id}">
+                    More Info
+                </a>
             </div>
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="botModal-{bot.id}" tabindex="-1" aria-labelledby="botModalLabel-{bot.id}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light border-neon-neon">
+            <div class="modal-header">
+                <h5 class="modal-title text-neon-glow" id="botModalLabel-{bot.id}">Bot Details - {bot.parameters.botType}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <div class="card bg-dark border-neon p-4 mx-auto shadow-lg rounded-4">
+                <div class="row g-4">
+
+                    <!-- Settings -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <h5 class="section-title neon-cyan mb-4">🛠️ Settings</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">Status</span><span class="value {bot.running ? 'text-glow-green' : 'text-glow-red'}">{bot.running ? 'RUNNING' : 'IDLE'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Bot Type</span><span class="value">{bot.parameters.botType}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Interval</span><span class="value">{bot.parameters.interval}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Strategy</span><span class="value">{bot.parameters.purchaseStrategy}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Amount</span><span class="value">{bot.parameters.purchaseAmount}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Volume X</span><span class="value">{bot.parameters.volumeMultiplier}</span></li>
+                            <li class="d-flex flex-column"><span class="label">RS Window</span><span class="value">{bot.parameters.windowResistanceSupport}</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Indicators -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <h5 class="section-title neon-yellow">📊 Indicators</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">RSI Buy</span><span class="value">{bot.parameters.rsiPurchase}</span></li>
+                            <li class="d-flex flex-column"><span class="label">RSI Sell</span><span class="value">{bot.parameters.rsiSale}</span></li>
+                            <li class="d-flex flex-column"><span class="label">SMA Short</span><span class="value">{bot.parameters.smaShort}</span></li>
+                            <li class="d-flex flex-column"><span class="label">SMA Long</span><span class="value">{bot.parameters.smaLong}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Stop Loss</span><span class="value">{bot.parameters.stopLossPercent}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Take Profit</span><span class="value">{bot.parameters.takeProfitPercent}</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Trade Status -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <h5 class="section-title neon-green">💰 Trade S.</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">Is Long</span><span class="value">{bot.status.isLong}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Time</span><span class="value">{bot.status.purchaseTime}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">{bot.status.purchasePrice}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Quantity</span><span class="value">{bot.status.quantity}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last Price</span><span class="value">{bot.status.lastPrice}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last RSI</span><span class="value">{bot.status.lastRsi}</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Market Stats -->
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <h5 class="section-title neon-orange">📈 Market S.</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">Last SMA Short</span><span class="value">{bot.status.lastSmaShort}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last SMA Long</span><span class="value">{bot.status.lastSmaLong}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last Support</span><span class="value">{bot.status.actualSupport}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last Resistance</span><span class="value">{bot.status.actualResistance}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Last Volume</span><span class="value">{bot.status.lastVolume}</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-4">
+                        <a href="/bots" class="btn btn-create-neon px-5 py-2 fs-5">← Back to Bots</a>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
 {/for}
 
 
