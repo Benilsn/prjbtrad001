@@ -15,6 +15,6 @@ public interface BotRepository<T> extends PanacheRepositoryBase<T, UUID> {
   Optional<T> getBotById(UUID botId);
   void deleteBot(UUID botId);
 
-//  void updateBot(BotType botType);
+//  void updateBot(BotType botTypeName);
 
 }

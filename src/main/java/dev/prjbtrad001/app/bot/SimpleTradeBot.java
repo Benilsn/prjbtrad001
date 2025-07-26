@@ -1,15 +1,21 @@
 package dev.prjbtrad001.app.bot;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import dev.prjbtrad001.app.service.BotOrchestratorService;
 import dev.prjbtrad001.app.service.TradingService;
 import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
@@ -76,12 +82,12 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
     return parameters;
   }
 
-  public void buy(double quantity) {
-    if (quantity <= 0) {
+  public void buy(BigDecimal quantity) {
+    if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
       log("Cannot buy with zero or negative quantity.");
       return;
     }
-    if (Wallet.get() < quantity) {
+    if (Wallet.get().compareTo(quantity) < 0) {
       log("Insufficient funds to buy: " + quantity);
       return;
     }
@@ -90,8 +96,8 @@ public class SimpleTradeBot extends PanacheEntityBase implements TradeBot, Runna
     log("Bought " + quantity + " units. Remaining wallet balance: " + Wallet.get());
   }
 
-  public void sell(double quantity) {
-    if (quantity <= 0) {
+  public void sell(BigDecimal quantity) {
+    if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
       log("Cannot sell with zero or negative quantity.");
       return;
     }

@@ -9,6 +9,8 @@ import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.FormParam;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -40,19 +42,19 @@ public class BotParameters{
 
 
   @FormParam("stopLossPercent")
-  private double stopLossPercent;
+  private BigDecimal stopLossPercent;
 
   @FormParam("takeProfitPercent")
-  private double takeProfitPercent;
+  private BigDecimal takeProfitPercent;
 
   @FormParam("rsiPurchase")
-  private double rsiPurchase;
+  private BigDecimal rsiPurchase;
 
   @FormParam("rsiSale")
-  private double rsiSale;
+  private BigDecimal rsiSale;
 
   @FormParam("volumeMultiplier")
-  private double volumeMultiplier;
+  private BigDecimal volumeMultiplier;
 
   @FormParam("smaShort")
   private int smaShort;
@@ -64,7 +66,7 @@ public class BotParameters{
   private int windowResistanceSupport;
 
   @FormParam("purchaseAmount")
-  private double purchaseAmount;
+  private BigDecimal purchaseAmount;
 
   @FormParam("purchaseStrategy")
   private PurchaseStrategy purchaseStrategy;

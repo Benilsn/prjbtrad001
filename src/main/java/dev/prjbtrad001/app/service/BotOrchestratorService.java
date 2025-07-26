@@ -76,7 +76,7 @@ public class BotOrchestratorService {
     int interval = (Integer.parseInt(bot.getParameters().getInterval().replaceAll("[mhd]", "")) * 60) + 1;
 
     bot.start();
-    bot.persist();
+    persist(bot);
 
     ScheduledFuture<?> future =
       scheduler
@@ -97,6 +97,11 @@ public class BotOrchestratorService {
 
     bot.stop();
     log("Stopped bot " + bot.getId());
+  }
+
+  @Transactional
+  public void persist(SimpleTradeBot bot) {
+    bot.persist();
   }
 
   @PreDestroy

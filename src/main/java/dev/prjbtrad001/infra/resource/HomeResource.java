@@ -48,7 +48,7 @@ public class HomeResource {
   @Path("/refresh-wallet")
   public String refreshWallet() {
     log.info("Refreshing wallet data...");
-    return FORMATTER2.format(String.format("R$%s", Wallet.get()));
+    return String.format("R$%s", FORMATTER2.format(Wallet.get()));
   }
 
 

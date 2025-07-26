@@ -1,19 +1,21 @@
 package dev.prjbtrad001.app.bot;
 
+import java.math.BigDecimal;
+
 public class Wallet {
 
-  private static volatile double BALANCE = 1000.0;
+  private static volatile BigDecimal BALANCE = new BigDecimal("1000.0");
 
-  public static synchronized double get() {
+  public static synchronized BigDecimal get() {
     return BALANCE;
   }
 
-  public static synchronized void deposit(double amount) {
-    BALANCE += amount;
+  public static synchronized void deposit(BigDecimal amount) {
+    BALANCE = BALANCE.add(amount);
   }
 
-  public static synchronized void withdraw(double amount) {
-    BALANCE -= amount;
+  public static synchronized void withdraw(BigDecimal amount) {
+    BALANCE = BALANCE.subtract(amount);
   }
 
 }
