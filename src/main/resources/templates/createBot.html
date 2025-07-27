@@ -8,7 +8,13 @@
 <body>
 
 <div class="container my-5 pb-5">
-    <h2 class="text-neon text-center mb-4">Create New Bot</h2>
+    <h2 class="text-neon text-center mb-4">
+        {#if botId == null}
+        Create New Bot
+        {#else}
+        Update Bot
+        {/if}
+    </h2>
 
     {#if errors}
     <div class="alert alert-danger">
@@ -21,8 +27,8 @@
     {/if}
 
     <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
-        {#if bot.id}
-            <input type="hidden" name="botId" value="{botId}">
+        {#if botId}
+        <input type="hidden" name="botId" value="{botId}">
         {/if}
         <div class="row mb-3">
             <div class="col-md-6">
@@ -99,8 +105,11 @@
             <div class="col-md-3">
                 <label class="form-label text-neon">Purchase Strategy</label>
                 <select name="purchaseStrategy" class="form-select">
-                    <option value="AMOUNT" {bot.parameters.purchaseStrategy == 'AMOUNT' ? 'selected' : ''}>AMOUNT</option>
-                    <option value="PERCENTAGE" {bot.parameters.purchaseStrategy == 'PERCENTAGE' ? 'selected' : ''}>PERCENTAGE</option>
+                    <option value="AMOUNT" {bot.parameters.purchaseStrategy == 'AMOUNT' ? 'selected' : ''}>AMOUNT
+                    </option>
+                    <option value="PERCENTAGE" {bot.parameters.purchaseStrategy == 'PERCENTAGE' ? 'selected' : ''}>
+                        PERCENTAGE
+                    </option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -115,7 +124,11 @@
 
         <div class="col-md-12 mt-4">
             <button type="submit" class="btn btn-create-neon w-100">
-                {botId == null ? 'Create Bot' : 'Update Bot'}
+                {#if botId == null}
+                Create Bot
+                {#else}
+                Update Bot
+                {/if}
             </button>
         </div>
     </form>

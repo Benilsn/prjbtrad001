@@ -18,6 +18,7 @@ public class Status {
   private BigDecimal totalPurchased;
   private BigDecimal valueAtTheTimeOfLastPurchase;
   private BigDecimal quantity;
+  private BigDecimal profit;
 //  private String purchaseTime;
 
   // Status

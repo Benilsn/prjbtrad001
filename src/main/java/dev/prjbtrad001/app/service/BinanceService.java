@@ -4,20 +4,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.CriptoCredentials;
-import dev.prjbtrad001.app.bot.Wallet;
+import dev.prjbtrad001.app.dto.AccountDto;
+import dev.prjbtrad001.app.dto.BalanceDto;
 import dev.prjbtrad001.app.dto.CriptoDto;
 import dev.prjbtrad001.app.dto.KlineDto;
-import dev.prjbtrad001.app.dto.WalletDto;
 import dev.prjbtrad001.app.utils.CriptoUtils;
 import dev.prjbtrad001.infra.config.CredentialsConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import lombok.extern.jbosslog.JBossLog;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -27,23 +26,29 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HexFormat;
 import java.util.List;
 import java.util.Optional;
 
+import static dev.prjbtrad001.app.utils.CriptoUtils.generateSignature;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
 
-@JBossLog
 @ApplicationScoped
 public class BinanceService {
 
   @Inject
-  ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
+
+  @ConfigProperty(name = "bot.symbol.list")
+  private String workingSymbols;
 
   private static final String BASE_URL = "https://api.binance.com/api/v3";
 
   private static final HttpClient httpClient = HttpClient.newHttpClient();
+
+  public BinanceService(ObjectMapper objectMapper) {
+    this.objectMapper = objectMapper;
+  }
 
   public CriptoDto getPrice(String symbol) {
     HttpRequest request =
@@ -62,7 +67,7 @@ public class BinanceService {
         });
         cripto.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       } else {
-        BinanceService.log.debug("Error: HTTP " + response.statusCode());
+        log("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
       log(e.getMessage());
@@ -122,18 +127,6 @@ public class BinanceService {
     return candles;
   }
 
-  private static String generateSignature(String data, String key) throws Exception {
-    Mac sha256HMAC = Mac.getInstance("HmacSHA256");
-    SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-    sha256HMAC.init(secretKeySpec);
-    byte[] hash = sha256HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
-    return HexFormat.of().formatHex(hash);
-  }
-
-  public static void main(String[] args) {
-    getWallet();
-  }
-
   public static long getBinanceServerTime() {
     try {
       HttpRequest request = HttpRequest.newBuilder()
@@ -157,7 +150,7 @@ public class BinanceService {
     return System.currentTimeMillis();
   }
 
-  public static String getCriptosBalance() {
+  public Optional<AccountDto> getCriptosBalance() {
     String queryString = "timestamp=" + getBinanceServerTime();
     CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
 
@@ -173,7 +166,9 @@ public class BinanceService {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
       if (response.statusCode() == 200) {
-        return response.body(); // ou parsear e retornar saldo específico
+        AccountDto account = MAPPER.readValue(response.body(), AccountDto.class);
+        account.filterBalances(workingSymbols.split(","));
+        return Optional.of(account);
       } else {
         log("Error getting balance: HTTP " + response.statusCode() + " - " + response.body());
       }
@@ -182,13 +177,13 @@ public class BinanceService {
       log("Error getting balance: " + e.getMessage());
     }
 
-    return null;
+    return Optional.empty();
   }
 
-  public static String placeBuyOrder(String symbol, String quantity) {
-    long timestamp = System.currentTimeMillis();
+  public static String placeBuyOrder(String symbol, BigDecimal quantity) {
+    long timestamp = getBinanceServerTime();
     String queryString = String.format(
-      "symbol=%s&side=BUY&type=MARKET&quantity=%s&timestamp=%d", symbol, quantity, timestamp
+      "symbol=%s&side=BUY&type=MARKET&quoteOrderQty=%s&timestamp=%d", symbol, quantity, timestamp
     );
 
     CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
@@ -197,7 +192,7 @@ public class BinanceService {
       String signature = generateSignature(queryString, criptoCredentials.secretKey());
 
       HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(BASE_URL + "/api/v3/order?" + queryString + "&signature=" + signature))
+        .uri(URI.create(BASE_URL + "/order?" + queryString + "&signature=" + signature))
         .header("X-MBX-APIKEY", criptoCredentials.apiKey())
         .POST(HttpRequest.BodyPublishers.noBody())
         .build();
@@ -218,7 +213,7 @@ public class BinanceService {
   }
 
   public static String placeSellOrder(String symbol, String quantity) {
-    long timestamp = System.currentTimeMillis();
+    long timestamp = getBinanceServerTime();
     String queryString = String.format(
       "symbol=%s&side=SELL&type=MARKET&quantity=%s&timestamp=%d", symbol, quantity, timestamp
     );
@@ -229,7 +224,7 @@ public class BinanceService {
       String signature = generateSignature(queryString, criptoCredentials.secretKey());
 
       HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(BASE_URL + "/api/v3/order?" + queryString + "&signature=" + signature))
+        .uri(URI.create(BASE_URL + "/order?" + queryString + "&signature=" + signature))
         .header("X-MBX-APIKEY", criptoCredentials.apiKey())
         .POST(HttpRequest.BodyPublishers.noBody())
         .build();
@@ -249,7 +244,41 @@ public class BinanceService {
     return null;
   }
 
-  public static Optional<WalletDto> getWallet() {
+  public static BigDecimal getMinNotional(String symbol) {
+    try {
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/exchangeInfo?symbol=" + symbol))
+        .GET()
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        JsonNode json = MAPPER.readTree(response.body());
+        JsonNode filters = json
+          .get("symbols").get(0)
+          .get("filters");
+
+        for (JsonNode filter : filters) {
+          if ("NOTIONAL".equals(filter.get("filterType").asText())) {
+            return new BigDecimal(filter.get("minNotional").asText()).setScale(8, RoundingMode.HALF_UP);
+          }
+        }
+
+        log("MIN_NOTIONAL filter not found for symbol: " + symbol);
+      } else {
+        log("Exchange info error: HTTP " + response.statusCode() + " - " + response.body());
+      }
+
+    } catch (Exception e) {
+      log("Error getting minNotional: " + e.getMessage());
+    }
+
+    return null;
+  }
+
+
+  public static Optional<BalanceDto> getBalance() {
     try {
       CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
       long timestamp = getBinanceServerTime();
@@ -272,7 +301,7 @@ public class BinanceService {
             if ("BRL".equalsIgnoreCase(node.get("coin").asText())) {
               BigDecimal free = new BigDecimal(node.get("free").asText());
               BigDecimal locked = new BigDecimal(node.get("locked").asText());
-              return Optional.of(new WalletDto("BRL", free, locked));
+              return Optional.of(new BalanceDto("BRL", free, locked));
             }
           }
         } catch (Exception e) {

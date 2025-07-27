@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -66,6 +67,7 @@ public class SimpleTradeBot extends PanacheEntityBase {
     this.status.setValueAtTheTimeOfLastPurchase(BigDecimal.ZERO);
     this.status.setTotalPurchased(BigDecimal.ZERO);
     this.status.setQuantity(BigDecimal.ZERO);
+    this.status.setProfit(this.status.getProfit().add(quantity.subtract(this.status.getTotalPurchased())));
     log("Sold R$" + quantity + ". New wallet balance: R$" + Wallet.get());
   }
 }

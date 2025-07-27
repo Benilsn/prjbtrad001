@@ -43,6 +43,7 @@ public class BotResource {
   public TemplateInstance createBot() {
     return Templates.createBot()
       .data("workingSymbols", workingSymbols.split(","))
+      .data("botId", null)
       .data("pageTitle", "Create Bot");
   }
 
@@ -107,7 +108,7 @@ public class BotResource {
     SimpleTradeBot bot = botOrchestratorService.getBotById(botId);
     return Templates.createBot()
       .data("workingSymbols", workingSymbols.split(","))
-      .data("pageTitle", "Create Bot")
+      .data("pageTitle", "Update Bot")
       .data("botId", botId)
       .data("bot", bot);
   }

@@ -82,6 +82,7 @@
       }
     }
 
+
     async function refreshTradeLog() {
       try {
         const response = await fetch('/refresh-log-data');
@@ -114,7 +115,7 @@
     }
 
     /* ----------------------------------
-     * 4. Trade Log Filter
+     * Trade Log Filter
      * ---------------------------------- */
     const logFilter = document.getElementById('log-filter');
     if (logFilter) {
@@ -134,7 +135,7 @@
     }
 
     /* ----------------------------------
-     * 5. Symbol Prefix for Purchase Amount
+     * Symbol Prefix for Purchase Amount
      * ---------------------------------- */
     const strategySelect = document.querySelector('select[name="purchaseStrategy"]');
     const amountSymbol = document.getElementById('amountSymbol');
@@ -149,6 +150,19 @@
       updateSymbol(); // Initial set
     }
   });
+
+    /* ----------------------------------
+    *Clear Trade Log
+    * ---------------------------------- */
+    const logContent = document.getElementById('trade-log-content');
+    const clearLogBtn = document.getElementById('clear-log-btn');
+
+    clearLogBtn.addEventListener('click', () => {
+      if (logContent) {
+        logContent.innerHTML = '';  // Clear all log entries
+      }
+    });
+
 </script>
 
 

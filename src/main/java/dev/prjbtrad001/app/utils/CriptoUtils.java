@@ -4,7 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.KlineDto;
 import lombok.experimental.UtilityClass;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
 
 @UtilityClass
@@ -40,5 +45,14 @@ public class CriptoUtils {
 
     return klines;
   }
+
+  public static String generateSignature(String data, String key) throws Exception {
+    Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+    SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+    sha256HMAC.init(secretKeySpec);
+    byte[] hash = sha256HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
+    return HexFormat.of().formatHex(hash);
+  }
+
 
 }
