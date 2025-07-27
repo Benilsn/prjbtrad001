@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Kline {
+public class KlineDto {
 
   private long openTime;
   private String openPrice;

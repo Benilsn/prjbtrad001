@@ -1,5 +1,6 @@
 package dev.prjbtrad001.app.service;
 
+import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.BotTask;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.utils.LogUtils;
@@ -48,6 +49,15 @@ public class BotOrchestratorService {
     BotOrchestratorService.log.debug("Deleting bot: " + botId);
     stopBot(botId);
     botRepository.deleteBot(botId);
+  }
+
+  @Transactional
+  public SimpleTradeBot updateBot(BotParameters parameters, UUID botId) {
+    SimpleTradeBot bot = getBotById(botId);
+    bot.setParameters(parameters);
+    bot.persist();
+    BotOrchestratorService.log.debug("Updating bot: " + bot.getParameters().getBotType());
+    return bot;
   }
 
   public SimpleTradeBot getBotById(UUID botId) {

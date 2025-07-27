@@ -51,8 +51,16 @@ public class BotResource {
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.TEXT_HTML)
   public Object saveBot(
-    @BeanParam BotParameters parameters) {
-    Set<ConstraintViolation<BotParameters>> violations = validator.validate(parameters);
+    @BeanParam BotParameters parameters,
+    @FormParam("botId") UUID botId) {
+    Set<ConstraintViolation<BotParameters>> violations;
+
+    if (botId != null) {
+      violations = validator.validate(parameters, BotParameters.Update.class);
+    } else {
+      violations = validator.validate(parameters, BotParameters.Create.class);
+    }
+
 
     if (!violations.isEmpty()) {
       List<String> errors = violations.stream()
@@ -65,13 +73,18 @@ public class BotResource {
           .data("parameters", parameters);
     }
 
-    botOrchestratorService
-      .createBot(new SimpleTradeBot(parameters));
+    String msg = "Bot created successfully!";
+    if (botId != null) {
+      botOrchestratorService.updateBot(parameters, botId);
+      msg = "Bot updated successfully!";
+    } else {
+      botOrchestratorService.createBot(new SimpleTradeBot(parameters));
+    }
 
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")
-          .queryParam("message", "Bot created successfully!")
+          .queryParam("message", msg)
           .build())
         .build();
   }
@@ -88,16 +101,16 @@ public class BotResource {
         .build();
   }
 
-//  @GET
-//  @Path("/details/{botId}")
-//  public TemplateInstance botDetails(@PathParam("botId") UUID botId) {
-//    SimpleTradeBot bot = botOrchestratorService.getBotById(botId);
-//    return
-//      Templates
-//        .botDetail()
-//        .data("pageTitle", "Bot Details")
-//        .data("bot", bot);
-//  }
+  @GET
+  @Path("/edit/{botId}")
+  public TemplateInstance editBot(@PathParam("botId") UUID botId) {
+    SimpleTradeBot bot = botOrchestratorService.getBotById(botId);
+    return Templates.createBot()
+      .data("workingSymbols", workingSymbols.split(","))
+      .data("pageTitle", "Create Bot")
+      .data("botId", botId)
+      .data("bot", bot);
+  }
 
   @GET
   @Path("/start/{botId}")

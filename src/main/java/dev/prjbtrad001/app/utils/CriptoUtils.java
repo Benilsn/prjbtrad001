@@ -2,19 +2,19 @@ package dev.prjbtrad001.app.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.prjbtrad001.app.dto.Kline;
+import dev.prjbtrad001.app.dto.KlineDto;
 import lombok.experimental.UtilityClass;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
 public class CriptoUtils {
 
-  public static List<Kline> parseKlines(ObjectMapper mapper, String jsonResponse) throws Exception {
+
+  public static List<KlineDto> parseKlines(ObjectMapper mapper, String jsonResponse) throws Exception {
     JsonNode rootNode = mapper.readTree(jsonResponse);
 
-    List<Kline> klines = new ArrayList<>();
+    List<KlineDto> klines = new ArrayList<>();
 
     if (rootNode.isArray()) {
       for (JsonNode node : rootNode) {
@@ -31,7 +31,7 @@ public class CriptoUtils {
         String takerBuyQuoteAssetVolume = node.get(10).asText();
         String ignore = node.get(11).asText();
 
-        Kline kline = new Kline(openTime, openPrice, highPrice, lowPrice, closePrice, volume,
+        KlineDto kline = new KlineDto(openTime, openPrice, highPrice, lowPrice, closePrice, volume,
           closeTime, quoteAssetVolume, numberOfTrades,
           takerBuyBaseAssetVolume, takerBuyQuoteAssetVolume, ignore);
         klines.add(kline);
@@ -40,6 +40,5 @@ public class CriptoUtils {
 
     return klines;
   }
-
 
 }

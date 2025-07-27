@@ -2,37 +2,117 @@
 
 {#for bot in allBots}
 <div class="col-md-3 mb-4">
-    <div class="card bot-card bg-dark text-light border-neon-neon position-relative p-3">
+    <div class="card bot-card bg-dark border-neon p-4 rounded-4 text-light shadow-lg position-relative">
 
-        <!-- Delete Button (Top-Right) -->
+        <!-- Delete Button -->
         <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2">
             <input type="hidden" name="botId" value="{bot.id}">
             <button type="submit" class="btn btn-neon-red btn-sm">✖</button>
         </form>
 
         <div class="card-body">
-            <h5 class="card-title text-neon-glow text-uppercase mb-4">{bot.parameters.botType}</h5>
+            <h5 class="text-uppercase text-neon-glow neon-cyan mb-4">{bot.parameters.botType}</h5>
 
-            <!-- Status -->
-            <p class="neon-label">
-                Status:
-                <span class="{bot.running ? 'text-glow-green animate-running' : 'text-glow-red'} fw-bold">
-                    {bot.running ? 'RUNNING' : 'IDLE'}
-                </span>
-            </p>
+            <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+                <li class="d-flex flex-column">
+                    <span class="label">Status</span>
+                    <span class="{bot.running ? 'text-glow-green' : 'text-glow-red'} fw-bold">
+                        {bot.running ? 'RUNNING' : 'IDLE'}
+                    </span>
+                </li>
+                <li class="d-flex flex-column">
+                    <span class="label">Long Position</span>
+                    <span class="{bot.status.isLong ? 'text-glow-green' : 'text-glow-orange'}">{bot.status.isLong}</span>
+                </li>
+                <li class="d-flex flex-column">
+                    <span class="label">Total Purchased</span>
+                    <span class="text-glow-green">R${bot.status.totalPurchased ?: 0}</span>
+                </li>
+                <li class="d-flex flex-column">
+                    <span class="label">Last Purchase Price</span>
+                    <span class="text-glow-green">R${bot.status.valueAtTheTimeOfLastPurchase ?: 0}</span>
+                </li>
+                <li class="d-flex flex-column">
+                    <span class="label">Quantity</span>
+                    <span class="text-neon-glow">{bot.status.quantity ?: 0}</span>
+                </li>
+            </ul>
 
-            <p class="neon-label">Long position: <span class="{bot.status.isLong ? 'text-glow-green' : 'text-glow-orange'}">{bot.status.isLong}</span></p>
-            <p class="neon-label">Total purchased: <span class="text-glow-green">R${bot.status.totalPurchased ?: 0}</span></p>
-            <p class="neon-label">Last purchase price: <span class="text-glow-green">R${bot.status.valueAtTheTimeOfLastPurchase ?: 0}</span></p>
-            <p class="neon-label">Quantity: <span class="text-neon-glow">{bot.status.quantity ?: 0}</span></p>
-
-            <div class="d-flex flex-wrap gap-2 mt-5">
-                <a href="/bots/{bot.running ? 'stop' : 'start'}/{bot.id}" methods=""
-                   class="btn btn-outline-neon-{bot.running ? 'red' : 'green'} btn-sm "> {bot.running ? 'Stop' : 'Run'} </a>
-                <!--<a href="/bots/edit/{bot.id}" class="btn btn-outline-neon btn-sm">Edit</a>
-                <a href="#" class="btn btn-outline-neon btn-sm" data-bs-toggle="modal" data-bs-target="#botModal-{bot.id}">
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="/bots/{bot.running ? 'stop' : 'start'}/{bot.id}" class="btn btn-outline-neon-{bot.running ? 'red' : 'green'} btn-sm">
+                    {bot.running ? 'Stop' : 'Run'}
+                </a>
+                <a href="/bots/edit/{bot.id}" class="btn btn-outline-neon-yellow btn-sm">Edit</a>
+                <a href="#" class="btn btn-outline-neon-white btn-sm" data-bs-toggle="modal" data-bs-target="#botModal-{bot.id}">
                     More Info
-                </a>-->
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="botModal-{bot.id}" tabindex="-1" aria-labelledby="botModalLabel-{bot.id}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light border-neon-neon">
+            <div class="modal-header">
+                <div class="modal-header position-relative w-100" style="border-bottom: none !important;">
+                    <h5 class="modal-title text-neon-glow fs-4 w-100 text-center m-0" id="botModalLabel-{bot.id}">
+                        Bot Details - {bot.parameters.botType}
+                    </h5>
+                    <button type="button" class="btn btn-neon-red btn-sm fs-4 position-absolute end-0 top-0 mt-2 me-2" data-bs-dismiss="modal" aria-label="Close">✖</button>
+                </div>
+            </div>
+            <div class="card bg-dark border-neon p-4 mx-auto shadow-lg rounded-4">
+                <div class="row g-4">
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <h5 class="section-title neon-sky mb-4">🛠️ Settings</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">Status</span><span class="value {bot.running ? 'text-glow-green' : 'text-glow-red'}">{bot.running ? 'RUNNING' : 'IDLE'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Bot Type</span><span class="value">{bot.parameters.botType}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Interval</span><span class="value">{bot.parameters.interval}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Strategy</span><span class="value">{bot.parameters.purchaseStrategy}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Amount</span><span class="value">{bot.parameters.purchaseAmount}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Volume X</span><span class="value">{bot.parameters.volumeMultiplier}</span></li>
+                            <li class="d-flex flex-column"><span class="label">RS Window</span><span class="value">{bot.parameters.windowResistanceSupport}</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <h5 class="section-title neon-yellow">📊 Indicators</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">RSI Buy</span><span class="value">{bot.parameters.rsiPurchase}</span></li>
+                            <li class="d-flex flex-column"><span class="label">RSI Sell</span><span class="value">{bot.parameters.rsiSale}</span></li>
+                            <li class="d-flex flex-column"><span class="label">SMA Short</span><span class="value">{bot.parameters.smaShort}</span></li>
+                            <li class="d-flex flex-column"><span class="label">SMA Long</span><span class="value">{bot.parameters.smaLong}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Stop Loss</span><span class="value">{bot.parameters.stopLossPercent}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Take Profit</span><span class="value">{bot.parameters.takeProfitPercent}</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <h5 class="section-title neon-green">💰 Trade S.</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                            <li class="d-flex flex-column"><span class="label">Is Long</span><span class="value">{bot.status.isLong}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Time</span><span class="value">{bot.status.totalPurchased}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">{bot.status.valueAtTheTimeOfLastPurchase}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Quantity</span><span class="value">{bot.status.quantity}</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3 mb-3">
+                        <h5 class="section-title neon-orange">📈 Market S.</h5>
+                        <ul class="list-unstyled d-flex flex-column gap-3">
+                        </ul>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="/bots" class="btn btn-create-neon px-5 py-2 fs-5">← Back to Bots</a>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -40,3 +120,4 @@
 
 {/for}
 {/fragment}
+

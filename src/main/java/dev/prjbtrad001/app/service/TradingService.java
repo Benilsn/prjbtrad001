@@ -1,8 +1,7 @@
 package dev.prjbtrad001.app.service;
 
 import dev.prjbtrad001.app.bot.*;
-import dev.prjbtrad001.app.dto.Kline;
-import lombok.Builder;
+import dev.prjbtrad001.app.dto.KlineDto;
 import lombok.experimental.UtilityClass;
 import lombok.extern.jbosslog.JBossLog;
 
@@ -24,7 +23,7 @@ public class TradingService {
     List<BigDecimal> closePrices = new ArrayList<>();
     List<BigDecimal> volumes = new ArrayList<>();
 
-    List<Kline> klines = BinanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
+    List<KlineDto> klines = BinanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
 
     klines.forEach(kline -> {
       closePrices.add(new BigDecimal(kline.getClosePrice()));
@@ -204,26 +203,6 @@ public class TradingService {
   private static List<BigDecimal> last(List<BigDecimal> list, int n) {
     if (list.size() < n) throw new IllegalArgumentException("List too short");
     return list.subList(list.size() - n, list.size());
-  }
-
-  @Builder
-  public record MarketTrend(
-    String botTypeName,
-    BigDecimal rsi,
-    BigDecimal smaShort,
-    BigDecimal smaLong,
-    BigDecimal currentPrice,
-    BigDecimal support,
-    BigDecimal resistance,
-    BigDecimal currentVolume,
-    BigDecimal averageVolume,
-    BigDecimal tolerance
-
-  ) {
-    public MarketTrend {
-      BigDecimal range = resistance.subtract(support);
-      tolerance = range.multiply(BigDecimal.valueOf(0.1));
-    }
   }
 
 }

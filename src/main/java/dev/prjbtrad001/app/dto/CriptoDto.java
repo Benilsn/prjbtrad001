@@ -21,7 +21,7 @@ import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER1;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cripto {
+public class CriptoDto {
 
   private String symbol;
 
@@ -32,15 +32,15 @@ public class Cripto {
 
   private String lastUpdated;
 
-  public Cripto(String symbol, String price, String last24hourPrice, String lastUpdated) {
+  public CriptoDto(String symbol, String price, String last24hourPrice, String lastUpdated) {
     this.symbol = symbol;
     this.price = price;
     this.last24hourPrice = last24hourPrice;
     this.lastUpdated = lastUpdated;
   }
 
-  public static Cripto defaultData() {
-    return new Cripto(
+  public static CriptoDto defaultData() {
+    return new CriptoDto(
       "DEFAULT",
       BigDecimal.ZERO.toPlainString(),
       "0.0",

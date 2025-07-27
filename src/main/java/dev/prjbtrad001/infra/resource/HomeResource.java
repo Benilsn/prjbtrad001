@@ -2,7 +2,7 @@ package dev.prjbtrad001.infra.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.Wallet;
-import dev.prjbtrad001.app.dto.Cripto;
+import dev.prjbtrad001.app.dto.CriptoDto;
 import dev.prjbtrad001.app.service.BinanceService;
 import dev.prjbtrad001.app.utils.LogUtils;
 import io.quarkus.qute.TemplateInstance;
@@ -41,7 +41,7 @@ public class HomeResource {
   @GET()
   @Path("/refresh-data")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<Cripto> refreshCriptoData(@QueryParam("symbols") String symbolsJson) {
+  public List<CriptoDto> refreshCriptoData(@QueryParam("symbols") String symbolsJson) {
     log.info("Refreshing data for symbols: " + symbolsJson);
     return binanceService.getPrices(symbolsJson);
   }

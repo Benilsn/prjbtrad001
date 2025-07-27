@@ -21,128 +21,105 @@
     {/if}
 
     <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
+        {#if bot.id}
+            <input type="hidden" name="botId" value="{botId}">
+        {/if}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">
-                    Symbol
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Crypto symbol for trading, e.g. BTCUSDT"></span>
-                </label>
+                <label class="form-label text-neon">Symbol</label>
                 <select name="symbol" class="form-select">
                     {#for symbol in workingSymbols}
-                        <option>{symbol}</option>
+                    <option value="{symbol}" {bot.parameters.botType == symbol ? 'selected' : ''}>{symbol}</option>
                     {/for}
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Interval
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Candle interval, e.g.: 1m (1 minute), 5m, 15m."></span>
-                </label>
-                <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
+                <label class="form-label text-neon">Interval</label>
+                <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m"
+                       value="{bot.parameters.interval ?: ''}" required>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Volume Multiplier
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Current volume must be greater than the average × volume multiplier to make a buy. E.g. 1.5"></span>
-                </label>
-                <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
+                <label class="form-label text-neon">Volume Multiplier</label>
+                <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2"
+                       value="{bot.parameters.volumeMultiplier ?: ''}">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Support/Resistance Window
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Number of candles used to identify supports and resistances."></span>
-                </label>
-                <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 100">
+                <label class="form-label text-neon">Support/Resistance Window</label>
+                <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 100"
+                       value="{bot.parameters.windowResistanceSupport ?: ''}">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Stop Loss (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentage of maximum loss before selling."></span>
-                </label>
+                <label class="form-label text-neon">Stop Loss (%)</label>
                 <div class="input-group">
                     <span class="input-group-text">%</span>
-                    <input type="number" min="0" step="any" name="stopLossPercent" class="form-control" placeholder="e.g. 0.5" aria-describedby="amountSymbol">
+                    <input type="number" min="0" step="any" name="stopLossPercent" class="form-control"
+                           placeholder="e.g. 0.5" value="{bot.parameters.stopLossPercent ?: ''}">
                 </div>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Take Profit (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentage of profit desired to end the operation."></span>
-                </label>
+                <label class="form-label text-neon">Take Profit (%)</label>
                 <div class="input-group">
                     <span class="input-group-text">%</span>
-                    <input type="number" min="0" step="any" name="takeProfitPercent" class="form-control" placeholder="e.g. 1.2" aria-describedby="amountSymbol">
+                    <input type="number" min="0" step="any" name="takeProfitPercent" class="form-control"
+                           placeholder="e.g. 1.2" value="{bot.parameters.takeProfitPercent ?: ''}">
                 </div>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Purchase
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="RSI = Relative Strength Index. RSI < 30 → Oversold asset (with an upward trend)"></span>
-                </label>
-                <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
+                <label class="form-label text-neon">RSI Purchase</label>
+                <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30"
+                       value="{bot.parameters.rsiPurchase ?: ''}">
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Sale
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="RSI = Relative Strength Index.  RSI > 70 → Overbought asset (with a downward trend)"></span>
-                </label>
-                <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
+                <label class="form-label text-neon">RSI Sale</label>
+                <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70"
+                       value="{bot.parameters.rsiSale ?: ''}">
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-3">
-                <label class="form-label text-neon">Short SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Short moving average period. E.g. 9 candles."></span>
-                </label>
-                <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
+                <label class="form-label text-neon">Short SMA</label>
+                <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9"
+                       value="{bot.parameters.smaShort ?: ''}">
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">Long SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Long moving average period. E.g. 21 candles."></span>
-                </label>
-                <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
+                <label class="form-label text-neon">Long SMA</label>
+                <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21"
+                       value="{bot.parameters.smaLong ?: ''}">
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">
-                    Purchase Strategy
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Symbol for trading strategy, e.g. AMOUNT"></span>
-                </label>
+                <label class="form-label text-neon">Purchase Strategy</label>
                 <select name="purchaseStrategy" class="form-select">
-                    <option>AMOUNT</option>
-                    <option>PERCENTAGE</option>
+                    <option value="AMOUNT" {bot.parameters.purchaseStrategy == 'AMOUNT' ? 'selected' : ''}>AMOUNT</option>
+                    <option value="PERCENTAGE" {bot.parameters.purchaseStrategy == 'PERCENTAGE' ? 'selected' : ''}>PERCENTAGE</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">Amount
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Amount for given 'Purchase Strategy'. E.g. 21."></span>
-                </label>
+                <label class="form-label text-neon">Amount</label>
                 <div class="input-group">
                     <span class="input-group-text" id="amountSymbol">$</span>
-                    <input type="number" name="purchaseAmount" class="form-control" placeholder="e.g. 50" aria-describedby="amountSymbol">
+                    <input type="number" name="purchaseAmount" class="form-control" placeholder="e.g. 50"
+                           value="{bot.parameters.purchaseAmount ?: ''}" aria-describedby="amountSymbol">
                 </div>
             </div>
         </div>
 
         <div class="col-md-12 mt-4">
-            <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
+            <button type="submit" class="btn btn-create-neon w-100">
+                {botId == null ? 'Create Bot' : 'Update Bot'}
+            </button>
         </div>
-
     </form>
+
 </div>
 
 </body>

@@ -1,15 +1,23 @@
 package dev.prjbtrad001.app.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.prjbtrad001.app.dto.Cripto;
-import dev.prjbtrad001.app.dto.Kline;
+import dev.prjbtrad001.app.bot.CriptoCredentials;
+import dev.prjbtrad001.app.bot.Wallet;
+import dev.prjbtrad001.app.dto.CriptoDto;
+import dev.prjbtrad001.app.dto.KlineDto;
+import dev.prjbtrad001.app.dto.WalletDto;
 import dev.prjbtrad001.app.utils.CriptoUtils;
+import dev.prjbtrad001.infra.config.CredentialsConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -19,8 +27,11 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
+import java.util.Optional;
 
+import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
 
 @JBossLog
@@ -34,14 +45,14 @@ public class BinanceService {
 
   private static final HttpClient httpClient = HttpClient.newHttpClient();
 
-  public Cripto getPrice(String symbol) {
+  public CriptoDto getPrice(String symbol) {
     HttpRequest request =
       HttpRequest.newBuilder()
         .uri(URI.create(BASE_URL + "/ticker/price?symbol=" + symbol))
         .GET()
         .build();
 
-    Cripto cripto = null;
+    CriptoDto cripto = null;
 
     try {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -51,42 +62,42 @@ public class BinanceService {
         });
         cripto.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
       } else {
-        log.debug("Error: HTTP " + response.statusCode());
+        BinanceService.log.debug("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
-      log.error(e.getMessage());
-      cripto = Cripto.defaultData();
+      log(e.getMessage());
+      cripto = CriptoDto.defaultData();
     }
 
     return cripto;
   }
 
-  public List<Cripto> getPrices(String symbolsJson) {
+  public List<CriptoDto> getPrices(String symbolsJson) {
     HttpRequest request =
       HttpRequest.newBuilder()
         .uri(URI.create(BASE_URL + "/ticker/price?symbols=" + URLEncoder.encode(symbolsJson, StandardCharsets.UTF_8)))
         .GET()
         .build();
 
-    List<Cripto> criptos = new ArrayList<>();
+    List<CriptoDto> criptos = new ArrayList<>();
 
     try {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
       if (response.statusCode() == 200) {
-        criptos = objectMapper.readerForListOf(Cripto.class).readValue(response.body());
+        criptos = objectMapper.readerForListOf(CriptoDto.class).readValue(response.body());
         criptos.forEach(c -> c.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
       } else {
-        log.error("Error: HTTP " + response.statusCode());
+        log("Error: HTTP " + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
-      log.error(e.getMessage());
+      log(e.getMessage());
     }
 
     return criptos;
   }
 
-  public static List<Kline> getCandles(String symbol, String interval, int limit) {
+  public static List<KlineDto> getCandles(String symbol, String interval, int limit) {
 
     HttpRequest request =
       HttpRequest.newBuilder()
@@ -94,7 +105,7 @@ public class BinanceService {
         .GET()
         .build();
 
-    List<Kline> candles = new ArrayList<>();
+    List<KlineDto> candles = new ArrayList<>();
 
     try {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -102,13 +113,179 @@ public class BinanceService {
       if (response.statusCode() == 200) {
         candles = CriptoUtils.parseKlines(MAPPER, response.body());
       } else {
-        log.error("Error: HTTP " + response.statusCode());
+        log("Error getting candles: HTTP " + response.statusCode());
       }
     } catch (Exception e) {
-      log.error(e.getMessage());
+      log(e.getMessage());
     }
 
     return candles;
+  }
+
+  private static String generateSignature(String data, String key) throws Exception {
+    Mac sha256HMAC = Mac.getInstance("HmacSHA256");
+    SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+    sha256HMAC.init(secretKeySpec);
+    byte[] hash = sha256HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
+    return HexFormat.of().formatHex(hash);
+  }
+
+  public static void main(String[] args) {
+    getWallet();
+  }
+
+  public static long getBinanceServerTime() {
+    try {
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/time"))
+        .GET()
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        JsonNode json = MAPPER.readTree(response.body());
+        return json.get("serverTime").asLong();
+      } else {
+        log("Error getting serverTime: HTTP " + response.statusCode());
+      }
+
+    } catch (Exception e) {
+      log("Error getting serverTime: " + e.getMessage());
+    }
+
+    return System.currentTimeMillis();
+  }
+
+  public static String getCriptosBalance() {
+    String queryString = "timestamp=" + getBinanceServerTime();
+    CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
+
+    try {
+      String signature = generateSignature(queryString, criptoCredentials.secretKey());
+
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/account?" + queryString + "&signature=" + signature))
+        .header("X-MBX-APIKEY", criptoCredentials.apiKey())
+        .GET()
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        return response.body(); // ou parsear e retornar saldo específico
+      } else {
+        log("Error getting balance: HTTP " + response.statusCode() + " - " + response.body());
+      }
+
+    } catch (Exception e) {
+      log("Error getting balance: " + e.getMessage());
+    }
+
+    return null;
+  }
+
+  public static String placeBuyOrder(String symbol, String quantity) {
+    long timestamp = System.currentTimeMillis();
+    String queryString = String.format(
+      "symbol=%s&side=BUY&type=MARKET&quantity=%s&timestamp=%d", symbol, quantity, timestamp
+    );
+
+    CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
+
+    try {
+      String signature = generateSignature(queryString, criptoCredentials.secretKey());
+
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/api/v3/order?" + queryString + "&signature=" + signature))
+        .header("X-MBX-APIKEY", criptoCredentials.apiKey())
+        .POST(HttpRequest.BodyPublishers.noBody())
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        return response.body();
+      } else {
+        log("Purchase error: HTTP " + response.statusCode() + " - " + response.body());
+      }
+
+    } catch (Exception e) {
+      log("Purchase error: " + e.getMessage());
+    }
+
+    return null;
+  }
+
+  public static String placeSellOrder(String symbol, String quantity) {
+    long timestamp = System.currentTimeMillis();
+    String queryString = String.format(
+      "symbol=%s&side=SELL&type=MARKET&quantity=%s&timestamp=%d", symbol, quantity, timestamp
+    );
+
+    CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
+
+    try {
+      String signature = generateSignature(queryString, criptoCredentials.secretKey());
+
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/api/v3/order?" + queryString + "&signature=" + signature))
+        .header("X-MBX-APIKEY", criptoCredentials.apiKey())
+        .POST(HttpRequest.BodyPublishers.noBody())
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        return response.body();
+      } else {
+        log("Selling error: HTTP " + response.statusCode() + " - " + response.body());
+      }
+
+    } catch (Exception e) {
+      log("Selling error: " + e.getMessage());
+    }
+
+    return null;
+  }
+
+  public static Optional<WalletDto> getWallet() {
+    try {
+      CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
+      long timestamp = getBinanceServerTime();
+      String query = "recvWindow=5000&timestamp=" + timestamp;
+      String signature = generateSignature(query, criptoCredentials.secretKey());
+
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create("https://api.binance.com/sapi/v1/capital/config/getall?" + query + "&signature=" + signature))
+        .header("X-MBX-APIKEY", criptoCredentials.apiKey())
+        .GET()
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        try {
+          JsonNode array = MAPPER.readTree(response.body());
+          for (JsonNode node : array) {
+
+            if ("BRL".equalsIgnoreCase(node.get("coin").asText())) {
+              BigDecimal free = new BigDecimal(node.get("free").asText());
+              BigDecimal locked = new BigDecimal(node.get("locked").asText());
+              return Optional.of(new WalletDto("BRL", free, locked));
+            }
+          }
+        } catch (Exception e) {
+          log("Error converting BRL Balance: " + e.getMessage());
+        }
+      } else {
+        log("Error Obtaining General Balance: HTTP " + response.statusCode() + " - " + response.body());
+      }
+
+    } catch (Exception e) {
+      log("Error to consult general balance: " + e.getMessage());
+    }
+    return Optional.empty();
   }
 
 
