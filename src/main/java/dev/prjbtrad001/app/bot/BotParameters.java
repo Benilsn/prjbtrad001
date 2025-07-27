@@ -40,7 +40,6 @@ public class BotParameters{
   @Column(name = "\"interval\"")
   private String interval;
 
-
   @FormParam("stopLossPercent")
   private BigDecimal stopLossPercent;
 

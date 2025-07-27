@@ -34,4 +34,5 @@ bot:
     list:
       - BTCUSDT
       - ETHUSDT
-      - XRPUSDT
+      - SOLUSDT
+      - BNBUSDT

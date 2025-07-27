@@ -1,9 +1,6 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.app.bot.BotParameters;
-import dev.prjbtrad001.app.bot.PurchaseStrategy;
-import dev.prjbtrad001.app.bot.SimpleTradeBot;
-import dev.prjbtrad001.app.bot.Wallet;
+import dev.prjbtrad001.app.bot.*;
 import dev.prjbtrad001.app.dto.Kline;
 import lombok.Builder;
 import lombok.experimental.UtilityClass;
@@ -11,8 +8,6 @@ import lombok.extern.jbosslog.JBossLog;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,124 +19,91 @@ import static dev.prjbtrad001.app.utils.LogUtils.log;
 public class TradingService {
 
   public static void analyzeMarket(SimpleTradeBot bot) {
+    BotParameters parameters = bot.getParameters();
+    Status status = bot.getStatus();
     List<BigDecimal> closePrices = new ArrayList<>();
     List<BigDecimal> volumes = new ArrayList<>();
 
-    List<Kline> klines = BinanceService.getCandles(bot.getParameters().getBotType().toString(), bot.getParameters().getInterval(), bot.getParameters().getWindowResistanceSupport());
+    List<Kline> klines = BinanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
 
     klines.forEach(kline -> {
       closePrices.add(new BigDecimal(kline.getClosePrice()));
       volumes.add(new BigDecimal(kline.getVolume()));
     });
 
-    MarketTrend marketTrend =
-      MarketTrend.builder()
-        .botTypeName("[" + bot.getParameters().getBotType() + "] - ")
-        .rsi(calculateRSI(last(closePrices, 15), 14))
-        .smaShort(calculateAverage(last(closePrices, bot.getParameters().getSmaShort())))
-        .smaLong(calculateAverage(last(closePrices, bot.getParameters().getSmaLong())))
-        .currentPrice(closePrices.getLast())
-        .support(Collections.min(last(closePrices, 30)))
-        .resistance(Collections.max(last(closePrices, 30)))
-        .currentVolume(volumes.getLast())
-        .averageVolume(calculateAverage(volumes))
-        .tolerance(Collections.max(last(closePrices, 30)).subtract(Collections.min(last(closePrices, 30))).multiply(BigDecimal.valueOf(0.1)))
-        .build();
+    BigDecimal rsi = calculateRSI(last(closePrices, 15), 14);
+    BigDecimal sma9 = calculateAverage(last(closePrices, parameters.getSmaShort()));
+    BigDecimal sma21 = calculateAverage(last(closePrices, parameters.getSmaLong()));
+    BigDecimal currentVolume = volumes.getLast();
+    BigDecimal averageVolume = calculateAverage(volumes);
 
-    if (!analyzeBuy(marketTrend, bot))
-      analyzeSell(marketTrend, bot);
-  }
+    BigDecimal support = Collections.min(last(closePrices, 30));
+    BigDecimal resistance = Collections.max(last(closePrices, 30));
+    BigDecimal currentPrice = closePrices.getLast();
 
-  private static boolean analyzeBuy(MarketTrend marketTrend, SimpleTradeBot bot) {
-    BotParameters parameters = bot.getParameters();
-    boolean bought = false;
+    String botTypeName = "[" + parameters.getBotType() + "] - ";
+    BigDecimal range = resistance.subtract(support);
+    BigDecimal tolerance = range.multiply(BigDecimal.valueOf(0.1));
 
-    boolean rsiOversold =
-      marketTrend.rsi.compareTo(parameters.getRsiPurchase()) <= 0;
-
-    boolean touchedSupport =
-      marketTrend.currentPrice.compareTo(marketTrend.support.add(marketTrend.tolerance)) <= 0;
+    boolean rsiOversold = rsi.compareTo(parameters.getRsiPurchase()) <= 0;
+    boolean touchedSupport = currentPrice.compareTo(support.add(tolerance)) <= 0;
 
     boolean bullishTrend =
-      marketTrend.smaShort
-        .compareTo(marketTrend.smaLong) > 0
-        || (marketTrend.currentPrice.compareTo(marketTrend.smaShort) > 0
-        && marketTrend.currentPrice.compareTo(marketTrend.smaLong) > 0);
+      sma9.compareTo(sma21) > 0
+        || (currentPrice.compareTo(sma9) > 0
+        && currentPrice.compareTo(sma21) > 0);
 
     boolean strongVolume =
-      marketTrend
-        .currentVolume
-        .compareTo(marketTrend.averageVolume.multiply(parameters.getVolumeMultiplier())) >= 0;
+      currentVolume.compareTo(averageVolume.multiply(parameters.getVolumeMultiplier())) >= 0;
 
-    log(marketTrend.botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + marketTrend.currentVolume + " >= Average Volume: " + marketTrend.averageVolume.multiply(parameters.getVolumeMultiplier()) + ")");
-    log(marketTrend.botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + marketTrend.rsi + " <= " + parameters.getRsiPurchase() + ")" + " - RSI: " + marketTrend.rsi);
-    log(marketTrend.botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + marketTrend.smaShort + " >  SMA21: " + marketTrend.smaLong + ")");
-    log(marketTrend.botTypeName + "\uD83D\uDEE1\uFE0F Touched Support: " + touchedSupport + " (Current Price: " + marketTrend.currentPrice + " <= Support: " + (marketTrend.support.add(marketTrend.tolerance)) + ")");
+    log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK") + " (Current Volume: " + currentVolume + " >= Average Volume: " + averageVolume.multiply(parameters.getVolumeMultiplier()) + ")");
+    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + rsi + " <= " + parameters.getRsiPurchase() + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📉 Bullish Trend: " + bullishTrend + " (SMA9: " + sma9 + " >  SMA21: " + sma21 + ")");
+    log(botTypeName + "\uD83D\uDEE1\uFE0F Touched Support: " + touchedSupport + " (Current Price: " + currentPrice + " <= Support: " + (support.add(tolerance)) + ")");
 
     double buyPoints = 0;
     if (rsiOversold) buyPoints += 1.0;
     if (bullishTrend) buyPoints += 1.0;
-    if (touchedSupport) buyPoints += 0.8;
+    if (touchedSupport) buyPoints += 0.4;
     if (strongVolume) buyPoints += 0.4;
 
     boolean shouldBuy = buyPoints >= 1.75;
 
     if (shouldBuy) {
-      log(marketTrend.botTypeName + "🔵 BUY signal detected!");
+      log(botTypeName + "🔵 BUY signal detected!");
 
       BigDecimal valueToBuy = parameters.getPurchaseAmount();
       if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
-        valueToBuy = Wallet.get()
-          .multiply(parameters.getPurchaseAmount())
-          .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
+        valueToBuy =
+          Wallet.get()
+            .multiply(parameters.getPurchaseAmount())
+            .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
       }
 
       BigDecimal quantity =
-        valueToBuy
-          .divide(marketTrend.currentPrice, 8, RoundingMode.HALF_UP);
+        valueToBuy.divide(currentPrice, 8, RoundingMode.HALF_UP);
 
-      if (bot.getStatus().isLong()) {
-        bot.getStatus().setQuantity(bot.getStatus().getQuantity().add(quantity));
+      if (status.isLong()) {
+        status.setQuantity(status.getQuantity().add(quantity));
+        status.setTotalPurchased(status.getTotalPurchased().add(valueToBuy));
       } else {
-        bot.getStatus().setQuantity(quantity);
+        status.setQuantity(quantity);
+        status.setTotalPurchased(valueToBuy);
       }
-
-      bot.getStatus().setPurchasePrice(marketTrend.currentPrice);
-      bot.getStatus().setPurchaseTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-      bot.getStatus().setLastPrice(marketTrend.currentPrice);
-      bot.getStatus().setLastRsi(marketTrend.rsi);
-      bot.getStatus().setLastSmaShort(marketTrend.smaShort);
-      bot.getStatus().setLastSmaLong(marketTrend.smaLong);
-      bot.getStatus().setActualSupport(marketTrend.support);
-      bot.getStatus().setActualResistance(marketTrend.resistance);
-      bot.getStatus().setLastVolume(marketTrend.currentVolume);
-      bot.getStatus().setQuantity(quantity);
+      status.setValueAtTheTimeOfLastPurchase(currentPrice);
 
       bot.buy(valueToBuy);
-      bought = true;
+      return;
     }
-    return bought;
-  }
 
-  private static void analyzeSell(MarketTrend marketTrend, SimpleTradeBot bot) {
-    BotParameters parameters = bot.getParameters();
+    boolean rsiOverbought = rsi.compareTo(parameters.getRsiSale()) >= 0;
+    boolean touchedResistance = currentPrice.compareTo(resistance.subtract(tolerance)) >= 0;
+    boolean bearishTrend = sma9.compareTo(sma21) < 0;
+    boolean weakVolume = currentVolume.compareTo(averageVolume) < 0;
 
-    boolean rsiOverbought =
-      marketTrend.rsi.compareTo(parameters.getRsiSale()) >= 0;
-
-    boolean touchedResistance =
-      marketTrend.currentPrice.compareTo(
-        marketTrend.resistance.subtract(marketTrend.tolerance)) >= 0;
-
-    boolean bearishTrend =
-      marketTrend.smaShort.compareTo(marketTrend.smaLong) < 0;
-
-    boolean weakVolume =
-      marketTrend.currentVolume.compareTo(marketTrend.averageVolume) < 0;
-
-    log(marketTrend.botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + marketTrend.rsi + " >= " + parameters.getRsiSale() + ")" + " - RSI: " + marketTrend.rsi);
-    log(marketTrend.botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + marketTrend.smaShort + " < SMA21: " + marketTrend.smaLong + ")");
-    log(marketTrend.botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + marketTrend.currentPrice + " >= Resistance: " + (marketTrend.resistance.subtract(marketTrend.tolerance)) + ")");
+    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " >= " + parameters.getRsiSale() + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
+    log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance.subtract(tolerance)) + ")");
 
     double sellPoints = 0;
     if (rsiOverbought) sellPoints += 1.0;
@@ -150,43 +112,49 @@ public class TradingService {
     if (weakVolume) sellPoints += 0.4;
     boolean reachedStopLoss = false;
     boolean reachedTakeProfit = false;
-    boolean isLong = bot.getStatus().isLong();
+    boolean isLong = status.isLong();
 
     if (isLong) {
-      BigDecimal purchasePrice = bot.getStatus().getPurchasePrice();
+      BigDecimal valueAtTheTimeOfLastPurchase = status.getValueAtTheTimeOfLastPurchase();
+
       BigDecimal priceChangePercent =
-        ((marketTrend.currentPrice.subtract(purchasePrice))
-          .divide(purchasePrice, 8, RoundingMode.HALF_UP))
+        currentPrice
+          .subtract(valueAtTheTimeOfLastPurchase)
+          .divide(valueAtTheTimeOfLastPurchase, 8, RoundingMode.HALF_UP)
           .multiply(BigDecimal.valueOf(100));
 
-      reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
-      reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
+      reachedStopLoss =
+        priceChangePercent
+          .compareTo(parameters.getStopLossPercent()
+            .negate()) <= 0;
 
-      log(marketTrend.botTypeName + "📉 Price change: " + String.format("%.2f", priceChangePercent) + "%");
-      log(marketTrend.botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
+      reachedTakeProfit =
+        priceChangePercent
+          .compareTo(parameters.getTakeProfitPercent()) >= 0;
+
+      log(botTypeName + "📉 Price change: " + String.format("%.2f", priceChangePercent) + "%");
+      log(botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
     }
 
     boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
 
     if (shouldSell) {
       if (!isLong) {
-        log(marketTrend.botTypeName + "🟡 SELL signal detected, but no position to sell!");
+        log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
         return;
       }
-      log(marketTrend.botTypeName + "🔴 SELL signal detected!");
+      log(botTypeName + "🔴 SELL signal detected!");
 
-      BigDecimal criptoAmount =
-        bot.getStatus()
-          .getQuantity()
-          .divide(bot.getStatus().getPurchasePrice(), 8, RoundingMode.HALF_UP);
+      BigDecimal cryptoAmount =
+        status.getQuantity()
+          .divide(currentPrice, 8, RoundingMode.HALF_UP);
 
       BigDecimal realizedProfit =
-        criptoAmount
-          .multiply(marketTrend.currentPrice);
+        cryptoAmount.multiply(currentPrice);
 
-      bot.sell(realizedProfit);
+      bot.sell(status.getTotalPurchased().add(realizedProfit).setScale(3, RoundingMode.HALF_DOWN));
     } else {
-      log(marketTrend.botTypeName + "🟡 No action recommended at this time.");
+      log(botTypeName + "🟡 No action recommended at this time.");
     }
   }
 

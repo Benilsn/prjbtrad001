@@ -15,17 +15,18 @@ public class Status {
 
   // Current state
   private boolean isLong;
-  private BigDecimal purchasePrice;
-  private String purchaseTime;
+  private BigDecimal totalPurchased;
+  private BigDecimal valueAtTheTimeOfLastPurchase;
   private BigDecimal quantity;
+//  private String purchaseTime;
 
   // Status
-  private BigDecimal lastPrice;
-  private BigDecimal lastRsi;
-  private BigDecimal lastSmaShort;
-  private BigDecimal lastSmaLong;
-  private BigDecimal actualSupport;
-  private BigDecimal actualResistance;
-  private BigDecimal lastVolume;
-  
+//  private BigDecimal lastPrice;
+//  private BigDecimal lastRsi;
+//  private BigDecimal lastSmaShort;
+//  private BigDecimal lastSmaLong;
+//  private BigDecimal actualSupport;
+//  private BigDecimal actualResistance;
+//  private BigDecimal lastVolume;
+//
 }

@@ -76,7 +76,7 @@ public class BotOrchestratorService {
     BotTask task = new BotTask(bot, botRunnerService);
     ScheduledFuture<?> future =
       scheduler
-        .scheduleAtFixedRate(task, 0, interval, TimeUnit.SECONDS);
+        .scheduleAtFixedRate(task, 2, interval, TimeUnit.SECONDS);
 
     runningBots.put(bot.getId(), future);
     log("Started bot " + bot.getId() + " with interval " + interval + "s");
