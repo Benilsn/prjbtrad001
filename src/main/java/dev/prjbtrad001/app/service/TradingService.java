@@ -157,7 +157,11 @@ public class TradingService {
             .multiply(order.trades().getFirst().price())
               .subtract(status.getValueAtTheTimeOfLastPurchase());
 
-      status.setProfit(profit);
+      if (status.getProfit() != null){
+        status.setProfit(status.getProfit().add(profit));
+      } else{
+        status.setProfit(profit);
+      }
 
       log(botTypeName + "Profit from sell: " + status.getProfit());
     } else {
