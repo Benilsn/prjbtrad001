@@ -149,12 +149,15 @@ public class TradingService {
       log(botTypeName + "🔴 SELL signal detected!");
 
       TradeOrderDto order =
-        binanceService.placeSellOrder(botTypeName)
+        binanceService.placeSellOrder(bot.getParameters().getBotType().name())
           .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 
-      status.setProfit(
-        currentPrice
-          .subtract(status.getValueAtTheTimeOfLastPurchase()));
+      BigDecimal profit =
+        order.quantity()
+            .multiply(order.trades().getFirst().price())
+              .subtract(status.getValueAtTheTimeOfLastPurchase());
+
+      status.setProfit(profit);
 
       log(botTypeName + "Profit from sell: " + status.getProfit());
     } else {

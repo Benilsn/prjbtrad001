@@ -34,24 +34,34 @@ public class Status {
 //  private BigDecimal lastVolume;
 //
 
-  public String getFormattedTotalPurchase() {
-    if (totalPurchased == null) {
-      totalPurchased = BigDecimal.ZERO;
-    }
-    return FORMATTER2.format(totalPurchased.setScale(2, RoundingMode.UNNECESSARY));
-  }
-
-  public String getFormattedValueAtTheTimeOfLastPurchase() {
-    if (valueAtTheTimeOfLastPurchase == null) {
-      valueAtTheTimeOfLastPurchase = BigDecimal.ZERO;
-    }
-    return FORMATTER2.format(valueAtTheTimeOfLastPurchase.setScale(2, RoundingMode.UNNECESSARY));
-  }
-
-  public String getFormattedProfit() {
+  public int isProfitPositive() {
     if (profit == null) {
-      profit = BigDecimal.ZERO;
+      return 0;
+    } else if (profit.compareTo(BigDecimal.ZERO) <= 0) {
+      return -1;
+    } else {
+      return 1;
     }
-    return FORMATTER2.format(profit.setScale(2, RoundingMode.UNNECESSARY));
   }
+
+//  public String getFormattedTotalPurchase() {
+//    if (totalPurchased == null) {
+//      totalPurchased = BigDecimal.ZERO;
+//    }
+//    return FORMATTER2.format(totalPurchased.setScale(2, RoundingMode.UNNECESSARY));
+//  }
+//
+//  public String getFormattedValueAtTheTimeOfLastPurchase() {
+//    if (valueAtTheTimeOfLastPurchase == null) {
+//      valueAtTheTimeOfLastPurchase = BigDecimal.ZERO;
+//    }
+//    return FORMATTER2.format(valueAtTheTimeOfLastPurchase.setScale(2, RoundingMode.UNNECESSARY));
+//  }
+//
+//  public String getFormattedProfit() {
+//    if (profit == null) {
+//      profit = BigDecimal.ZERO;
+//    }
+//    return FORMATTER2.format(profit.setScale(2, RoundingMode.UNNECESSARY));
+//  }
 }
