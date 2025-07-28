@@ -2,7 +2,10 @@ package dev.prjbtrad001.app.service;
 
 import dev.prjbtrad001.app.bot.*;
 import dev.prjbtrad001.app.dto.KlineDto;
-import lombok.experimental.UtilityClass;
+import dev.prjbtrad001.app.dto.TradeOrderDto;
+import dev.prjbtrad001.infra.exception.TradeException;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lombok.extern.jbosslog.JBossLog;
 
 import java.math.BigDecimal;
@@ -12,18 +15,22 @@ import java.util.Collections;
 import java.util.List;
 
 import static dev.prjbtrad001.app.utils.LogUtils.log;
+import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
 @JBossLog
-@UtilityClass
+@ApplicationScoped
 public class TradingService {
 
-  public static void analyzeMarket(SimpleTradeBot bot) {
+  @Inject
+  BinanceService binanceService;
+
+  public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
     List<BigDecimal> closePrices = new ArrayList<>();
     List<BigDecimal> volumes = new ArrayList<>();
 
-    List<KlineDto> klines = BinanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
+    List<KlineDto> klines = binanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
 
     klines.forEach(kline -> {
       closePrices.add(new BigDecimal(kline.getClosePrice()));
@@ -72,26 +79,23 @@ public class TradingService {
       log(botTypeName + "🔵 BUY signal detected!");
 
       BigDecimal valueToBuy = parameters.getPurchaseAmount();
-      if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
+      if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE))
         valueToBuy =
-          Wallet.get()
+          binanceService
+            .getBalance().orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
+            .balance()
             .multiply(parameters.getPurchaseAmount())
             .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
-      }
 
-      BigDecimal quantity =
-        valueToBuy.divide(currentPrice, 8, RoundingMode.HALF_UP);
+      TradeOrderDto order =
+        binanceService.placeBuyOrder(botTypeName, valueToBuy)
+          .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
-      if (status.isLong()) {
-        status.setQuantity(status.getQuantity().add(quantity));
-        status.setTotalPurchased(status.getTotalPurchased().add(valueToBuy));
-      } else {
-        status.setQuantity(quantity);
-        status.setTotalPurchased(valueToBuy);
-      }
       status.setValueAtTheTimeOfLastPurchase(currentPrice);
+      status.setTotalPurchased(order.totalSpentBRL());
+      status.setQuantity(order.quantity());
+      status.setLong(true);
 
-      bot.buy(valueToBuy);
       return;
     }
 
@@ -104,16 +108,10 @@ public class TradingService {
     log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
     log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance.subtract(tolerance)) + ")");
 
-    double sellPoints = 0;
-    if (rsiOverbought) sellPoints += 1.0;
-    if (bearishTrend) sellPoints += 1.0;
-    if (touchedResistance) sellPoints += 0.4;
-    if (weakVolume) sellPoints += 0.4;
     boolean reachedStopLoss = false;
     boolean reachedTakeProfit = false;
-    boolean isLong = status.isLong();
 
-    if (isLong) {
+    if (status.isLong()) {
       BigDecimal valueAtTheTimeOfLastPurchase = status.getValueAtTheTimeOfLastPurchase();
 
       BigDecimal priceChangePercent =
@@ -135,23 +133,30 @@ public class TradingService {
       log(botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
     }
 
+    double sellPoints = 0;
+    if (rsiOverbought) sellPoints += 1.0;
+    if (bearishTrend) sellPoints += 1.0;
+    if (touchedResistance) sellPoints += 0.4;
+    if (weakVolume) sellPoints += 0.4;
+
     boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
 
     if (shouldSell) {
-      if (!isLong) {
+      if (!status.isLong()) {
         log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
         return;
       }
       log(botTypeName + "🔴 SELL signal detected!");
 
-      BigDecimal cryptoAmount =
-        status.getQuantity()
-          .divide(currentPrice, 8, RoundingMode.HALF_UP);
+      TradeOrderDto order =
+        binanceService.placeSellOrder(botTypeName)
+          .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 
-      BigDecimal realizedProfit =
-        cryptoAmount.multiply(currentPrice);
+      status.setProfit(
+        currentPrice
+          .subtract(status.getValueAtTheTimeOfLastPurchase()));
 
-      bot.sell(status.getTotalPurchased().add(realizedProfit).setScale(3, RoundingMode.HALF_DOWN));
+      log(botTypeName + "Profit from sell: " + status.getProfit());
     } else {
       log(botTypeName + "🟡 No action recommended at this time.");
     }

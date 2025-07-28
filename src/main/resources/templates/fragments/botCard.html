@@ -26,7 +26,13 @@
                 </li>
                 <li class="d-flex flex-column">
                     <span class="label">Profit</span>
-                    <span class="text-glow-green">R${bot.status.profit ?: 0}</span>
+                    {#if bot.status.profit != null && bot.status.profit.compareTo(0) >= 0}
+                        <span class="text-glow-green">R${bot.status.profit ?: 0}</span>
+                    {#else if bot.status.profit == null || bot.status.profit.compareTo(0) == 0}
+                        <span class="text-glow-yellow">R${bot.status.profit ?: 0}</span>
+                    {#else}
+                        <span class="text-glow-red">R${bot.status.formattedProfit ?: 0}</span>
+                    {/if}
                 </li>
                 <li class="d-flex flex-column">
                     <span class="label">Quantity</span>
@@ -34,11 +40,11 @@
                 </li>
                 <li class="d-flex flex-column">
                     <span class="label">Total Purchased</span>
-                    <span class="text-glow-green">R${bot.status.totalPurchased ?: 0}</span>
+                    <span class="text-glow-green">R${bot.status.totalPurchased.formattedTotalPurchase ?: 0}</span>
                 </li>
                 <li class="d-flex flex-column">
                     <span class="label">Last Purchase Price</span>
-                    <span class="text-glow-green">R${bot.status.valueAtTheTimeOfLastPurchase ?: 0}</span>
+                    <span class="text-glow-green">R${bot.status.formattedValueAtTheTimeOfLastPurchase ?: 0}</span>
                 </li>
             </ul>
 

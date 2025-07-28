@@ -62,7 +62,7 @@ import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
  * CriptoDto price = binanceService.getPrice("BTCBRL");
  * }</pre>
  *
- * @author [Your Name]
+ * @author Benilsn
  * @see CriptoDto
  * @see AccountDto
  * @see TradeOrderDto
@@ -183,7 +183,7 @@ public class BinanceService {
    * @param limit    the maximum number of candles to return (max allowed by Binance: 1000)
    * @return a list of {@link KlineDto} objects representing the candlestick data; empty if an error occurs
    */
-  public static List<KlineDto> getCandles(String symbol, String interval, int limit) {
+  public List<KlineDto> getCandles(String symbol, String interval, int limit) {
 
     HttpRequest request =
       HttpRequest.newBuilder()
@@ -223,7 +223,7 @@ public class BinanceService {
    *
    * @return the Binance server time in milliseconds, or local system time if the request fails
    */
-  public static long getBinanceServerTime() {
+  private static long getBinanceServerTime() {
     try {
       HttpRequest request = HttpRequest.newBuilder()
         .uri(URI.create(BASE_URL + "/time"))
@@ -247,22 +247,18 @@ public class BinanceService {
   }
 
   /**
-   * Retrieves the user's cryptocurrency balances from Binance via the <code>/account</code> endpoint.
+   * Retrieves all cryptocurrency balances from the user's Binance account.
    *
-   * <p>This method sends an authenticated GET request to Binance's <code>/account</code> API,
-   * signed using the user's secret key, and retrieves all balances associated with the account.</p>
+   * <p>This method sends an authenticated GET request to Binance's <code>/account</code> endpoint,
+   * signed using the user's secret key, and retrieves all balances associated with the account.
+   * It filters the balances to include only those for symbols specified in the {@code workingSymbols} configuration.</p>
    *
-   * <p>After parsing the response into an {@code AccountDto} object, it filters the balances
-   * based on the configured <code>workingSymbols</code> (comma-separated string), keeping only the
-   * balances relevant to the application’s trading context.</p>
+   * <p>If the request is successful (HTTP 200), it returns an {@code Optional<AccountDto>} containing
+   * the filtered account information. If not found or if an error occurs, it logs the error and returns {@code Optional.empty()}.</p>
    *
-   * <p>If the request is successful (HTTP 200), the filtered balances are returned inside
-   * an {@code Optional<AccountDto>}. Otherwise, an empty Optional is returned and the error is logged.</p>
-   *
-   * @return an {@code Optional<AccountDto>} containing filtered crypto balances,
-   *         or {@code Optional.empty()} if the request fails or parsing fails
+   * @return an {@code Optional<AccountDto>} containing the user's cryptocurrency balances
    */
-  public Optional<AccountDto> getCriptosBalance() {
+  public Optional<AccountDto> getAllCriptoBalances() {
     String queryString = "timestamp=" + getBinanceServerTime();
     CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
 
@@ -295,6 +291,55 @@ public class BinanceService {
   }
 
   /**
+   * Retrieves the balance for a specific cryptocurrency symbol from the user's Binance account.
+   *
+   * <p>This method sends an authenticated GET request to Binance's <code>/account</code> endpoint,
+   * signed using the user's secret key, and retrieves all balances associated with the account.
+   * It then filters the balances to find the one matching the specified symbol.</p>
+   *
+   * <p>If the request is successful (HTTP 200), it returns the balance for the specified symbol
+   * wrapped in an {@code AccountDto.Balance}. If not found or if an error occurs, it throws a {@code TradeException}.</p>
+   *
+   * @param symbol the trading pair symbol to retrieve the balance for (e.g., "BTCBRL")
+   * @return an {@code AccountDto.Balance} containing the free and locked amounts for the specified symbol
+   * @throws TradeException if the balance for the specified symbol is not found or if an error occurs
+   */
+  public AccountDto.Balance getCriptoBalance(String symbol) {
+    String queryString = "timestamp=" + getBinanceServerTime();
+    CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
+
+    try {
+      String signature = generateSignature(queryString, criptoCredentials.secretKey());
+
+      HttpRequest request = HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/account?" + queryString + "&signature=" + signature))
+        .header("X-MBX-APIKEY", criptoCredentials.apiKey())
+        .GET()
+        .build();
+
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        AccountDto account = MAPPER.readValue(response.body(), AccountDto.class);
+        account.filterBalances(workingSymbols.split(","));
+        log.debug("Account criptos balance: " + MAPPER.writeValueAsString(account));
+        return
+          account.balances()
+            .stream()
+            .filter(b -> symbol.replaceFirst("BRL$", "").equals(b.asset()))
+            .findFirst()
+            .orElseThrow(() -> new TradeException(ErrorCode.BALANCE_NOT_FOUND.getMessage()));
+      } else {
+        log("Error getting balance: HTTP " + response.statusCode() + " - " + response.body());
+      }
+    } catch (Exception e) {
+      log("Error getting balance: " + e.getMessage());
+    }
+
+    return null;
+  }
+
+  /**
    * Places a market buy order on Binance for the specified trading symbol using a fixed amount in BRL.
    *
    * <p>This method builds and sends a signed request to Binance's <code>/order</code> endpoint
@@ -304,12 +349,12 @@ public class BinanceService {
    * <p>If the request succeeds (HTTP 200), the response is parsed into a {@code TradeOrderDto}
    * and returned wrapped in an {@code Optional}. If the request fails, it logs the error and returns {@code Optional.empty()}.</p>
    *
-   * @param symbol  the trading pair symbol to buy (e.g., "BTCBRL")
+   * @param symbol   the trading pair symbol to buy (e.g., "BTCBRL")
    * @param quantity the amount in BRL (quote currency) to spend on the purchase (e.g., new BigDecimal("100"))
    * @return an {@code Optional<TradeOrderDto>} with Binance’s response details if the order succeeds,
-   *         or {@code Optional.empty()} if the request fails or is rejected
+   * or {@code Optional.empty()} if the request fails or is rejected
    */
-  public static Optional<TradeOrderDto> placeBuyOrder(String symbol, BigDecimal quantity) {
+  public Optional<TradeOrderDto> placeBuyOrder(String symbol, BigDecimal quantity) {
     long timestamp = getBinanceServerTime();
     String queryString = String.format("symbol=%s&side=BUY&type=MARKET&quoteOrderQty=%s&timestamp=%d", symbol, quantity.toPlainString(), timestamp);
 
@@ -360,17 +405,9 @@ public class BinanceService {
    */
   public Optional<TradeOrderDto> placeSellOrder(String symbol) {
     BigDecimal lotSizeToBeSold = getLotSize(symbol);
-    BigDecimal criptoBalance =
-      getCriptosBalance()
-        .orElseThrow(() -> new TradeException(ErrorCode.ACCOUNT_DETAILS_NOT_FOUND.getMessage()))
-        .balances()
-        .stream()
-        .filter(b -> symbol.replaceFirst("BRL$", "").equals(b.asset()))
-        .findFirst()
-        .orElseThrow(() -> new TradeException(ErrorCode.BALANCE_NOT_FOUND.getMessage()))
-        .free();
+    BigDecimal criptoBalance = getCriptoBalance(symbol).free();
 
-    if (lotSizeToBeSold != null && criptoBalance.compareTo(lotSizeToBeSold) != 0){
+    if (lotSizeToBeSold != null && criptoBalance.compareTo(lotSizeToBeSold) != 0) {
       log.debug(symbol + " balance: " + criptoBalance);
       criptoBalance = roundDownToStepSize(criptoBalance, lotSizeToBeSold);
       log.debug("Adjusted crypto balance to match step size: " + criptoBalance);
@@ -501,9 +538,9 @@ public class BinanceService {
    * using HMAC-SHA256 as required by Binance's API security rules.</p>
    *
    * @return an {@code Optional<BalanceDto>} containing the BRL balance (free and locked),
-   *         or an empty Optional if the request fails or no BRL balance is found
+   * or an empty Optional if the request fails or no BRL balance is found
    */
-  public static Optional<BalanceDto> getBalance() {
+  public Optional<BalanceDto> getBalance() {
     try {
       CriptoCredentials criptoCredentials = CredentialsConfig.getCriptoCredentials();
       long timestamp = getBinanceServerTime();

@@ -11,6 +11,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Configuration class responsible for loading and providing Binance API credentials application-wide.
+ *
+ * <p>Annotated with {@code @Startup} to ensure this bean is eagerly initialized when the application starts,
+ * and {@code @ApplicationScoped} to provide a singleton instance for the entire application lifecycle.</p>
+ *
+ * <p>This class typically loads API credentials from secure storage or configuration files
+ * and makes them available for injection or static access throughout the application.</p>
+ */
 @Startup
 @ApplicationScoped
 public class CredentialsConfig {
@@ -24,6 +33,16 @@ public class CredentialsConfig {
   @Getter
   private static CriptoCredentials criptoCredentials;
 
+  /**
+   * Loads the Binance API credentials from predefined file paths after the bean's construction.
+   *
+   * <p>This method is annotated with {@code @PostConstruct} to automatically execute
+   * after dependency injection is done. It reads the API key and secret key from
+   * specified files, trims whitespace, and initializes the {@code criptoCredentials} object.</p>
+   *
+   * <p>If reading the files fails, it logs the error message to standard error
+   * and assigns default credentials to {@code criptoCredentials}.</p>
+   */
   @PostConstruct
   private void loadCredentials() {
     try {

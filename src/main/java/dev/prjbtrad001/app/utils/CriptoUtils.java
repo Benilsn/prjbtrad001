@@ -14,10 +14,50 @@ import java.util.ArrayList;
 import java.util.HexFormat;
 import java.util.List;
 
+/**
+ * Utility class providing helper methods for cryptocurrency data processing.
+ *
+ * <p>This class contains static methods to parse JSON responses from Binance API,
+ * manipulate numeric values such as rounding crypto balances according to step sizes,
+ * and other common utility functions needed across the crypto trading application.</p>
+ *
+ * <p>Example usage:</p>
+ * <pre>{@code
+ * List<KlineDto> klines = CriptoUtils.parseKlines(mapper, jsonResponse);
+ * BigDecimal roundedBalance = CriptoUtils.roundDownToStepSize(balance, stepSize);
+ * }</pre>
+ *
+ * @see KlineDto
+ */
 @UtilityClass
 public class CriptoUtils {
 
 
+  /**
+   * Parses a JSON response from Binance's /klines endpoint into a list of {@link KlineDto} objects.
+   *
+   * <p>The JSON response is expected to be an array where each element represents a candlestick (kline)
+   * with fields in a fixed order, as defined by Binance API:</p>
+   * <ol>
+   *   <li>Open time (long)</li>
+   *   <li>Open price (String)</li>
+   *   <li>High price (String)</li>
+   *   <li>Low price (String)</li>
+   *   <li>Close price (String)</li>
+   *   <li>Volume (String)</li>
+   *   <li>Close time (long)</li>
+   *   <li>Quote asset volume (String)</li>
+   *   <li>Number of trades (int)</li>
+   *   <li>Taker buy base asset volume (String)</li>
+   *   <li>Taker buy quote asset volume (String)</li>
+   *   <li>Ignore (String)</li>
+   * </ol>
+   *
+   * @param mapper       the Jackson {@link ObjectMapper} instance used to parse JSON
+   * @param jsonResponse the raw JSON response string from Binance's /klines endpoint
+   * @return a list of {@link KlineDto} representing parsed candlestick data
+   * @throws Exception if parsing the JSON fails or the input format is unexpected
+   */
   public static List<KlineDto> parseKlines(ObjectMapper mapper, String jsonResponse) throws Exception {
     JsonNode rootNode = mapper.readTree(jsonResponse);
 
@@ -48,6 +88,17 @@ public class CriptoUtils {
     return klines;
   }
 
+  /**
+   * Generates an HMAC SHA-256 signature for the given data using the provided secret key.
+   *
+   * <p>This method is used to sign requests to Binance API, ensuring
+   * authentication and integrity of the transmitted data.</p>
+   *
+   * @param data the message or query string to be signed
+   * @param key the secret key used for signing (usually the Binance API secret)
+   * @return the generated signature as a hexadecimal string
+   * @throws Exception if the HMAC SHA-256 algorithm is not available or initialization fails
+   */
   public static String generateSignature(String data, String key) throws Exception {
     Mac sha256HMAC = Mac.getInstance("HmacSHA256");
     SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), "HmacSHA256");

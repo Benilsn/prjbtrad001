@@ -42,32 +42,4 @@ public class SimpleTradeBot extends PanacheEntityBase {
     this.parameters = parameters;
     this.status = new Status();
   }
-
-  public void buy(BigDecimal quantity) {
-    if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
-      log("Cannot buy with zero or negative quantity.");
-      return;
-    }
-    if (Wallet.get().compareTo(quantity) < 0) {
-      log("Insufficient funds to buy: " + quantity);
-      return;
-    }
-    Wallet.withdraw(quantity);
-    this.status.setLong(true);
-    log("Bought R$" + quantity + " . Remaining wallet balance: R$" + Wallet.get());
-  }
-
-  public void sell(BigDecimal quantity) {
-    if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
-      log("Cannot sell with zero or negative quantity.");
-      return;
-    }
-    Wallet.deposit(quantity);
-    this.status.setLong(false);
-    this.status.setValueAtTheTimeOfLastPurchase(BigDecimal.ZERO);
-    this.status.setTotalPurchased(BigDecimal.ZERO);
-    this.status.setQuantity(BigDecimal.ZERO);
-    this.status.setProfit(this.status.getProfit().add(quantity.subtract(this.status.getTotalPurchased())));
-    log("Sold R$" + quantity + ". New wallet balance: R$" + Wallet.get());
-  }
 }

@@ -1,7 +1,6 @@
 package dev.prjbtrad001.infra.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.prjbtrad001.app.bot.Wallet;
 import dev.prjbtrad001.app.dto.CriptoDto;
 import dev.prjbtrad001.app.service.BinanceService;
 import dev.prjbtrad001.app.utils.LogUtils;
@@ -50,7 +49,7 @@ public class HomeResource {
   @Path("/refresh-wallet")
   public String refreshWallet() {
     log.info("Refreshing wallet data...");
-    return String.format("R$%s", FORMATTER2.format(Wallet.get()));
+    return String.format("R$%s", FORMATTER2.format(binanceService.getBalance().get().balance()));
   }
 
   @GET
