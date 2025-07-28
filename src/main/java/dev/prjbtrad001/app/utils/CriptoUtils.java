@@ -7,6 +7,8 @@ import lombok.experimental.UtilityClass;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HexFormat;
@@ -54,5 +56,33 @@ public class CriptoUtils {
     return HexFormat.of().formatHex(hash);
   }
 
+  /**
+   * Rounds down the given crypto balance to the nearest multiple of the specified step size.
+   *
+   * <p>This is useful for ensuring that trade quantities comply with Binance's
+   * {@code LOT_SIZE.stepSize} constraint, which defines the minimum quantity increment allowed.</p>
+   *
+   * <p>Example:</p>
+   * <pre>{@code
+   * BigDecimal balance = new BigDecimal("0.00004995");
+   * BigDecimal stepSize = new BigDecimal("0.00001000");
+   * BigDecimal rounded = roundDownToStepSize(balance, stepSize);
+   * // Result: 0.00004000
+   * }</pre>
+   *
+   * @param cryptoBalance the available balance to round
+   * @param stepSize the step size defined by Binance for the asset
+   * @return the balance rounded down to a valid quantity according to step size
+   * @throws IllegalArgumentException if step size is zero or negative
+   */
+  public static BigDecimal roundDownToStepSize(BigDecimal cryptoBalance, BigDecimal stepSize) {
+    if (stepSize.compareTo(BigDecimal.ZERO) <= 0)
+      throw new IllegalArgumentException("Step size must be greater than zero.");
+
+    return cryptoBalance
+      .divide(stepSize, 0, RoundingMode.DOWN)
+      .multiply(stepSize)
+      .setScale(stepSize.scale(), RoundingMode.DOWN);
+  }
 
 }
