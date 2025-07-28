@@ -4,9 +4,6 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
 
 @Getter
 @Setter
@@ -19,7 +16,7 @@ public class Status {
   // Current state
   private boolean isLong;
   private BigDecimal totalPurchased;
-  private BigDecimal valueAtTheTimeOfLastPurchase;
+  private BigDecimal averagePrice;
   private BigDecimal quantity;
   private BigDecimal profit;
 //  private String purchaseTime;

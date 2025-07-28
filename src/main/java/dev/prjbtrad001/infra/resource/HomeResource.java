@@ -1,6 +1,7 @@
 package dev.prjbtrad001.infra.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.prjbtrad001.app.dto.BalanceDto;
 import dev.prjbtrad001.app.dto.CriptoDto;
 import dev.prjbtrad001.app.service.BinanceService;
 import dev.prjbtrad001.app.utils.LogUtils;
@@ -14,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Queue;
 
@@ -23,8 +25,10 @@ import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
 @JBossLog
 public class HomeResource {
 
-  @Inject BinanceService binanceService;
-  @Inject ObjectMapper mapper;
+  @Inject
+  BinanceService binanceService;
+  @Inject
+  ObjectMapper mapper;
 
   @ConfigProperty(name = "bot.symbol.list")
   private String workingSymbols;
@@ -49,7 +53,7 @@ public class HomeResource {
   @Path("/refresh-wallet")
   public String refreshWallet() {
     log.info("Refreshing wallet data...");
-    return String.format("R$%s", FORMATTER2.format(binanceService.getBalance().get().balance()));
+    return String.format("R$%s", FORMATTER2.format(binanceService.getBalance().orElse(new BalanceDto(null, BigDecimal.ZERO, null)).balance()));
   }
 
   @GET

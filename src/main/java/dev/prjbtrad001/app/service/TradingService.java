@@ -81,22 +81,30 @@ public class TradingService {
       log(botTypeName + "🔵 BUY signal detected!");
 
       BigDecimal valueToBuy = parameters.getPurchaseAmount();
-      if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE))
-        valueToBuy =
-          binanceService
-            .getBalance().orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
-            .balance()
-            .multiply(parameters.getPurchaseAmount())
-            .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
+      if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
+        valueToBuy = binanceService
+          .getBalance().orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
+          .balance()
+          .multiply(parameters.getPurchaseAmount())
+          .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
+      }
 
-      TradeOrderDto order =
-        binanceService.placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
-          .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
+      TradeOrderDto order = binanceService
+        .placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
+        .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
-      //TODO REAZER CALCULO
-      status.setValueAtTheTimeOfLastPurchase(currentPrice);
-      status.setTotalPurchased(order.totalSpentBRL());
-      status.setQuantity(order.quantity());
+      BigDecimal lastQuantity = status.getQuantity() != null ? status.getQuantity() : BigDecimal.ZERO;
+      BigDecimal lastPurchasedTotal = status.getTotalPurchased() != null ? status.getTotalPurchased() : BigDecimal.ZERO;
+
+      BigDecimal newQuantity = lastQuantity.add(order.quantity());
+      status.setQuantity(newQuantity);
+
+      BigDecimal newPurchasedTotal = lastPurchasedTotal.add(order.totalSpentBRL());
+      status.setTotalPurchased(newPurchasedTotal);
+
+      BigDecimal averagePrice = newPurchasedTotal.divide(newQuantity, 8, RoundingMode.HALF_UP);
+      status.setAveragePrice(averagePrice);
+
       status.setLong(true);
 
       return;
@@ -115,7 +123,7 @@ public class TradingService {
     boolean reachedTakeProfit = false;
 
     if (status.isLong()) {
-      BigDecimal valueAtTheTimeOfLastPurchase = status.getValueAtTheTimeOfLastPurchase();
+      BigDecimal valueAtTheTimeOfLastPurchase = status.getAveragePrice();
 
       BigDecimal priceChangePercent =
         currentPrice
@@ -152,27 +160,34 @@ public class TradingService {
       log(botTypeName + "🔴 SELL signal detected!");
 
       TradeOrderDto order =
-        binanceService.placeSellOrder(bot.getParameters().getBotType().name())
+        binanceService
+          .placeSellOrder(bot.getParameters().getBotType().name())
           .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 
-      bot.getStatus().setLong(false);
+      BigDecimal saleTotalValue =
+        order.trades()
+          .stream()
+          .map(t -> t.price().multiply(t.quantity()))
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-      //TODO REAZER CALCULO
-      BigDecimal saleValue = order.trades().stream()
-        .map(t -> t.price().multiply(t.quantity()))
-        .reduce(BigDecimal.ZERO, BigDecimal::add)
-        .divide(order.quantity(), 8, RoundingMode.HALF_UP);
+      BigDecimal averagePriceSale = saleTotalValue.divide(order.quantity(), 8, RoundingMode.HALF_UP);
 
-      BigDecimal purchaseValue = order.quantity().multiply(status.getValueAtTheTimeOfLastPurchase());
-      BigDecimal profit = saleValue.subtract(purchaseValue);
+      BigDecimal averagePricePurchase = status.getAveragePrice();
+      BigDecimal purchaseTotalValue = averagePricePurchase.multiply(order.quantity());
 
-      if (status.getProfit() != null){
-        status.setProfit(status.getProfit().add(profit));
-      } else{
-        status.setProfit(profit);
-      }
+      BigDecimal profit = saleTotalValue.subtract(purchaseTotalValue);
 
-      log(botTypeName + "Profit from sell: " + status.getProfit());
+      status.setProfit(profit);
+      status.setQuantity(BigDecimal.ZERO);
+      status.setTotalPurchased(BigDecimal.ZERO);
+      status.setAveragePrice(BigDecimal.ZERO);
+      status.setLong(false);
+
+      log(botTypeName + "💰 Sale made.");
+      log(botTypeName + "🔹 Average purchase price: " + averagePricePurchase);
+      log(botTypeName + "🔹 Average sale price: " + averagePriceSale);
+      log(botTypeName + "🔹 Profit from sale: R$" + profit);
+      log(botTypeName + "🔹 Total accumulated profit: R$" + status.getProfit());
     } else {
       log(botTypeName + "🟡 No action recommended at this time.");
     }

@@ -48,7 +48,7 @@
                 </li>
                 <li class="d-flex flex-column">
                     <span class="label">Last Purchase Price</span>
-                    <span class="text-glow-green">R${bot.status.valueAtTheTimeOfLastPurchase ?: '0,00'}</span>
+                    <span class="text-glow-green">R${bot.status.averagePrice ?: '0,00'}</span>
                 </li>
             </ul>
 
@@ -111,7 +111,7 @@
                         <ul class="list-unstyled d-flex flex-column gap-3">
                             <li class="d-flex flex-column"><span class="label">Is Long</span><span class="value">{bot.status.isLong}</span></li>
                             <li class="d-flex flex-column"><span class="label">Total Purchased</span><span class="value">{bot.status.totalPurchased}</span></li>
-                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">{bot.status.valueAtTheTimeOfLastPurchase}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">{bot.status.averagePrice}</span></li>
                             <li class="d-flex flex-column"><span class="label">Quantity</span><span class="value">{bot.status.quantity}</span></li>
                         </ul>
                     </div>
