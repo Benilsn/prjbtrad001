@@ -26,7 +26,7 @@ public class BotParameters{
 
   @Transient
   @JsonIgnore @Getter(AccessLevel.NONE)
-  private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
+  private DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
 
   @Transient
   @JsonIgnore @Getter(AccessLevel.NONE)

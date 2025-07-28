@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class FormatterUtils {
 
-  @Getter public static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
+  @Getter public static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
   @Getter public static final DecimalFormat FORMATTER1 = new DecimalFormat("#,###.00000", symbols);
   @Getter public static final DecimalFormat FORMATTER2 = new DecimalFormat("#,###.00", symbols);
 

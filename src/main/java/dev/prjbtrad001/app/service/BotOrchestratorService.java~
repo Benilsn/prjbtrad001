@@ -1,0 +1,142 @@
+package dev.prjbtrad001.app.service;
+
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.utils.LogUtils;
+import dev.prjbtrad001.domain.repository.BotRepository;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.literal.NamedLiteral;
+import jakarta.inject.Inject;
+import jakarta.resource.spi.ConfigProperty;
+import jakarta.transaction.Transactional;
+import lombok.extern.jbosslog.JBossLog;
+
+import java.util.*;
+import java.util.concurrent.*;
+
+import static dev.prjbtrad001.app.utils.LogUtils.log;
+
+@JBossLog
+@ApplicationScoped
+public class BotOrchestratorService {
+
+  private BotRepository<SimpleTradeBot> botRepository;
+
+  @Inject
+  Instance<BotRepository<SimpleTradeBot>> repositories;
+
+  @ConfigProperty(name = "bot.data.strategy")
+  String dataStrategy;
+
+  private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
+  private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
+
+  public SimpleTradeBot createBot(SimpleTradeBot bot) {
+    log.debug("Creating bot: " + bot.getParameters().getBotType());
+    botRepository.createBot(bot);
+    return bot;
+  }
+
+  public List<SimpleTradeBot> getAllBots() {
+    List<SimpleTradeBot> bots = botRepository.getAllBots();
+    log.debug("Getting all " + bots.size() + " bots.");
+    // Ordena colocando os bots que estão rodando primeiro
+    return bots.stream()
+            .sorted(Comparator.comparing(SimpleTradeBot::isRunning).reversed())
+            .toList();
+  }
+
+  public void deleteBot(UUID botId) {
+    log.debug("Deleting bot: " + botId);
+    stopBot(botId);
+    botRepository.deleteBot(botId);
+  }
+
+  public SimpleTradeBot getBotById(UUID botId) {
+    log.debug("Getting bot by ID: " + botId);
+    return botRepository.getBotById(botId)
+            .orElseThrow(() -> new NoSuchElementException("Bot not found with ID: " + botId));
+  }
+
+  @Transactional
+  public void startBot(UUID botId) {
+    SimpleTradeBot bot = getBotById(botId);
+
+    if (runningBots.containsKey(bot.getId())) {
+      log("Bot " + bot.getId() + " is already running.");
+      return;
+    }
+
+    // Extrai o número do intervalo, assumindo formato tipo "1m", "5m", "1h", etc.
+    int intervalSeconds = parseIntervalToSeconds(bot.getParameters().getInterval());
+
+    bot.start();
+    bot.persist();
+
+    ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(bot, 0, intervalSeconds, TimeUnit.SECONDS);
+    runningBots.put(bot.getId(), future);
+
+    log("Started bot " + bot.getId() + " with interval " + intervalSeconds + " seconds");
+  }
+
+  @Transactional
+  public void stopBot(UUID botId) {
+    SimpleTradeBot bot = getBotById(botId);
+
+    ScheduledFuture<?> future = runningBots.remove(bot.getId());
+    if (future != null) {
+      future.cancel(true);
+    }
+
+    bot.stop();
+    log("Stopped bot " + bot.getId());
+  }
+
+  @PreDestroy
+  @Transactional
+  public void shutdownAll() {
+    runningBots.values().forEach(future -> future.cancel(true));
+    LogUtils.shutdown();
+    runningBots.clear();
+    scheduler.shutdown();
+    log("All bots stopped and scheduler shut down.");
+  }
+
+  @PostConstruct
+  public void init() {
+    // Injetar o repositório com o qualifier dado pela config "dataStrategy"
+    this.botRepository = repositories.select(NamedLiteral.of(dataStrategy)).get();
+  }
+
+  /**
+   * Converte o intervalo de string no formato '1m', '5m', '1h', '1d' para segundos.
+   * Suporta:
+   * m = minutos
+   * h = horas
+   * d = dias
+   */
+  private int parseIntervalToSeconds(String interval) {
+    try {
+      if (interval == null || interval.isEmpty()) {
+        log.warn("Interval string is null or empty, defaulting to 60 seconds");
+        return 60; // padrão 1 minuto
+      }
+      int value = Integer.parseInt(interval.replaceAll("[^0-9]", ""));
+      if (interval.endsWith("m")) {
+        return value * 60;
+      } else if (interval.endsWith("h")) {
+        return value * 3600;
+      } else if (interval.endsWith("d")) {
+        return value * 86400;
+      } else {
+        // Caso não haja unidade, assume segundos
+        return value;
+      }
+    } catch (NumberFormatException e) {
+      log.warn("Failed to parse interval '" + interval + "': " + e.getMessage());
+      return 60; // fallback 1 minuto
+    }
+  }
+}

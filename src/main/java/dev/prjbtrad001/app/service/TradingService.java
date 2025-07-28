@@ -42,12 +42,12 @@ public class TradingService {
     BigDecimal rsi = calculateRSI(last(closePrices, 15), 14);
     BigDecimal sma9 = calculateAverage(last(closePrices, parameters.getSmaShort()));
     BigDecimal sma21 = calculateAverage(last(closePrices, parameters.getSmaLong()));
-    BigDecimal currentVolume = volumes.getLast();
+    BigDecimal currentVolume = volumes.get(volumes.size() - 1);
     BigDecimal averageVolume = calculateAverage(volumes);
 
     BigDecimal support = Collections.min(last(closePrices, 30));
     BigDecimal resistance = Collections.max(last(closePrices, 30));
-    BigDecimal currentPrice = closePrices.getLast();
+    BigDecimal currentPrice = closePrices.get(closePrices.size() - 1);
 
     String botTypeName = "[" + parameters.getBotType() + "] - ";
     BigDecimal range = resistance.subtract(support);
