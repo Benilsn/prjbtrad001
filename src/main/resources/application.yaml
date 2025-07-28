@@ -20,9 +20,9 @@ quarkus:
     log:
       sql: false
     database:
-        generation: drop-and-create
+        generation: update
   log:
-    level: INFO
+    level: ERROR
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'

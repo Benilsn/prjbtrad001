@@ -88,7 +88,7 @@ public class TradingService {
             .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
 
       TradeOrderDto order =
-        binanceService.placeBuyOrder(botTypeName, valueToBuy)
+        binanceService.placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
           .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
       status.setValueAtTheTimeOfLastPurchase(currentPrice);
