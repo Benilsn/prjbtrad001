@@ -24,7 +24,7 @@ public class BotOrchestratorService {
   private BotRepository botRepository;
 
   @Inject
-  BotRunnerService botRunnerService;
+  BotExecutorService botExecutorService;
 
   private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
   private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
@@ -83,7 +83,7 @@ public class BotOrchestratorService {
     bot.setRunning(true);
     persist(bot);
 
-    BotTask task = new BotTask(bot, botRunnerService);
+    BotTask task = new BotTask(bot.getId(), botExecutorService);
     ScheduledFuture<?> future =
       scheduler
         .scheduleAtFixedRate(task, 2, interval, TimeUnit.SECONDS);

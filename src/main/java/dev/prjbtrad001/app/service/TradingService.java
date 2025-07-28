@@ -6,6 +6,7 @@ import dev.prjbtrad001.app.dto.TradeOrderDto;
 import dev.prjbtrad001.infra.exception.TradeException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
 
 import java.math.BigDecimal;
@@ -24,6 +25,7 @@ public class TradingService {
   @Inject
   BinanceService binanceService;
 
+  @Transactional
   public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
@@ -91,6 +93,7 @@ public class TradingService {
         binanceService.placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
           .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
+      //TODO REAZER CALCULO
       status.setValueAtTheTimeOfLastPurchase(currentPrice);
       status.setTotalPurchased(order.totalSpentBRL());
       status.setQuantity(order.quantity());
@@ -152,12 +155,16 @@ public class TradingService {
         binanceService.placeSellOrder(bot.getParameters().getBotType().name())
           .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 
-      BigDecimal profit =
-        order.quantity()
-            .multiply(order.trades().getFirst().price())
-              .subtract(status.getValueAtTheTimeOfLastPurchase());
-
       bot.getStatus().setLong(false);
+
+      //TODO REAZER CALCULO
+      BigDecimal saleValue = order.trades().stream()
+        .map(t -> t.price().multiply(t.quantity()))
+        .reduce(BigDecimal.ZERO, BigDecimal::add)
+        .divide(order.quantity(), 8, RoundingMode.HALF_UP);
+
+      BigDecimal purchaseValue = order.quantity().multiply(status.getValueAtTheTimeOfLastPurchase());
+      BigDecimal profit = saleValue.subtract(purchaseValue);
 
       if (status.getProfit() != null){
         status.setProfit(status.getProfit().add(profit));

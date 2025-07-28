@@ -1,20 +1,22 @@
 package dev.prjbtrad001.app.bot;
 
-import dev.prjbtrad001.app.service.BotRunnerService;
+import dev.prjbtrad001.app.service.BotExecutorService;
+
+import java.util.UUID;
 
 public class BotTask implements Runnable {
 
-  private final SimpleTradeBot bot;
-  private final BotRunnerService runnerService;
+  private final UUID botId;
+  private final BotExecutorService botExecutorService;
 
-  public BotTask(SimpleTradeBot bot, BotRunnerService runnerService) {
-    this.bot = bot;
-    this.runnerService = runnerService;
+  public BotTask(UUID botId, BotExecutorService botExecutorService) {
+    this.botId = botId;
+    this.botExecutorService = botExecutorService;
   }
 
   @Override
   public void run() {
-    runnerService.executeBot(bot);
+    botExecutorService.executeById(botId);
   }
 
 }
