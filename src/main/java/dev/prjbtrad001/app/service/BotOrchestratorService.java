@@ -29,12 +29,14 @@ public class BotOrchestratorService {
   private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
   private final Map<UUID, ScheduledFuture<?>> runningBots = new ConcurrentHashMap<>();
 
+  @Transactional
   public SimpleTradeBot createBot(SimpleTradeBot bot) {
     BotOrchestratorService.log.debug("Creating bot: " + bot.getParameters().getBotType());
     botRepository.createBot(bot);
     return bot;
   }
 
+  @Transactional
   public List<SimpleTradeBot> getAllBots() {
     List<SimpleTradeBot> bots = botRepository.getAllBots();
     BotOrchestratorService.log.debug("Getting all " + bots.size() + " bots.");
@@ -45,6 +47,7 @@ public class BotOrchestratorService {
         .toList();
   }
 
+  @Transactional
   public void deleteBot(UUID botId) {
     BotOrchestratorService.log.debug("Deleting bot: " + botId);
     stopBot(botId);
@@ -60,6 +63,7 @@ public class BotOrchestratorService {
     return bot;
   }
 
+  @Transactional
   public SimpleTradeBot getBotById(UUID botId) {
     BotOrchestratorService.log.debug("Getting bot by ID: " + botId);
     return

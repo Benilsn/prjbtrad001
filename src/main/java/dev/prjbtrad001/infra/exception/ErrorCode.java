@@ -13,7 +13,8 @@ public enum ErrorCode {
   BALANCE_NOT_FOUND("Balance not found for the specified asset"),
   ACCOUNT_DETAILS_NOT_FOUND("Account details not found"),
   FAILED_TO_PLACE_SELL_ORDER("Failed to place the sell order"),
-  FAILED_TO_PLACE_BUY_ORDER("Failed to place the buy order");
+  FAILED_TO_PLACE_BUY_ORDER("Failed to place the buy order"),
+  INSUFFICIENT_BALANCE("Insufficient balance for the operation");
 
   private final String message;
 

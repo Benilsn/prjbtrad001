@@ -407,6 +407,10 @@ public class BinanceService {
     BigDecimal lotSizeToBeSold = getLotSize(symbol);
     BigDecimal criptoBalance = getCriptoBalance(symbol).free();
 
+    if (criptoBalance.compareTo(lotSizeToBeSold) < 0) {
+      log("Insufficient balance to sell " + symbol + ": " + criptoBalance);
+      throw new TradeException(ErrorCode.INSUFFICIENT_BALANCE.getMessage());
+    }
     if (lotSizeToBeSold != null && criptoBalance.compareTo(lotSizeToBeSold) != 0) {
       log.debug(symbol + " balance: " + criptoBalance);
       criptoBalance = roundDownToStepSize(criptoBalance, lotSizeToBeSold);

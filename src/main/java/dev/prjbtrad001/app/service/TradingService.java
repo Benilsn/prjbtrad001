@@ -12,6 +12,7 @@ import lombok.extern.jbosslog.JBossLog;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -77,18 +78,15 @@ public class TradingService {
 
     boolean shouldBuy = buyPoints >= 1.75;
 
-    BigDecimal totalQuantity = binanceService.getCriptoBalance(bot.getParameters().getBotType().toString()).free();
-    BigDecimal purchaseTotal = currentPrice.multiply(totalQuantity);
-    status.setTotalPurchased(purchaseTotal);
-    status.setQuantity(totalQuantity);
-
     if (shouldBuy) {
       log(botTypeName + "🔵 BUY signal detected!");
 
+      // Calculates purchase value based on strategy
       BigDecimal valueToBuy = parameters.getPurchaseAmount();
       if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
         valueToBuy = binanceService
-          .getBalance().orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
+          .getBalance()
+          .orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
           .balance()
           .multiply(parameters.getPurchaseAmount())
           .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
@@ -98,93 +96,98 @@ public class TradingService {
         .placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
         .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
-      BigDecimal lastPurchasedTotal = status.getTotalPurchased() != null ? status.getTotalPurchased() : BigDecimal.ZERO;
-      BigDecimal newPurchasedTotal = lastPurchasedTotal.add(order.totalSpentBRL());
-      status.setTotalPurchased(newPurchasedTotal);
+      // Calculates average price and total quantity
+      BigDecimal totalQuantityExecuted = order.quantity();
+      BigDecimal totalSpentBRL = order.totalSpentBRL();
 
-      BigDecimal averagePrice = newPurchasedTotal.divide(totalQuantity, 8, RoundingMode.HALF_UP);
+      // Updates state considering previous purchases
+      BigDecimal newTotalQuantity = status.getQuantity() != null ?
+        status.getQuantity().add(totalQuantityExecuted) : totalQuantityExecuted;
+      BigDecimal newTotalPurchased = status.getTotalPurchased() != null ?
+        status.getTotalPurchased().add(totalSpentBRL) : totalSpentBRL;
 
-      status.setAveragePrice(averagePrice);
+      // Calculates new average price
+      BigDecimal newAveragePrice = newTotalPurchased.divide(newTotalQuantity, 8, RoundingMode.HALF_UP);
+
+      // Updates status
+      status.setQuantity(newTotalQuantity);
+      status.setTotalPurchased(newTotalPurchased);
+      status.setAveragePrice(newAveragePrice);
       status.setLong(true);
-
+      return;
     }
-    else {
 
-      boolean rsiOverbought = rsi.compareTo(parameters.getRsiSale()) >= 0;
-      boolean touchedResistance = currentPrice.compareTo(resistance.subtract(tolerance)) >= 0;
-      boolean bearishTrend = sma9.compareTo(sma21) < 0;
-      boolean weakVolume = currentVolume.compareTo(averageVolume) < 0;
+    boolean rsiOverbought = rsi.compareTo(parameters.getRsiSale()) >= 0;
+    boolean touchedResistance = currentPrice.compareTo(resistance.subtract(tolerance)) >= 0;
+    boolean bearishTrend = sma9.compareTo(sma21) < 0;
+    boolean weakVolume = currentVolume.compareTo(averageVolume) < 0;
 
-      log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " >= " + parameters.getRsiSale() + ")" + " - RSI: " + rsi);
-      log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
-      log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance.subtract(tolerance)) + ")");
+    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + rsi + " >= " + parameters.getRsiSale() + ")" + " - RSI: " + rsi);
+    log(botTypeName + "📈 Bearish Trend: " + bearishTrend + " (SMA9: " + sma9 + " < SMA21: " + sma21 + ")");
+    log(botTypeName + "\uD83D\uDE80 Touched Resistance: " + touchedResistance + " (Current Price: " + currentPrice + " >= Resistance: " + (resistance.subtract(tolerance)) + ")");
 
-      boolean reachedStopLoss = false;
-      boolean reachedTakeProfit = false;
+    boolean reachedStopLoss = false;
+    boolean reachedTakeProfit = false;
 
-      if (status.isLong()) {
-        BigDecimal valueAtTheTimeOfLastPurchase = status.getAveragePrice();
+    if (status.isLong()) {
+      BigDecimal averagePrice = status.getAveragePrice();
+      BigDecimal priceChangePercent = currentPrice
+        .subtract(averagePrice)
+        .divide(averagePrice, 8, RoundingMode.HALF_UP)
+        .multiply(BigDecimal.valueOf(100));
 
-        BigDecimal priceChangePercent =
-          currentPrice
-            .subtract(valueAtTheTimeOfLastPurchase)
-            .divide(valueAtTheTimeOfLastPurchase, 8, RoundingMode.HALF_UP)
-            .multiply(BigDecimal.valueOf(100));
+      reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
+      reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
-        reachedStopLoss =
-          priceChangePercent
-            .compareTo(parameters.getStopLossPercent()
-              .negate()) <= 0;
-
-        reachedTakeProfit =
-          priceChangePercent
-            .compareTo(parameters.getTakeProfitPercent()) >= 0;
-
-        log(botTypeName + "📉 Price change: " + String.format("%.2f", priceChangePercent) + "%");
-        log(botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
-      }
-
-      double sellPoints = 0;
-      if (rsiOverbought) sellPoints += 1.0;
-      if (bearishTrend) sellPoints += 1.0;
-      if (touchedResistance) sellPoints += 0.4;
-      if (weakVolume) sellPoints += 0.4;
-
-      boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
-
-      if (shouldSell) {
-        if (!status.isLong()) {
-          log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
-          return;
-        }
-        log(botTypeName + "🔴 SELL signal detected!");
-
-        TradeOrderDto order =
-          binanceService
-            .placeSellOrder(bot.getParameters().getBotType().name())
-            .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
-
-        BigDecimal saleTotalValue =
-          order.trades()
-            .stream()
-            .map(t -> t.price().multiply(t.quantity()))
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal profit = saleTotalValue.subtract(purchaseTotal);
-
-        status.setProfit(profit);
-        status.setQuantity(BigDecimal.ZERO);
-        status.setTotalPurchased(BigDecimal.ZERO);
-        status.setAveragePrice(BigDecimal.ZERO);
-        status.setLong(false);
-
-        log(botTypeName + "💰 Sale made.");
-        log(botTypeName + "🔹 Profit from sale: R$" + profit);
-        log(botTypeName + "🔹 Total accumulated profit: R$" + status.getProfit());
-      } else {
-        log(botTypeName + "🟡 No action recommended at this time.");
-      }
+      log(botTypeName + String.format("📉 Price change: %.2f%%", priceChangePercent));
+      log(botTypeName + "⛔ Stop Loss reached: " + reachedStopLoss);
+      log(botTypeName + "💹 Take Profit reached: " + reachedTakeProfit);
     }
+
+    double sellPoints = 0;
+    if (rsiOverbought) sellPoints += 1.0;
+    if (bearishTrend) sellPoints += 1.0;
+    if (touchedResistance) sellPoints += 0.4;
+    if (weakVolume) sellPoints += 0.4;
+
+    boolean shouldSell = sellPoints >= 1.75 || reachedStopLoss || reachedTakeProfit;
+
+    if (shouldSell) {
+      if (!status.isLong()) {
+        log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
+        return;
+      }
+      TradeOrderDto order = binanceService
+        .placeSellOrder(bot.getParameters().getBotType().name())
+        .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
+
+      // Calculates total amount received in the sale
+      BigDecimal totalReceived = order.trades().stream()
+        .map(t -> t.price().multiply(t.quantity()))
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+      // Calculate profit loss
+      BigDecimal investedAmount = status.getTotalPurchased();
+      BigDecimal profit = totalReceived.subtract(investedAmount);
+
+      // Accumulates the total profit
+      BigDecimal totalProfit = status.getProfit() != null ?
+        status.getProfit().add(profit) : profit;
+
+      // Reset status after sale
+      status.setProfit(totalProfit);
+      status.setQuantity(BigDecimal.ZERO);
+      status.setTotalPurchased(BigDecimal.ZERO);
+      status.setAveragePrice(BigDecimal.ZERO);
+      status.setLong(false);
+
+      log(botTypeName + "💰 Sale completed");
+      log(botTypeName + "🔹 Trade profit: R$" + profit);
+      log(botTypeName + "🔹 Total accumulated profit: R$" + totalProfit);
+    } else {
+      log(botTypeName + "🟡 No action recommended at this time.");
+    }
+
   }
 
   private static BigDecimal calculateRSI(List<BigDecimal> closePrices, int period) {

@@ -31,6 +31,13 @@ public class BotStartupManager {
     log.info("Restoring " + botIds.size() + " running bots...");
 
     botIds
-      .forEach(botOrchestratorService::startBot);
+      .forEach(b -> {
+        botOrchestratorService.startBot(b);
+        try {
+          Thread.sleep(1500);
+        } catch (InterruptedException e) {
+          throw new RuntimeException(e);
+        }
+      });
   }
 }
