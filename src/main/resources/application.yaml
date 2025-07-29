@@ -20,7 +20,7 @@ quarkus:
     log:
       sql: false
     database:
-        generation: drop-and-create
+        generation: update
   log:
     level: ERROR
     console:
