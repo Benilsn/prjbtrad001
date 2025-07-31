@@ -6,4 +6,8 @@ public class TradeException extends RuntimeException {
     super(message);
   }
 
+  public TradeException(String message, Throwable throwable) {
+    super(message, throwable);
+  }
+
 }
