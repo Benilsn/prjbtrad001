@@ -35,7 +35,7 @@
                 <label class="form-label text-neon">Symbol</label>
                 <select name="symbol" class="form-select">
                     {#for symbol in workingSymbols}
-                    <option value="{symbol}" {bot.parameters.botType == symbol ? 'selected' : ''}>{symbol}</option>
+                        <option value="{symbol}" {bot.parameters.botType.toString() == symbol ? 'selected' : ''}>{symbol}</option>
                     {/for}
                 </select>
             </div>

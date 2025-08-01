@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.bot.CriptoCredentials;
+import dev.prjbtrad001.app.core.Trading;
 import dev.prjbtrad001.app.dto.*;
 import dev.prjbtrad001.app.utils.CriptoUtils;
+import dev.prjbtrad001.domain.core.TradingExecutor;
 import dev.prjbtrad001.infra.config.CredentialsConfig;
 import dev.prjbtrad001.infra.exception.ErrorCode;
 import dev.prjbtrad001.infra.exception.TradeException;
@@ -70,7 +72,8 @@ import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
  */
 @JBossLog
 @ApplicationScoped
-public class BinanceService {
+@Trading(Trading.Type.REAL)
+public class BinanceService implements TradingExecutor {
 
   @Inject
   private final ObjectMapper objectMapper;

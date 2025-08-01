@@ -28,11 +28,12 @@ quarkus:
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
+  limit: 4
+  mock-trading: false
   credentials:
     path:
       api-key: ${BINANCE_API_KEY}
       secret-key: ${BINANCE_SECRET_KEY}
-  limit: 4
   symbol:
     limit: 1
     list:
@@ -40,3 +41,5 @@ bot:
       - ETHBRL
       - SOLBRL
       - BNBBRL
+      - XRPBRL
+      - DOGEBRL

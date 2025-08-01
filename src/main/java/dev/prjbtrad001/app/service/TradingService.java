@@ -6,6 +6,7 @@ import dev.prjbtrad001.app.core.MarketConditions;
 import dev.prjbtrad001.app.core.TradingSignals;
 import dev.prjbtrad001.app.dto.KlineDto;
 import dev.prjbtrad001.app.dto.TradeOrderDto;
+import dev.prjbtrad001.domain.core.TradingExecutor;
 import dev.prjbtrad001.infra.exception.TradeException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -23,14 +24,14 @@ import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 public class TradingService {
 
   @Inject
-  BinanceService binanceService;
+  TradingExecutor tradingExecutor;
 
   @Transactional
   public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
 
-    List<KlineDto> klines = binanceService.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
+    List<KlineDto> klines = tradingExecutor.getCandles(parameters.getBotType().toString(), parameters.getInterval(), parameters.getWindowResistanceSupport());
 
     MarketAnalyzer marketAnalyzer = new MarketAnalyzer();
     MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
@@ -48,10 +49,8 @@ public class TradingService {
         .compareTo(conditions.support()
           .add(tolerance)) <= 0;
 
-    boolean bullishTrend =
-      conditions.sma9().compareTo(conditions.sma21()) > 0
-        || (conditions.currentPrice().compareTo(conditions.sma9()) > 0
-        && conditions.currentPrice().compareTo(conditions.sma21()) > 0);
+    boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0
+      && conditions.currentPrice().compareTo(conditions.sma9()) > 0;
 
     boolean strongVolume =
       conditions.currentVolume()
@@ -77,7 +76,7 @@ public class TradingService {
 
       BigDecimal valueToBuy = parameters.getPurchaseAmount();
       if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
-        valueToBuy = binanceService
+        valueToBuy = tradingExecutor
           .getBalance()
           .orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
           .balance()
@@ -85,7 +84,7 @@ public class TradingService {
           .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
       }
 
-      TradeOrderDto order = binanceService
+      TradeOrderDto order = tradingExecutor
         .placeBuyOrder(bot.getParameters().getBotType().name(), valueToBuy)
         .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
@@ -150,7 +149,7 @@ public class TradingService {
         log(botTypeName + "🟡 SELL signal detected, but no position to sell!");
         return;
       }
-      TradeOrderDto order = binanceService
+      TradeOrderDto order = tradingExecutor
         .placeSellOrder(bot.getParameters().getBotType().name())
         .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 

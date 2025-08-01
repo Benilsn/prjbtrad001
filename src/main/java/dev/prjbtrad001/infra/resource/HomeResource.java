@@ -3,8 +3,8 @@ package dev.prjbtrad001.infra.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.dto.BalanceDto;
 import dev.prjbtrad001.app.dto.CriptoDto;
-import dev.prjbtrad001.app.service.BinanceService;
 import dev.prjbtrad001.app.utils.LogUtils;
+import dev.prjbtrad001.domain.core.TradingExecutor;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -26,7 +26,7 @@ import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
 public class HomeResource {
 
   @Inject
-  BinanceService binanceService;
+  TradingExecutor tradingExecutor;
   @Inject
   ObjectMapper mapper;
 
@@ -46,14 +46,14 @@ public class HomeResource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<CriptoDto> refreshCriptoData(@QueryParam("symbols") String symbolsJson) {
     log.info("Refreshing data for symbols: " + symbolsJson);
-    return binanceService.getPrices(symbolsJson);
+    return tradingExecutor.getPrices(symbolsJson);
   }
 
   @GET()
   @Path("/refresh-wallet")
   public String refreshWallet() {
     log.info("Refreshing wallet data...");
-    return String.format("R$%s", FORMATTER2.format(binanceService.getBalance().orElse(new BalanceDto(null, BigDecimal.ZERO, null)).balance()));
+    return String.format("R$%s", FORMATTER2.format(tradingExecutor.getBalance().orElse(new BalanceDto(null, BigDecimal.ZERO, null)).balance()));
   }
 
   @GET
