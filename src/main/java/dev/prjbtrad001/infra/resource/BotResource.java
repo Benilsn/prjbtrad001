@@ -6,6 +6,8 @@ import dev.prjbtrad001.app.service.BotOrchestratorService;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -52,8 +54,9 @@ public class BotResource {
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.TEXT_HTML)
   public Object saveBot(
-    @BeanParam BotParameters parameters,
+    @Valid @BeanParam BotParameters parameters,
     @FormParam("botId") UUID botId) {
+
     Set<ConstraintViolation<BotParameters>> violations;
 
     if (botId != null) {
@@ -74,32 +77,44 @@ public class BotResource {
           .data("parameters", parameters);
     }
 
-    String msg = "Bot created successfully!";
-    if (botId != null) {
-      botOrchestratorService.updateBot(parameters, botId);
-      msg = "Bot updated successfully!";
-    } else {
-      botOrchestratorService.createBot(new SimpleTradeBot(parameters));
-    }
+    try {
+      String msg = "Bot created successfully!";
+      if (botId != null) {
+        botOrchestratorService.updateBot(parameters, botId);
+        msg = "Bot updated successfully!";
+      } else {
+        botOrchestratorService.createBot(new SimpleTradeBot(parameters));
+      }
 
-    return
-      Response
+      return Response
         .seeOther(UriBuilder.fromPath("/bots")
           .queryParam("message", msg)
           .build())
         .build();
+
+    } catch (ConstraintViolationException e) {
+      return Response.ok(
+        Templates.createBot()
+          .data("errors", e.getConstraintViolations().stream()
+            .map(ConstraintViolation::getMessage)
+            .toList())
+          .data("workingSymbols", workingSymbols.split(","))
+          .data("pageTitle", "Create Bot")
+          .data("parameters", parameters)
+      ).build();
+    }
   }
 
   @POST
   @Path("/delete")
   public Response deleteBot(@FormParam("botId") UUID botId) {
     botOrchestratorService.deleteBot(botId);
-    return
-      Response
-        .seeOther(UriBuilder.fromPath("/bots")
-          .queryParam("message", "Bot deleted successfully!")
-          .build())
-        .build();
+
+    return Response
+      .seeOther(UriBuilder.fromPath("/bots")
+        .queryParam("message", "Bot deleted successfully!")
+        .build())
+      .build();
   }
 
   @GET

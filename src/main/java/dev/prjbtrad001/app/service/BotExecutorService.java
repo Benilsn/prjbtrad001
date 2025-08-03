@@ -4,7 +4,9 @@ import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
 import java.util.UUID;
+
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @ApplicationScoped

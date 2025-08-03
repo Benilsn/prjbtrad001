@@ -16,6 +16,8 @@ quarkus:
       driver: org.h2.Driver
       username: sa
       password: sa
+  hibernate-validator:
+    fail-fast: false
   hibernate-orm:
     log:
       sql: false
@@ -29,7 +31,7 @@ quarkus:
 
 bot:
   limit: 4
-  mock-trading: false
+  mock-trading: true
   credentials:
     path:
       api-key: ${BINANCE_API_KEY}

@@ -5,8 +5,8 @@ import dev.prjbtrad001.app.service.MockService;
 import dev.prjbtrad001.domain.core.TradingExecutor;
 import dev.prjbtrad001.infra.config.TradingConfig;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class TradingServiceProducer {

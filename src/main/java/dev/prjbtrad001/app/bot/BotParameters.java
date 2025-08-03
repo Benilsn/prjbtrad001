@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.FormParam;
 import lombok.*;
@@ -22,61 +24,76 @@ import java.util.Locale;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class BotParameters{
+public class BotParameters {
 
   @Transient
-  @JsonIgnore @Getter(AccessLevel.NONE)
+  @JsonIgnore
+  @Getter(AccessLevel.NONE)
   private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
 
   @Transient
-  @JsonIgnore @Getter(AccessLevel.NONE)
+  @JsonIgnore
+  @Getter(AccessLevel.NONE)
   private DecimalFormat formatter = new DecimalFormat("#,###.00", symbols);
 
-  @ValidSymbol(groups = Create.class)
+  @ValidSymbol(groups = Create.class, message = "Invalid bot type symbol")
+  @NotNull(message = "Bot type cannot be null")
   @FormParam("symbol")
   private BotType botType;
 
-  @Pattern(regexp = "^(1s|1m|3m|5m|15m|30m|1h|2h|4h|6h|8h|12h|1d|3d|1w|1M)$")
+  @NotBlank(message = "Interval cannot be blank")
+  @Pattern(regexp = "^(1s|1m|3m|5m|15m|30m|1h|2h|4h|6h|8h|12h|1d|3d|1w|1M)$",
+    message = "Invalid interval format. Must be one of: 1s, 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M")
   @FormParam("interval")
   @Column(name = "\"interval\"")
   private String interval;
 
-  @Min(0)
+  @NotNull(message = "Stop loss percentage cannot be null")
+  @Min(value = 0, message = "Stop loss percentage must be greater than or equal to 0")
   @FormParam("stopLossPercent")
   private BigDecimal stopLossPercent;
 
-  @Min(0)
+  @NotNull(message = "Take profit percentage cannot be null")
+  @Min(value = 0, message = "Take profit percentage must be greater than or equal to 0")
   @FormParam("takeProfitPercent")
   private BigDecimal takeProfitPercent;
 
-  @Min(0)
+  @NotNull(message = "RSI purchase value cannot be null")
+  @Min(value = 0, message = "RSI purchase value must be greater than or equal to 0")
   @FormParam("rsiPurchase")
   private BigDecimal rsiPurchase;
 
-  @Min(0)
+  @NotNull(message = "RSI sale value cannot be null")
+  @Min(value = 0, message = "RSI sale value must be greater than or equal to 0")
   @FormParam("rsiSale")
   private BigDecimal rsiSale;
 
-  @Min(0)
+  @NotNull(message = "Volume multiplier cannot be null")
+  @Min(value = 0, message = "Volume multiplier must be greater than or equal to 0")
   @FormParam("volumeMultiplier")
   private BigDecimal volumeMultiplier;
 
-  @Min(0)
+  @NotNull(message = "SMA short period cannot be null")
+  @Min(value = 0, message = "SMA short period must be greater than or equal to 0")
   @FormParam("smaShort")
   private int smaShort;
 
-  @Min(0)
+  @NotNull(message = "SMA long period cannot be null")
+  @Min(value = 0, message = "SMA long period must be greater than or equal to 0")
   @FormParam("smaLong")
   private int smaLong;
 
-  @Min(0)
+  @NotNull(message = "Window resistance support cannot be null")
+  @Min(value = 0, message = "Window resistance support must be greater than or equal to 0")
   @FormParam("windowResistanceSupport")
   private int windowResistanceSupport;
 
-  @Min(0)
+  @NotNull(message = "Purchase amount cannot be null")
+  @Min(value = 0, message = "Purchase amount must be greater than or equal to 0")
   @FormParam("purchaseAmount")
   private BigDecimal purchaseAmount;
 
+  @NotNull(message = "Purchase strategy cannot be null")
   @FormParam("purchaseStrategy")
   private PurchaseStrategy purchaseStrategy;
 
@@ -95,6 +112,9 @@ public class BotParameters{
 //  }
 
 
-  public interface Create {}
-  public interface Update {}
+  public interface Create {
+  }
+
+  public interface Update {
+  }
 }

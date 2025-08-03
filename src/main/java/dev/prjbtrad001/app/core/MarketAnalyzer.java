@@ -82,7 +82,7 @@ public class MarketAnalyzer {
 
   private SMAValues calculateSMAs(List<BigDecimal> closePrices, BotParameters parameters) {
     if (closePrices == null || closePrices.isEmpty()) {
-      throw new TradeException("Lista de preços vazia para cálculo de SMA");
+      throw new TradeException("Empty price list for SMA calculation");
     }
 
     BigDecimal sma9 = calculateSMA(closePrices, parameters.getSmaShort());
@@ -93,8 +93,8 @@ public class MarketAnalyzer {
 
   private BigDecimal calculateSMA(List<BigDecimal> prices, int period) {
     if (prices.size() < period) {
-      log.warn("Dados insuficientes para SMA: " + prices.size() + "/" + period);
-      throw new TradeException("Dados insuficientes para calcular SMA de período " + period);
+      log.warn("Insufficient data for SMA: " + prices.size() + "/" + period);
+      throw new TradeException("Insufficient data to calculate period sum " + period);
     }
 
     List<BigDecimal> lastNPrices =

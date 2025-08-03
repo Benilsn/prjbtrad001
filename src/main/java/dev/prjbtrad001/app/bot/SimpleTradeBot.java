@@ -12,10 +12,7 @@ import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.math.BigDecimal;
 import java.util.UUID;
-
-import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @Entity
 @JBossLog

@@ -1,6 +1,9 @@
 package dev.prjbtrad001.app.service;
 
-import dev.prjbtrad001.app.bot.*;
+import dev.prjbtrad001.app.bot.BotParameters;
+import dev.prjbtrad001.app.bot.PurchaseStrategy;
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.bot.Status;
 import dev.prjbtrad001.app.core.MarketAnalyzer;
 import dev.prjbtrad001.app.core.MarketConditions;
 import dev.prjbtrad001.app.core.TradingSignals;
@@ -12,6 +15,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;

@@ -151,17 +151,13 @@
     }
   });
 
-    /* ----------------------------------
-    *Clear Trade Log
-    * ---------------------------------- */
-    const logContent = document.getElementById('trade-log-content');
-    const clearLogBtn = document.getElementById('clear-log-btn');
-
-    clearLogBtn.addEventListener('click', () => {
-      if (logContent) {
-        logContent.innerHTML = '';  // Clear all log entries
-      }
-    });
+    window.onload = function() {
+        if (new URLSearchParams(window.location.search).has('message')) {
+            setTimeout(function() {
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }, 2000);
+        }
+    }
 
 </script>
 

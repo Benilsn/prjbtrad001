@@ -3,7 +3,6 @@ package dev.prjbtrad001.app.service;
 import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.BotTask;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
-import dev.prjbtrad001.app.utils.LogUtils;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import dev.prjbtrad001.infra.exception.BotOperationException;
 import jakarta.annotation.PreDestroy;

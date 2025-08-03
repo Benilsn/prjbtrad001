@@ -12,6 +12,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -68,6 +70,18 @@ public class HomeResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Queue<String> refreshLogData() {
     return LogUtils.LOG_DATA;
+  }
+
+  @GET()
+  @Path("/clear-trade-log")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response clearTradeLog() {
+    LogUtils.LOG_DATA.clear();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/trade-log")
+          .build())
+        .build();
   }
 
 

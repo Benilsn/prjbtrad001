@@ -18,9 +18,9 @@
 
     {#if errors}
     <div class="alert alert-danger">
-        <ul>
-            {#for err in errors}
-            <li>{err}</li>
+        <ul class="mb-0">
+            {#for error in errors}
+            <li>{error}</li>
             {/for}
         </ul>
     </div>
@@ -35,7 +35,7 @@
                 <label class="form-label text-neon">Symbol</label>
                 <select name="symbol" class="form-select">
                     {#for symbol in workingSymbols}
-                        <option value="{symbol}" {bot.parameters.botType.toString() == symbol ? 'selected' : ''}>{symbol}</option>
+                    <option value="{symbol}" {bot.parameters.botType.toString() == symbol ? 'selected' : ''}>{symbol}</option>
                     {/for}
                 </select>
             </div>
@@ -50,12 +50,12 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">Volume Multiplier</label>
                 <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2"
-                       value="{bot.parameters.volumeMultiplier ?: ''}">
+                       value="{bot.parameters.volumeMultiplier ?: ''}" required>
             </div>
             <div class="col-md-6">
                 <label class="form-label text-neon">Support/Resistance Window</label>
                 <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 100"
-                       value="{bot.parameters.windowResistanceSupport ?: ''}">
+                       value="{bot.parameters.windowResistanceSupport ?: ''}" required>
             </div>
         </div>
 
@@ -65,7 +65,7 @@
                 <div class="input-group">
                     <span class="input-group-text">%</span>
                     <input type="number" min="0" step="any" name="stopLossPercent" class="form-control"
-                           placeholder="e.g. 0.5" value="{bot.parameters.stopLossPercent ?: ''}">
+                           placeholder="e.g. 0.5" value="{bot.parameters.stopLossPercent ?: ''}" required>
                 </div>
             </div>
             <div class="col-md-6">
@@ -73,7 +73,7 @@
                 <div class="input-group">
                     <span class="input-group-text">%</span>
                     <input type="number" min="0" step="any" name="takeProfitPercent" class="form-control"
-                           placeholder="e.g. 1.2" value="{bot.parameters.takeProfitPercent ?: ''}">
+                           placeholder="e.g. 1.2" value="{bot.parameters.takeProfitPercent ?: ''}" required>
                 </div>
             </div>
         </div>
@@ -82,12 +82,12 @@
             <div class="col-md-6">
                 <label class="form-label text-neon">RSI Purchase</label>
                 <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30"
-                       value="{bot.parameters.rsiPurchase ?: ''}">
+                       value="{bot.parameters.rsiPurchase ?: ''}" required>
             </div>
             <div class="col-md-6">
                 <label class="form-label text-neon">RSI Sale</label>
                 <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70"
-                       value="{bot.parameters.rsiSale ?: ''}">
+                       value="{bot.parameters.rsiSale ?: ''}" required>
             </div>
         </div>
 
@@ -95,12 +95,12 @@
             <div class="col-md-3">
                 <label class="form-label text-neon">Short SMA</label>
                 <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9"
-                       value="{bot.parameters.smaShort ?: ''}">
+                       value="{bot.parameters.smaShort ?: ''}" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label text-neon">Long SMA</label>
                 <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21"
-                       value="{bot.parameters.smaLong ?: ''}">
+                       value="{bot.parameters.smaLong ?: ''}" required>
             </div>
             <div class="col-md-3">
                 <label class="form-label text-neon">Purchase Strategy</label>
@@ -117,7 +117,7 @@
                 <div class="input-group">
                     <span class="input-group-text" id="amountSymbol">$</span>
                     <input type="number" name="purchaseAmount" class="form-control" placeholder="e.g. 50"
-                           value="{bot.parameters.purchaseAmount ?: ''}" aria-describedby="amountSymbol">
+                           value="{bot.parameters.purchaseAmount ?: ''}" aria-describedby="amountSymbol" required>
                 </div>
             </div>
         </div>
