@@ -38,10 +38,10 @@ public class TradingService {
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-    if (hasRecentTrade(status, TradingConstants.MIN_TRADE_INTERVAL_MINUTES)) {
-      log(botTypeName + "⏳ Waiting for minimum interval between operations");
-      return;
-    }
+//    if (hasRecentTrade(status, TradingConstants.MIN_TRADE_INTERVAL_MINUTES)) {
+//      log(botTypeName + "⏳ Waiting for minimum interval between operations");
+//      return;
+//    }
 
     List<KlineDto> klines = tradingExecutor.getCandles(
       parameters.getBotType().toString(),
