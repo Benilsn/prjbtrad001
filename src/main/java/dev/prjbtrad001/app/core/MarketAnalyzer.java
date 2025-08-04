@@ -32,17 +32,31 @@ public class MarketAnalyzer {
     BigDecimal support = Collections.min(last(closePrices, 30));
     BigDecimal resistance = Collections.max(last(closePrices, 30));
     BigDecimal currentPrice = closePrices.getLast();
-    return
-      new MarketConditions(
-        rsi,
-        sma.sma9(),
-        sma.sma21(),
-        support,
-        resistance,
-        currentPrice,
-        currentVolume,
-        averageVolume
-      );
+
+    // Indicadores adicionais
+    BigDecimal ema8 = calculateEMA(closePrices, 8);
+    BigDecimal ema21 = calculateEMA(closePrices, 21);
+    BigDecimal momentum = calculateMomentum(closePrices, 10);
+    BigDecimal volatility = calculateVolatility(closePrices, 14);
+    BigDecimal[] bollinger = calculateBollingerBands(closePrices, 20, 2);
+
+    return new MarketConditions(
+      rsi,
+      sma.sma9(),
+      sma.sma21(),
+      support,
+      resistance,
+      currentPrice,
+      currentVolume,
+      averageVolume,
+      ema8,
+      ema21,
+      momentum,
+      volatility,
+      bollinger[0],
+      bollinger[1],
+      bollinger[2]
+    );
   }
 
   private BigDecimal calculateRSI(List<BigDecimal> closePrices, int period) {
@@ -103,19 +117,6 @@ public class MarketAnalyzer {
     return calculateAverage(lastNPrices);
   }
 
-  private static BigDecimal calculateAverage(List<BigDecimal> values) {
-    if (values == null || values.isEmpty()) {
-      return BigDecimal.ZERO;
-    }
-
-    BigDecimal sum = values.stream()
-      .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-    BigDecimal count = BigDecimal.valueOf(values.size());
-
-    return sum.divide(count, 8, RoundingMode.HALF_UP);
-  }
-
   private static List<BigDecimal> last(List<BigDecimal> list, int n) {
     if (list == null) {
       throw new IllegalArgumentException("List cannot be null");
@@ -128,5 +129,79 @@ public class MarketAnalyzer {
     }
     return list.subList(list.size() - n, list.size());
   }
+
+  private BigDecimal calculateEMA(List<BigDecimal> prices, int period) {
+    if (prices.size() < period) return BigDecimal.ZERO;
+
+    BigDecimal multiplier = new BigDecimal(2)
+      .divide(new BigDecimal(period + 1), 8, RoundingMode.HALF_UP);
+
+    BigDecimal ema = calculateAverage(prices.subList(0, period));
+
+    for (int i = period; i < prices.size(); i++) {
+      ema = prices.get(i).multiply(multiplier)
+        .add(ema.multiply(BigDecimal.ONE.subtract(multiplier)));
+    }
+
+    return ema;
+  }
+
+  private BigDecimal calculateMomentum(List<BigDecimal> prices, int period) {
+    if (prices.size() < period + 1) return BigDecimal.ZERO;
+
+    BigDecimal current = prices.getLast();
+    BigDecimal past = prices.get(prices.size() - period - 1);
+
+    return current.subtract(past)
+      .divide(past, 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
+  }
+
+  private BigDecimal calculateVolatility(List<BigDecimal> prices, int period) {
+    if (prices.size() < period) return BigDecimal.ZERO;
+
+    List<BigDecimal> recentPrices = prices.subList(prices.size() - period, prices.size());
+    BigDecimal avg = calculateAverage(recentPrices);
+
+    BigDecimal sumSquaredDiff = recentPrices.stream()
+      .map(p -> p.subtract(avg).pow(2))
+      .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    BigDecimal variance = sumSquaredDiff.divide(new BigDecimal(period), 8, RoundingMode.HALF_UP);
+    return sqrt(variance);
+  }
+
+  private BigDecimal[] calculateBollingerBands(List<BigDecimal> prices, int period, double stdDev) {
+    BigDecimal sma = calculateAverage(prices.subList(prices.size() - period, prices.size()));
+    BigDecimal std = calculateVolatility(prices, period);
+    BigDecimal stdMultiplier = new BigDecimal(stdDev);
+
+    BigDecimal upper = sma.add(std.multiply(stdMultiplier));
+    BigDecimal lower = sma.subtract(std.multiply(stdMultiplier));
+
+    return new BigDecimal[] {upper, sma, lower};
+  }
+
+  private BigDecimal sqrt(BigDecimal value) {
+    return BigDecimal.valueOf(Math.sqrt(value.doubleValue()));
+  }
+
+  private List<BigDecimal> extractClosePrices(List<KlineDto> klines) {
+    return klines.stream()
+      .map(k -> new BigDecimal(k.getClosePrice()))
+      .toList();
+  }
+
+  private BigDecimal calculateAverage(List<BigDecimal> values) {
+    if (values == null || values.isEmpty()) {
+      return BigDecimal.ZERO;
+    }
+
+    BigDecimal sum = values.stream()
+      .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+    return sum.divide(BigDecimal.valueOf(values.size()), 8, RoundingMode.HALF_UP);
+  }
+
 
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class Status {
   private BigDecimal averagePrice;
   private BigDecimal quantity;
   private BigDecimal profit;
-//  private String purchaseTime;
+  private LocalDateTime lastPurchaseTime;
 
   // Status
 //  private BigDecimal lastPrice;

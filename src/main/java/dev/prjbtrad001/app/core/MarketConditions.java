@@ -10,6 +10,13 @@ public record MarketConditions(
   BigDecimal resistance,
   BigDecimal currentPrice,
   BigDecimal currentVolume,
-  BigDecimal averageVolume
+  BigDecimal averageVolume,
+  BigDecimal ema8,
+  BigDecimal ema21,
+  BigDecimal momentum,
+  BigDecimal volatility,
+  BigDecimal bollingerUpper,
+  BigDecimal bollingerMiddle,
+  BigDecimal bollingerLower
 ) {
 }

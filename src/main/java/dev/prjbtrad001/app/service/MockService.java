@@ -105,11 +105,9 @@ public class MockService implements TradingExecutor {
       BigDecimal price = new BigDecimal(getPrice(symbol).getPrice()).setScale(8, RoundingMode.HALF_UP);
       BigDecimal brlBalance = wallet.getBalance("BRL");
 
-      // Verifica se tem saldo suficiente em reais
       if (brlBalance.compareTo(purchaseAmountInReais) >= 0) {
         String asset = symbol.replaceFirst("BRL$", "");
 
-        // Calcula a quantidade de cripto que pode comprar com o valor em reais
         BigDecimal quantity = purchaseAmountInReais.divide(price, 8, RoundingMode.HALF_UP);
 
         wallet.updateBalance("BRL", purchaseAmountInReais.negate());
@@ -137,9 +135,11 @@ public class MockService implements TradingExecutor {
         BigDecimal price = new BigDecimal(getPrice(symbol).getPrice()).setScale(8, RoundingMode.HALF_UP);
         BigDecimal totalInReais = price.multiply(quantity);
 
-        // Atualiza saldos
+        BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
+        BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
+
         wallet.updateBalance(asset, quantity.negate());
-        wallet.updateBalance("BRL", totalInReais);
+        wallet.updateBalance("BRL", totalAfterFee);
 
         log.infof("Mock sell: %s quantity=%s price=%s total=%s",
           symbol, quantity, price, totalInReais);
