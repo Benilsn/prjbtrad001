@@ -50,7 +50,7 @@ public record TradingSignals(
   }
 
   private boolean hasMinimumRequiredConditions() {
-    return rsiCondition && (trendCondition || priceCondition);
+    return (rsiCondition && priceCondition) || (trendCondition && priceCondition);
   }
 
   private double calculateBuyPoints() {

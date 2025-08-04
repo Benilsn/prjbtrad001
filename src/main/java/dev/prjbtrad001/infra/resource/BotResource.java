@@ -152,5 +152,17 @@ public class BotResource {
         .build();
   }
 
+  @GET
+  @Path("/deleteAll")
+  public Response deleteAll() {
+    botOrchestratorService.deleteAll();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "All bots deleted successfully!")
+          .build())
+        .build();
+  }
+
 
 }

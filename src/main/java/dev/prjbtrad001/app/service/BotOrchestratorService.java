@@ -120,6 +120,13 @@ public class BotOrchestratorService {
     log("Stopped bot " + bot.getId());
   }
 
+  @Transactional
+  public void deleteAll() {
+    botRepository.deleteAll();
+    runningBots.clear();
+    log.debugf("All bots deleted successfully");
+  }
+
   @PreDestroy
   @Transactional
   public void shutdownAll() {

@@ -16,10 +16,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
@@ -76,7 +78,7 @@ public class TradingService {
               BigDecimal.ONE.add(BigDecimal.valueOf(0.005)))) <= 0;
 
     boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower()
-      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.01)))) <= 0;
+      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.02)))) <= 0;
 
     boolean strongVolume = conditions.currentVolume()
       .compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
@@ -102,6 +104,17 @@ public class TradingService {
       .stopLoss(false)
       .takeProfit(false)
       .build();
+
+    if (bot.getStatus().isLong()
+      && touchedBollingerLower
+      && conditions.currentPrice().compareTo(bot.getStatus().getAveragePrice().multiply(BigDecimal.valueOf(0.98))) <= 0) {
+      log(botTypeName + "🔵 BUY signal detected - adding to position");
+      BigDecimal additionalAmount =
+        calculateOptimalBuyAmount(bot, conditions)
+          .multiply(BigDecimal.valueOf(0.5));
+      executeBuyOrder(bot, additionalAmount);
+      return;
+    }
 
     if (buySignals.shouldBuy()) {
       log(botTypeName + "🔵 BUY signal detected!");

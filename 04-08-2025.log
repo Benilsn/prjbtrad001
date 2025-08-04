@@ -1,0 +1,2215 @@
+[04-08-2025 08:39:33] - Stopped bot aafb6fae-4aca-433e-9e4d-9651d48abd3b
+[04-08-2025 08:39:35] - Stopped bot 5e3a83b1-996e-4036-b93e-4fce4da5d1df
+[04-08-2025 08:39:37] - Stopped bot e6b9859a-ff85-4c05-9018-684ab1eeff15
+[04-08-2025 08:39:38] - Stopped bot f76d415c-4baf-48e7-b2c7-33b978bb339f
+[04-08-2025 08:39:40] - Stopped bot ec35db22-bda1-4a56-874d-11e11cea5924
+[04-08-2025 08:39:42] - Stopped bot a8e9c351-d6ec-4b18-b0e8-24a5e66d212d
+[04-08-2025 08:40:43] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 08:40:44] - [DOGEBRL] - 🔻 RSI Oversold: false (25.23660856 <= 25.00)
+[04-08-2025 08:40:44] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:40:44] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 08:40:44] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 08:40:44] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:40:44] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:40:44] - [DOGEBRL] - Took 634ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 08:41:19] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 08:41:19] - [BTCBRL] - 🔻 RSI Oversold: true (32.10188929 <= 35.00)
+[04-08-2025 08:41:19] - [BTCBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:41:19] - [BTCBRL] - 🛡️ Touched Support: true
+[04-08-2025 08:41:19] - [BTCBRL] - 📊 Volume: WEAK
+[04-08-2025 08:41:19] - [BTCBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:41:19] - [BTCBRL] - 🔵 BUY signal detected!
+[04-08-2025 08:41:19] - [BTCBRL] - 💰 Executing buy order: 105.000
+[04-08-2025 08:41:20] - [BTCBRL] - ✅ Purchase executed: Average price = 635824.14920673, Quantity = 0.00016514
+[04-08-2025 08:41:20] - [BTCBRL] - Took 567ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 08:41:52] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 08:41:53] - [ETHBRL] - 🔻 RSI Oversold: false (49.66083231 <= 32.00)
+[04-08-2025 08:41:53] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 08:41:53] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 08:41:53] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 08:41:53] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:41:53] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:41:53] - [ETHBRL] - Took 286ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 08:42:19] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 08:42:19] - [SOLBRL] - 🔻 RSI Oversold: true (29.65116263 <= 30.00)
+[04-08-2025 08:42:19] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:42:19] - [SOLBRL] - 🛡️ Touched Support: true
+[04-08-2025 08:42:19] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 08:42:19] - [SOLBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:42:19] - [SOLBRL] - 🔵 BUY signal detected!
+[04-08-2025 08:42:19] - [SOLBRL] - 💰 Executing buy order: 150.00
+[04-08-2025 08:42:19] - [SOLBRL] - ✅ Purchase executed: Average price = 899.99998200, Quantity = 0.16666667
+[04-08-2025 08:42:19] - [SOLBRL] - Took 547ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 08:43:26] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 08:43:26] - [BNBBRL] - 🔻 RSI Oversold: true (28.57142857 <= 33.00)
+[04-08-2025 08:43:26] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:43:26] - [BNBBRL] - 🛡️ Touched Support: true
+[04-08-2025 08:43:26] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 08:43:26] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:43:26] - [BNBBRL] - 🔵 BUY signal detected!
+[04-08-2025 08:43:26] - [BNBBRL] - 💰 Executing buy order: 105.000
+[04-08-2025 08:43:26] - [BNBBRL] - ✅ Purchase executed: Average price = 4196.00037244, Quantity = 0.02502383
+[04-08-2025 08:43:26] - [BNBBRL] - Took 583ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 08:44:15] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 08:44:15] - [XRPBRL] - 🔻 RSI Oversold: false (40.88049714 <= 30.00)
+[04-08-2025 08:44:15] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:44:15] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 08:44:15] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 08:44:15] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:44:15] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:44:15] - [XRPBRL] - Took 279ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 08:55:44] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 08:55:44] - [DOGEBRL] - 🔻 RSI Oversold: false (29.09091813 <= 25.00)
+[04-08-2025 08:55:44] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:55:44] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 08:55:44] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 08:55:44] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:55:44] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:55:44] - [DOGEBRL] - Took 320ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 08:56:20] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 08:56:20] - [BTCBRL] - 📉 Current price variation: 0,07%
+[04-08-2025 08:56:20] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 08:56:20] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 08:56:20] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 08:56:20] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 08:56:20] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 08:56:20] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 08:56:20] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 08:56:20] - [BTCBRL] - Took 294ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 08:56:53] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 08:56:54] - [ETHBRL] - 🔻 RSI Oversold: false (50.49960256 <= 32.00)
+[04-08-2025 08:56:54] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 08:56:54] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 08:56:54] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 08:56:54] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:56:54] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:56:54] - [ETHBRL] - Took 291ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 08:57:20] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 08:57:20] - [SOLBRL] - 📉 Current price variation: 0,30%
+[04-08-2025 08:57:20] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 08:57:20] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 08:57:20] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 08:57:20] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 08:57:20] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 08:57:20] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 08:57:20] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 08:57:20] - [SOLBRL] - Took 270ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 08:58:27] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 08:58:27] - [BNBBRL] - 📉 Current price variation: 0,02%
+[04-08-2025 08:58:27] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 08:58:27] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 08:58:27] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 08:58:27] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 08:58:27] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 08:58:27] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 08:58:27] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 08:58:27] - [BNBBRL] - Took 297ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 08:59:16] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 08:59:16] - [XRPBRL] - 🔻 RSI Oversold: false (34.64911887 <= 30.00)
+[04-08-2025 08:59:16] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 08:59:16] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 08:59:16] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 08:59:16] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 08:59:16] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 08:59:16] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 09:10:45] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 09:10:45] - [DOGEBRL] - 🔻 RSI Oversold: false (36.23707321 <= 25.00)
+[04-08-2025 09:10:45] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:10:45] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 09:10:45] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 09:10:45] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:10:45] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:10:45] - [DOGEBRL] - Took 304ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 09:11:21] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 09:11:21] - [BTCBRL] - 📉 Current price variation: 0,09%
+[04-08-2025 09:11:21] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:11:21] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:11:21] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:11:21] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:11:21] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:11:21] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:11:21] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:11:21] - [BTCBRL] - Took 287ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 09:11:54] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 09:11:55] - [ETHBRL] - 🔻 RSI Oversold: false (55.01646366 <= 32.00)
+[04-08-2025 09:11:55] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 09:11:55] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 09:11:55] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 09:11:55] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:11:55] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:11:55] - [ETHBRL] - Took 289ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 09:12:21] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 09:12:21] - [SOLBRL] - 📉 Current price variation: 0,51%
+[04-08-2025 09:12:21] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:12:21] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:12:21] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:12:21] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:12:21] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:12:21] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:12:21] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:12:21] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 09:13:28] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 09:13:28] - [BNBBRL] - 📉 Current price variation: 0,24%
+[04-08-2025 09:13:28] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:13:28] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:13:28] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:13:28] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:13:28] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:13:28] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:13:28] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:13:28] - [BNBBRL] - Took 299ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 09:14:17] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 09:14:17] - [XRPBRL] - 🔻 RSI Oversold: false (43.87096631 <= 30.00)
+[04-08-2025 09:14:17] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:14:17] - [XRPBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:14:17] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 09:14:17] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:14:17] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:14:17] - [XRPBRL] - Took 287ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 09:25:46] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 09:25:46] - [DOGEBRL] - 🔻 RSI Oversold: false (32.19816656 <= 25.00)
+[04-08-2025 09:25:46] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:25:46] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:25:46] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 09:25:46] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:25:46] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:25:46] - [DOGEBRL] - Took 306ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 09:26:22] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 09:26:22] - [BTCBRL] - 📉 Current price variation: -0,30%
+[04-08-2025 09:26:22] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:26:22] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:26:22] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:26:22] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:26:22] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:26:22] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:26:22] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:26:22] - [BTCBRL] - Took 289ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 09:26:55] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 09:26:56] - [ETHBRL] - 🔻 RSI Oversold: false (45.58151476 <= 32.00)
+[04-08-2025 09:26:56] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 09:26:56] - [ETHBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:26:56] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 09:26:56] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:26:56] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:26:56] - [ETHBRL] - Took 290ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 09:27:22] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 09:27:22] - [SOLBRL] - 📉 Current price variation: 0,33%
+[04-08-2025 09:27:22] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:27:22] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:27:22] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:27:22] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:27:22] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:27:22] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:27:22] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:27:22] - [SOLBRL] - Took 275ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 09:28:29] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 09:28:29] - [BNBBRL] - 📉 Current price variation: -0,02%
+[04-08-2025 09:28:29] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:28:29] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:28:29] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:28:29] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:28:29] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:28:29] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:28:29] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:28:29] - [BNBBRL] - Took 303ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 09:29:18] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 09:29:18] - [XRPBRL] - 🔻 RSI Oversold: false (48.22694823 <= 30.00)
+[04-08-2025 09:29:18] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:29:18] - [XRPBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:29:18] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 09:29:18] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:29:18] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:29:18] - [XRPBRL] - Took 292ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 09:40:47] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 09:40:47] - [DOGEBRL] - 🔻 RSI Oversold: false (39.33918290 <= 25.00)
+[04-08-2025 09:40:47] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:40:47] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:40:47] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 09:40:47] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:40:47] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:40:47] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 09:41:23] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 09:41:23] - [BTCBRL] - 📉 Current price variation: -0,36%
+[04-08-2025 09:41:23] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:41:23] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:41:23] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:41:23] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:41:23] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:41:23] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:41:23] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:41:23] - [BTCBRL] - Took 284ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 09:41:56] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 09:41:57] - [ETHBRL] - 🔻 RSI Oversold: false (44.32490445 <= 32.00)
+[04-08-2025 09:41:57] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:41:57] - [ETHBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:41:57] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 09:41:57] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:41:57] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:41:57] - [ETHBRL] - Took 287ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 09:42:23] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 09:42:23] - [SOLBRL] - 📉 Current price variation: 0,33%
+[04-08-2025 09:42:23] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:42:23] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:42:23] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:42:23] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:42:23] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:42:23] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:42:23] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:42:23] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 09:43:30] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 09:43:30] - [BNBBRL] - 📉 Current price variation: -0,17%
+[04-08-2025 09:43:30] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:43:30] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:43:30] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:43:30] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:43:30] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:43:30] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:43:30] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:43:30] - [BNBBRL] - Took 303ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 09:44:19] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 09:44:19] - [XRPBRL] - 🔻 RSI Oversold: false (49.75368957 <= 30.00)
+[04-08-2025 09:44:19] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:44:19] - [XRPBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:44:19] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 09:44:19] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:44:19] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:44:19] - [XRPBRL] - Took 284ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 09:55:48] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 09:55:48] - [DOGEBRL] - 🔻 RSI Oversold: false (38.22632865 <= 25.00)
+[04-08-2025 09:55:48] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:55:48] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 09:55:48] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 09:55:48] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:55:48] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:55:48] - [DOGEBRL] - Took 296ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 09:56:24] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 09:56:24] - [BTCBRL] - 📉 Current price variation: -0,41%
+[04-08-2025 09:56:24] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:56:24] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:56:24] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:56:24] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:56:24] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:56:24] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:56:24] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:56:24] - [BTCBRL] - Took 286ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 09:56:57] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 09:56:58] - [ETHBRL] - 🔻 RSI Oversold: false (47.82948866 <= 32.00)
+[04-08-2025 09:56:58] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:56:58] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 09:56:58] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 09:56:58] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:56:58] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:56:58] - [ETHBRL] - Took 288ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 09:57:24] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 09:57:24] - [SOLBRL] - 📉 Current price variation: 0,59%
+[04-08-2025 09:57:24] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:57:24] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:57:24] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:57:24] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:57:24] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:57:24] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:57:24] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:57:24] - [SOLBRL] - Took 267ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 09:58:31] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 09:58:31] - [BNBBRL] - 📉 Current price variation: 0,00%
+[04-08-2025 09:58:31] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 09:58:31] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 09:58:31] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 09:58:31] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 09:58:31] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 09:58:31] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 09:58:31] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 09:58:31] - [BNBBRL] - Took 301ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 09:59:20] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 09:59:20] - [XRPBRL] - 🔻 RSI Oversold: false (63.21353019 <= 30.00)
+[04-08-2025 09:59:20] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 09:59:20] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 09:59:20] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 09:59:20] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 09:59:20] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 09:59:20] - [XRPBRL] - Took 282ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 10:10:49] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 10:10:49] - [DOGEBRL] - 🔻 RSI Oversold: false (38.34370436 <= 25.00)
+[04-08-2025 10:10:49] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:10:49] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:10:49] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 10:10:49] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:10:49] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:10:49] - [DOGEBRL] - Took 303ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 10:11:25] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 10:11:25] - [BTCBRL] - 📉 Current price variation: -0,63%
+[04-08-2025 10:11:25] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:11:25] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:11:25] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 10:11:25] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:11:25] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:11:25] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:11:25] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:11:25] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 10:11:58] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 10:11:59] - [ETHBRL] - 🔻 RSI Oversold: false (45.45010420 <= 32.00)
+[04-08-2025 10:11:59] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:11:59] - [ETHBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:11:59] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 10:11:59] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:11:59] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:11:59] - [ETHBRL] - Took 290ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 10:12:25] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 10:12:25] - [SOLBRL] - 📉 Current price variation: 0,47%
+[04-08-2025 10:12:25] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:12:25] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:12:25] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:12:25] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:12:25] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:12:25] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:12:25] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:12:25] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 10:13:32] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 10:13:32] - [BNBBRL] - 📉 Current price variation: -0,14%
+[04-08-2025 10:13:32] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:13:32] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:13:32] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:13:32] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:13:32] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:13:32] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:13:32] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:13:32] - [BNBBRL] - Took 297ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 10:14:21] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 10:14:21] - [XRPBRL] - 🔻 RSI Oversold: false (62.99020176 <= 30.00)
+[04-08-2025 10:14:21] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:14:21] - [XRPBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:14:21] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 10:14:21] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:14:21] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:14:21] - [XRPBRL] - Took 280ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 10:25:50] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 10:25:50] - [DOGEBRL] - 🔻 RSI Oversold: false (35.51141675 <= 25.00)
+[04-08-2025 10:25:50] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:25:50] - [DOGEBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:25:50] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 10:25:50] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:25:50] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:25:50] - [DOGEBRL] - Took 303ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 10:26:26] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 10:26:26] - [BTCBRL] - 📉 Current price variation: -0,92%
+[04-08-2025 10:26:26] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:26:26] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:26:26] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 10:26:26] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:26:26] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:26:26] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:26:26] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:26:26] - [BTCBRL] - Took 287ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 10:26:59] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 10:27:00] - [ETHBRL] - 🔻 RSI Oversold: false (45.50229664 <= 32.00)
+[04-08-2025 10:27:00] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:27:00] - [ETHBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:27:00] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 10:27:00] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:27:00] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:27:00] - [ETHBRL] - Took 283ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 10:27:26] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 10:27:26] - [SOLBRL] - 📉 Current price variation: 0,12%
+[04-08-2025 10:27:26] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:27:26] - [SOLBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:27:26] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:27:26] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:27:26] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:27:26] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:27:26] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:27:26] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 10:28:33] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 10:28:33] - [BNBBRL] - 📉 Current price variation: -0,64%
+[04-08-2025 10:28:33] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:28:33] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:28:33] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 10:28:33] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:28:33] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:28:33] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:28:33] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:28:33] - [BNBBRL] - Took 296ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 10:29:22] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 10:29:22] - [XRPBRL] - 🔻 RSI Oversold: false (51.30890856 <= 30.00)
+[04-08-2025 10:29:22] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:29:22] - [XRPBRL] - 🛡️ Touched Support: true
+[04-08-2025 10:29:22] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 10:29:22] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:29:22] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:29:22] - [XRPBRL] - Took 280ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 10:40:51] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 10:40:51] - [DOGEBRL] - 🔻 RSI Oversold: false (51.50119962 <= 25.00)
+[04-08-2025 10:40:51] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:40:51] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:40:51] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 10:40:51] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 10:40:51] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:40:51] - [DOGEBRL] - Took 294ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 10:41:27] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 10:41:27] - [BTCBRL] - 📉 Current price variation: -0,50%
+[04-08-2025 10:41:27] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:41:27] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:41:27] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:41:27] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:41:27] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:41:27] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:41:27] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:41:27] - [BTCBRL] - Took 282ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 10:42:00] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 10:42:01] - [ETHBRL] - 🔻 RSI Oversold: false (57.50671121 <= 32.00)
+[04-08-2025 10:42:01] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:42:01] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:42:01] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 10:42:01] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 10:42:01] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:42:01] - [ETHBRL] - Took 285ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 10:42:27] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 10:42:27] - [SOLBRL] - 📉 Current price variation: 1,23%
+[04-08-2025 10:42:27] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:42:27] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 10:42:27] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:42:27] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:42:27] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:42:27] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:42:27] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:42:27] - [SOLBRL] - Took 267ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 10:43:34] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 10:43:34] - [BNBBRL] - 📉 Current price variation: 0,17%
+[04-08-2025 10:43:34] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:43:34] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:43:34] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:43:34] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:43:34] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:43:34] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:43:34] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:43:34] - [BNBBRL] - Took 306ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 10:44:23] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 10:44:23] - [XRPBRL] - 🔻 RSI Oversold: false (71.45161014 <= 30.00)
+[04-08-2025 10:44:23] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:44:23] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:44:23] - [XRPBRL] - 📊 Volume: STRONG
+[04-08-2025 10:44:23] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 10:44:23] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:44:23] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 10:55:52] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 10:55:52] - [DOGEBRL] - 🔻 RSI Oversold: false (49.64026353 <= 25.00)
+[04-08-2025 10:55:52] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 10:55:52] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:55:52] - [DOGEBRL] - 📊 Volume: STRONG
+[04-08-2025 10:55:52] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 10:55:52] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:55:52] - [DOGEBRL] - Took 307ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 10:56:28] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 10:56:28] - [BTCBRL] - 📉 Current price variation: -0,40%
+[04-08-2025 10:56:28] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:56:28] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:56:28] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:56:28] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:56:28] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:56:28] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:56:28] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:56:28] - [BTCBRL] - Took 289ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 10:57:01] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 10:57:02] - [ETHBRL] - 🔻 RSI Oversold: false (60.54111562 <= 32.00)
+[04-08-2025 10:57:02] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 10:57:02] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:57:02] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 10:57:02] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 10:57:02] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:57:02] - [ETHBRL] - Took 279ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 10:57:28] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 10:57:28] - [SOLBRL] - 📉 Current price variation: 1,27%
+[04-08-2025 10:57:28] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:57:28] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 10:57:28] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:57:28] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:57:28] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:57:28] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:57:28] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:57:28] - [SOLBRL] - Took 272ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 10:58:35] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 10:58:35] - [BNBBRL] - 📉 Current price variation: 0,10%
+[04-08-2025 10:58:35] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 10:58:35] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 10:58:35] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 10:58:35] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 10:58:35] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 10:58:35] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 10:58:35] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 10:58:35] - [BNBBRL] - Took 295ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 10:59:24] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 10:59:24] - [XRPBRL] - 🔻 RSI Oversold: false (76.19783837 <= 30.00)
+[04-08-2025 10:59:24] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 10:59:24] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 10:59:24] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 10:59:24] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 10:59:24] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 10:59:24] - [XRPBRL] - Took 288ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 11:10:53] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 11:10:53] - [DOGEBRL] - 🔻 RSI Oversold: false (64.75092391 <= 25.00)
+[04-08-2025 11:10:53] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:10:53] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:10:53] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 11:10:53] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:10:53] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:10:53] - [DOGEBRL] - Took 299ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 11:11:29] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 11:11:29] - [BTCBRL] - 📉 Current price variation: -0,14%
+[04-08-2025 11:11:29] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:11:29] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:11:29] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:11:29] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:11:29] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:11:29] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:11:29] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:11:29] - [BTCBRL] - Took 285ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 11:12:02] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 11:12:03] - [ETHBRL] - 🔻 RSI Oversold: false (71.23060569 <= 32.00)
+[04-08-2025 11:12:03] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:12:03] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:12:03] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 11:12:03] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:12:03] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:12:03] - [ETHBRL] - Took 284ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 11:12:29] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 11:12:29] - [SOLBRL] - 📉 Current price variation: 1,94%
+[04-08-2025 11:12:29] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:12:29] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 11:12:29] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:12:29] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:12:29] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:12:29] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:12:29] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:12:29] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 11:13:36] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 11:13:36] - [BNBBRL] - 📉 Current price variation: 0,43%
+[04-08-2025 11:13:36] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:13:36] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:13:36] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:13:36] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:13:36] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:13:36] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:13:36] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:13:36] - [BNBBRL] - Took 287ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 11:14:25] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 11:14:25] - [XRPBRL] - 🔻 RSI Oversold: false (79.05687377 <= 30.00)
+[04-08-2025 11:14:25] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:14:25] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:14:25] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 11:14:25] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:14:25] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:14:25] - [XRPBRL] - Took 284ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 11:25:54] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 11:25:54] - [DOGEBRL] - 🔻 RSI Oversold: false (61.59695514 <= 25.00)
+[04-08-2025 11:25:54] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:25:54] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:25:54] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 11:25:54] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:25:54] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:25:54] - [DOGEBRL] - Took 309ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 11:26:30] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 11:26:30] - [BTCBRL] - 📉 Current price variation: 0,03%
+[04-08-2025 11:26:30] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:26:30] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:26:30] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:26:30] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:26:30] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:26:30] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:26:30] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:26:30] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 11:27:03] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 11:27:04] - [ETHBRL] - 🔻 RSI Oversold: false (73.16518301 <= 32.00)
+[04-08-2025 11:27:04] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:27:04] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:27:04] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 11:27:04] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:27:04] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:27:04] - [ETHBRL] - Took 285ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 11:27:30] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 11:27:30] - [SOLBRL] - 📉 Current price variation: 2,01%
+[04-08-2025 11:27:30] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:27:30] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 11:27:30] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:27:30] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:27:30] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:27:30] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:27:30] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:27:30] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 11:28:37] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 11:28:37] - [BNBBRL] - 📉 Current price variation: 0,36%
+[04-08-2025 11:28:37] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:28:37] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:28:37] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:28:37] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:28:37] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:28:37] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:28:37] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:28:37] - [BNBBRL] - Took 292ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 11:29:26] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 11:29:26] - [XRPBRL] - 🔻 RSI Oversold: false (80.05578131 <= 30.00)
+[04-08-2025 11:29:26] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:29:26] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:29:26] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 11:29:26] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:29:26] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:29:26] - [XRPBRL] - Took 279ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 11:40:55] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 11:40:55] - [DOGEBRL] - 🔻 RSI Oversold: false (60.67420149 <= 25.00)
+[04-08-2025 11:40:55] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:40:55] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:40:55] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 11:40:55] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:40:55] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:40:55] - [DOGEBRL] - Took 304ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 11:41:31] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 11:41:31] - [BTCBRL] - 📉 Current price variation: -0,28%
+[04-08-2025 11:41:31] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:41:31] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:41:31] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:41:31] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:41:31] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:41:31] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:41:31] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:41:31] - [BTCBRL] - Took 281ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 11:42:04] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 11:42:05] - [ETHBRL] - 🔻 RSI Oversold: false (65.43907087 <= 32.00)
+[04-08-2025 11:42:05] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:42:05] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:42:05] - [ETHBRL] - 📊 Volume: STRONG
+[04-08-2025 11:42:05] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:42:05] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:42:05] - [ETHBRL] - Took 287ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 11:42:31] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 11:42:31] - [SOLBRL] - 📉 Current price variation: 1,53%
+[04-08-2025 11:42:31] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:42:31] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 11:42:31] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:42:31] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:42:31] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:42:31] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:42:31] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:42:31] - [SOLBRL] - Took 271ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 11:43:38] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 11:43:38] - [BNBBRL] - 📉 Current price variation: 0,07%
+[04-08-2025 11:43:38] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:43:38] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:43:38] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:43:38] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:43:38] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:43:38] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:43:38] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:43:38] - [BNBBRL] - Took 301ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 11:44:27] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 11:44:27] - [XRPBRL] - 🔻 RSI Oversold: false (65.64791847 <= 30.00)
+[04-08-2025 11:44:27] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:44:27] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:44:27] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 11:44:27] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:44:27] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:44:27] - [XRPBRL] - Took 286ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 11:55:56] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 11:55:56] - [DOGEBRL] - 🔻 RSI Oversold: false (53.44541174 <= 25.00)
+[04-08-2025 11:55:56] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:55:56] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:55:56] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 11:55:56] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:55:56] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:55:56] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 11:56:32] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 11:56:32] - [BTCBRL] - 📉 Current price variation: -0,45%
+[04-08-2025 11:56:32] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:56:32] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:56:32] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:56:32] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:56:32] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:56:32] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:56:32] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:56:32] - [BTCBRL] - Took 285ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 11:57:05] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 11:57:06] - [ETHBRL] - 🔻 RSI Oversold: false (67.33513708 <= 32.00)
+[04-08-2025 11:57:06] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:57:06] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:57:06] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 11:57:06] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:57:06] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:57:06] - [ETHBRL] - Took 553ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 11:57:32] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 11:57:32] - [SOLBRL] - 📉 Current price variation: 1,11%
+[04-08-2025 11:57:32] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:57:32] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 11:57:32] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:57:32] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:57:32] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:57:32] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:57:32] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:57:32] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 11:58:39] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 11:58:39] - [BNBBRL] - 📉 Current price variation: 0,00%
+[04-08-2025 11:58:39] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 11:58:39] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 11:58:39] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 11:58:39] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 11:58:39] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 11:58:39] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 11:58:39] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 11:58:39] - [BNBBRL] - Took 293ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 11:59:28] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 11:59:28] - [XRPBRL] - 🔻 RSI Oversold: false (53.79230140 <= 30.00)
+[04-08-2025 11:59:28] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 11:59:28] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 11:59:28] - [XRPBRL] - 📊 Volume: STRONG
+[04-08-2025 11:59:28] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 11:59:28] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 11:59:28] - [XRPBRL] - Took 282ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 12:10:57] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 12:10:57] - [DOGEBRL] - 🔻 RSI Oversold: false (57.97348833 <= 25.00)
+[04-08-2025 12:10:57] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:10:57] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:10:57] - [DOGEBRL] - 📊 Volume: STRONG
+[04-08-2025 12:10:57] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:10:57] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:10:57] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 12:11:33] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 12:11:33] - [BTCBRL] - 📉 Current price variation: -0,27%
+[04-08-2025 12:11:33] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:11:33] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 12:11:33] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:11:33] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:11:33] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:11:33] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:11:33] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:11:33] - [BTCBRL] - Took 282ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 12:12:06] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 12:12:07] - [ETHBRL] - 🔻 RSI Oversold: false (70.96627717 <= 32.00)
+[04-08-2025 12:12:07] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:12:07] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:12:07] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 12:12:07] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:12:07] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:12:07] - [ETHBRL] - Took 388ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 12:12:33] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 12:12:33] - [SOLBRL] - 📉 Current price variation: 1,48%
+[04-08-2025 12:12:33] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:12:33] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:12:33] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:12:33] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:12:33] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:12:33] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:12:33] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:12:33] - [SOLBRL] - Took 265ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 12:13:40] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 12:13:40] - [BNBBRL] - 📉 Current price variation: 0,33%
+[04-08-2025 12:13:40] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:13:40] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 12:13:40] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:13:40] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:13:40] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:13:40] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:13:40] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:13:40] - [BNBBRL] - Took 298ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 12:14:29] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 12:14:29] - [XRPBRL] - 🔻 RSI Oversold: false (58.91647579 <= 30.00)
+[04-08-2025 12:14:29] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:14:29] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:14:29] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 12:14:29] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:14:29] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:14:29] - [XRPBRL] - Took 286ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 12:25:58] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 12:25:58] - [DOGEBRL] - 🔻 RSI Oversold: false (58.94040509 <= 25.00)
+[04-08-2025 12:25:58] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:25:58] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:25:58] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 12:25:58] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:25:58] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:25:58] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 12:26:34] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 12:26:34] - [BTCBRL] - 📉 Current price variation: -0,33%
+[04-08-2025 12:26:34] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:26:34] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 12:26:34] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:26:34] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:26:34] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:26:34] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:26:34] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:26:34] - [BTCBRL] - Took 289ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 12:27:07] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 12:27:08] - [ETHBRL] - 🔻 RSI Oversold: false (70.00280816 <= 32.00)
+[04-08-2025 12:27:08] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:27:08] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:27:08] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 12:27:08] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:27:08] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:27:08] - [ETHBRL] - Took 283ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 12:27:34] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 12:27:34] - [SOLBRL] - 📉 Current price variation: 1,60%
+[04-08-2025 12:27:34] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:27:34] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:27:34] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:27:34] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:27:34] - [SOLBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:27:34] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:27:34] - [SOLBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:27:34] - [SOLBRL] - Took 272ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 12:28:41] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 12:28:41] - [BNBBRL] - 📉 Current price variation: 0,33%
+[04-08-2025 12:28:41] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:28:41] - [BNBBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:28:41] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:28:41] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:28:41] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:28:41] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:28:41] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:28:41] - [BNBBRL] - Took 297ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 12:29:30] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 12:29:30] - [XRPBRL] - 🔻 RSI Oversold: false (61.50537333 <= 30.00)
+[04-08-2025 12:29:30] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:29:30] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:29:30] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 12:29:30] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:29:30] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:29:30] - [XRPBRL] - Took 284ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 12:40:59] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 12:40:59] - [DOGEBRL] - 🔻 RSI Oversold: false (55.89225195 <= 25.00)
+[04-08-2025 12:40:59] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:40:59] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:40:59] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 12:40:59] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:40:59] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:40:59] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 12:41:35] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 12:41:35] - [BTCBRL] - 📉 Current price variation: -0,47%
+[04-08-2025 12:41:35] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:41:35] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 12:41:35] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:41:35] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:41:35] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:41:35] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:41:35] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:41:35] - [BTCBRL] - Took 282ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 12:42:08] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 12:42:09] - [ETHBRL] - 🔻 RSI Oversold: false (72.80118689 <= 32.00)
+[04-08-2025 12:42:09] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:42:09] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:42:09] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 12:42:09] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:42:09] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:42:09] - [ETHBRL] - Took 280ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 12:42:35] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 12:42:35] - [SOLBRL] - 📉 Current price variation: 1,20%
+[04-08-2025 12:42:35] - [SOLBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:42:35] - [SOLBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:42:35] - [SOLBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:42:35] - [SOLBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:42:35] - [SOLBRL] - ⏱️ Position Timeout: true
+[04-08-2025 12:42:35] - [SOLBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:42:35] - [SOLBRL] - 🔴 SELL signal detected!
+[04-08-2025 12:42:35] - [SOLBRL] - 💰 Executing sell order
+[04-08-2025 12:42:35] - [SOLBRL] - ✅ Sale executed successfully
+[04-08-2025 12:42:35] - [SOLBRL] - 💰 Profit: R$1,80 (1,20%)
+[04-08-2025 12:42:35] - [SOLBRL] - 💰 Accumulated profit: R$1,80
+[04-08-2025 12:42:35] - [SOLBRL] - Took 534ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 12:43:42] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 12:43:42] - [BNBBRL] - 📉 Current price variation: -0,17%
+[04-08-2025 12:43:42] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:43:42] - [BNBBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:43:42] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:43:42] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:43:42] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:43:42] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:43:42] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:43:42] - [BNBBRL] - Took 295ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 12:44:31] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 12:44:31] - [XRPBRL] - 🔻 RSI Oversold: false (66.82243302 <= 30.00)
+[04-08-2025 12:44:31] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:44:31] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:44:31] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 12:44:31] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:44:31] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:44:31] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 12:56:00] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 12:56:00] - [DOGEBRL] - 🔻 RSI Oversold: false (61.55228275 <= 25.00)
+[04-08-2025 12:56:00] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:56:00] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:56:00] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 12:56:00] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:56:00] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:56:00] - [DOGEBRL] - Took 296ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 12:56:36] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 12:56:36] - [BTCBRL] - 📉 Current price variation: -0,26%
+[04-08-2025 12:56:36] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:56:36] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 12:56:36] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:56:36] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:56:36] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:56:36] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:56:36] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:56:36] - [BTCBRL] - Took 288ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 12:57:09] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 12:57:10] - [ETHBRL] - 🔻 RSI Oversold: false (73.46369657 <= 32.00)
+[04-08-2025 12:57:10] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:57:10] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:57:10] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 12:57:10] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:57:10] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:57:10] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 12:57:36] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 12:57:36] - [SOLBRL] - 🔻 RSI Oversold: false (61.57205229 <= 30.00)
+[04-08-2025 12:57:36] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:57:36] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:57:36] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 12:57:36] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:57:36] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:57:36] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 12:58:43] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 12:58:43] - [BNBBRL] - 📉 Current price variation: 0,10%
+[04-08-2025 12:58:43] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 12:58:43] - [BNBBRL] - 📉 Bearish Trend: false
+[04-08-2025 12:58:43] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 12:58:43] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 12:58:43] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 12:58:43] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 12:58:43] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 12:58:43] - [BNBBRL] - Took 293ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 12:59:32] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 12:59:32] - [XRPBRL] - 🔻 RSI Oversold: false (69.68375576 <= 30.00)
+[04-08-2025 12:59:32] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 12:59:32] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 12:59:32] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 12:59:32] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 12:59:32] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 12:59:32] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 13:11:01] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 13:11:01] - [DOGEBRL] - 🔻 RSI Oversold: false (64.67656032 <= 25.00)
+[04-08-2025 13:11:01] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:11:01] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:11:01] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 13:11:01] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:11:01] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:11:01] - [DOGEBRL] - Took 293ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 13:11:37] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 13:11:37] - [BTCBRL] - 📉 Current price variation: -0,03%
+[04-08-2025 13:11:37] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 13:11:37] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:11:37] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:11:37] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:11:37] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 13:11:37] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:11:37] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 13:11:37] - [BTCBRL] - Took 286ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 13:12:10] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 13:12:11] - [ETHBRL] - 🔻 RSI Oversold: false (75.72462257 <= 32.00)
+[04-08-2025 13:12:11] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:12:11] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:12:11] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 13:12:11] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:12:11] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:12:11] - [ETHBRL] - Took 289ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 13:12:37] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 13:12:37] - [SOLBRL] - 🔻 RSI Oversold: false (64.30020279 <= 30.00)
+[04-08-2025 13:12:37] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:12:37] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:12:37] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 13:12:37] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:12:37] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:12:37] - [SOLBRL] - Took 266ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 13:13:44] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 13:13:44] - [BNBBRL] - 📉 Current price variation: 0,45%
+[04-08-2025 13:13:44] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 13:13:44] - [BNBBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:13:44] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:13:44] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:13:44] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 13:13:44] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:13:44] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 13:13:44] - [BNBBRL] - Took 301ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 13:14:33] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 13:14:33] - [XRPBRL] - 🔻 RSI Oversold: false (71.42857551 <= 30.00)
+[04-08-2025 13:14:33] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:14:33] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:14:33] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 13:14:33] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:14:33] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:14:33] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 13:26:02] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 13:26:02] - [DOGEBRL] - 🔻 RSI Oversold: false (66.82244007 <= 25.00)
+[04-08-2025 13:26:02] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:26:02] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:26:02] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 13:26:02] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:26:02] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:26:02] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 13:26:38] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 13:26:38] - [BTCBRL] - 📉 Current price variation: -0,02%
+[04-08-2025 13:26:38] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 13:26:38] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:26:38] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:26:38] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:26:38] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 13:26:38] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:26:38] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 13:26:38] - [BTCBRL] - Took 287ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 13:27:11] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 13:27:12] - [ETHBRL] - 🔻 RSI Oversold: false (80.44460547 <= 32.00)
+[04-08-2025 13:27:12] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:27:12] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:27:12] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 13:27:12] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:27:12] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:27:12] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 13:27:38] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 13:27:38] - [SOLBRL] - 🔻 RSI Oversold: false (69.75425340 <= 30.00)
+[04-08-2025 13:27:38] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:27:38] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:27:38] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 13:27:38] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:27:38] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:27:38] - [SOLBRL] - Took 271ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 13:28:45] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 13:28:45] - [BNBBRL] - 📉 Current price variation: 0,74%
+[04-08-2025 13:28:45] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 13:28:45] - [BNBBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:28:45] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:28:45] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:28:45] - [BNBBRL] - ⏱️ Position Timeout: true
+[04-08-2025 13:28:45] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:28:45] - [BNBBRL] - 🔴 SELL signal detected!
+[04-08-2025 13:28:45] - [BNBBRL] - 💰 Executing sell order
+[04-08-2025 13:28:45] - [BNBBRL] - ✅ Sale executed successfully
+[04-08-2025 13:28:45] - [BNBBRL] - 💰 Profit: R$0,78 (0,74%)
+[04-08-2025 13:28:45] - [BNBBRL] - 💰 Accumulated profit: R$0,78
+[04-08-2025 13:28:45] - [BNBBRL] - Took 580ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 13:29:34] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 13:29:34] - [XRPBRL] - 🔻 RSI Oversold: false (73.66212227 <= 30.00)
+[04-08-2025 13:29:34] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:29:34] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:29:34] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 13:29:34] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:29:34] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:29:34] - [XRPBRL] - Took 275ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 13:41:03] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 13:41:03] - [DOGEBRL] - 🔻 RSI Oversold: false (76.33683086 <= 25.00)
+[04-08-2025 13:41:03] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:41:03] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:41:03] - [DOGEBRL] - 📊 Volume: STRONG
+[04-08-2025 13:41:03] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:41:03] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:41:03] - [DOGEBRL] - Took 297ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 13:41:39] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 13:41:39] - [BTCBRL] - 📉 Current price variation: 0,04%
+[04-08-2025 13:41:39] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 13:41:39] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:41:39] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:41:39] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:41:39] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 13:41:39] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:41:39] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 13:41:39] - [BTCBRL] - Took 279ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 13:42:12] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 13:42:13] - [ETHBRL] - 🔻 RSI Oversold: false (86.45519559 <= 32.00)
+[04-08-2025 13:42:13] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:42:13] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:42:13] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 13:42:13] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:42:13] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:42:13] - [ETHBRL] - Took 291ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 13:42:39] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 13:42:39] - [SOLBRL] - 🔻 RSI Oversold: false (74.22480621 <= 30.00)
+[04-08-2025 13:42:39] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:42:39] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:42:39] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 13:42:39] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:42:39] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:42:39] - [SOLBRL] - Took 270ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 13:43:46] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 13:43:46] - [BNBBRL] - 🔻 RSI Oversold: false (71.33333331 <= 33.00)
+[04-08-2025 13:43:46] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:43:46] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:43:46] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 13:43:46] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:43:46] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:43:46] - [BNBBRL] - Took 298ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 13:44:35] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 13:44:35] - [XRPBRL] - 🔻 RSI Oversold: false (78.76370374 <= 30.00)
+[04-08-2025 13:44:35] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:44:35] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:44:35] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 13:44:35] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:44:35] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:44:35] - [XRPBRL] - Took 279ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 13:56:04] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 13:56:04] - [DOGEBRL] - 🔻 RSI Oversold: false (75.72947673 <= 25.00)
+[04-08-2025 13:56:04] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:56:04] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:56:04] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 13:56:04] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:56:04] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:56:04] - [DOGEBRL] - Took 294ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 13:56:40] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 13:56:40] - [BTCBRL] - 📉 Current price variation: 0,26%
+[04-08-2025 13:56:40] - [BTCBRL] - 🔺 RSI Overbought: true
+[04-08-2025 13:56:40] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 13:56:40] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 13:56:40] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 13:56:40] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 13:56:40] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 13:56:40] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 13:56:40] - [BTCBRL] - Took 277ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 13:57:13] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 13:57:14] - [ETHBRL] - 🔻 RSI Oversold: false (82.97488732 <= 32.00)
+[04-08-2025 13:57:14] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:57:14] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:57:14] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 13:57:14] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:57:14] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:57:14] - [ETHBRL] - Took 290ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 13:57:40] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 13:57:40] - [SOLBRL] - 🔻 RSI Oversold: false (69.58424513 <= 30.00)
+[04-08-2025 13:57:40] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:57:40] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:57:40] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 13:57:40] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:57:40] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:57:40] - [SOLBRL] - Took 274ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 13:58:47] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 13:58:47] - [BNBBRL] - 🔻 RSI Oversold: false (66.42857138 <= 33.00)
+[04-08-2025 13:58:47] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:58:47] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:58:47] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 13:58:47] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:58:47] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:58:47] - [BNBBRL] - Took 292ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 13:59:36] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 13:59:36] - [XRPBRL] - 🔻 RSI Oversold: false (70.78651154 <= 30.00)
+[04-08-2025 13:59:36] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 13:59:36] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 13:59:36] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 13:59:36] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 13:59:36] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 13:59:36] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 14:11:05] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 14:11:05] - [DOGEBRL] - 🔻 RSI Oversold: false (74.18902590 <= 25.00)
+[04-08-2025 14:11:05] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:11:05] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:11:05] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 14:11:05] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:11:05] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:11:05] - [DOGEBRL] - Took 294ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 14:11:41] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 14:11:41] - [BTCBRL] - 📉 Current price variation: 0,54%
+[04-08-2025 14:11:41] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 14:11:41] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 14:11:41] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 14:11:41] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 14:11:41] - [BTCBRL] - ⏱️ Position Timeout: true
+[04-08-2025 14:11:41] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 14:11:41] - [BTCBRL] - 🔴 SELL signal detected!
+[04-08-2025 14:11:41] - [BTCBRL] - ⚠️ Attempted to sell without an open position!
+[04-08-2025 14:11:41] - [BTCBRL] - Took 284ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 14:12:14] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 14:12:15] - [ETHBRL] - 🔻 RSI Oversold: false (84.31549350 <= 32.00)
+[04-08-2025 14:12:15] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:12:15] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:12:15] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 14:12:15] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:12:15] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:12:15] - [ETHBRL] - Took 283ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 14:12:41] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 14:12:41] - [SOLBRL] - 🔻 RSI Oversold: false (74.23664134 <= 30.00)
+[04-08-2025 14:12:41] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:12:41] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:12:41] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 14:12:41] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:12:41] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:12:41] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 14:13:48] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 14:13:48] - [BNBBRL] - 🔻 RSI Oversold: false (68.61313867 <= 33.00)
+[04-08-2025 14:13:48] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:13:48] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:13:48] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 14:13:48] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:13:48] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:13:48] - [BNBBRL] - Took 301ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 14:14:37] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 14:14:37] - [XRPBRL] - 🔻 RSI Oversold: false (64.76867870 <= 30.00)
+[04-08-2025 14:14:37] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:14:37] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:14:37] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 14:14:37] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:14:37] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:14:37] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 14:26:06] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 14:26:06] - [DOGEBRL] - 🔻 RSI Oversold: false (66.10381820 <= 25.00)
+[04-08-2025 14:26:06] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:26:06] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:26:06] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 14:26:06] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:26:06] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:26:06] - [DOGEBRL] - Took 296ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 14:26:42] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 14:26:42] - [BTCBRL] - 📉 Current price variation: 0,45%
+[04-08-2025 14:26:42] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 14:26:42] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 14:26:42] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 14:26:42] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 14:26:42] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 14:26:42] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 14:26:42] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 14:26:42] - [BTCBRL] - Took 283ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 14:27:15] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 14:27:16] - [ETHBRL] - 🔻 RSI Oversold: false (68.38534261 <= 32.00)
+[04-08-2025 14:27:16] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:27:16] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:27:16] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 14:27:16] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:27:16] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:27:16] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 14:27:42] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 14:27:42] - [SOLBRL] - 🔻 RSI Oversold: false (66.40159045 <= 30.00)
+[04-08-2025 14:27:42] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:27:42] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:27:42] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 14:27:42] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:27:42] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:27:42] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 14:28:49] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 14:28:49] - [BNBBRL] - 🔻 RSI Oversold: false (62.77372263 <= 33.00)
+[04-08-2025 14:28:49] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:28:49] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:28:49] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 14:28:49] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:28:49] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:28:49] - [BNBBRL] - Took 294ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 14:29:38] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 14:29:38] - [XRPBRL] - 🔻 RSI Oversold: false (53.16302043 <= 30.00)
+[04-08-2025 14:29:38] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:29:38] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:29:38] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 14:29:38] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:29:38] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:29:38] - [XRPBRL] - Took 280ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 14:41:07] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 14:41:07] - [DOGEBRL] - 🔻 RSI Oversold: false (55.95562665 <= 25.00)
+[04-08-2025 14:41:07] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:41:07] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:41:07] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 14:41:07] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:41:07] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:41:07] - [DOGEBRL] - Took 297ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 14:41:43] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 14:41:43] - [BTCBRL] - 📉 Current price variation: 0,22%
+[04-08-2025 14:41:43] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 14:41:43] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 14:41:43] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 14:41:43] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 14:41:43] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 14:41:43] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 14:41:43] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 14:41:43] - [BTCBRL] - Took 281ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 14:42:16] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 14:42:17] - [ETHBRL] - 🔻 RSI Oversold: false (62.32553714 <= 32.00)
+[04-08-2025 14:42:17] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:42:17] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:42:17] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 14:42:17] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:42:17] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:42:17] - [ETHBRL] - Took 286ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 14:42:43] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 14:42:43] - [SOLBRL] - 🔻 RSI Oversold: false (60.84452962 <= 30.00)
+[04-08-2025 14:42:43] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:42:43] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:42:43] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 14:42:43] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:42:43] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:42:43] - [SOLBRL] - Took 268ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 14:43:50] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 14:43:50] - [BNBBRL] - 🔻 RSI Oversold: false (60.76923080 <= 33.00)
+[04-08-2025 14:43:50] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:43:50] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:43:50] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 14:43:50] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:43:50] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:43:50] - [BNBBRL] - Took 297ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 14:44:39] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 14:44:39] - [XRPBRL] - 🔻 RSI Oversold: false (49.48571201 <= 30.00)
+[04-08-2025 14:44:39] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:44:39] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:44:39] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 14:44:39] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:44:39] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:44:39] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 14:56:08] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 14:56:08] - [DOGEBRL] - 🔻 RSI Oversold: false (52.94880740 <= 25.00)
+[04-08-2025 14:56:08] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:56:08] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:56:08] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 14:56:08] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:56:08] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:56:08] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 14:56:44] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 14:56:44] - [BTCBRL] - 📉 Current price variation: 0,13%
+[04-08-2025 14:56:44] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 14:56:44] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 14:56:44] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 14:56:44] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 14:56:44] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 14:56:44] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 14:56:44] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 14:56:44] - [BTCBRL] - Took 281ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 14:57:17] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 14:57:18] - [ETHBRL] - 🔻 RSI Oversold: false (69.32195985 <= 32.00)
+[04-08-2025 14:57:18] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:57:18] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:57:18] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 14:57:18] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:57:18] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:57:18] - [ETHBRL] - Took 284ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 14:57:44] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 14:57:44] - [SOLBRL] - 🔻 RSI Oversold: false (63.76518210 <= 30.00)
+[04-08-2025 14:57:44] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:57:44] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:57:44] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 14:57:44] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:57:44] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:57:44] - [SOLBRL] - Took 266ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 14:58:51] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 14:58:51] - [BNBBRL] - 🔻 RSI Oversold: false (66.39344267 <= 33.00)
+[04-08-2025 14:58:51] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:58:51] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:58:51] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 14:58:51] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:58:51] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:58:51] - [BNBBRL] - Took 291ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 14:59:40] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 14:59:40] - [XRPBRL] - 🔻 RSI Oversold: false (57.27512962 <= 30.00)
+[04-08-2025 14:59:40] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 14:59:40] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 14:59:40] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 14:59:40] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 14:59:40] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 14:59:40] - [XRPBRL] - Took 280ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 15:11:09] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 15:11:09] - [DOGEBRL] - 🔻 RSI Oversold: false (60.02966422 <= 25.00)
+[04-08-2025 15:11:09] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:11:09] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:11:09] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 15:11:09] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:11:09] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:11:09] - [DOGEBRL] - Took 303ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 15:11:45] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 15:11:45] - [BTCBRL] - 📉 Current price variation: 0,07%
+[04-08-2025 15:11:45] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 15:11:45] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 15:11:45] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 15:11:45] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 15:11:45] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 15:11:45] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 15:11:45] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 15:11:45] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 15:12:18] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 15:12:19] - [ETHBRL] - 🔻 RSI Oversold: false (68.22043961 <= 32.00)
+[04-08-2025 15:12:19] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:12:19] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:12:19] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 15:12:19] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:12:19] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:12:19] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 15:12:45] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 15:12:45] - [SOLBRL] - 🔻 RSI Oversold: false (63.89452331 <= 30.00)
+[04-08-2025 15:12:45] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:12:45] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:12:45] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 15:12:45] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:12:45] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:12:45] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 15:13:52] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 15:13:52] - [BNBBRL] - 🔻 RSI Oversold: false (68.69565213 <= 33.00)
+[04-08-2025 15:13:52] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:13:52] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:13:52] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 15:13:52] - [BNBBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:13:52] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:13:52] - [BNBBRL] - Took 294ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 15:14:41] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 15:14:41] - [XRPBRL] - 🔻 RSI Oversold: false (59.52063330 <= 30.00)
+[04-08-2025 15:14:41] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:14:41] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:14:41] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 15:14:41] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:14:41] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:14:41] - [XRPBRL] - Took 281ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 15:26:10] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 15:26:10] - [DOGEBRL] - 🔻 RSI Oversold: false (62.05827960 <= 25.00)
+[04-08-2025 15:26:10] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:26:10] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:26:10] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 15:26:10] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:26:10] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:26:10] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 15:26:46] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 15:26:46] - [BTCBRL] - 📉 Current price variation: 0,12%
+[04-08-2025 15:26:46] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 15:26:46] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 15:26:46] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 15:26:46] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 15:26:46] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 15:26:46] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 15:26:46] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 15:26:46] - [BTCBRL] - Took 292ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 15:27:19] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 15:27:20] - [ETHBRL] - 🔻 RSI Oversold: false (64.42027655 <= 32.00)
+[04-08-2025 15:27:20] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:27:20] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:27:20] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 15:27:20] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:27:20] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:27:20] - [ETHBRL] - Took 281ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 15:27:46] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 15:27:46] - [SOLBRL] - 🔻 RSI Oversold: false (62.25165567 <= 30.00)
+[04-08-2025 15:27:46] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:27:46] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:27:46] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 15:27:46] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:27:46] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:27:46] - [SOLBRL] - Took 271ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 15:28:53] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 15:28:53] - [BNBBRL] - 🔻 RSI Oversold: false (62.72727274 <= 33.00)
+[04-08-2025 15:28:53] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:28:53] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:28:53] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 15:28:53] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 15:28:53] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:28:53] - [BNBBRL] - Took 295ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 15:29:42] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 15:29:42] - [XRPBRL] - 🔻 RSI Oversold: false (54.13333190 <= 30.00)
+[04-08-2025 15:29:42] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:29:42] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:29:42] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 15:29:42] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:29:42] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:29:42] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 15:41:11] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 15:41:11] - [DOGEBRL] - 🔻 RSI Oversold: false (54.76880741 <= 25.00)
+[04-08-2025 15:41:11] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:41:11] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:41:11] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 15:41:11] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:41:11] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:41:11] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 15:41:47] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 15:41:47] - [BTCBRL] - 📉 Current price variation: -0,11%
+[04-08-2025 15:41:47] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 15:41:47] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 15:41:47] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 15:41:47] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 15:41:47] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 15:41:47] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 15:41:47] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 15:41:47] - [BTCBRL] - Took 278ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 15:42:20] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 15:42:21] - [ETHBRL] - 🔻 RSI Oversold: false (59.68050705 <= 32.00)
+[04-08-2025 15:42:21] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:42:21] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:42:21] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 15:42:21] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:42:21] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:42:21] - [ETHBRL] - Took 297ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 15:42:47] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 15:42:47] - [SOLBRL] - 🔻 RSI Oversold: false (60.50808310 <= 30.00)
+[04-08-2025 15:42:47] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:42:47] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:42:47] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 15:42:47] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:42:47] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:42:47] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 15:43:54] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 15:43:54] - [BNBBRL] - 🔻 RSI Oversold: false (57.52212395 <= 33.00)
+[04-08-2025 15:43:54] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:43:54] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:43:54] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 15:43:54] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 15:43:54] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:43:54] - [BNBBRL] - Took 295ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 15:44:43] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 15:44:43] - [XRPBRL] - 🔻 RSI Oversold: false (51.19797979 <= 30.00)
+[04-08-2025 15:44:43] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:44:43] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:44:43] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 15:44:43] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 15:44:43] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:44:43] - [XRPBRL] - Took 278ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 15:56:12] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 15:56:12] - [DOGEBRL] - 🔻 RSI Oversold: false (53.14280003 <= 25.00)
+[04-08-2025 15:56:12] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:56:12] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:56:12] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 15:56:12] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:56:12] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:56:12] - [DOGEBRL] - Took 305ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 15:56:48] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 15:56:48] - [BTCBRL] - 📉 Current price variation: -0,18%
+[04-08-2025 15:56:48] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 15:56:48] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 15:56:48] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 15:56:48] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 15:56:48] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 15:56:48] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 15:56:48] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 15:56:48] - [BTCBRL] - Took 283ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 15:57:21] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 15:57:22] - [ETHBRL] - 🔻 RSI Oversold: false (62.04331249 <= 32.00)
+[04-08-2025 15:57:22] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:57:22] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:57:22] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 15:57:22] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:57:22] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:57:22] - [ETHBRL] - Took 284ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 15:57:48] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 15:57:48] - [SOLBRL] - 🔻 RSI Oversold: false (64.74999997 <= 30.00)
+[04-08-2025 15:57:48] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:57:48] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:57:48] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 15:57:48] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 15:57:48] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:57:48] - [SOLBRL] - Took 268ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 15:58:55] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 15:58:55] - [BNBBRL] - 🔻 RSI Oversold: false (70.10309282 <= 33.00)
+[04-08-2025 15:58:55] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:58:55] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:58:55] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 15:58:55] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 15:58:55] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:58:55] - [BNBBRL] - Took 294ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 15:59:44] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 15:59:44] - [XRPBRL] - 🔻 RSI Oversold: false (57.16253215 <= 30.00)
+[04-08-2025 15:59:44] - [XRPBRL] - 📈 Bullish Trend: true
+[04-08-2025 15:59:44] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 15:59:44] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 15:59:44] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 15:59:44] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 15:59:44] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 16:11:13] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 16:11:13] - [DOGEBRL] - 🔻 RSI Oversold: false (58.91161908 <= 25.00)
+[04-08-2025 16:11:13] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:11:13] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:11:13] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 16:11:13] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:11:13] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:11:13] - [DOGEBRL] - Took 302ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 16:11:49] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 16:11:49] - [BTCBRL] - 📉 Current price variation: -0,26%
+[04-08-2025 16:11:49] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 16:11:49] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 16:11:49] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 16:11:49] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 16:11:49] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 16:11:49] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 16:11:49] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 16:11:49] - [BTCBRL] - Took 282ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 16:12:22] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 16:12:23] - [ETHBRL] - 🔻 RSI Oversold: false (61.26755640 <= 32.00)
+[04-08-2025 16:12:23] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 16:12:23] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:12:23] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 16:12:23] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:12:23] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:12:23] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 16:12:49] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 16:12:49] - [SOLBRL] - 🔻 RSI Oversold: false (59.85037407 <= 30.00)
+[04-08-2025 16:12:49] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:12:49] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:12:49] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 16:12:49] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:12:49] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:12:49] - [SOLBRL] - Took 266ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 16:13:56] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 16:13:56] - [BNBBRL] - 🔻 RSI Oversold: false (62.63736266 <= 33.00)
+[04-08-2025 16:13:56] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 16:13:56] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:13:56] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 16:13:56] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:13:56] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:13:56] - [BNBBRL] - Took 290ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 16:14:45] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 16:14:45] - [XRPBRL] - 🔻 RSI Oversold: false (57.14286002 <= 30.00)
+[04-08-2025 16:14:45] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:14:45] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:14:45] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 16:14:45] - [XRPBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:14:45] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:14:45] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 16:26:14] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 16:26:14] - [DOGEBRL] - 🔻 RSI Oversold: false (56.68443484 <= 25.00)
+[04-08-2025 16:26:14] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:26:14] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:26:14] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 16:26:14] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:26:14] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:26:14] - [DOGEBRL] - Took 301ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 16:26:50] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 16:26:50] - [BTCBRL] - 📉 Current price variation: -0,29%
+[04-08-2025 16:26:50] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 16:26:50] - [BTCBRL] - 📉 Bearish Trend: false
+[04-08-2025 16:26:50] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 16:26:50] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 16:26:50] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 16:26:50] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 16:26:50] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 16:26:50] - [BTCBRL] - Took 286ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 16:27:23] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 16:27:24] - [ETHBRL] - 🔻 RSI Oversold: false (54.96874182 <= 32.00)
+[04-08-2025 16:27:24] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 16:27:24] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:27:24] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 16:27:24] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:27:24] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:27:24] - [ETHBRL] - Took 286ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 16:27:50] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 16:27:50] - [SOLBRL] - 🔻 RSI Oversold: false (49.86595158 <= 30.00)
+[04-08-2025 16:27:50] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:27:50] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:27:50] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 16:27:50] - [SOLBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:27:50] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:27:50] - [SOLBRL] - Took 272ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 16:28:57] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 16:28:57] - [BNBBRL] - 🔻 RSI Oversold: false (51.35135122 <= 33.00)
+[04-08-2025 16:28:57] - [BNBBRL] - 📈 Bullish Trend: true
+[04-08-2025 16:28:57] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:28:57] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 16:28:57] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:28:57] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:28:57] - [BNBBRL] - Took 296ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 16:29:46] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 16:29:46] - [XRPBRL] - 🔻 RSI Oversold: false (46.09928765 <= 30.00)
+[04-08-2025 16:29:46] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:29:46] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:29:46] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 16:29:46] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:29:46] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:29:46] - [XRPBRL] - Took 278ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 16:41:15] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 16:41:15] - [DOGEBRL] - 🔻 RSI Oversold: false (49.79422536 <= 25.00)
+[04-08-2025 16:41:15] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:41:15] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:41:15] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 16:41:15] - [DOGEBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:41:15] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:41:15] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 16:41:51] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 16:41:51] - [BTCBRL] - 📉 Current price variation: -0,40%
+[04-08-2025 16:41:51] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 16:41:51] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 16:41:51] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 16:41:51] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 16:41:51] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 16:41:51] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 16:41:51] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 16:41:51] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 16:42:24] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 16:42:25] - [ETHBRL] - 🔻 RSI Oversold: false (47.87162014 <= 32.00)
+[04-08-2025 16:42:25] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 16:42:25] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:42:25] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 16:42:25] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:42:25] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:42:25] - [ETHBRL] - Took 286ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 16:42:51] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 16:42:51] - [SOLBRL] - 🔻 RSI Oversold: false (40.97421213 <= 30.00)
+[04-08-2025 16:42:51] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:42:51] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:42:51] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 16:42:51] - [SOLBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:42:51] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:42:51] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 16:43:58] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 16:43:58] - [BNBBRL] - 🔻 RSI Oversold: false (36.98630130 <= 33.00)
+[04-08-2025 16:43:58] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:43:58] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:43:58] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 16:43:58] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:43:58] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:43:58] - [BNBBRL] - Took 305ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 16:44:47] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 16:44:47] - [XRPBRL] - 🔻 RSI Oversold: false (41.92982353 <= 30.00)
+[04-08-2025 16:44:47] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:44:47] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:44:47] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 16:44:47] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:44:47] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:44:47] - [XRPBRL] - Took 279ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 16:56:16] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 16:56:16] - [DOGEBRL] - 🔻 RSI Oversold: false (42.90172943 <= 25.00)
+[04-08-2025 16:56:16] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:56:16] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:56:16] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 16:56:16] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 16:56:16] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:56:16] - [DOGEBRL] - Took 297ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 16:56:52] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 16:56:52] - [BTCBRL] - 📉 Current price variation: -0,42%
+[04-08-2025 16:56:52] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 16:56:52] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 16:56:52] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 16:56:52] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 16:56:52] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 16:56:52] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 16:56:52] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 16:56:52] - [BTCBRL] - Took 285ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 16:57:25] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 16:57:26] - [ETHBRL] - 🔻 RSI Oversold: false (38.98555827 <= 32.00)
+[04-08-2025 16:57:26] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:57:26] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:57:26] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 16:57:26] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:57:26] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:57:26] - [ETHBRL] - Took 283ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 16:57:52] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 16:57:52] - [SOLBRL] - 🔻 RSI Oversold: false (36.11940295 <= 30.00)
+[04-08-2025 16:57:52] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:57:52] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:57:52] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 16:57:52] - [SOLBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:57:52] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:57:52] - [SOLBRL] - Took 272ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 16:58:59] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 16:58:59] - [BNBBRL] - 🔻 RSI Oversold: false (35.13513528 <= 33.00)
+[04-08-2025 16:58:59] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:58:59] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:58:59] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 16:58:59] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:58:59] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:58:59] - [BNBBRL] - Took 308ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 16:59:48] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 16:59:48] - [XRPBRL] - 🔻 RSI Oversold: false (36.61416593 <= 30.00)
+[04-08-2025 16:59:48] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 16:59:48] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 16:59:48] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 16:59:48] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 16:59:48] - [XRPBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 16:59:48] - [XRPBRL] - Took 283ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 17:11:17] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 17:11:17] - [DOGEBRL] - 🔻 RSI Oversold: false (29.88510377 <= 25.00)
+[04-08-2025 17:11:17] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:11:17] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:11:17] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 17:11:17] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:11:17] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:11:17] - [DOGEBRL] - Took 306ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 17:11:53] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 17:11:53] - [BTCBRL] - 📉 Current price variation: -0,55%
+[04-08-2025 17:11:53] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:11:53] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:11:53] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 17:11:53] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:11:53] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:11:53] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:11:53] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:11:53] - [BTCBRL] - Took 278ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 17:12:26] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 17:12:27] - [ETHBRL] - 🔻 RSI Oversold: false (41.32900035 <= 32.00)
+[04-08-2025 17:12:27] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:12:27] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:12:27] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 17:12:27] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:12:27] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:12:27] - [ETHBRL] - Took 287ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 17:12:53] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 17:12:53] - [SOLBRL] - 🔻 RSI Oversold: false (31.80327851 <= 30.00)
+[04-08-2025 17:12:53] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:12:53] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:12:53] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 17:12:53] - [SOLBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:12:53] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:12:53] - [SOLBRL] - Took 270ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 17:14:00] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 17:14:00] - [BNBBRL] - 🔻 RSI Oversold: true (11.53846133 <= 33.00)
+[04-08-2025 17:14:00] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:14:00] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:14:00] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 17:14:00] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:14:00] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:14:00] - [BNBBRL] - Took 290ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 17:14:49] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 17:14:49] - [XRPBRL] - 🔻 RSI Oversold: true (29.05983438 <= 30.00)
+[04-08-2025 17:14:49] - [XRPBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:14:49] - [XRPBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:14:49] - [XRPBRL] - 📊 Volume: WEAK
+[04-08-2025 17:14:49] - [XRPBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:14:49] - [XRPBRL] - 🔵 BUY signal detected!
+[04-08-2025 17:14:49] - [XRPBRL] - 💰 Executing buy order: 150.00
+[04-08-2025 17:14:49] - [XRPBRL] - ✅ Purchase executed: Average price = 16.79300000, Quantity = 8.93229322
+[04-08-2025 17:14:49] - [XRPBRL] - Took 546ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 17:26:18] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 17:26:18] - [DOGEBRL] - 🔻 RSI Oversold: false (36.11648020 <= 25.00)
+[04-08-2025 17:26:18] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:26:18] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:26:18] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 17:26:18] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:26:18] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:26:18] - [DOGEBRL] - Took 298ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 17:26:54] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 17:26:54] - [BTCBRL] - 📉 Current price variation: -0,56%
+[04-08-2025 17:26:54] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:26:54] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:26:54] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 17:26:54] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:26:54] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:26:54] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:26:54] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:26:54] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 17:27:27] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 17:27:28] - [ETHBRL] - 🔻 RSI Oversold: true (28.50784549 <= 32.00)
+[04-08-2025 17:27:28] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:27:28] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:27:28] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 17:27:28] - [ETHBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:27:28] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:27:28] - [ETHBRL] - Took 284ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 17:27:54] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 17:27:54] - [SOLBRL] - 🔻 RSI Oversold: true (17.46031736 <= 30.00)
+[04-08-2025 17:27:54] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:27:54] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:27:54] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 17:27:54] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:27:54] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:27:54] - [SOLBRL] - Took 273ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 17:29:01] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 17:29:01] - [BNBBRL] - 🔻 RSI Oversold: true (9.80392139 <= 33.00)
+[04-08-2025 17:29:01] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:29:01] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:29:01] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 17:29:01] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:29:01] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:29:01] - [BNBBRL] - Took 296ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 17:29:50] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 17:29:50] - [XRPBRL] - 📉 Current price variation: 0,10%
+[04-08-2025 17:29:50] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:29:50] - [XRPBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:29:50] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 17:29:50] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:29:50] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:29:50] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:29:50] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:29:50] - [XRPBRL] - Took 284ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 17:41:19] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 17:41:19] - [DOGEBRL] - 🔻 RSI Oversold: false (32.02473701 <= 25.00)
+[04-08-2025 17:41:19] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:41:19] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:41:19] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 17:41:19] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:41:19] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:41:19] - [DOGEBRL] - Took 306ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 17:41:55] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 17:41:55] - [BTCBRL] - 📉 Current price variation: -0,29%
+[04-08-2025 17:41:55] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:41:55] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:41:55] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 17:41:55] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:41:55] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:41:55] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:41:55] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:41:55] - [BTCBRL] - Took 283ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 17:42:28] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 17:42:29] - [ETHBRL] - 🔻 RSI Oversold: false (48.96564201 <= 32.00)
+[04-08-2025 17:42:29] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:42:29] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:42:29] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 17:42:29] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:42:29] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:42:29] - [ETHBRL] - Took 284ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 17:42:55] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 17:42:55] - [SOLBRL] - 🔻 RSI Oversold: false (41.53354620 <= 30.00)
+[04-08-2025 17:42:55] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:42:55] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:42:55] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 17:42:55] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:42:55] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:42:55] - [SOLBRL] - Took 266ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 17:44:02] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 17:44:02] - [BNBBRL] - 🔻 RSI Oversold: true (29.62962955 <= 33.00)
+[04-08-2025 17:44:02] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:44:02] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:44:02] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 17:44:02] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:44:02] - [BNBBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:44:02] - [BNBBRL] - Took 291ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 17:44:51] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 17:44:51] - [XRPBRL] - 📉 Current price variation: 0,32%
+[04-08-2025 17:44:51] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:44:51] - [XRPBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:44:51] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 17:44:51] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:44:51] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:44:51] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:44:51] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:44:51] - [XRPBRL] - Took 281ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 17:56:20] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 17:56:20] - [DOGEBRL] - 🔻 RSI Oversold: false (38.05978201 <= 25.00)
+[04-08-2025 17:56:20] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:56:20] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:56:20] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 17:56:20] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:56:20] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:56:20] - [DOGEBRL] - Took 294ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 17:56:56] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 17:56:56] - [BTCBRL] - 📉 Current price variation: -0,46%
+[04-08-2025 17:56:56] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:56:56] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:56:56] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 17:56:56] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:56:56] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:56:56] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:56:56] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:56:56] - [BTCBRL] - Took 288ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 17:57:29] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 17:57:30] - [ETHBRL] - 🔻 RSI Oversold: false (57.97519921 <= 32.00)
+[04-08-2025 17:57:30] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:57:30] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:57:30] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 17:57:30] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:57:30] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:57:30] - [ETHBRL] - Took 282ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 17:57:56] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 17:57:56] - [SOLBRL] - 🔻 RSI Oversold: false (45.42483662 <= 30.00)
+[04-08-2025 17:57:56] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:57:56] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:57:56] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 17:57:56] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 17:57:56] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 17:57:56] - [SOLBRL] - Took 274ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 17:59:03] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 17:59:03] - [BNBBRL] - 🔻 RSI Oversold: true (22.85714308 <= 33.00)
+[04-08-2025 17:59:03] - [BNBBRL] - 📈 Bullish Trend: false
+[04-08-2025 17:59:03] - [BNBBRL] - 🛡️ Touched Support: false
+[04-08-2025 17:59:03] - [BNBBRL] - 📊 Volume: WEAK
+[04-08-2025 17:59:03] - [BNBBRL] - 🧲 Touched Bollinger Lower: true
+[04-08-2025 17:59:03] - [BNBBRL] - 🔵 BUY signal detected!
+[04-08-2025 17:59:03] - [BNBBRL] - 💰 Executing buy order: 105.000
+[04-08-2025 17:59:03] - [BNBBRL] - ✅ Purchase executed: Average price = 4216.99956866, Quantity = 0.02489922
+[04-08-2025 17:59:03] - [BNBBRL] - Took 569ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 17:59:52] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 17:59:52] - [XRPBRL] - 📉 Current price variation: 0,29%
+[04-08-2025 17:59:52] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 17:59:52] - [XRPBRL] - 📉 Bearish Trend: true
+[04-08-2025 17:59:52] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: false
+[04-08-2025 17:59:52] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 17:59:52] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 17:59:52] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 17:59:52] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 17:59:52] - [XRPBRL] - Took 281ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 18:11:21] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 18:11:21] - [DOGEBRL] - 🔻 RSI Oversold: false (50.38170388 <= 25.00)
+[04-08-2025 18:11:21] - [DOGEBRL] - 📈 Bullish Trend: false
+[04-08-2025 18:11:21] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:11:21] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 18:11:21] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:11:21] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:11:21] - [DOGEBRL] - Took 300ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 18:11:57] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 18:11:57] - [BTCBRL] - 📉 Current price variation: -0,46%
+[04-08-2025 18:11:57] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:11:57] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:11:57] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:11:57] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:11:57] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:11:57] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:11:57] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:11:57] - [BTCBRL] - Took 280ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 18:12:30] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 18:12:31] - [ETHBRL] - 🔻 RSI Oversold: false (61.35370654 <= 32.00)
+[04-08-2025 18:12:31] - [ETHBRL] - 📈 Bullish Trend: false
+[04-08-2025 18:12:31] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:12:31] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 18:12:31] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:12:31] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:12:31] - [ETHBRL] - Took 290ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 18:12:57] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 18:12:57] - [SOLBRL] - 🔻 RSI Oversold: false (50.88339239 <= 30.00)
+[04-08-2025 18:12:57] - [SOLBRL] - 📈 Bullish Trend: false
+[04-08-2025 18:12:57] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:12:57] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 18:12:57] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:12:57] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:12:57] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 18:14:04] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 18:14:04] - [BNBBRL] - 📉 Current price variation: 0,45%
+[04-08-2025 18:14:04] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:14:04] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:14:04] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:14:04] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:14:04] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:14:04] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:14:04] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:14:04] - [BNBBRL] - Took 300ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 18:14:53] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 18:14:53] - [XRPBRL] - 📉 Current price variation: 0,75%
+[04-08-2025 18:14:53] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:14:53] - [XRPBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:14:53] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:14:53] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:14:53] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:14:53] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:14:53] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:14:53] - [XRPBRL] - Took 289ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 18:26:22] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 18:26:22] - [DOGEBRL] - 🔻 RSI Oversold: false (60.68795899 <= 25.00)
+[04-08-2025 18:26:22] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:26:22] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:26:22] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 18:26:22] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:26:22] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:26:22] - [DOGEBRL] - Took 295ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 18:26:58] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 18:26:58] - [BTCBRL] - 📉 Current price variation: -0,16%
+[04-08-2025 18:26:58] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:26:58] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:26:58] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:26:58] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:26:58] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:26:58] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:26:58] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:26:58] - [BTCBRL] - Took 286ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 18:27:31] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 18:27:32] - [ETHBRL] - 🔻 RSI Oversold: false (62.80986827 <= 32.00)
+[04-08-2025 18:27:32] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:27:32] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:27:32] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 18:27:32] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:27:32] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:27:32] - [ETHBRL] - Took 283ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 18:27:58] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 18:27:58] - [SOLBRL] - 🔻 RSI Oversold: false (61.90476190 <= 30.00)
+[04-08-2025 18:27:58] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:27:58] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:27:58] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 18:27:58] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:27:58] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:27:58] - [SOLBRL] - Took 269ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 18:29:05] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 18:29:05] - [BNBBRL] - 📉 Current price variation: 0,31%
+[04-08-2025 18:29:05] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:29:05] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:29:05] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:29:05] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:29:05] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:29:05] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:29:05] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:29:05] - [BNBBRL] - Took 299ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 18:29:54] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 18:29:54] - [XRPBRL] - 📉 Current price variation: 0,91%
+[04-08-2025 18:29:54] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:29:54] - [XRPBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:29:54] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:29:54] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:29:54] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:29:54] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:29:54] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:29:54] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 18:41:23] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 18:41:23] - [DOGEBRL] - 🔻 RSI Oversold: false (66.73691221 <= 25.00)
+[04-08-2025 18:41:23] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:41:23] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:41:23] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 18:41:23] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:41:23] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:41:23] - [DOGEBRL] - Took 299ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 18:41:59] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 18:41:59] - [BTCBRL] - 📉 Current price variation: 0,12%
+[04-08-2025 18:41:59] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:41:59] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:41:59] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:41:59] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:41:59] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:41:59] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:41:59] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:41:59] - [BTCBRL] - Took 284ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 18:42:32] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 18:42:33] - [ETHBRL] - 🔻 RSI Oversold: false (68.63774961 <= 32.00)
+[04-08-2025 18:42:33] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:42:33] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:42:33] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 18:42:33] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:42:33] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:42:33] - [ETHBRL] - Took 281ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 18:42:59] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 18:42:59] - [SOLBRL] - 🔻 RSI Oversold: false (59.13978476 <= 30.00)
+[04-08-2025 18:42:59] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:42:59] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:42:59] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 18:42:59] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:42:59] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:42:59] - [SOLBRL] - Took 271ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 18:44:06] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 18:44:06] - [BNBBRL] - 📉 Current price variation: 0,45%
+[04-08-2025 18:44:06] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:44:06] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:44:06] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:44:06] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:44:06] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:44:06] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:44:06] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:44:06] - [BNBBRL] - Took 295ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 18:44:55] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 18:44:55] - [XRPBRL] - 📉 Current price variation: 1,25%
+[04-08-2025 18:44:55] - [XRPBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:44:55] - [XRPBRL] - 📉 Bearish Trend: false
+[04-08-2025 18:44:55] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:44:55] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:44:55] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:44:55] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:44:55] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:44:55] - [XRPBRL] - Took 287ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
+[04-08-2025 18:56:24] - [DOGEBRL - 7849e6e7-acf9-4458-93c9-f68e60542e60] Checking market data...
+[04-08-2025 18:56:24] - [DOGEBRL] - 🔻 RSI Oversold: false (64.95044561 <= 25.00)
+[04-08-2025 18:56:24] - [DOGEBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:56:24] - [DOGEBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:56:24] - [DOGEBRL] - 📊 Volume: WEAK
+[04-08-2025 18:56:24] - [DOGEBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:56:24] - [DOGEBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:56:24] - [DOGEBRL] - Took 311ms to process bot: 7849e6e7-acf9-4458-93c9-f68e60542e60
+[04-08-2025 18:57:00] - [BTCBRL - d1b61f4a-c92e-401e-9768-548c248a8c3a] Checking market data...
+[04-08-2025 18:57:00] - [BTCBRL] - 📉 Current price variation: -0,01%
+[04-08-2025 18:57:00] - [BTCBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:57:00] - [BTCBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:57:00] - [BTCBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:57:00] - [BTCBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:57:00] - [BTCBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:57:00] - [BTCBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:57:00] - [BTCBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:57:00] - [BTCBRL] - Took 281ms to process bot: d1b61f4a-c92e-401e-9768-548c248a8c3a
+[04-08-2025 18:57:33] - [ETHBRL - e19f259c-31f1-4c66-b8c0-bade9d0ba26b] Checking market data...
+[04-08-2025 18:57:34] - [ETHBRL] - 🔻 RSI Oversold: false (72.74326128 <= 32.00)
+[04-08-2025 18:57:34] - [ETHBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:57:34] - [ETHBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:57:34] - [ETHBRL] - 📊 Volume: WEAK
+[04-08-2025 18:57:34] - [ETHBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:57:34] - [ETHBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:57:34] - [ETHBRL] - Took 287ms to process bot: e19f259c-31f1-4c66-b8c0-bade9d0ba26b
+[04-08-2025 18:58:00] - [SOLBRL - 50c8a33b-33eb-43c2-bf96-8630ca50fe8f] Checking market data...
+[04-08-2025 18:58:00] - [SOLBRL] - 🔻 RSI Oversold: false (67.63005776 <= 30.00)
+[04-08-2025 18:58:00] - [SOLBRL] - 📈 Bullish Trend: true
+[04-08-2025 18:58:00] - [SOLBRL] - 🛡️ Touched Support: false
+[04-08-2025 18:58:00] - [SOLBRL] - 📊 Volume: WEAK
+[04-08-2025 18:58:00] - [SOLBRL] - 🧲 Touched Bollinger Lower: false
+[04-08-2025 18:58:00] - [SOLBRL] - ⚪ Insufficient conditions for purchase.
+[04-08-2025 18:58:00] - [SOLBRL] - Took 276ms to process bot: 50c8a33b-33eb-43c2-bf96-8630ca50fe8f
+[04-08-2025 18:59:07] - [BNBBRL - 1f0e6302-e139-4f81-97a2-f8a4789bee99] Checking market data...
+[04-08-2025 18:59:07] - [BNBBRL] - 📉 Current price variation: 0,38%
+[04-08-2025 18:59:07] - [BNBBRL] - 🔺 RSI Overbought: false
+[04-08-2025 18:59:07] - [BNBBRL] - 📉 Bearish Trend: true
+[04-08-2025 18:59:07] - [BNBBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:59:07] - [BNBBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:59:07] - [BNBBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:59:07] - [BNBBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:59:07] - [BNBBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:59:07] - [BNBBRL] - Took 292ms to process bot: 1f0e6302-e139-4f81-97a2-f8a4789bee99
+[04-08-2025 18:59:56] - [XRPBRL - 4909c07d-e09f-4f6a-ba74-e9160f3ff624] Checking market data...
+[04-08-2025 18:59:56] - [XRPBRL] - 📉 Current price variation: 1,21%
+[04-08-2025 18:59:56] - [XRPBRL] - 🔺 RSI Overbought: true
+[04-08-2025 18:59:56] - [XRPBRL] - 📉 Bearish Trend: false
+[04-08-2025 18:59:56] - [XRPBRL] - 🧲 Touched Resistance/Upper Band: true
+[04-08-2025 18:59:56] - [XRPBRL] - ⛔ Stop Loss: false, Take Profit: false
+[04-08-2025 18:59:56] - [XRPBRL] - ⏱️ Position Timeout: false
+[04-08-2025 18:59:56] - [XRPBRL] - 🔄 Dynamic Stop Loss: false
+[04-08-2025 18:59:56] - [XRPBRL] - ⚪ Maintaining current position.
+[04-08-2025 18:59:56] - [XRPBRL] - Took 285ms to process bot: 4909c07d-e09f-4f6a-ba74-e9160f3ff624
