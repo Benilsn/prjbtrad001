@@ -42,11 +42,11 @@ O bot é altamente configurável através de parâmetros:
 - **Multiplicador de Volume**: Fator para identificar picos de volume
 - **Estratégia de Compra**: Valor fixo ou percentual do saldo
 - **Valor de Compra**: Montante ou percentual para cada operação
-
+ 
 ## Gerenciamento de Risco
 - **Stop Loss Dinâmico**: Protege lucros quando a posição já está lucrativa
 - **Análise de Volatilidade**: Ajusta tamanho da posição com base na volatilidade
-- **Intervalos Mínimos**: Previne operações excessivas em curto período
+- **Intervalos Mínimos**: Previne operações excessivas em curto periodo
 
 ## Tecnologias Utilizadas
 - Java
