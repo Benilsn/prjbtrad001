@@ -142,7 +142,6 @@ public class TradingService {
     }
   }
 
-
   private void evaluateSellSignal(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
@@ -226,7 +225,6 @@ public class TradingService {
       log(botTypeName + "⚪ Maintaining current position.");
     }
   }
-
 
   private BigDecimal calculateOptimalBuyAmount(SimpleTradeBot bot, MarketConditions conditions) {
     BotParameters parameters = bot.getParameters();
