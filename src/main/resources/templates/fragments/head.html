@@ -30,12 +30,12 @@
 
         .bot-card {
           margin-bottom: 2rem;
-          transition: transform 0.2s;
+          transition: transform 0.1s ease, box-shadow 0.3s ease;
         }
 
         .bot-card:hover {
           transform: scale(1.03);
-          box-shadow: 0 0 20px #0ff;
+          box-shadow: 0 0 10px #0ff;
         }
 
         .btn-outline-danger, .btn-outline-secondary {
@@ -67,6 +67,54 @@
           box-shadow: 0 0 20px #0ff;
         }
 
+        .btn-delete-all-neon {
+          background-color: transparent;
+          border: 2px solid #ff003c;
+          color: #ff003c;
+          padding: 10px 20px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ff003c;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-delete-all-neon:hover {
+          background-color: #ff003c;
+          color: #000;
+          box-shadow: 0 0 20px #ff003c;
+        }
+
+        .btn-clean-log-neon {
+          background-color: transparent;
+          border: 2px solid #ff003c;
+          color: #ff003c;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ff003c;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-clean-log-neon:hover {
+          background-color: #ff003c;
+          color: #000;
+          box-shadow: 0 0 20px #ff003c;
+        }
+
+        .btn-clean-filters-neon {
+          background-color: transparent;
+        border: 2px solid #bfa800;
+        color: #bfa800;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ffff66;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-clean-filters-neon:hover {
+          background-color: #ffff66;
+          color: #000;
+          box-shadow: 0 0 20px #ffff66;
+        }
+
             /* General styling */
             .neon-text {
               color: #00fff7;
@@ -94,36 +142,37 @@
             /* Glitch keyframes */
             @keyframes glitch {
               0% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
                 transform: translate(0, 0);
                 opacity: 1;
               }
               10% {
-                text-shadow: -1px -1px #00fff7, 1px 1px #00ff90;
-                transform: translate(-1px, 1px);
-                opacity: 0.9;
+                text-shadow: -0.5px -0.5px #00fff7, 0.5px 0.5px #00ff90;
+                transform: translate(-0.3px, 0.3px);
+                opacity: 0.97;
               }
               20% {
-                text-shadow: 1px -1px #00ff90, -1px 1px #00fff7;
-                transform: translate(1px, -1px);
+                text-shadow: 0.5px -0.5px #00ff90, -0.5px 0.5px #00fff7;
+                transform: translate(0.3px, -0.3px);
                 opacity: 0.95;
               }
               30% {
-                text-shadow: -1px 1px #00fff7, 1px -1px #00ff90;
-                transform: translate(-1px, -1px);
-                opacity: 0.8;
+                text-shadow: -0.5px 0.5px #00fff7, 0.5px -0.5px #00ff90;
+                transform: translate(-0.3px, -0.3px);
+                opacity: 0.96;
               }
               40% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
-                transform: translate(1px, 1px);
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
+                transform: translate(0.3px, 0.3px);
                 opacity: 1;
               }
               100% {
-                text-shadow: 1px 1px #00ff90, -1px -1px #00fff7;
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
                 transform: translate(0, 0);
                 opacity: 1;
               }
             }
+
 
             /* Apply glitch effect */
             .log-entry {
@@ -355,9 +404,19 @@
           text-shadow: 0 0 15px #00ff9c;
         }
 
+        .text-glow-yellow {
+          color: #ffff66;
+          text-shadow: 0 0 15px #ffff66;
+        }
+
         .text-glow-red {
           color: #ff4e4e;
           text-shadow: 0 0 15px #ff4e4e;
+        }
+
+        .text-glow-orange {
+          color: #ff6600;
+          text-shadow: 0 0 15px #ff6600;
         }
 
         .btn-outline-neon {
@@ -399,6 +458,32 @@
           box-shadow: 0 0 12px #00f6ff;
         }
 
+         .btn-outline-neon-yellow {
+          border: 1px solid #ffff66;
+          color: #ffff66;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-yellow:hover {
+          background-color: #ffff66;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
+        .btn-outline-neon-white {
+          border: 1px solid #f8f8ff;
+          color: #f8f8ff;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-white:hover {
+          background-color: #f8f8ff;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
         .neon-label {
           color: #ffffff;
           text-shadow: 0 0 15px #ffffff, 0 0 5px #ffffff;
@@ -428,6 +513,87 @@
           text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
           font-weight: 600;
         }
+
+        .neon-input {
+          background-color: #111;
+          border: 2px solid #0ff;
+          color: #0ff;
+          font-family: 'Courier New', monospace;
+          padding: 10px;
+          border-radius: 8px;
+          box-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+        }
+
+        .neon-input::placeholder {
+          color: #0ff9;
+        }
+
+        .log-entry {
+          transition: opacity 0.2s ease;
+        }
+
+        .hidden-log {
+          display: none;
+        }
+
+        @keyframes moveText {
+          0%   { transform: translateX(0); }
+          50%  { transform: translateX(2px); }
+          100% { transform: translateX(0); }
+        }
+
+        .animate-running {
+          display: inline-block;
+          animation: moveText 0.8s ease-in-out infinite;
+        }
+
+        .text-neon-glow {
+            text-shadow: 0 0 6px #0ff, 0 0 10px #0ff;
+        }
+
+        .neon-cyan    { color: #0ff; }
+        .neon-green   { color: #00ff99; }
+        .neon-yellow  { color: #ffff66; }
+        .neon-orange  { color: #cc5500; }
+        .neon-cyan     { color: #00ffff; }  /* Cyan */
+        .neon-orange   { color: #ff9933; }  /* Orange Glow */
+        .neon-pink     { color: #ff66cc; }  /* Bubblegum Neon Pink */
+        .neon-blue     { color: #3399ff; }  /* Bright Electric Blue */
+        .neon-purple   { color: #cc66ff; }  /* Neon Purple */
+        .neon-lime     { color: #ccff00; }  /* Electric Lime */
+        .neon-red      { color: #ff4c4c; }  /* Bright Alert Red */
+        .neon-white    { color: #f8f8ff; }  /* Icy White */
+        .neon-teal     { color: #66ffff; }  /* Aqua/Light Cyan */
+        .neon-magenta  { color: #ff00ff; }  /* Intense Magenta */
+        .neon-sky      { color: #66ccff; }  /* Sky Blue */
+        .neon-violet   { color: #9966ff; }  /* Deeper Violet */
+        .neon-amber    { color: #ffcc00; }  /* Amber/Gold Glow */
+
+         .section-title {
+          font-weight: bold;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+          text-shadow: 0 0 6px currentColor;
+        }
+
+        .label {
+          font-size: 0.8rem;
+          color: #bbb;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 2px;
+        }
+
+        .value {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #00ffff;
+          text-shadow: 0 0 4px #0ff;
+        }
+
+
+
+
 
     </style>
 </head>

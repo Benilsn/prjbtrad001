@@ -8,114 +8,133 @@
 <body>
 
 <div class="container my-5 pb-5">
-    <h2 class="text-neon text-center mb-4">Create New Bot</h2>
+
+    <h2 class="text-neon text-center mb-4">
+        {#if botId == null}
+        Create New Bot
+        {#else}
+        Update Bot
+        {/if}
+    </h2>
 
     {#if errors}
     <div class="alert alert-danger">
-        <ul>
-            {#for err in errors}
-            <li>{err}</li>
+        <ul class="mb-0">
+            {#for error in errors}
+            <li>{error}</li>
             {/for}
         </ul>
     </div>
     {/if}
 
+
     <form method="post" action="/bots/save" class="bg-dark text-light border-neon p-4 rounded">
+        {#if botId}
+        <input type="hidden" name="botId" value="{botId}">
+        {/if}
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">
-                    Symbol
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Par de cripto para negociação, ex: BTCUSDT"></span>
-                </label>
+                <label class="form-label text-neon">Symbol</label>
                 <select name="symbol" class="form-select">
                     {#for symbol in workingSymbols}
-                        <option>{symbol}</option>
+                    <option value="{symbol}" {bot.parameters.botType.toString() == symbol ? 'selected' : ''}>{symbol}</option>
                     {/for}
                 </select>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Interval
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Intervalo dos candles, ex: 1m (1 minuto), 5m, 15m."></span>
-                </label>
-                <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m" required>
+                <label class="form-label text-neon">Interval</label>
+                <input type="text" name="interval" class="form-control" placeholder="e.g. 1m, 5m"
+                       value="{bot.parameters.interval ?: ''}" required>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Volume Multiplier
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="O volume atual deve ser maior que a média × esse fator para ativar o trade."></span>
-                </label>
-                <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2">
+                <label class="form-label text-neon">Volume Multiplier</label>
+                <input type="number" step="0.01" name="volumeMultiplier" class="form-control" placeholder="e.g. 1.2"
+                       value="{bot.parameters.volumeMultiplier ?: ''}" required>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Support/Resistance Window
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Número de candles usados para identificar suportes e resistências."></span>
-                </label>
-                <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 50">
+                <label class="form-label text-neon">Support/Resistance Window</label>
+                <input type="number" name="windowResistanceSupport" class="form-control" placeholder="e.g. 100"
+                       value="{bot.parameters.windowResistanceSupport ?: ''}" required>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">Stop Loss (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de perda máxima antes de vender. Ex: 0.005 = 0.5%."></span>
-                </label>
-                <input type="number" step="0.0001" name="stopLossPercent" class="form-control" placeholder="e.g. 0.005">
+                <label class="form-label text-neon">Stop Loss (%)</label>
+                <div class="input-group">
+                    <span class="input-group-text">%</span>
+                    <input type="number" min="0" step="any" name="stopLossPercent" class="form-control"
+                           placeholder="e.g. 0.5" value="{bot.parameters.stopLossPercent ?: ''}" required>
+                </div>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">Take Profit (%)
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Percentual de lucro desejado para encerrar a operação."></span>
-                </label>
-                <input type="number" step="0.0001" name="takeProfitPercent" class="form-control"
-                       placeholder="e.g. 0.012">
+                <label class="form-label text-neon">Take Profit (%)</label>
+                <div class="input-group">
+                    <span class="input-group-text">%</span>
+                    <input type="number" min="0" step="any" name="takeProfitPercent" class="form-control"
+                           placeholder="e.g. 1.2" value="{bot.parameters.takeProfitPercent ?: ''}" required>
+                </div>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Purchase
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Valor mínimo do RSI para considerar uma compra. Ex: 30."></span>
-                </label>
-                <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30">
+                <label class="form-label text-neon">RSI Purchase</label>
+                <input type="number" step="0.01" name="rsiPurchase" class="form-control" placeholder="e.g. 30"
+                       value="{bot.parameters.rsiPurchase ?: ''}" required>
             </div>
             <div class="col-md-6">
-                <label class="form-label text-neon">RSI Sale
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="	Valor máximo do RSI para considerar uma venda. Ex: 70."></span>
-                </label>
-                <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70">
+                <label class="form-label text-neon">RSI Sale</label>
+                <input type="number" step="0.01" name="rsiSale" class="form-control" placeholder="e.g. 70"
+                       value="{bot.parameters.rsiSale ?: ''}" required>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-3">
-                <label class="form-label text-neon">Short SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel curta. Ex: 9 candles."></span>
-                </label>
-                <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9">
+                <label class="form-label text-neon">Short SMA</label>
+                <input type="number" name="smaShort" class="form-control" placeholder="e.g. 9"
+                       value="{bot.parameters.smaShort ?: ''}" required>
             </div>
             <div class="col-md-3">
-                <label class="form-label text-neon">Long SMA
-                    <span class="fa-duotone fa-solid fa-circle-info info-icon m-1" data-bs-toggle="tooltip" data-bs-placement="right"
-                          title="Período da média móvel longa. Ex: 21 candles."></span>
-                </label>
-                <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21">
+                <label class="form-label text-neon">Long SMA</label>
+                <input type="number" name="smaLong" class="form-control" placeholder="e.g. 21"
+                       value="{bot.parameters.smaLong ?: ''}" required>
             </div>
-            <div class="col-md-6 mt-4">
-                <button type="submit" class="btn btn-create-neon w-100">Create Bot</button>
+            <div class="col-md-3">
+                <label class="form-label text-neon">Purchase Strategy</label>
+                <select name="purchaseStrategy" class="form-select">
+                    <option value="AMOUNT" {bot.parameters.purchaseStrategy == 'AMOUNT' ? 'selected' : ''}>AMOUNT
+                    </option>
+                    <option value="PERCENTAGE" {bot.parameters.purchaseStrategy == 'PERCENTAGE' ? 'selected' : ''}>
+                        PERCENTAGE
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label text-neon">Amount</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="amountSymbol">$</span>
+                    <input type="number" name="purchaseAmount" class="form-control" placeholder="e.g. 50"
+                           value="{bot.parameters.purchaseAmount ?: ''}" aria-describedby="amountSymbol" required>
+                </div>
             </div>
         </div>
 
+        <div class="col-md-12 mt-4">
+            <button type="submit" class="btn btn-create-neon w-100">
+                {#if botId == null}
+                Create Bot
+                {#else}
+                Update Bot
+                {/if}
+            </button>
+        </div>
     </form>
+
 </div>
 
 </body>

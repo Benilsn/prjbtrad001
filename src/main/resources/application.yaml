@@ -1,4 +1,6 @@
 quarkus:
+  scheduler:
+    enabled: true
   qute:
     strict-rendering: false
   http:
@@ -6,6 +8,7 @@ quarkus:
   h2:
     console:
       enabled: true
+      path: /h2
   datasource:
     db-kind: h2
     jdbc:
@@ -13,24 +16,32 @@ quarkus:
       driver: org.h2.Driver
       username: sa
       password: sa
+  hibernate-validator:
+    fail-fast: false
   hibernate-orm:
     log:
-      sql: true
+      sql: false
     database:
-        generation: drop-and-create
+        generation: update
   log:
-    level: DEBUG
+    level: ERROR
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
   limit: 4
-  data:
-    strategy: h2db
+  mock-trading: true
+  credentials:
+    path:
+      api-key: ${BINANCE_API_KEY}
+      secret-key: ${BINANCE_SECRET_KEY}
   symbol:
     limit: 1
     list:
-      - BTCUSDT
-      - ETHUSDT
-      - XRPUSDT
+      - BTCBRL
+      - ETHBRL
+      - SOLBRL
+      - BNBBRL
+      - XRPBRL
+      - DOGEBRL

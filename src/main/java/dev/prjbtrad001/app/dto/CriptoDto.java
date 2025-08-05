@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AccessLevel;
+import dev.prjbtrad001.app.utils.FormatterUtils;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,16 +12,16 @@ import lombok.Setter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+
+import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER1;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Cripto {
+public class CriptoDto {
 
   private String symbol;
 
@@ -32,20 +32,15 @@ public class Cripto {
 
   private String lastUpdated;
 
-  @Getter(AccessLevel.NONE)
-  private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.of("pt", "BR"));
-  @Getter(AccessLevel.NONE)
-  private static final DecimalFormat formatter = new DecimalFormat("#,###.00000", symbols);
-
-  public Cripto(String symbol, String price, String last24hourPrice, String lastUpdated) {
+  public CriptoDto(String symbol, String price, String last24hourPrice, String lastUpdated) {
     this.symbol = symbol;
     this.price = price;
     this.last24hourPrice = last24hourPrice;
     this.lastUpdated = lastUpdated;
   }
 
-  public static Cripto defaultData() {
-    return new Cripto(
+  public static CriptoDto defaultData() {
+    return new CriptoDto(
       "DEFAULT",
       BigDecimal.ZERO.toPlainString(),
       "0.0",
@@ -56,10 +51,8 @@ public class Cripto {
   private static class BigDecimal4ScaleDeserializer extends JsonDeserializer<String> {
     @Override
     public String deserialize(JsonParser p, DeserializationContext deserializationContext) throws IOException {
-      symbols.setDecimalSeparator(',');
-      symbols.setGroupingSeparator('.');
-      formatter.setParseBigDecimal(true);
-      return formatter.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
+      FormatterUtils.setFormatter();
+      return FORMATTER1.format(new BigDecimal(p.getText()).setScale(5, RoundingMode.UNNECESSARY));
     }
   }
 }

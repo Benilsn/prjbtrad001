@@ -3,10 +3,11 @@ package dev.prjbtrad001.infra.resource;
 import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.service.BotOrchestratorService;
-import dev.prjbtrad001.domain.core.TradeBot;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,6 +18,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import static dev.prjbtrad001.app.utils.FormatterUtils.getLastFiveCharacters;
 
 @Path("/bots")
 public class BotResource {
@@ -38,18 +41,11 @@ public class BotResource {
   }
 
   @GET
-  @Path("/trade-log")
-  public TemplateInstance tradeLog() {
-    return Templates.tradeLog()
-      .data("pageTitle", "Trade Log")
-      .data("data", botOrchestratorService.getLogData());
-  }
-
-  @GET
   @Path("/create")
   public TemplateInstance createBot() {
     return Templates.createBot()
       .data("workingSymbols", workingSymbols.split(","))
+      .data("botId", null)
       .data("pageTitle", "Create Bot");
   }
 
@@ -58,8 +54,17 @@ public class BotResource {
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   @Produces(MediaType.TEXT_HTML)
   public Object saveBot(
-    @BeanParam BotParameters parameters) {
-    Set<ConstraintViolation<BotParameters>> violations = validator.validate(parameters);
+    @Valid @BeanParam BotParameters parameters,
+    @FormParam("botId") UUID botId) {
+
+    Set<ConstraintViolation<BotParameters>> violations;
+
+    if (botId != null) {
+      violations = validator.validate(parameters, BotParameters.Update.class);
+    } else {
+      violations = validator.validate(parameters, BotParameters.Create.class);
+    }
+
 
     if (!violations.isEmpty()) {
       List<String> errors = violations.stream()
@@ -72,38 +77,91 @@ public class BotResource {
           .data("parameters", parameters);
     }
 
-    botOrchestratorService
-      .createBot(new SimpleTradeBot(parameters));
+    try {
+      String msg = "Bot created successfully!";
+      if (botId != null) {
+        botOrchestratorService.updateBot(parameters, botId);
+        msg = "Bot updated successfully!";
+      } else {
+        botOrchestratorService.createBot(new SimpleTradeBot(parameters));
+      }
 
-    return
-      Response
+      return Response
         .seeOther(UriBuilder.fromPath("/bots")
-          .queryParam("message", "Bot created successfully!")
+          .queryParam("message", msg)
           .build())
         .build();
+
+    } catch (ConstraintViolationException e) {
+      return Response.ok(
+        Templates.createBot()
+          .data("errors", e.getConstraintViolations().stream()
+            .map(ConstraintViolation::getMessage)
+            .toList())
+          .data("workingSymbols", workingSymbols.split(","))
+          .data("pageTitle", "Create Bot")
+          .data("parameters", parameters)
+      ).build();
+    }
   }
 
   @POST
   @Path("/delete")
   public Response deleteBot(@FormParam("botId") UUID botId) {
     botOrchestratorService.deleteBot(botId);
+
+    return Response
+      .seeOther(UriBuilder.fromPath("/bots")
+        .queryParam("message", "Bot deleted successfully!")
+        .build())
+      .build();
+  }
+
+  @GET
+  @Path("/edit/{botId}")
+  public TemplateInstance editBot(@PathParam("botId") UUID botId) {
+    SimpleTradeBot bot = botOrchestratorService.getBotById(botId);
+    return Templates.createBot()
+      .data("workingSymbols", workingSymbols.split(","))
+      .data("pageTitle", "Update Bot")
+      .data("botId", botId)
+      .data("bot", bot);
+  }
+
+  @GET
+  @Path("/start/{botId}")
+  public Response startBot(@PathParam("botId") UUID botId) {
+    botOrchestratorService.startBot(botId);
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")
-          .queryParam("message", "Bot deleted successfully!")
+          .queryParam("message", "Bot  " + getLastFiveCharacters(botId.toString()) + "  STARTED!")
           .build())
         .build();
   }
 
   @GET
-  @Path("/details/{botId}")
-  public TemplateInstance botDetails(@PathParam("botId") UUID botId) {
-    TradeBot bot = botOrchestratorService.getBotById(botId);
+  @Path("/stop/{botId}")
+  public Response stopBot(@PathParam("botId") UUID botId) {
+    botOrchestratorService.stopBot(botId);
     return
-      Templates
-        .botDetail()
-        .data("pageTitle", "Bot Details")
-        .data("bot", bot);
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Bot  " + getLastFiveCharacters(botId.toString()) + "  \nSTOPPED!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/deleteAll")
+  public Response deleteAll() {
+    botOrchestratorService.deleteAll();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "All bots deleted successfully!")
+          .build())
+        .build();
   }
 
 

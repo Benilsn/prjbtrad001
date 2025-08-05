@@ -1,9 +1,12 @@
 package dev.prjbtrad001.domain.core;
 
 public enum BotType {
-  BTCUSDT,
-  ETHUSDT,
-  XRPUSDT;
+  BTCBRL,
+  ETHBRL,
+  SOLBRL,
+  BNBBRL,
+  XRPBRL,
+  DOGEBRL;
 
   public boolean isValid(String symbol) {
     for (BotType type : BotType.values()) {
