@@ -65,21 +65,27 @@ public class TradingService {
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
     if (isDownTrend) {
-      boolean extremeOversold = conditions.rsi().compareTo(BigDecimal.valueOf(25)) <= 0;
+      boolean extremeOversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
+
+      BigDecimal supportFactor = BigDecimal.ONE.subtract(BigDecimal.valueOf(0.005));
       boolean strongSupport = conditions.currentPrice().compareTo(
-        conditions.support().multiply(BigDecimal.valueOf(0.995))) <= 0;
+        conditions.support().multiply(supportFactor)) <= 0;
+
       boolean volumeSpike = conditions.currentVolume().compareTo(
-        conditions.averageVolume().multiply(BigDecimal.valueOf(2.0))) >= 0;
+        conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
 
       log(botTypeName + "🔻 Downtrend detected");
-      log(botTypeName + "📉 Extreme Oversold (RSI <= 25): " + extremeOversold + " (RSI: " + conditions.rsi() + ")");
-      log(botTypeName + "🛡️ Strong Support: " + strongSupport + " (Price: " + conditions.currentPrice() + ", Support: " + conditions.support() + ")");
-      log(botTypeName + "📊 Volume Spike: " + volumeSpike + " (Current: " + conditions.currentVolume() + ", Avg: " + conditions.averageVolume() + ")");
+      log(botTypeName + "📉 Extreme Oversold (RSI <= " + parameters.getRsiPurchase() + "): " + extremeOversold + " (Current RSI: " + conditions.rsi() + ")");
+      log(botTypeName + "🛡️ Strong Support (within 0.5%): " + strongSupport + " (Price: " + conditions.currentPrice() + ", Support: " + conditions.support() + ")");
+      log(botTypeName + "📊 Volume Spike (>= " + parameters.getVolumeMultiplier() + "x): " + volumeSpike + " (Current: " + conditions.currentVolume() + ", Avg: " + conditions.averageVolume() + ")");
 
       if (extremeOversold && strongSupport && volumeSpike) {
+        BigDecimal downTrendReduction = BigDecimal.valueOf(0.5);
         BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions)
-          .multiply(BigDecimal.valueOf(0.5));
-        log(botTypeName + "🔵 BUY signal in downtrend! Amount: " + reducedAmount);
+          .multiply(downTrendReduction);
+
+        log(botTypeName + "🔵 BUY signal in downtrend! Amount: " + reducedAmount +
+          " (" + downTrendReduction.multiply(BigDecimal.valueOf(100)) + "% of optimal)");
         executeBuyOrder(bot, reducedAmount);
       } else {
         log(botTypeName + "⚪ No BUY: conditions not met in downtrend.");
@@ -147,12 +153,16 @@ public class TradingService {
     log(botTypeName + String.format("📉 Current price variation: %.2f%%", priceChangePercent));
 
     if (isDownTrend) {
-      boolean smallTakeProfit = priceChangePercent.compareTo(BigDecimal.valueOf(1.0)) >= 0;
-      boolean tightStopLoss = priceChangePercent.compareTo(BigDecimal.valueOf(-0.7)) <= 0;
+
+      BigDecimal halfTakeProfit = parameters.getTakeProfitPercent().divide(BigDecimal.TWO, RoundingMode.HALF_UP);
+      BigDecimal halfStopLoss = parameters.getStopLossPercent().divide(BigDecimal.TWO, RoundingMode.HALF_UP);
+
+      boolean smallTakeProfit = priceChangePercent.compareTo(halfTakeProfit) >= 0;
+      boolean tightStopLoss = priceChangePercent.compareTo(halfStopLoss.negate()) <= 0;
 
       log(botTypeName + "🔻 Downtrend detected");
-      log(botTypeName + "💰 Small Take Profit (>= 1%): " + smallTakeProfit + " (" + priceChangePercent + "%)");
-      log(botTypeName + "⛔ Tight Stop Loss (<= -0.7%): " + tightStopLoss + " (" + priceChangePercent + "%)");
+      log(botTypeName + "💰 Small Take Profit (>= " + halfTakeProfit + "%): " + smallTakeProfit + " (" + priceChangePercent + "%)");
+      log(botTypeName + "⛔ Tight Stop Loss (<= -" + halfStopLoss + "%): " + tightStopLoss + " (" + priceChangePercent + "%)");
 
       if (smallTakeProfit || tightStopLoss) {
         log(botTypeName + "🔴 SELL signal in downtrend! Reason: " +

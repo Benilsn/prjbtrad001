@@ -27,12 +27,12 @@
                 <li class="d-flex flex-column">
                     <span class="label">Profit</span>
                     {#if bot.status.isProfitPositive == 0 || bot.status.isProfitPositive == null}
-                        <span class="text-glow-yellow">R${bot.status.profit}</span>
+                        <span class="text-glow-yellow">R${bot.status.profit ?: '0,00'}</span>
                     {#else}
                         {#if bot.status.isProfitPositive < 0}
-                            <span class="text-glow-red">R${bot.status.profit}</span>
+                            <span class="text-glow-red">R${bot.status.profit  ?: '0,00'}</span>
                         {#else}
-                            <span class="text-glow-green">R${bot.status.profit}</span>
+                            <span class="text-glow-green">R${bot.status.profit ?: '0,00'}</span>
                         {/if}
                     {/if}
 

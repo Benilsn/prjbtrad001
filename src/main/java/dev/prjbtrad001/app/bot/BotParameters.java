@@ -107,10 +107,6 @@ public class BotParameters {
 //    return formatter.format(new BigDecimal(purchasePrice).setScale(2, RoundingMode.UNNECESSARY));
 //  }
 //
-//  public String getFormattedLastPrice() {
-//    return formatter.format(new BigDecimal(lastPrice).setScale(2, RoundingMode.UNNECESSARY));
-//  }
-
 
   public interface Create {
   }

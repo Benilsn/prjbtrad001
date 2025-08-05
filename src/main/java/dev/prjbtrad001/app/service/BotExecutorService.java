@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 
 import java.util.UUID;
 
+import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @ApplicationScoped
@@ -27,6 +28,7 @@ public class BotExecutorService {
       log("[" + bot.getParameters().getBotType() + " - " + bot.getId() + "] Checking market data...");
       tradingService.analyzeMarket(bot);
       log("[" + bot.getParameters().getBotType() + "] - Took " + (System.currentTimeMillis() - start) + "ms to process bot: " + bot.getId());
+      log(LINE_SEPARATOR, false);
 
     } catch (Exception e) {
       log("Error while running bot: " + e.getMessage());
