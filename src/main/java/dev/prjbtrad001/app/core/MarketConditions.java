@@ -13,10 +13,13 @@ public record MarketConditions(
   BigDecimal averageVolume,
   BigDecimal ema8,
   BigDecimal ema21,
+  BigDecimal ema50,
+  BigDecimal ema100,
   BigDecimal momentum,
   BigDecimal volatility,
   BigDecimal bollingerUpper,
   BigDecimal bollingerMiddle,
-  BigDecimal bollingerLower
+  BigDecimal bollingerLower,
+  BigDecimal priceSlope
 ) {
 }

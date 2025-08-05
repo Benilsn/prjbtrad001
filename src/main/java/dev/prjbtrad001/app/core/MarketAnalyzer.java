@@ -36,9 +36,12 @@ public class MarketAnalyzer {
     // Indicadores adicionais
     BigDecimal ema8 = calculateEMA(closePrices, 8);
     BigDecimal ema21 = calculateEMA(closePrices, 21);
+    BigDecimal ema50 = calculateEMA(closePrices, 50);
+    BigDecimal ema100 = calculateEMA(closePrices, 100);
     BigDecimal momentum = calculateMomentum(closePrices, 10);
     BigDecimal volatility = calculateVolatility(closePrices, 14);
     BigDecimal[] bollinger = calculateBollingerBands(closePrices, 20, 2);
+    BigDecimal priceSlope = calculatePriceSlope(closePrices);
 
     return new MarketConditions(
       rsi,
@@ -51,11 +54,14 @@ public class MarketAnalyzer {
       averageVolume,
       ema8,
       ema21,
+      ema50,
+      ema100,
       momentum,
       volatility,
       bollinger[0],
       bollinger[1],
-      bollinger[2]
+      bollinger[2],
+      priceSlope
     );
   }
 
@@ -179,7 +185,7 @@ public class MarketAnalyzer {
     BigDecimal upper = sma.add(std.multiply(stdMultiplier));
     BigDecimal lower = sma.subtract(std.multiply(stdMultiplier));
 
-    return new BigDecimal[] {upper, sma, lower};
+    return new BigDecimal[]{upper, sma, lower};
   }
 
   private BigDecimal sqrt(BigDecimal value) {
@@ -201,6 +207,16 @@ public class MarketAnalyzer {
       .reduce(BigDecimal.ZERO, BigDecimal::add);
 
     return sum.divide(BigDecimal.valueOf(values.size()), 8, RoundingMode.HALF_UP);
+  }
+
+  public BigDecimal calculatePriceSlope(List<BigDecimal> prices) {
+    if (prices == null || prices.size() < 2) return BigDecimal.ZERO;
+    BigDecimal firstPrice = prices.getFirst();
+    BigDecimal lastPrice = prices.getLast();
+    int periods = prices.size();
+
+    return lastPrice.subtract(firstPrice)
+      .divide(BigDecimal.valueOf(periods), 8, RoundingMode.HALF_UP);
   }
 
 
