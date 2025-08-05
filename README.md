@@ -1,60 +1,63 @@
-# binance-trade-bot001
+# PrjBTrad001 - Bot de Trading de Criptomoedas
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Objetivo
+O PrjBTrad001 é um bot de trading automatizado desenvolvido para operar em mercados de criptomoedas. O objetivo principal é executar estratégias de trading baseadas em análise técnica, com foco em maximizar lucros e minimizar riscos em diferentes condições de mercado.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Como o bot funciona
 
-## Running the application in dev mode
+### Análise de Mercado
+O bot analisa continuamente o mercado usando uma combinação de indicadores técnicos:
+- **RSI (Índice de Força Relativa)**: Identifica condições de sobrecompra e sobrevenda
+- **Médias Móveis**: SMA9, SMA21, EMA8, EMA21, EMA50, EMA100 para confirmar tendências
+- **Bandas de Bollinger**: Identifica extremos de preço e volatilidade
+- **Análise de Volume**: Detecta aumento de interesse no mercado
+- **Suporte e Resistência**: Identifica níveis de preço significativos
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
-```
+### Estratégias de Compra
+O bot implementa as seguintes condições para executar ordens de compra:
+- RSI abaixo do valor configurado (condição de sobrevenda)
+- Preço tocando suporte ou banda inferior de Bollinger
+- Volume acima da média em momentos críticos
+- Momentum positivo em condições favoráveis
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+### Estratégias de Venda
+As decisões de venda são baseadas em:
+- **Take Profit**: Venda quando o lucro atinge o percentual configurado
+- **Stop Loss**: Limita perdas ao percentual configurado
+- **Timeout de Posição**: Fecha posições após um período específico
+- **Análise Técnica**: RSI em sobrecompra, preço tocando resistência, etc.
 
-## Packaging and running the application
+### Adaptação a Tendências de Mercado
+O bot identifica tendências de baixa (downtrend) e ajusta seu comportamento:
+- **Em Downtrend**:
+    - Usa take profit e stop loss reduzidos (metade do normal)
+    - Executa compras menores (50% do valor padrão)
+    - Fecha posições mais rapidamente (1/3 do timeout normal)
+    - Exige condições especiais para compra (RSI extremo, suporte forte, pico de volume)
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Configurações do Bot
+O bot é altamente configurável através de parâmetros:
+- **RSI de Compra e Venda**: Níveis para detectar sobrevenda e sobrecompra
+- **Take Profit e Stop Loss**: Percentuais para saída automática
+- **Multiplicador de Volume**: Fator para identificar picos de volume
+- **Estratégia de Compra**: Valor fixo ou percentual do saldo
+- **Valor de Compra**: Montante ou percentual para cada operação
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+## Gerenciamento de Risco
+- **Stop Loss Dinâmico**: Protege lucros quando a posição já está lucrativa
+- **Análise de Volatilidade**: Ajusta tamanho da posição com base na volatilidade
+- **Intervalos Mínimos**: Previne operações excessivas em curto período
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+## Tecnologias Utilizadas
+- Java
+- Maven
+- API de Exchange (Binance)
+- Persistência de dados
+- Sistema de logging para análise de desempenho
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+## Status do Projeto
+Este projeto está em desenvolvimento ativo, com melhorias contínuas sendo implementadas para otimizar a estratégia de trading e o gerenciamento de risco.
 
-## Creating a native executable
+---
 
-You can create a native executable using: 
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/binance-trade-bot001-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and more
-
-## Provided Code
-
-### RESTEasy JAX-RS
-
-Easily start your RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+**Nota**: Trading de criptomoedas envolve riscos significativos. Este bot é uma ferramenta experimental e seus resultados podem variar de acordo com as condições de mercado.
