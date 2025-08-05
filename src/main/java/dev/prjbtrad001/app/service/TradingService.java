@@ -38,10 +38,10 @@ public class TradingService {
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-//    if (hasRecentTrade(status, TradingConstants.MIN_TRADE_INTERVAL_MINUTES)) {
-//      log(botTypeName + "⏳ Waiting for minimum interval between operations");
-//      return;
-//    }
+    if (hasRecentTrade(status, TradingConstants.MIN_TRADE_INTERVAL_MINUTES)) {
+      log(botTypeName + "⏳ Waiting for minimum interval between operations");
+      return;
+    }
 
     List<KlineDto> klines = tradingExecutor.getCandles(
       parameters.getBotType().toString(),
@@ -52,11 +52,21 @@ public class TradingService {
     MarketAnalyzer marketAnalyzer = new MarketAnalyzer();
     MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
 
-    // If we don't have an open position, evaluate buy
-    if (!status.isLong()) {
-      evaluateBuySignal(bot, conditions);
+    if (status.isLong()) {
+      boolean touchedBollingerLower =
+        conditions.currentPrice()
+          .compareTo(conditions.bollingerLower()
+            .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.02)))) <= 0;
+      if (touchedBollingerLower &&
+        conditions.currentPrice().compareTo(status.getAveragePrice().multiply(BigDecimal.valueOf(0.98))) <= 0) {
+        log(botTypeName + "🔵 BUY signal detected - adding to position");
+        BigDecimal additionalAmount = calculateOptimalBuyAmount(bot, conditions).multiply(BigDecimal.valueOf(0.5));
+        executeBuyOrder(bot, additionalAmount);
+      } else {
+        evaluateSellSignal(bot, conditions);
+      }
     } else {
-      evaluateSellSignal(bot, conditions);
+      evaluateBuySignal(bot, conditions);
     }
   }
 
@@ -104,17 +114,6 @@ public class TradingService {
       .stopLoss(false)
       .takeProfit(false)
       .build();
-
-    if (bot.getStatus().isLong()
-      && touchedBollingerLower
-      && conditions.currentPrice().compareTo(bot.getStatus().getAveragePrice().multiply(BigDecimal.valueOf(0.98))) <= 0) {
-      log(botTypeName + "🔵 BUY signal detected - adding to position");
-      BigDecimal additionalAmount =
-        calculateOptimalBuyAmount(bot, conditions)
-          .multiply(BigDecimal.valueOf(0.5));
-      executeBuyOrder(bot, additionalAmount);
-      return;
-    }
 
     if (buySignals.shouldBuy()) {
       log(botTypeName + "🔵 BUY signal detected!");
