@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{#include 'fragments/head.html'/}
+
+{#include 'fragments/navbar.html'/}
+
+<body>
+
+<div class="container-fluid my-5">
+    <div class="d-flex justify-content-center align-items-start gap-4 flex-wrap">
+
+        <!-- Cards: Center/Right-Middle -->
+        <div class="d-flex flex-row flex-wrap justify-content-center gap-5 mt-5">
+            {#for cripto in criptos}
+                <div class="crypto-card text-center" style="width: 400px;">
+                    <h3 class="neon-text", id="{cripto}-label">Loading</h3>
+                    <p class="crypto-price green-text" id="{cripto}-price">Loading...</p>
+                    <p class="crypto-last-updated my-3">Last updated:<br><span id="{cripto}-updated">Loading...</span></p>
+                </div>
+            {/for}
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+
+{#include 'fragments/footer.html'/}
+
+</html>

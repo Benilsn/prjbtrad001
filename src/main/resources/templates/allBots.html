@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{#include 'fragments/head.html'/}
+
+{#include 'fragments/navbar.html'/}
+
+<body>
+
+<!-- Section to display running bots -->
+<div class="container my-4">
+    <h2 class="text-neon text-center mb-4">Active Bots</h2>
+
+    {#if message}
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+          const modal = new bootstrap.Modal(document.getElementById('botModal'));
+          modal.show();
+        });
+    </script>
+    <div class="modal fade" id="botModal" tabindex="-1" aria-labelledby="botModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content neon-glow border-0 rounded-4 px-3 py-2" style="background-color: #101010;">
+
+                <div class="modal-header border-0 pb-0">
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center pt-2 pb-1">
+                    <p class="neon-text fs-5">🚀 {message}</p>
+                </div>
+
+                <div class="modal-footer border-0 justify-content-center pt-1">
+                    <button type="button" class="btn btn-create-neon px-4 py-2 fs-6" data-bs-dismiss="modal">OK</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {/if}
+
+    <!-- Create Bot Button -->
+    <div class="text-center mb-4">
+        <a class="btn btn-create-neon mx-3" href="/bots/create">+ Create Bot</a>
+        <button type="button" class="btn btn-delete-all-neon" data-bs-toggle="modal" data-bs-target="#deleteAllBotsModal">
+            - Delete All Bots
+        </button>
+        <!-- Neon Modal -->
+        <div class="modal fade" id="deleteAllBotsModal" tabindex="-1" aria-labelledby="deleteAllBotsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-neon" style="background:#101010;">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-neon" id="deleteAllBotsModalLabel">Confirm Deletion</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="text-neon-glow fs-5">
+                            Are you sure you want to <span class="text-glow-red">delete ALL bots</span>?<br>
+                            <span class="text-glow-yellow">This action cannot be undone!</span>
+                        </p>
+                    </div>
+                    <div class="modal-footer border-0 justify-content-center">
+                        <button type="button" class="btn btn-outline-neon" data-bs-dismiss="modal">Cancel</button>
+                        <a type="button" class="btn btn-delete-all-neon" href="/bots/deleteAll">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        {#include 'fragments/botCard.html'/}
+    </div>
+
+</div>
+
+</body>
+
+{#include 'fragments/footer.html'/}
+
+</html>

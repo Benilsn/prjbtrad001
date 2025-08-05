@@ -1,0 +1,47 @@
+quarkus:
+  scheduler:
+    enabled: true
+  qute:
+    strict-rendering: false
+  http:
+    port: 8080
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  datasource:
+    db-kind: h2
+    jdbc:
+      url: jdbc:h2:file:./target/data/h2db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      driver: org.h2.Driver
+      username: sa
+      password: sa
+  hibernate-validator:
+    fail-fast: false
+  hibernate-orm:
+    log:
+      sql: false
+    database:
+        generation: update
+  log:
+    level: ERROR
+    console:
+      color: true
+      format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
+
+bot:
+  limit: 4
+  mock-trading: true
+  credentials:
+    path:
+      api-key: ${BINANCE_API_KEY}
+      secret-key: ${BINANCE_SECRET_KEY}
+  symbol:
+    limit: 1
+    list:
+      - BTCBRL
+      - ETHBRL
+      - SOLBRL
+      - BNBBRL
+      - XRPBRL
+      - DOGEBRL

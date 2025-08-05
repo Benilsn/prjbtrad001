@@ -1,0 +1,601 @@
+{#fragment id=head}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{pageTitle}</title>
+
+    <link rel="icon" href="/images/btc-neon.png" type="image"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+
+
+    <!-- Custom Styles -->
+    <style>
+
+        .text-neon {
+          color: #0ff;
+          text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+        }
+
+        .border-neon {
+          border: 2px solid #0ff;
+          box-shadow: 0 0 10px #0ff;
+        }
+
+        .bot-card {
+          margin-bottom: 2rem;
+          transition: transform 0.1s ease, box-shadow 0.3s ease;
+        }
+
+        .bot-card:hover {
+          transform: scale(1.03);
+          box-shadow: 0 0 10px #0ff;
+        }
+
+        .btn-outline-danger, .btn-outline-secondary {
+          margin-right: 5px;
+          border-color: #0ff;
+          color: #0ff;
+        }
+
+        .btn-outline-danger:hover, .btn-outline-secondary:hover {
+          background-color: #0ff;
+          color: #000;
+        }
+
+        .btn-create-neon {
+          background-color: transparent;
+          border: 2px solid #0ff;
+          color: #0ff;
+          padding: 10px 20px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #0ff;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-create-neon:hover {
+          background-color: #0ff;
+          color: #000;
+          box-shadow: 0 0 20px #0ff;
+        }
+
+        .btn-delete-all-neon {
+          background-color: transparent;
+          border: 2px solid #ff003c;
+          color: #ff003c;
+          padding: 10px 20px;
+          font-size: 1.1rem;
+          font-weight: bold;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ff003c;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-delete-all-neon:hover {
+          background-color: #ff003c;
+          color: #000;
+          box-shadow: 0 0 20px #ff003c;
+        }
+
+        .btn-clean-log-neon {
+          background-color: transparent;
+          border: 2px solid #ff003c;
+          color: #ff003c;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ff003c;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-clean-log-neon:hover {
+          background-color: #ff003c;
+          color: #000;
+          box-shadow: 0 0 20px #ff003c;
+        }
+
+        .btn-clean-filters-neon {
+          background-color: transparent;
+        border: 2px solid #bfa800;
+        color: #bfa800;
+          border-radius: 5px;
+          box-shadow: 0 0 8px #ffff66;
+          transition: 0.3s ease-in-out;
+        }
+
+        .btn-clean-filters-neon:hover {
+          background-color: #ffff66;
+          color: #000;
+          box-shadow: 0 0 20px #ffff66;
+        }
+
+            /* General styling */
+            .neon-text {
+              color: #00fff7;
+              text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+              font-size: 1rem;
+            }
+
+            .neon-text-logo {
+              color: #00fff7;
+              text-shadow: 0 0 5px #00fff7, 0 0 10px #00fff7;
+              font-size: 1.5rem;
+            }
+
+            /* Trade log styling */
+            .trade-log-box {
+              background-color: rgba(13, 13, 13, 0.4);
+              border: 2px solid #00fff7;
+              border-radius: 10px;
+              box-shadow: 0 0 10px #00fff7;
+              height: 500px;
+              max-height: 600px;
+              overflow-y: auto;
+            }
+
+            /* Glitch keyframes */
+            @keyframes glitch {
+              0% {
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
+                transform: translate(0, 0);
+                opacity: 1;
+              }
+              10% {
+                text-shadow: -0.5px -0.5px #00fff7, 0.5px 0.5px #00ff90;
+                transform: translate(-0.3px, 0.3px);
+                opacity: 0.97;
+              }
+              20% {
+                text-shadow: 0.5px -0.5px #00ff90, -0.5px 0.5px #00fff7;
+                transform: translate(0.3px, -0.3px);
+                opacity: 0.95;
+              }
+              30% {
+                text-shadow: -0.5px 0.5px #00fff7, 0.5px -0.5px #00ff90;
+                transform: translate(-0.3px, -0.3px);
+                opacity: 0.96;
+              }
+              40% {
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
+                transform: translate(0.3px, 0.3px);
+                opacity: 1;
+              }
+              100% {
+                text-shadow: 0.5px 0.5px #00ff90, -0.5px -0.5px #00fff7;
+                transform: translate(0, 0);
+                opacity: 1;
+              }
+            }
+
+
+            /* Apply glitch effect */
+            .log-entry {
+              font-family: monospace;
+              color: #00ff90;
+              margin: 5px 0;
+              animation: glitch 3s infinite;
+              white-space: nowrap;
+            }
+
+            /* Custom neon scrollbar for WebKit browsers */
+            .trade-log-box::-webkit-scrollbar {
+              width: 10px;
+            }
+
+            .trade-log-box::-webkit-scrollbar-track {
+              background: #111;
+              border-radius: 10px;
+            }
+
+            .trade-log-box::-webkit-scrollbar-thumb {
+              background: linear-gradient(#00fff7, #00ff90);
+              border-radius: 10px;
+              box-shadow: 0 0 6px #00fff7;
+            }
+
+            /* Optional hover effect */
+            .trade-log-box::-webkit-scrollbar-thumb:hover {
+              background: linear-gradient(#00ff90, #00fff7);
+              box-shadow: 0 0 10px #00fff7, 0 0 20px #00ff90;
+            }
+
+            /* Crypto cards */
+            .crypto-card {
+              background: #111111;
+              border: 2px solid #00fff7;
+              box-shadow: 0 0 10px #00fff7, 0 0 40px #00fff7 inset;
+              letter-spacing: 5px;
+              border-radius: 15px;
+              padding: 30px 20px;
+              transition: transform 0.3s ease;
+            }
+
+            .crypto-card:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 0 15px #00fff7, 0 0 50px #00fff7 inset;
+            }
+
+            .crypto-price {
+              font-size: 2rem;
+              font-weight: bold;
+              animation: glitch 5s infinite;
+            }
+
+            .green-text {
+              color: #00ff90;
+              text-shadow: 0 0 4px #00ff90, 0 0 10px #00ff90;
+            }
+
+            .crypto-last-updated {
+              font-size: 1rem;
+              color: #bbbbbb;
+              margin-top: -10px;
+              margin-bottom: 10px;
+            }
+
+
+            /* ===========================
+               NAVBAR STYLE
+               =========================== */
+            body {
+              background-color: #0d0d0d;
+              font-family: 'Orbitron', sans-serif;
+            }
+
+            .cyber-navbar {
+              background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
+              border-bottom: 2px solid #00fff7;
+              box-shadow: 0 0 10px #00fff7;
+            }
+
+
+            .neon-link {
+              color: #ffffff;
+              transition: 0.3s;
+              position: relative;
+            }
+
+            .neon-link::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              height: 2px;
+              width: 0%;
+              background: #00fff7;
+              transition: width 0.3s ease;
+              box-shadow: 0 0 5px #00fff7;
+            }
+
+            .neon-link:hover {
+              color: #00fff7;
+            }
+
+            .neon-link:hover::after {
+              width: 100%;
+            }
+
+            .navbar-toggler-icon {
+              background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' fill='%2300fff7' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='%2300fff7' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            }
+
+            /* ===========================
+               FOOTER STYLE
+               =========================== */
+
+
+            .cyber-footer {
+              background: linear-gradient(90deg, #0d0d0d 0%, #1a1a1a 100%);
+              border-top: 2px solid #00fff7;
+              box-shadow: 0 0 10px #00fff7;
+              color: #ffffff;
+            }
+
+            .cyber-footer .social-icons a {
+              text-decoration: none;
+              font-weight: bold;
+              position: relative;
+            }
+
+            .cyber-footer .social-icons a::after {
+              content: '';
+              position: absolute;
+              bottom: -2px;
+              left: 0;
+              width: 0%;
+              height: 2px;
+              background: #00fff7;
+              box-shadow: 0 0 5px #00fff7;
+              transition: width 0.3s ease;
+            }
+
+            .cyber-footer .social-icons a:hover {
+              color: #00fff7;
+            }
+
+            .cyber-footer .social-icons a:hover::after {
+              width: 100%;
+            }
+
+            @media (max-width: 576px) {
+              .cyber-footer .neon-text {
+                font-size: 1rem;
+            }
+
+            .cyber-footer .social-icons a {
+                font-size: 0.9rem;
+              }
+            }
+
+            /* Trade log box */
+            .trade-log-box {
+              background-color: rgba(13, 13, 13, 0.4); /* Transparent */
+              border: 0px solid #00fff7;
+              border-radius: 10px;
+              box-shadow: 0 0 10px #00fff7;
+              max-height: 600px;
+              overflow-y: auto;
+            }
+
+        .info-icon {
+          width: 20px;
+          height: 20px;
+          background-color: #00f5ff;
+          color: #2f4f4f;
+          text-align: center;
+          line-height: 20px;
+          border-radius: 50%;
+          font-weight: bold;
+          cursor: pointer;
+          box-shadow: 0 0 6px #00f5ff, 0 0 12px #00f5ff;
+          transition: transform 0.2s ease;
+        }
+
+        .info-icon:hover {
+          transform: scale(1.2);
+          box-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+        }
+
+        .btn-neon-red {
+          color: #ff003c;
+          background-color: transparent;
+          font-size: 1.4rem;
+          line-height: 1;
+          box-shadow:
+            0 0 5px #ff003c,
+          transition: all 0.2s ease-in-out;
+        }
+
+        .btn-neon-red:hover {
+          background-color: #ff003c;
+          color: black;
+          box-shadow:
+            0 0 10px #ff003c,
+            0 0 20px #ff003c,
+            0 0 40px #ff003c;
+        }
+
+        .btn-outline-info,
+        .btn-outline-secondary {
+          border-color: #00ffff;
+          color: #00ffff;
+        }
+
+        .btn-outline-info:hover,
+        .btn-outline-secondary:hover {
+          background-color: #00ffff;
+          color: #000;
+          box-shadow: 0 0 6px #00ffff;
+        }
+
+        .text-neon-glow {
+          color: #00f6ff;
+          text-shadow: 0 0 15px #00f6ff, 0 0 15px #00f6ff;
+        }
+
+        .text-glow-green {
+          color: #00ff9c;
+          text-shadow: 0 0 15px #00ff9c;
+        }
+
+        .text-glow-yellow {
+          color: #ffff66;
+          text-shadow: 0 0 15px #ffff66;
+        }
+
+        .text-glow-red {
+          color: #ff4e4e;
+          text-shadow: 0 0 15px #ff4e4e;
+        }
+
+        .text-glow-orange {
+          color: #ff6600;
+          text-shadow: 0 0 15px #ff6600;
+        }
+
+        .btn-outline-neon {
+          border: 1px solid #00f6ff;
+          color: #00f6ff;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon:hover {
+          background-color: #00f6ff;
+          color: #000;
+          box-shadow: 0 0 6px #00f6ff;
+        }
+
+        .btn-outline-neon-green {
+          border: 1px solid #00ff9c;
+          color: #00ff9c;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-green:hover {
+          background-color:  #00ff9c;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
+        .btn-outline-neon-red {
+          border: 1px solid #ff4e4e;
+          color: #ff4e4e;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-red:hover {
+          background-color: #ff4e4e;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
+         .btn-outline-neon-yellow {
+          border: 1px solid #ffff66;
+          color: #ffff66;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-yellow:hover {
+          background-color: #ffff66;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
+        .btn-outline-neon-white {
+          border: 1px solid #f8f8ff;
+          color: #f8f8ff;
+          background-color: transparent;
+          transition: all 0.2s ease;
+        }
+
+        .btn-outline-neon-white:hover {
+          background-color: #f8f8ff;
+          color: #000;
+          box-shadow: 0 0 12px #00f6ff;
+        }
+
+        .neon-label {
+          color: #ffffff;
+          text-shadow: 0 0 15px #ffffff, 0 0 5px #ffffff;
+          font-weight: 500;
+        }
+
+        .text-neon-blue {
+          color: #00f6ff;
+          text-shadow: 0 0 4px #00f6ff, 0 0 6px #00f6ff;
+        }
+
+        .btn-outline-neon {
+          border: 1px solid #00f6ff;
+          color: #00f6ff;
+          background-color: transparent;
+          transition: all 0.1s ease;
+        }
+
+        .btn-outline-neon:hover {
+          background-color: #00f6ff;
+          color: #000;
+          box-shadow: 0 0 6px #00f6ff;
+        }
+
+        .text-neon-white {
+          color: #cfffff;
+          text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+          font-weight: 600;
+        }
+
+        .neon-input {
+          background-color: #111;
+          border: 2px solid #0ff;
+          color: #0ff;
+          font-family: 'Courier New', monospace;
+          padding: 10px;
+          border-radius: 8px;
+          box-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+        }
+
+        .neon-input::placeholder {
+          color: #0ff9;
+        }
+
+        .log-entry {
+          transition: opacity 0.2s ease;
+        }
+
+        .hidden-log {
+          display: none;
+        }
+
+        @keyframes moveText {
+          0%   { transform: translateX(0); }
+          50%  { transform: translateX(2px); }
+          100% { transform: translateX(0); }
+        }
+
+        .animate-running {
+          display: inline-block;
+          animation: moveText 0.8s ease-in-out infinite;
+        }
+
+        .text-neon-glow {
+            text-shadow: 0 0 6px #0ff, 0 0 10px #0ff;
+        }
+
+        .neon-cyan    { color: #0ff; }
+        .neon-green   { color: #00ff99; }
+        .neon-yellow  { color: #ffff66; }
+        .neon-orange  { color: #cc5500; }
+        .neon-cyan     { color: #00ffff; }  /* Cyan */
+        .neon-orange   { color: #ff9933; }  /* Orange Glow */
+        .neon-pink     { color: #ff66cc; }  /* Bubblegum Neon Pink */
+        .neon-blue     { color: #3399ff; }  /* Bright Electric Blue */
+        .neon-purple   { color: #cc66ff; }  /* Neon Purple */
+        .neon-lime     { color: #ccff00; }  /* Electric Lime */
+        .neon-red      { color: #ff4c4c; }  /* Bright Alert Red */
+        .neon-white    { color: #f8f8ff; }  /* Icy White */
+        .neon-teal     { color: #66ffff; }  /* Aqua/Light Cyan */
+        .neon-magenta  { color: #ff00ff; }  /* Intense Magenta */
+        .neon-sky      { color: #66ccff; }  /* Sky Blue */
+        .neon-violet   { color: #9966ff; }  /* Deeper Violet */
+        .neon-amber    { color: #ffcc00; }  /* Amber/Gold Glow */
+
+         .section-title {
+          font-weight: bold;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+          text-shadow: 0 0 6px currentColor;
+        }
+
+        .label {
+          font-size: 0.8rem;
+          color: #bbb;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 2px;
+        }
+
+        .value {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #00ffff;
+          text-shadow: 0 0 4px #0ff;
+        }
+
+
+
+
+
+    </style>
+</head>
+
+{/fragment}
