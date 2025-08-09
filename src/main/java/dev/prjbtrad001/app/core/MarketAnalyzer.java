@@ -241,7 +241,6 @@ public class MarketAnalyzer {
   }
 
   private BigDecimal[] calculateFastMACD(List<BigDecimal> prices) {
-    // MACD rápido (5,13,4) para scalping
     if (prices.size() < 13) return new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 
     BigDecimal ema5 = calculateEMA(prices, 5);
