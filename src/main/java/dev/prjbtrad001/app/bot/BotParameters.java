@@ -83,10 +83,10 @@ public class BotParameters {
   @FormParam("smaLong")
   private int smaLong;
 
-  @NotNull(message = "Window resistance support cannot be null")
-  @Min(value = 0, message = "Window resistance support must be greater than or equal to 0")
-  @FormParam("windowResistanceSupport")
-  private int windowResistanceSupport;
+  @NotNull(message = "Candles analyzed support cannot be null")
+  @Min(value = 0, message = "Candles analyzed support must be greater than or equal to 0")
+  @FormParam("candlesAnalyzed")
+  private int candlesAnalyzed;
 
   @NotNull(message = "Purchase amount cannot be null")
   @Min(value = 0, message = "Purchase amount must be greater than or equal to 0")

@@ -135,11 +135,8 @@ public class MockService implements TradingExecutor {
         BigDecimal price = new BigDecimal(getPrice(symbol).getPrice()).setScale(8, RoundingMode.HALF_UP);
         BigDecimal totalInReais = price.multiply(quantity);
 
-        BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
-        BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
-
         wallet.updateBalance(asset, quantity.negate());
-        wallet.updateBalance("BRL", totalAfterFee);
+        wallet.updateBalance("BRL", totalInReais);
 
         log.infof("Mock sell: %s quantity=%s price=%s total=%s",
           symbol, quantity, price, totalInReais);
@@ -172,7 +169,7 @@ public class MockService implements TradingExecutor {
 
   @Getter
   private static class MockWallet {
-    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(2000.0);
+    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(5000.00);
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
 
     public MockWallet() {
