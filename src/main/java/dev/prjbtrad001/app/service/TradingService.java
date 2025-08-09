@@ -81,10 +81,10 @@ public class TradingService {
         BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions)
           .multiply(signalStrength);
 
-        log(botTypeName + "🔵 Scalp BUY in Downtrend! Strength: " + signalStrength + " Value: " + reducedAmount);
+        log(botTypeName + "🔵 BUY in Downtrend! Strength: " + signalStrength + " Value: " + reducedAmount);
         executeBuyOrder(bot, reducedAmount);
       } else {
-        log(botTypeName + "⚪ No scalp signal in downtrend");
+        log(botTypeName + "⚪ NO BUY signal in Downtrend!");
       }
       return;
     }

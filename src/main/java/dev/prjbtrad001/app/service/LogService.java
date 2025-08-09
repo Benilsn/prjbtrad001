@@ -12,7 +12,6 @@ import java.math.RoundingMode;
 import java.util.Map;
 import java.util.concurrent.*;
 import static dev.prjbtrad001.app.service.TradingService.calculatePriceChangePercent;
-import static dev.prjbtrad001.app.utils.LogUtils.LINE_SEPARATOR;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 
 @JBossLog
@@ -129,15 +128,14 @@ public class LogService {
 
       // Informações específicas para downtrend
       if (isDownTrend) {
+        boolean emaShortDowntrend = conditions.ema8().compareTo(conditions.ema21()) < 0;
+        BigDecimal emaRatio = conditions.ema8().divide(conditions.ema21(), 4, RoundingMode.HALF_UP);
         log(botTypeName + "🔻 BEARISH TREND - Additional Details:");
         log(botTypeName + "📉 Price Slope: " + conditions.priceSlope().setScale(5, RoundingMode.HALF_UP) +
           " | Bearish strength: " + (conditions.priceSlope().abs().multiply(BigDecimal.valueOf(100))).setScale(2, RoundingMode.HALF_UP));
+        log(botTypeName + "📉 EMA Short-Term Downtrend: " + emaShortDowntrend +
+          " (EMA8/EMA21: " + emaRatio + " - Bearish when < 1.0)");
 
-        BigDecimal emaShortRatio = conditions.ema8().divide(conditions.ema21(), 4, RoundingMode.HALF_UP);
-        BigDecimal emaLongRatio = conditions.ema50().divide(conditions.ema100(), 4, RoundingMode.HALF_UP);
-
-        log(botTypeName + "📊 EMA8/EMA21: " + emaShortRatio + " (Bearish when < 1.0)");
-        log(botTypeName + "📊 EMA50/EMA100: " + emaLongRatio + " (Long-term trend)");
       }
 
       // Posição no mercado se o bot estiver em posição
@@ -165,20 +163,20 @@ public class LogService {
     BigDecimal smaRatio = conditions.sma9()
       .divide(conditions.sma21(), 4, RoundingMode.HALF_UP);
 
-    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + conditions.rsi().setScale(2) + " <= " + parameters.getRsiPurchase() + ")");
+    log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + conditions.rsi().setScale(2, RoundingMode.HALF_UP) + " <= " + parameters.getRsiPurchase() + ")");
     log(botTypeName + "📈 Bullish Trend: " + bullishTrend + " (SMA9/SMA21: " + smaRatio +
       " - Bullish when > 1.0)");
-    log(botTypeName + "🛡️ Touched Support: " + touchedSupport + " (Price: " + conditions.currentPrice().setScale(2) +
+    log(botTypeName + "🛡️ Touched Support: " + touchedSupport + " (Price: " + conditions.currentPrice().setScale(2, RoundingMode.HALF_UP) +
       " | Support: " + conditions.support().setScale(2, RoundingMode.HALF_UP) + ")");
     log(botTypeName + "🧲 Touched Bollinger Lower: " + touchedBollingerLower + " (Price: " +
-      conditions.currentPrice().setScale(2, RoundingMode.HALF_UP) + " | Lower Band: " + conditions.bollingerLower().setScale(2) + ")");
+      conditions.currentPrice().setScale(2, RoundingMode.HALF_UP) + " | Lower Band: " + conditions.bollingerLower().setScale(2, RoundingMode.HALF_UP) + ")");
 
     // Adicionar informação de proximidade à banda/suporte para maior contexto
     BigDecimal priceToSupport = conditions.currentPrice().divide(conditions.support(), 4, RoundingMode.HALF_UP);
     BigDecimal priceToBollingerLower = conditions.currentPrice().divide(conditions.bollingerLower(), 4, RoundingMode.HALF_UP);
 
-    log(botTypeName + "📏 Distance to Support: " + priceToSupport.subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).setScale(2) +
-      "% | To Lower Band: " + priceToBollingerLower.subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).setScale(2) + "%");
+    log(botTypeName + "📏 Distance to Support: " + priceToSupport.subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP) +
+      "% | To Lower Band: " + priceToBollingerLower.subtract(BigDecimal.ONE).multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP) + "%");
   }
 
   public void processSellSignalLogs(SimpleTradeBot bot, MarketConditions conditions, String botTypeName) {
@@ -196,7 +194,7 @@ public class LogService {
       .divide(conditions.sma21(), 4, RoundingMode.HALF_UP);
 
     log(botTypeName + "💰 Current Profit: " + priceChangePercent.setScale(2, RoundingMode.HALF_UP) + "%");
-    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + conditions.rsi().setScale(2) + " >= " + parameters.getRsiSale() + ")");
+    log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought + " (" + conditions.rsi().setScale(2, RoundingMode.HALF_UP) + " >= " + parameters.getRsiSale() + ")");
     log(botTypeName + "📉 Bearish Trend: " + bearishTrend + " (SMA9/SMA21: " + smaRatio +
       " - Bearish when < 1.0)");
     log(botTypeName + "🧲 Touched Resistance: " + touchedResistance + " (Price: " + conditions.currentPrice() +
@@ -215,16 +213,6 @@ public class LogService {
   }
 
   // Classe para armazenar um snapshot thread-safe das condições de mercado
-  private static class MarketConditionsSnapshot {
-    final SimpleTradeBot bot;
-    final MarketConditions conditions;
-    final boolean isDownTrend;
-
-    MarketConditionsSnapshot(SimpleTradeBot bot, MarketConditions conditions,
-                             boolean isDownTrend) {
-      this.bot = bot;
-      this.conditions = conditions;
-      this.isDownTrend = isDownTrend;
-    }
+    private record MarketConditionsSnapshot(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
   }
 }
