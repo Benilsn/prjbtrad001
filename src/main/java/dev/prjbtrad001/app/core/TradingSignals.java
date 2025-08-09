@@ -2,6 +2,8 @@ package dev.prjbtrad001.app.core;
 
 import lombok.Builder;
 
+import java.math.BigDecimal;
+
 /**
  * Represents trading signals based on technical analysis conditions.
  * Uses a point-based system to determine buy and sell decisions.
@@ -44,7 +46,13 @@ public record TradingSignals(
     return points >= TradingConstants.BUY_THRESHOLD && hasMinimumRequiredConditions();
   }
 
-  public boolean shouldSell() {
+  public boolean shouldSell(BigDecimal currentProfitPercent) {
+    // Se o lucro está abaixo do mínimo, só permite venda por stop loss
+    if (currentProfitPercent.compareTo(BigDecimal.valueOf(TradingConstants.MIN_PROFIT_THRESHOLD)) < 0) {
+      return stopLoss;
+    }
+
+    // Lucro acima do mínimo, prossegue com a lógica normal
     double points = calculateSellPoints();
     return points >= TradingConstants.SELL_THRESHOLD || stopLoss || takeProfit;
   }

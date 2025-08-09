@@ -146,9 +146,20 @@ public class TradingService {
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-    // Calculation of current profit/loss
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
-    log(botTypeName + String.format("📉 Current price variation: %.2f%%", priceChangePercent));
+    boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
+
+    // NOVO: Calcular o lucro mínimo necessário para cobrir as taxas
+    BigDecimal taxTotal = BigDecimal.valueOf(0.2); // 0,1% na compra + 0,1% na venda
+    BigDecimal minProfitThreshold = taxTotal.add(BigDecimal.valueOf(0.1)); // 0,2% + 0,1% margem adicional
+
+    log(botTypeName + String.format("📉 Variação atual: %.2f%% (mínimo para lucro: %.2f%%)", priceChangePercent, minProfitThreshold));
+
+    // Só continua avaliação de venda se estiver acima do lucro mínimo (exceto para stop loss)
+    if (priceChangePercent.compareTo(minProfitThreshold) < 0 && !reachedStopLoss && !isEmergencyExit(conditions)) {
+      log(botTypeName + "⚠️ Abaixo do limite mínimo de lucro para scalping. Mantendo posição.");
+      return;
+    }
 
     if (applyTrailingStop(bot, conditions)) {
       return;
@@ -208,7 +219,6 @@ public class TradingService {
     boolean negativeMonentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
 
     // Evaluation of stop loss and take profit
-    boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
     boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
     // Time stop - if position has been open for a long time
@@ -237,7 +247,7 @@ public class TradingService {
       .takeProfit(reachedTakeProfit || positionTimeout)
       .build();
 
-    if (sellSignals.shouldSell()) {
+    if (sellSignals.shouldSell(priceChangePercent)) {
       log(botTypeName + "🔴 SELL signal detected!");
       executeSellOrder(bot);
     } else {
@@ -453,29 +463,38 @@ public class TradingService {
   private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
     Status status = bot.getStatus();
     BigDecimal currentProfit = calculatePriceChangePercent(status, conditions.currentPrice());
+    BigDecimal taxCost = BigDecimal.valueOf(0.2); // 0,1% compra + 0,1% venda
 
-    // Inicia trailing quando lucro > 0.5%
-    if (currentProfit.compareTo(BigDecimal.valueOf(0.5)) > 0) {
-      // Calcula 70% do lucro atual como stop dinâmico
+    // Só inicia trailing quando lucro > taxas + 0,3% (margem de segurança)
+    if (currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.3))) > 0) {
+      // Calcula trailing com base no lucro atual, mas nunca abaixo do custo das taxas
       BigDecimal trailingLevel = currentProfit.multiply(BigDecimal.valueOf(0.7));
+      trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.05))); // nunca abaixo das taxas
 
       // Atualiza o trailing stop se for maior que o anterior
       if (status.getTrailingStopLevel() == null ||
         trailingLevel.compareTo(status.getTrailingStopLevel()) > 0) {
         status.setTrailingStopLevel(trailingLevel);
-        log("[" + bot.getParameters().getBotType() + "] - 🔄 Trailing stop atualizado: " + trailingLevel + "%");
+        log("[" + bot.getParameters().getBotType() + "] - 🔄 Trailing stop: " + trailingLevel + "%");
       }
     }
 
-    // Verifica se o preço recuou abaixo do trailing stop
+    // Verifica trailing stop, mas garante lucro mínimo acima das taxas
     if (status.getTrailingStopLevel() != null &&
-      currentProfit.compareTo(status.getTrailingStopLevel()) < 0) {
-      log("[" + bot.getParameters().getBotType() + "] - 🔴 Trailing Stop atingido em " + currentProfit + "%");
+      currentProfit.compareTo(status.getTrailingStopLevel()) < 0 &&
+      currentProfit.compareTo(taxCost) > 0) {
+      log("[" + bot.getParameters().getBotType() + "] - 🔴 Trailing Stop executado: " + currentProfit + "%");
       executeSellOrder(bot);
-      return true; // Indica que uma venda foi executada
+      return true;
     }
 
-    return false; // Nenhuma venda foi executada
+    return false;
+  }
+
+  private boolean isEmergencyExit(MarketConditions conditions) {
+    // Condições para saída emergencial mesmo abaixo do limite mínimo de lucro
+    return conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.15)) < 0 && // Queda abrupta
+      conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;     // Alta volatilidade
   }
 
 }

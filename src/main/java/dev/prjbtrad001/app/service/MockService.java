@@ -123,7 +123,7 @@ public class MockService implements TradingExecutor {
         }
 
         BigDecimal tradingFee = grossQuantity.multiply(feeRate);
-        log("[" + symbol + "]" + "💰 Trading fee: " + tradingFee + " " + asset, true);
+        log("[" + symbol + "] - " + "💰 Trading fee: " + tradingFee + " " + asset, true);
 
         BigDecimal feeImpactPercent =
           tradingFee.multiply(price)
@@ -156,7 +156,7 @@ public class MockService implements TradingExecutor {
         BigDecimal totalInReais = price.multiply(quantity);
 
         BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
-        log("[" + symbol + "]" + "💰 Trading fee: R$" + tradingFee, true);
+        log("[" + symbol + "] - " + "💰 Trading fee: R$" + tradingFee, true);
         BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
 
         wallet.updateBalance(asset, quantity.negate());
@@ -193,7 +193,7 @@ public class MockService implements TradingExecutor {
 
   @Getter
   private static class MockWallet {
-    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(3000.00);
+    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(1000 );
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
 
     public MockWallet() {
