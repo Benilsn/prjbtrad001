@@ -3,6 +3,7 @@ package dev.prjbtrad001.app.service;
 import dev.prjbtrad001.app.core.Trading;
 import dev.prjbtrad001.app.dto.*;
 import dev.prjbtrad001.app.utils.CriptoUtils;
+import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradingExecutor;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.Getter;
@@ -104,19 +105,38 @@ public class MockService implements TradingExecutor {
     try {
       BigDecimal price = new BigDecimal(getPrice(symbol).getPrice()).setScale(8, RoundingMode.HALF_UP);
       BigDecimal brlBalance = wallet.getBalance("BRL");
+      String asset = symbol.replaceFirst("BRL$", "");
+
+      BigDecimal minScalpValue = BigDecimal.valueOf(10);
+      if (purchaseAmountInReais.compareTo(minScalpValue) < 0) {
+        log("[" + symbol + "] ⚠️ Valor muito pequeno para scalping eficiente");
+      }
 
       if (brlBalance.compareTo(purchaseAmountInReais) >= 0) {
-        String asset = symbol.replaceFirst("BRL$", "");
-
-        BigDecimal quantity = purchaseAmountInReais.divide(price, 8, RoundingMode.HALF_UP);
-
         wallet.updateBalance("BRL", purchaseAmountInReais.negate());
-        wallet.updateBalance(asset, quantity);
 
-        log.infof("Mock buy: %s quantity=%s price=%s total=%s",
-          symbol, quantity, price, purchaseAmountInReais);
+        BigDecimal grossQuantity = purchaseAmountInReais.divide(price, 8, RoundingMode.HALF_UP);
 
-        return Optional.of(createMockOrder(symbol, quantity, price, purchaseAmountInReais));
+        BigDecimal feeRate = BigDecimal.valueOf(0.001);
+        if (symbol.equalsIgnoreCase(BotType.BNBBRL.toString())) {
+          feeRate = BigDecimal.valueOf(0.00075);
+        }
+
+        BigDecimal tradingFee = grossQuantity.multiply(feeRate);
+        log("[" + symbol + "]" + "💰 Trading fee: " + tradingFee + " " + asset, true);
+
+        BigDecimal feeImpactPercent =
+          tradingFee.multiply(price)
+            .divide(purchaseAmountInReais, 8, RoundingMode.HALF_UP)
+            .multiply(BigDecimal.valueOf(100));
+
+        log("[" + symbol + "] 📊 Impacto da taxa: " + feeImpactPercent + "% do valor total");
+
+        BigDecimal netQuantity = grossQuantity.subtract(tradingFee);
+
+        wallet.updateBalance(asset, netQuantity);
+
+        return Optional.of(createMockOrder(symbol, netQuantity, price, purchaseAmountInReais));
       }
       log.warn("Insufficient mock balance for buy order");
     } catch (Exception e) {
@@ -135,8 +155,12 @@ public class MockService implements TradingExecutor {
         BigDecimal price = new BigDecimal(getPrice(symbol).getPrice()).setScale(8, RoundingMode.HALF_UP);
         BigDecimal totalInReais = price.multiply(quantity);
 
+        BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
+        log("[" + symbol + "]" + "💰 Trading fee: R$" + tradingFee, true);
+        BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
+
         wallet.updateBalance(asset, quantity.negate());
-        wallet.updateBalance("BRL", totalInReais);
+        wallet.updateBalance("BRL", totalAfterFee);
 
         log.infof("Mock sell: %s quantity=%s price=%s total=%s",
           symbol, quantity, price, totalInReais);
@@ -169,7 +193,7 @@ public class MockService implements TradingExecutor {
 
   @Getter
   private static class MockWallet {
-    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(5000.00);
+    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(3000.00);
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
 
     public MockWallet() {
