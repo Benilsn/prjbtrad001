@@ -36,8 +36,7 @@ public record TradingSignals(
   boolean momentumCondition,
   boolean volatilityCondition,
   boolean stopLoss,
-  boolean takeProfit,
-  boolean bollingerBandCondition
+  boolean takeProfit
 ) {
 
   public boolean shouldBuy() {
@@ -51,17 +50,16 @@ public record TradingSignals(
   }
 
   private boolean hasMinimumRequiredConditions() {
-    return rsiCondition || priceCondition || (volumeCondition && momentumCondition);
+    return (rsiCondition && priceCondition) || (trendCondition && priceCondition);
   }
 
   private double calculateBuyPoints() {
-    return (rsiCondition ? 1.0 : 0)
-      + (trendCondition ? 0.6 : 0)
-      + (volumeCondition ? 1.0 : 0)
-      + (priceCondition ? 1.2 : 0)
-      + (momentumCondition ? 1.0 : 0)
-      + (volatilityCondition ? 0.7 : 0)
-      + (bollingerBandCondition ? 1.2 : 0);
+    return (rsiCondition ? 1.3 : 0)
+      + (trendCondition ? 1.0 : 0)
+      + (volumeCondition ? 0.6 : 0)
+      + (priceCondition ? 0.8 : 0)
+      + (momentumCondition ? 0.5 : 0)
+      + (volatilityCondition ? 0.3 : 0);
   }
 
   private double calculateSellPoints() {

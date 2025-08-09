@@ -115,28 +115,12 @@ public class TradingService {
 
     boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
 
-    // Calcular posição percentual nas Bandas de Bollinger (0% = banda inferior, 100% = banda superior)
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal pricePositionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP)
-      .multiply(BigDecimal.valueOf(100));
-
-    // Para scalping, consideramos favorável quando preço está nos primeiros 20% da banda
-    boolean bollingerBuyCondition = pricePositionInBand.compareTo(BigDecimal.valueOf(20)) <= 0;
-
-    // Se o preço rompeu abaixo da banda inferior, sinal ainda mais forte
-    boolean priceBelowBand = conditions.currentPrice().compareTo(conditions.bollingerLower()) < 0;
-    if (priceBelowBand) {
-      log(botTypeName + "⚡ Preço ABAIXO da Banda Inferior de Bollinger - Sinal forte de compra");
-    }
-
     // Print logs of conditions
     log(botTypeName + "🔻 RSI Oversold: " + rsiOversold + " (" + conditions.rsi() + " <= " + parameters.getRsiPurchase() + ")");
     log(botTypeName + "📈 Bullish Trend: " + bullishTrend);
     log(botTypeName + "🛡️ Touched Support: " + touchedSupport);
     log(botTypeName + "📊 Volume: " + (strongVolume ? "STRONG" : "WEAK"));
     log(botTypeName + "🧲 Touched Bollinger Lower: " + touchedBollingerLower);
-    log(botTypeName + "📊 Posição nas Bandas: " + pricePositionInBand + "% (< 20% = favorável)");
 
     TradingSignals buySignals = TradingSignals.builder()
       .rsiCondition(rsiOversold)
@@ -147,7 +131,6 @@ public class TradingService {
       .volatilityCondition(lowVolatility)
       .stopLoss(false)
       .takeProfit(false)
-      .bollingerBandCondition(bollingerBuyCondition)
       .build();
 
     if (buySignals.shouldBuy()) {
@@ -236,27 +219,12 @@ public class TradingService {
     boolean dynamicStopLoss = priceChangePercent.compareTo(BigDecimal.valueOf(1.5)) >= 0 &&
       priceChangePercent.compareTo(priceChangePercent.multiply(BigDecimal.valueOf(0.7))) <= 0;
 
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal pricePositionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP)
-      .multiply(BigDecimal.valueOf(100));
-
-    // Condição de venda quando preço está nos últimos 20% da banda
-    boolean bollingerSellCondition = pricePositionInBand.compareTo(BigDecimal.valueOf(80)) >= 0;
-
-    // Preço acima da banda superior = sinal mais forte
-    boolean priceAboveBand = conditions.currentPrice().compareTo(conditions.bollingerUpper()) > 0;
-    if (priceAboveBand) {
-      log(botTypeName + "⚡ Preço ACIMA da Banda Superior de Bollinger - Sinal forte de venda");
-    }
-
     log(botTypeName + "🔺 RSI Overbought: " + rsiOverbought);
     log(botTypeName + "📉 Bearish Trend: " + bearishTrend);
     log(botTypeName + "🧲 Touched Resistance/Upper Band: " + (touchedResistance || touchedBollingerUpper));
     log(botTypeName + "⛔ Stop Loss: " + reachedStopLoss + ", Take Profit: " + reachedTakeProfit);
     log(botTypeName + "⏱️ Position Timeout: " + positionTimeout);
     log(botTypeName + "🔄 Dynamic Stop Loss: " + dynamicStopLoss);
-    log(botTypeName + "📊 Posição nas Bandas: " + pricePositionInBand + "% (> 80% = favorável para venda)");
 
     TradingSignals sellSignals = TradingSignals.builder()
       .rsiCondition(rsiOverbought)
@@ -267,7 +235,6 @@ public class TradingService {
       .volatilityCondition(false)
       .stopLoss(reachedStopLoss || dynamicStopLoss)
       .takeProfit(reachedTakeProfit || positionTimeout)
-      .bollingerBandCondition(bollingerSellCondition || priceAboveBand)
       .build();
 
     if (sellSignals.shouldSell()) {
