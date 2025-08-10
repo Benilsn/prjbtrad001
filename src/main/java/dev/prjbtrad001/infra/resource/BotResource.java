@@ -32,6 +32,9 @@ public class BotResource {
   @ConfigProperty(name = "bot.symbol.list")
   private String workingSymbols;
 
+  @ConfigProperty(name = "bot.file.path")
+  private String botFilePath;
+
   @GET
   public TemplateInstance allBots(@QueryParam("message") String message) {
     return Templates.allBots()
@@ -53,7 +56,7 @@ public class BotResource {
   @Path("/create-from-file")
   public Response createFromFile() {
     try {
-      botOrchestratorService.createAllFromFile(java.nio.file.Path.of("src/main/resources/data/bot_strategy.csv"));
+      botOrchestratorService.createAllFromFile(java.nio.file.Path.of(botFilePath));
     } catch (Exception e) {
       return Response
         .seeOther(UriBuilder.fromPath("/bots")
