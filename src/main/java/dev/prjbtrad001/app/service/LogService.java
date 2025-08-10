@@ -137,7 +137,6 @@ public class LogService {
           " | Bearish strength: " + (conditions.priceSlope().abs().multiply(BigDecimal.valueOf(100))).setScale(2, RoundingMode.HALF_UP));
         log(botTypeName + "📉 EMA Short-Term Downtrend: " + emaShortDowntrend +
           " (EMA8/EMA21: " + emaRatio + " - Bearish when < 1.0)");
-
       }
     } catch (Exception e) {
       LogService.log.error("Error processing async logs: " + e.getMessage(), e);

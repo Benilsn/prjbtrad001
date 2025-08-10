@@ -1,10 +1,7 @@
 package dev.prjbtrad001.app.bot;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +9,8 @@ import lombok.Setter;
 import lombok.extern.jbosslog.JBossLog;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -35,8 +34,52 @@ public class SimpleTradeBot extends PanacheEntityBase {
 
   private boolean running = false;
 
+  @Transient
+  private int consecutiveLosses = 0;
+
+  @Transient
+  private boolean tradingPaused = false;
+
+  @Transient
+  private LocalDateTime pauseUntil = LocalDateTime.now();
+
+  @Transient
+  private BigDecimal positionSizeMultiplier = BigDecimal.ONE;
+
   public SimpleTradeBot(BotParameters parameters) {
     this.parameters = parameters;
     this.status = new Status();
   }
+
+  public void addTradeResult(boolean isProfit) {
+    if (!isProfit) {
+      consecutiveLosses++;
+
+      if (consecutiveLosses >= 2) {
+        tradingPaused = true;
+        pauseUntil = LocalDateTime.now().plusMinutes(30);
+        positionSizeMultiplier = BigDecimal.valueOf(0.5);
+      }
+    } else {
+      consecutiveLosses = 0;
+      tradingPaused = false;
+
+      positionSizeMultiplier = positionSizeMultiplier.add(BigDecimal.valueOf(0.1))
+        .min(BigDecimal.ONE);
+    }
+  }
+
+  public boolean isTradingPaused() {
+    if (tradingPaused && pauseUntil.isBefore(LocalDateTime.now())) {
+      tradingPaused = false;
+      // Começa com posições menores após uma pausa
+      positionSizeMultiplier = BigDecimal.valueOf(0.6);
+    }
+    return tradingPaused;
+  }
+
+  public BigDecimal getAdjustedPositionSize(BigDecimal baseAmount) {
+    return baseAmount.multiply(positionSizeMultiplier);
+  }
+
 }
