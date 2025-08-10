@@ -1,7 +1,7 @@
 {#fragment id=botCard}
 
 {#for bot in allBots}
-<div class="col-md-3 mb-4">
+<div class="col-md-3">
     <div class="card bot-card bg-dark border-neon p-4 rounded-4 text-light shadow-lg position-relative">
 
         <!-- Delete Button -->
@@ -13,7 +13,7 @@
         <div class="card-body">
             <h5 class="text-uppercase text-neon-glow neon-cyan mb-4">{bot.parameters.botType}</h5>
 
-            <ul class="list-unstyled d-flex flex-column gap-3 mb-4">
+            <ul class="list-unstyled d-flex flex-column gap-3">
                 <li class="d-flex flex-column">
                     <span class="label">Status</span>
                     <span class="{bot.running ? 'text-glow-green' : 'text-glow-red'} fw-bold">

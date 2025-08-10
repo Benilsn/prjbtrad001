@@ -49,6 +49,25 @@ public class BotResource {
       .data("pageTitle", "Create Bot");
   }
 
+  @GET
+  @Path("/create-from-file")
+  public Response createFromFile() {
+    try {
+      botOrchestratorService.createAllFromFile(java.nio.file.Path.of("src/main/resources/data/bot_strategy.csv"));
+    } catch (Exception e) {
+      return Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Error creating bots from file: " + e.getMessage())
+          .build())
+        .build();
+    }
+    return Response
+      .seeOther(UriBuilder.fromPath("/bots")
+        .queryParam("message", "\uD83D\uDE80 Bots created successfully!")
+        .build())
+      .build();
+  }
+
   @POST
   @Path("/save")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -153,13 +172,37 @@ public class BotResource {
   }
 
   @GET
-  @Path("/deleteAll")
+  @Path("/delete-all")
   public Response deleteAll() {
     botOrchestratorService.deleteAll();
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")
           .queryParam("message", "All bots deleted successfully!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/run-all")
+  public Response runsAll() {
+    botOrchestratorService.runAll();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "\uD83D\uDE80 Started idle bot(s)!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/stop-all")
+  public Response stopAll() {
+    botOrchestratorService.stopAllBots();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Stop running bot(s)!")
           .build())
         .build();
   }

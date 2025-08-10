@@ -2,16 +2,27 @@ package dev.prjbtrad001.app.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.prjbtrad001.app.bot.BotParameters;
+import dev.prjbtrad001.app.bot.PurchaseStrategy;
+import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.dto.KlineDto;
+import dev.prjbtrad001.domain.core.BotType;
 import lombok.experimental.UtilityClass;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HexFormat;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -95,7 +106,7 @@ public class CriptoUtils {
    * authentication and integrity of the transmitted data.</p>
    *
    * @param data the message or query string to be signed
-   * @param key the secret key used for signing (usually the Binance API secret)
+   * @param key  the secret key used for signing (usually the Binance API secret)
    * @return the generated signature as a hexadecimal string
    * @throws Exception if the HMAC SHA-256 algorithm is not available or initialization fails
    */
@@ -122,7 +133,7 @@ public class CriptoUtils {
    * }</pre>
    *
    * @param cryptoBalance the available balance to round
-   * @param stepSize the step size defined by Binance for the asset
+   * @param stepSize      the step size defined by Binance for the asset
    * @return the balance rounded down to a valid quantity according to step size
    * @throws IllegalArgumentException if step size is zero or negative
    */
@@ -134,6 +145,40 @@ public class CriptoUtils {
       .divide(stepSize, 0, RoundingMode.DOWN)
       .multiply(stepSize)
       .setScale(stepSize.scale(), RoundingMode.DOWN);
+  }
+
+  public static List<SimpleTradeBot> readFromCsv(Path filePath) throws IOException {
+    List<SimpleTradeBot> bots = new ArrayList<>();
+
+    List<String> lines = Files.readAllLines(filePath);
+
+    for (int i = 1; i < lines.size(); i++) {
+      String line = lines.get(i).trim();
+      if (line.isEmpty()) continue;
+
+      String[] parts = line.split(";");
+      if (parts.length < 12) {
+        throw new IllegalArgumentException("Invalid CSV format at line " + (i + 1));
+      }
+
+      BotParameters parameters = new BotParameters();
+      parameters.setBotType(BotType.valueOf(parts[0]));
+      parameters.setInterval(parts[1]);
+      parameters.setStopLossPercent(new BigDecimal(parts[2]));
+      parameters.setTakeProfitPercent(new BigDecimal(parts[3]));
+      parameters.setRsiPurchase(new BigDecimal(parts[4]));
+      parameters.setRsiSale(new BigDecimal(parts[5]));
+      parameters.setVolumeMultiplier(new BigDecimal(parts[6]));
+      parameters.setSmaShort(Integer.parseInt(parts[7]));
+      parameters.setSmaLong(Integer.parseInt(parts[8]));
+      parameters.setCandlesAnalyzed(Integer.parseInt(parts[9]));
+      parameters.setPurchaseStrategy(PurchaseStrategy.valueOf(parts[10])); // assumes enum
+      parameters.setPurchaseAmount(new BigDecimal(parts[11]));
+
+      bots.add(new SimpleTradeBot(parameters));
+    }
+
+    return bots;
   }
 
 }

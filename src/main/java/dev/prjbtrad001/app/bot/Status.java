@@ -35,4 +35,14 @@ public class Status {
 
   private LocalDateTime lastSellTime;
 
+  public int isProfitPositive() {
+    if (profit == null) {
+      return 0;
+    } else if (profit.compareTo(BigDecimal.ZERO) <= 0) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
 }
