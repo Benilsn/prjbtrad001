@@ -415,7 +415,6 @@ public class TradingService {
   private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, int timeoutSeconds) {
     if (!bot.getStatus().isLong()) return false;
 
-    // Ajusta timeout com base na volatilidade
     double volatilityFactor = Math.min(2.0, Math.max(0.5, conditions.volatility().doubleValue() / 2.0));
     int adjustedTimeout = (int) (timeoutSeconds / volatilityFactor);
 
