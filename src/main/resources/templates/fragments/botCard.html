@@ -109,19 +109,23 @@
                     <div class="col-12 col-md-6 col-lg-3 mb-3">
                         <h5 class="section-title neon-green">💰 Trade S.</h5>
                         <ul class="list-unstyled d-flex flex-column gap-3">
-                            <li class="d-flex flex-column"><span class="label">Is Long</span><span class="value">{bot.status.isLong}</span></li>
-                            <li class="d-flex flex-column"><span class="label">Total Purchased</span><span class="value">{bot.status.totalPurchased}</span></li>
-                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">{bot.status.averagePrice}</span></li>
-                            <li class="d-flex flex-column"><span class="label">Quantity</span><span class="value">{bot.status.quantity}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Is Long</span><span class="value">{bot.status.isLong ?: false}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Total Purchased</span><span class="value">R$ {bot.status.totalPurchased ?: '0,00'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Purchase Price</span><span class="value">R$ {bot.status.averagePrice ?: '0,00'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Quantity</span><span class="value">{bot.status.quantity ?: '0,00'}</span></li>
+
+                            <li class="d-flex flex-column"><span class="label">Consecutive Loss</span><span class="value">{bot.consecutiveLosses ?: '0,00'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Trading paused</span><span class="value">{bot.tradingPaused ?: false}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Pause until</span><span class="value">{bot.pauseUntil ? bot.pauseUntil.format('dd/MM/yyyy HH:mm') : 'N/A'}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Position size multiplier</span><span class="value">{bot.positionSizeMultiplier ?: '0,00'}</span></li>
                         </ul>
                     </div>
 
                     <div class="col-12 col-md-6 col-lg-3 mb-3">
                         <h5 class="section-title neon-orange">📈 Market S.</h5>
                         <ul class="list-unstyled d-flex flex-column gap-3">
-                            <li class="d-flex flex-column"><span class="label">Profit</span><span class="value">{bot.status.profit}</span></li>
+                            <li class="d-flex flex-column"><span class="label">Profit</span><span class="value">R$ {bot.status.profit ?: 0}</span></li>
                             <li class="d-flex flex-column"><span class="label">Purchase time</span><span class="value">{bot.status.lastPurchaseTime ? bot.status.lastPurchaseTime.format('dd/MM/yyyy HH:mm') : 'N/A'}</span></li>
-                            <li class="d-flex flex-column"><span class="label">Last sell</span><span class="value">{bot.status.lastSellTime ? bot.status.lastSellTime.format('dd/MM/yyyy HH:mm') : 'N/A'}</span></li>
                         </ul>
                     </div>
 

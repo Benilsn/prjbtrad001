@@ -37,6 +37,7 @@ public record TradingSignals(
   boolean volatilityCondition,
   boolean stopLoss,
   boolean takeProfit,
+  boolean positionTimeout,
   boolean extremeRsi,
   boolean extremeLowVolume,
   boolean strongDowntrend,
@@ -54,11 +55,12 @@ public record TradingSignals(
     boolean volatilityCondition,
     boolean stopLoss,
     boolean takeProfit,
+    boolean positionTimeout,
     boolean emergencyExit,
     boolean minimumProfitReached
   ) {
     this(rsiCondition, trendCondition, volumeCondition, priceCondition,
-      momentumCondition, volatilityCondition, stopLoss, takeProfit,
+      momentumCondition, volatilityCondition, stopLoss, takeProfit, positionTimeout,
       false, false, false, emergencyExit, minimumProfitReached);
   }
 
@@ -72,7 +74,7 @@ public record TradingSignals(
   }
 
   public boolean shouldSell() {
-    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit;
+    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit || positionTimeout;
 
     if (!emergencyCondition && !minimumProfitReached) {
       return false;

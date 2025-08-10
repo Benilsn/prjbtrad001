@@ -33,8 +33,6 @@ public class Status {
 
   private BigDecimal trailingStopLevel;
 
-  private LocalDateTime lastSellTime;
-
   public int isProfitPositive() {
     if (profit == null) {
       return 0;

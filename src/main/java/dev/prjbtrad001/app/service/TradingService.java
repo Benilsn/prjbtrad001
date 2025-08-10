@@ -37,11 +37,6 @@ public class TradingService {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
 
-    if (hasRecentClosedPosition(status, TradingConstants.MIN_TRADE_INTERVAL_SECONDS)) {
-      log("[" + parameters.getBotType() + "] - ⏳ Waiting for minimum interval between operations");
-      return;
-    }
-
     List<KlineDto> klines =
       tradingExecutor.getCandles(
         parameters.getBotType().toString(),
@@ -114,11 +109,12 @@ public class TradingService {
       .priceCondition(touchedSupport || touchedBollingerLower)
       .momentumCondition(positiveMonentum)
       .volatilityCondition(lowVolatility)
-      .extremeRsi(conditions.rsi().compareTo(BigDecimal.valueOf(70)) > 0)
+      .extremeRsi(conditions.rsi().compareTo(parameters.getRsiPurchase()) > 0)
       .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
       .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
       //Sell only signals
       .stopLoss(false)
+      .positionTimeout(false)
       .takeProfit(false)
       .emergencyExit(false)
       .minimumProfitReached(false)
@@ -187,7 +183,8 @@ public class TradingService {
       .priceCondition(touchedResistance || touchedBollingerUpper)
       .momentumCondition(negativeMonentum)
       .stopLoss(reachedStopLoss)
-      .takeProfit(reachedTakeProfit || positionTimeout)
+      .takeProfit(reachedTakeProfit)
+      .positionTimeout(positionTimeout)
       .emergencyExit(isEmergencyExit(conditions))
       .minimumProfitReached(priceChangePercent.compareTo(minProfitThreshold) >= 0)
 
@@ -354,7 +351,6 @@ public class TradingService {
     status.setAveragePrice(BigDecimal.ZERO);
     status.setLastPurchaseTime(null);
     status.setLong(false);
-    status.setLastSellTime(LocalDateTime.now());
     bot.addTradeResult(profit.compareTo(BigDecimal.ZERO) > 0);
 
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
@@ -445,12 +441,6 @@ public class TradingService {
   private boolean isEmergencyExit(MarketConditions conditions) {
     return conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.15)) < 0 &&
       conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;
-  }
-
-  private boolean hasRecentClosedPosition(Status status, int secondsAgo) {
-    return
-      status.getLastSellTime() != null
-        && status.getLastSellTime().plusSeconds(secondsAgo).isAfter(LocalDateTime.now());
   }
 
   private BigDecimal estimatePotentialProfit(MarketConditions conditions) {
