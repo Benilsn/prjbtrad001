@@ -80,31 +80,6 @@ public class TradingService {
     BotParameters parameters = bot.getParameters();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-//    if (isDownTrend) {
-//      boolean oversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
-//
-//      BigDecimal supportFactor = BigDecimal.ONE.subtract(BigDecimal.valueOf(0.015));
-//      boolean nearSupport = conditions.currentPrice().compareTo(
-//        conditions.support().multiply(supportFactor)) <= 0;
-//
-//      boolean adequateVolume = conditions.currentVolume().compareTo(
-//        conditions.averageVolume().multiply(BigDecimal.valueOf(0.8))) >= 0;
-//
-//      boolean potentialBounce = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
-//
-//      if ((oversold ? 1 : 0) + (nearSupport ? 1 : 0) + (adequateVolume ? 1 : 0) + (potentialBounce ? 1 : 0) >= 3) {
-//        BigDecimal signalStrength = calculateSignalStrength(conditions);
-//        BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions)
-//          .multiply(signalStrength);
-//
-//        log(botTypeName + "🔵 BUY in Downtrend! Strength: " + signalStrength + " Value: " + reducedAmount);
-//        executeBuyOrder(bot, reducedAmount);
-//      } else {
-//        log(botTypeName + "⚪ NO BUY signal in Downtrend!");
-//      }
-//      return;
-//    }
-
     BigDecimal totalFees = BigDecimal.valueOf(0.2);
     BigDecimal potentialProfit = estimatePotentialProfit(conditions);
 
@@ -184,51 +159,6 @@ public class TradingService {
     if (applyTrailingStop(bot, conditions)) {
       return;
     }
-
-//    if (isDownTrend) {
-//      // Cálculos de TP/SL dinâmicos baseados na volatilidade
-//      BigDecimal volatilityFactor;
-//      if (conditions.volatility().compareTo(BigDecimal.valueOf(3)) > 0) {
-//        volatilityFactor = BigDecimal.valueOf(0.4); // Volatilidade alta - TP/SL mais curtos
-//      } else if (conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) > 0) {
-//        volatilityFactor = BigDecimal.valueOf(0.6); // Volatilidade média
-//      } else {
-//        volatilityFactor = BigDecimal.valueOf(0.8); // Volatilidade baixa
-//      }
-//
-//      BigDecimal adjustedTP = parameters.getTakeProfitPercent().multiply(volatilityFactor);
-//      BigDecimal adjustedSL = parameters.getStopLossPercent().multiply(volatilityFactor);
-//
-//      // Take profit mais agressivo em downtrend forte
-//      boolean priceWeakening = conditions.momentum().compareTo(BigDecimal.valueOf(-0.2)) < 0;
-//      boolean strongDowntrend = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.05)) < 0;
-//
-//      if (priceWeakening && strongDowntrend) {
-//        adjustedTP = adjustedTP.multiply(BigDecimal.valueOf(0.7));
-//      }
-//
-//      boolean smallTakeProfit = priceChangePercent.compareTo(adjustedTP) >= 0;
-//      boolean tightStopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0;
-//
-//      // Reversão de RSI como sinal adicional de saída
-//      boolean rsiReversal = conditions.rsi().compareTo(BigDecimal.valueOf(55)) > 0 &&
-//        priceChangePercent.compareTo(BigDecimal.valueOf(0.3)) > 0;
-//
-//      boolean timeout = checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS / 3) &&
-//        priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
-//
-//      log(botTypeName + "🔻 Downtrend detected");
-//      log(botTypeName + "💰 Adjusted TP (>= " + adjustedTP + "%): " + smallTakeProfit + " (" + priceChangePercent + "%)");
-//      log(botTypeName + "⛔ Adjusted SL (<= -" + adjustedSL + "%): " + tightStopLoss + " (" + priceChangePercent + "%)");
-//      log(botTypeName + "🔄 RSI Reversal: " + rsiReversal);
-//
-//      if (smallTakeProfit || tightStopLoss || rsiReversal || timeout) {
-//        String reason = smallTakeProfit ? "Take Profit" : (tightStopLoss ? "Stop Loss" : (timeout ? "Timeout" : "RSI Reversal"));
-//        log(botTypeName + "🔴 SELL signal in downtrend! Reason: " + reason);
-//        executeSellOrder(bot);
-//        return;
-//      }
-//    }
 
     boolean rsiOverbought = conditions.rsi().compareTo(parameters.getRsiSale()) >= 0;
     boolean bearishTrend = conditions.sma9().compareTo(conditions.sma21()) < 0;

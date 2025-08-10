@@ -2,10 +2,6 @@ package dev.prjbtrad001.app.core;
 
 import lombok.Builder;
 
-import java.math.BigDecimal;
-
-import static dev.prjbtrad001.app.utils.LogUtils.log;
-
 /**
  * Represents trading signals based on technical analysis conditions.
  * Uses a point-based system to determine buy and sell decisions.
