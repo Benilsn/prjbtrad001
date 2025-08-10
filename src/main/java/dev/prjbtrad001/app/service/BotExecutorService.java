@@ -25,10 +25,10 @@ public class BotExecutorService {
     try {
       long start = System.currentTimeMillis();
 
+      log(LINE_SEPARATOR, false);
       log("[" + bot.getParameters().getBotType() + " - " + bot.getId() + "] Checking market data...");
       tradingService.analyzeMarket(bot);
       log("[" + bot.getParameters().getBotType() + "] - Took " + (System.currentTimeMillis() - start) + "ms to process bot: " + bot.getId());
-      log(LINE_SEPARATOR, false);
 
     } catch (Exception e) {
       log("Error while running bot: " + e.getMessage());

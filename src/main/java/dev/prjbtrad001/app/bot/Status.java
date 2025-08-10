@@ -33,6 +33,8 @@ public class Status {
 
   private LocalDateTime lastPurchaseTime;
 
+  private BigDecimal trailingStopLevel;
+
   // Status
 //  private BigDecimal lastPrice;
 //  private BigDecimal lastRsi;
