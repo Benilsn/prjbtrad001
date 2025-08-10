@@ -29,8 +29,8 @@ public class MarketAnalyzer {
     BigDecimal currentVolume = volumes.getLast();
     BigDecimal averageVolume = calculateAverage(volumes);
 
-    BigDecimal support = Collections.min(last(closePrices, 30));
-    BigDecimal resistance = Collections.max(last(closePrices, 30));
+    BigDecimal support = Collections.min(last(closePrices, 20));
+    BigDecimal resistance = Collections.max(last(closePrices, 20));
     BigDecimal currentPrice = closePrices.getLast();
 
     // Indicadores adicionais
@@ -192,12 +192,6 @@ public class MarketAnalyzer {
     return BigDecimal.valueOf(Math.sqrt(value.doubleValue()));
   }
 
-  private List<BigDecimal> extractClosePrices(List<KlineDto> klines) {
-    return klines.stream()
-      .map(k -> new BigDecimal(k.getClosePrice()))
-      .toList();
-  }
-
   private BigDecimal calculateAverage(List<BigDecimal> values) {
     if (values == null || values.isEmpty()) {
       return BigDecimal.ZERO;
@@ -219,5 +213,52 @@ public class MarketAnalyzer {
       .divide(BigDecimal.valueOf(periods), 8, RoundingMode.HALF_UP);
   }
 
+  private BigDecimal[] calculateStochasticRSI(List<BigDecimal> prices, int period) {
+    if (prices.size() < period + 14) return new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO};
+
+    // Calcula RSI para os últimos "period+14" preços
+    List<BigDecimal> rsiValues = new ArrayList<>();
+    for (int i = 14; i < prices.size(); i++) {
+      List<BigDecimal> window = prices.subList(i-14, i+1);
+      rsiValues.add(calculateRSI(window, 14));
+    }
+
+    // Calcula min/max do RSI para o período
+    BigDecimal minRsi = Collections.min(rsiValues);
+    BigDecimal maxRsi = Collections.max(rsiValues);
+    BigDecimal lastRsi = rsiValues.getLast();
+
+    // Calcula K% do Stochastic RSI
+    BigDecimal stochK = maxRsi.equals(minRsi) ? BigDecimal.valueOf(50) :
+      lastRsi.subtract(minRsi)
+        .divide(maxRsi.subtract(minRsi), 8, RoundingMode.HALF_UP)
+        .multiply(BigDecimal.valueOf(100));
+
+    // Calcula D% (média móvel de 3 períodos do K%)
+    BigDecimal stochD = calculateSMA(rsiValues.subList(Math.max(0, rsiValues.size() - 3), rsiValues.size()), 3);
+
+    return new BigDecimal[]{stochK, stochD};
+  }
+
+  private BigDecimal[] calculateFastMACD(List<BigDecimal> prices) {
+    if (prices.size() < 13) return new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+
+    BigDecimal ema5 = calculateEMA(prices, 5);
+    BigDecimal ema13 = calculateEMA(prices, 13);
+    BigDecimal macdLine = ema5.subtract(ema13);
+
+    // Últimos valores para cálculo da signal line
+    List<BigDecimal> macdValues = new ArrayList<>();
+    for (int i = 13; i < prices.size(); i++) {
+      BigDecimal ema5i = calculateEMA(prices.subList(0, i+1), 5);
+      BigDecimal ema13i = calculateEMA(prices.subList(0, i+1), 13);
+      macdValues.add(ema5i.subtract(ema13i));
+    }
+
+    BigDecimal signalLine = calculateEMA(macdValues, 4);
+    BigDecimal histogram = macdLine.subtract(signalLine);
+
+    return new BigDecimal[]{macdLine, signalLine, histogram};
+  }
 
 }

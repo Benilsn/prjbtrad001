@@ -2,6 +2,10 @@ package dev.prjbtrad001.app.core;
 
 import lombok.Builder;
 
+import java.math.BigDecimal;
+
+import static dev.prjbtrad001.app.utils.LogUtils.log;
+
 /**
  * Represents trading signals based on technical analysis conditions.
  * Uses a point-based system to determine buy and sell decisions.
@@ -36,30 +40,81 @@ public record TradingSignals(
   boolean momentumCondition,
   boolean volatilityCondition,
   boolean stopLoss,
-  boolean takeProfit
+  boolean takeProfit,
+  boolean extremeRsi,
+  boolean extremeLowVolume,
+  boolean strongDowntrend,
+  boolean emergencyExit,
+  boolean minimumProfitReached
 ) {
 
+  @Builder
+  public TradingSignals(
+    boolean rsiCondition,
+    boolean trendCondition,
+    boolean volumeCondition,
+    boolean priceCondition,
+    boolean momentumCondition,
+    boolean volatilityCondition,
+    boolean stopLoss,
+    boolean takeProfit,
+    boolean emergencyExit,
+    boolean minimumProfitReached
+  ) {
+    this(rsiCondition, trendCondition, volumeCondition, priceCondition,
+      momentumCondition, volatilityCondition, stopLoss, takeProfit,
+      false, false, false, emergencyExit, minimumProfitReached);
+  }
+
   public boolean shouldBuy() {
+    if (extremeRsi || extremeLowVolume || strongDowntrend) {
+      return false;
+    }
+
     double points = calculateBuyPoints();
     return points >= TradingConstants.BUY_THRESHOLD && hasMinimumRequiredConditions();
   }
 
   public boolean shouldSell() {
+    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit;
+
+    if (!emergencyCondition && !minimumProfitReached) {
+      return false;
+    }
+
+    if (emergencyCondition) {
+      return true;
+    }
+
     double points = calculateSellPoints();
-    return points >= TradingConstants.SELL_THRESHOLD || stopLoss || takeProfit;
+    return points >= TradingConstants.SELL_THRESHOLD;
   }
 
   private boolean hasMinimumRequiredConditions() {
-    return (rsiCondition && priceCondition) || (trendCondition && priceCondition);
+    int positiveSignals = (rsiCondition ? 1 : 0) +
+      (trendCondition ? 1 : 0) +
+      (volumeCondition ? 1 : 0) +
+      (priceCondition ? 1 : 0) +
+      (momentumCondition ? 1 : 0);
+
+    return priceCondition && positiveSignals >= 3;
   }
 
   private double calculateBuyPoints() {
-    return (rsiCondition ? 1.3 : 0)
+    double basePoints = (rsiCondition ? 1.3 : 0)
       + (trendCondition ? 1.0 : 0)
       + (volumeCondition ? 0.6 : 0)
       + (priceCondition ? 0.8 : 0)
       + (momentumCondition ? 0.5 : 0)
       + (volatilityCondition ? 0.3 : 0);
+
+    double penalties = 0;
+
+    if (rsiCondition && !trendCondition) penalties += 0.4;
+    if (trendCondition && !volumeCondition) penalties += 0.3;
+    if (!momentumCondition) penalties += 0.3;
+
+    return Math.max(0, basePoints - penalties);
   }
 
   private double calculateSellPoints() {
