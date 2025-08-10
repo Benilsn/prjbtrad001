@@ -6,7 +6,9 @@ public enum BotType {
   SOLBRL,
   BNBBRL,
   XRPBRL,
-  DOGEBRL;
+  DOGEBRL,
+  MATICBRL,
+  LTCBRL;
 
   public boolean isValid(String symbol) {
     for (BotType type : BotType.values()) {

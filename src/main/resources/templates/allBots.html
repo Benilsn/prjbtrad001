@@ -8,8 +8,8 @@
 <body>
 
 <!-- Section to display running bots -->
-<div class="container my-4">
-    <h2 class="text-neon text-center mb-4">Active Bots</h2>
+<div class="container my-3 mb-3">
+    <h2 class="text-neon text-center mb-3">Active Bots</h2>
 
     {#if message}
     <script>
@@ -19,7 +19,7 @@
         });
     </script>
     <div class="modal fade" id="botModal" tabindex="-1" aria-labelledby="botModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
             <div class="modal-content neon-glow border-0 rounded-4 px-3 py-2" style="background-color: #101010;">
 
                 <div class="modal-header border-0 pb-0">
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="modal-body text-center pt-2 pb-1">
-                    <p class="neon-text fs-5">🚀 {message}</p>
+                    <p class="neon-text fs-5">{message}</p>
                 </div>
 
                 <div class="modal-footer border-0 justify-content-center pt-1">
@@ -40,12 +40,12 @@
     </div>
     {/if}
 
-    <!-- Create Bot Button -->
     <div class="text-center mb-4">
-        <a class="btn btn-create-neon mx-3" href="/bots/create">+ Create Bot</a>
-        <button type="button" class="btn btn-delete-all-neon" data-bs-toggle="modal" data-bs-target="#deleteAllBotsModal">
-            - Delete All Bots
-        </button>
+        <a class="btn btn-create-neon-green mx-2" href="/bots/create">Create</a>
+        <a class="btn btn-create-neon-green mx-2" href="/bots/create-from-file">Create from file</a>
+        <a class="btn btn-create-neon mx-2" href="#" id="runAllBotsBtn">Run all</a>
+        <a class="btn btn-create-neon-yellow mx-2" href="/bots/stop-all">Stop all<i class="fa-solid fa-person-running-fast fs-4"></i></a>
+        <button type="button" class="btn btn-delete-all-neon" data-bs-toggle="modal" data-bs-target="#deleteAllBotsModal">Delete All Bots</button>
         <!-- Neon Modal -->
         <div class="modal fade" id="deleteAllBotsModal" tabindex="-1" aria-labelledby="deleteAllBotsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -62,19 +62,57 @@
                     </div>
                     <div class="modal-footer border-0 justify-content-center">
                         <button type="button" class="btn btn-outline-neon" data-bs-dismiss="modal">Cancel</button>
-                        <a type="button" class="btn btn-delete-all-neon" href="/bots/deleteAll">Delete</a>
+                        <a type="button" class="btn btn-delete-all-neon" href="/bots/delete-all">Delete</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" style="margin-bottom: 100px;">
         {#include 'fragments/botCard.html'/}
     </div>
-
 </div>
 
+<!-- Modal de Carregamento -->
+<div class="modal fade" id="loadingBotsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loadingBotsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-neon" style="background:#101010;">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-neon" id="loadingBotsModalLabel">Starting bots</h5>
+            </div>
+            <div class="modal-body text-center py-4">
+                <p class="text-neon-glow fs-5 mb-4">
+                    <span class="text-glow-green">Initializing all bots ...</span>
+                </p>
+                <div class="spinner-border text-neon-glow mb-3" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-glow-yellow mt-3">This operation can take a few seconds</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const runAllBtn = document.getElementById('runAllBotsBtn');
+
+        runAllBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Mostrar o modal de carregamento
+            const loadingModal = new bootstrap.Modal(document.getElementById('loadingBotsModal'));
+            loadingModal.show();
+
+            // Redirecionar para a URL após um pequeno delay para garantir que o modal seja exibido
+            setTimeout(function() {
+                window.location.href = '/bots/run-all';
+            }, 300);
+        });
+    });
+</script>
 </body>
 
 {#include 'fragments/footer.html'/}

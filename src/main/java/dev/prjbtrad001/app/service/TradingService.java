@@ -16,7 +16,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -40,7 +39,7 @@ public class TradingService {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
 
-    if (hasRecentTrade(status, TradingConstants.MIN_TRADE_INTERVAL_SECONDS)) {
+    if (hasRecentClosedPosition(status, TradingConstants.MIN_TRADE_INTERVAL_SECONDS)) {
       log("[" + parameters.getBotType() + "] - ⏳ Waiting for minimum interval between operations");
       return;
     }
@@ -406,6 +405,7 @@ public class TradingService {
     status.setAveragePrice(BigDecimal.ZERO);
     status.setLastPurchaseTime(null);
     status.setLong(false);
+    status.setLastSellTime(LocalDateTime.now());
 
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
     log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
@@ -415,7 +415,6 @@ public class TradingService {
   private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, int timeoutSeconds) {
     if (!bot.getStatus().isLong()) return false;
 
-    // Ajusta timeout com base na volatilidade
     double volatilityFactor = Math.min(2.0, Math.max(0.5, conditions.volatility().doubleValue() / 2.0));
     int adjustedTimeout = (int) (timeoutSeconds / volatilityFactor);
 
@@ -508,9 +507,10 @@ public class TradingService {
       conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;
   }
 
-  private boolean hasRecentTrade(Status status, int secondsAgo) {
-    return status.getLastPurchaseTime() != null &&
-      status.getLastPurchaseTime().plusSeconds(secondsAgo).isAfter(LocalDateTime.now());
+  private boolean hasRecentClosedPosition(Status status, int secondsAgo) {
+    return
+      status.getLastSellTime() != null
+        && status.getLastSellTime().plusSeconds(secondsAgo).isAfter(LocalDateTime.now());
   }
 
 }

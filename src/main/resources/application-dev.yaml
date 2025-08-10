@@ -1,2 +1,3 @@
-BINANCE_API_KEY: C:\\etc\\binance\\credentials\\key
-BINANCE_SECRET_KEY: C:\etc\binance\credentials\secret
+BINANCE_API_KEY: C:\etc\trade-bot\binance\credentials\key
+BINANCE_SECRET_KEY: C:\etc\\trade-bot\binance\credentials\secret
+BOT_FILE_PATH: C:\etc\trade-bot\bot_strategy.csv

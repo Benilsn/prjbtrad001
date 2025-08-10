@@ -32,6 +32,8 @@ quarkus:
 bot:
   limit: 4
   mock-trading: true
+  file:
+    path: ${BOT_FILE_PATH}
   credentials:
     path:
       api-key: ${BINANCE_API_KEY}
@@ -45,3 +47,5 @@ bot:
       - BNBBRL
       - XRPBRL
       - DOGEBRL
+      - MATICBRL
+      - LTCBRL
