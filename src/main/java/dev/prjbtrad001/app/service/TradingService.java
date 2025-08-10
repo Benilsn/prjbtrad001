@@ -71,12 +71,16 @@ public class TradingService {
     if (isDownTrend) {
       boolean oversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
 
+      BigDecimal supportFactor = BigDecimal.ONE.subtract(BigDecimal.valueOf(0.015));
+      boolean nearSupport = conditions.currentPrice().compareTo(
+        conditions.support().multiply(supportFactor)) <= 0;
+
       boolean adequateVolume = conditions.currentVolume().compareTo(
         conditions.averageVolume().multiply(BigDecimal.valueOf(0.8))) >= 0;
 
       boolean potentialBounce = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
 
-      if (adequateVolume && potentialBounce && oversold) {
+      if ((oversold ? 1 : 0) + (nearSupport ? 1 : 0) + (adequateVolume ? 1 : 0) + (potentialBounce ? 1 : 0) >= 3) {
         BigDecimal signalStrength = calculateSignalStrength(conditions);
         BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions)
           .multiply(signalStrength);
@@ -91,8 +95,8 @@ public class TradingService {
 
     boolean rsiOversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
 
-    boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 &&
-      conditions.ema8().compareTo(conditions.ema21()) > 0;
+    boolean ema8AboveEma21 = conditions.ema8().compareTo(conditions.ema21()) > 0;
+    boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 && ema8AboveEma21;
 
     boolean touchedSupport =
       conditions.currentPrice()
@@ -115,12 +119,33 @@ public class TradingService {
       .priceCondition(touchedSupport || touchedBollingerLower)
       .momentumCondition(positiveMonentum)
       .volatilityCondition(lowVolatility)
+      .extremeRsi(conditions.rsi().compareTo(BigDecimal.valueOf(70)) > 0)
+      .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
+      .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
+      //Sell only signals
       .stopLoss(false)
       .takeProfit(false)
+      .emergencyExit(false)
+      .minimumProfitReached(false)
       .build();
 
     if (buySignals.shouldBuy()) {
-      log(botTypeName + "🔵 BUY signal detected!");
+      String reason;
+      if (rsiOversold && touchedSupport) {
+        reason = "RSI + Support";
+      } else if (rsiOversold && touchedBollingerLower) {
+        reason = "RSI + Bollinger";
+      } else if (bullishTrend && touchedSupport) {
+        reason = "Bullish + Support";
+      } else if (rsiOversold && positiveMonentum) {
+        reason = "RSI + Momentum";
+      } else if (bullishTrend && strongVolume) {
+        reason = "Bullish + Volume";
+      } else {
+        reason = "Signal Score";
+      }
+
+      log(botTypeName + "🔵 BUY signal detected! Reason: " + reason);
       executeBuyOrder(bot, calculateOptimalBuyAmount(bot, conditions));
     } else {
       log(botTypeName + "⚪ Insufficient conditions for purchase.");
@@ -135,19 +160,6 @@ public class TradingService {
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
-    boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
-
-    // NOVO: Calcular o lucro mínimo necessário para cobrir as taxas
-    BigDecimal taxTotal = BigDecimal.valueOf(0.3); // 0,1% na compra + 0,1% na venda
-    BigDecimal minProfitThreshold = taxTotal.add(BigDecimal.valueOf(0.1)); // 0,2% + 0,1% margem adicional
-
-    log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, minProfitThreshold));
-
-    // Só continua avaliação de venda se estiver acima do lucro mínimo (exceto para stop loss)
-    if (priceChangePercent.compareTo(minProfitThreshold) < 0 && !reachedStopLoss && !isEmergencyExit(conditions)) {
-      log(botTypeName + "⚠️ Below the minimum profit limit for scalping. Maintaining position.");
-      return;
-    }
 
     if (applyTrailingStop(bot, conditions)) {
       return;
@@ -206,27 +218,53 @@ public class TradingService {
       conditions.bollingerUpper().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.01)))) >= 0;
     boolean negativeMonentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
 
-    // Evaluation of stop loss and take profit
     boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
-    // Time stop - if position has been open for a long time
     boolean positionTimeout =
       checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS) &&
         priceChangePercent.compareTo(BigDecimal.valueOf(0.3)) >= 0;
 
+    boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
+
+    // Minimum profit considering fees
+    BigDecimal minProfitThreshold = BigDecimal.valueOf(0.3);
+
+    log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, minProfitThreshold));
+
     TradingSignals sellSignals = TradingSignals.builder()
       .rsiCondition(rsiOverbought)
       .trendCondition(bearishTrend)
-      .volumeCondition(false)
       .priceCondition(touchedResistance || touchedBollingerUpper)
       .momentumCondition(negativeMonentum)
-      .volatilityCondition(false)
       .stopLoss(reachedStopLoss)
       .takeProfit(reachedTakeProfit || positionTimeout)
+      .emergencyExit(isEmergencyExit(conditions))
+      .minimumProfitReached(priceChangePercent.compareTo(minProfitThreshold) >= 0)
+
+      //Buy only signals
+      .volumeCondition(false)
+      .volatilityCondition(false)
       .build();
 
-    if (sellSignals.shouldSell(priceChangePercent)) {
-      log(botTypeName + "🔴 SELL signal detected!");
+    if (sellSignals.shouldSell()) {
+      String reason;
+      if (reachedStopLoss) {
+        reason = "Stop Loss";
+      } else if (reachedTakeProfit) {
+        reason = "Take Profit";
+      } else if (positionTimeout) {
+        reason = "Timeout";
+      } else if (isEmergencyExit(conditions)) {
+        reason = "Emergency Exit";
+      } else if (rsiOverbought) {
+        reason = "RSI Overbought";
+      } else if (bearishTrend && (touchedResistance || touchedBollingerUpper)) {
+        reason = "Bearish + Resistance";
+      } else {
+        reason = "Signal Score";
+      }
+
+      log(botTypeName + "🔴 SELL signal detected! Reason: " + reason);
       executeSellOrder(bot);
     } else {
       log(botTypeName + "⚪ Maintaining current position.");
@@ -327,7 +365,7 @@ public class TradingService {
     status.setLastPurchaseTime(LocalDateTime.now());
     status.setLong(true);
 
-    log(botTypeName + "✅ Purchase executed: Average price = " + newAveragePrice + ", Quantity = " + newTotalQuantity);
+    log(botTypeName + "✅ Purchase executed successfully");
   }
 
   private void executeSellOrder(SimpleTradeBot bot) {
@@ -369,9 +407,9 @@ public class TradingService {
     status.setLastPurchaseTime(null);
     status.setLong(false);
 
-    log(botTypeName + "✅ Sale executed successfully");
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
     log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
+    log(botTypeName + "✅ Sale executed successfully");
   }
 
   private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, int timeoutSeconds) {
@@ -441,15 +479,12 @@ public class TradingService {
   private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
     Status status = bot.getStatus();
     BigDecimal currentProfit = calculatePriceChangePercent(status, conditions.currentPrice());
-    BigDecimal taxCost = BigDecimal.valueOf(0.2); // 0,1% compra + 0,1% venda
+    BigDecimal taxCost = BigDecimal.valueOf(0.2);
 
-    // Só inicia trailing quando lucro > taxas + 0,3% (margem de segurança)
-    if (currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.15))) > 0) {
-      // Calcula trailing com base no lucro atual, mas nunca abaixo do custo das taxas
+    if (currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.30))) > 0) {
       BigDecimal trailingLevel = currentProfit.multiply(BigDecimal.valueOf(0.8));
-      trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.05))); // nunca abaixo das taxas
+      trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.05)));
 
-      // Atualiza o trailing stop se for maior que o anterior
       if (status.getTrailingStopLevel() == null ||
         trailingLevel.compareTo(status.getTrailingStopLevel()) > 0) {
         status.setTrailingStopLevel(trailingLevel);
@@ -457,7 +492,6 @@ public class TradingService {
       }
     }
 
-    // Verifica trailing stop, mas garante lucro mínimo acima das taxas
     if (status.getTrailingStopLevel() != null &&
       currentProfit.compareTo(status.getTrailingStopLevel()) < 0 &&
       currentProfit.compareTo(taxCost) > 0) {
@@ -470,15 +504,13 @@ public class TradingService {
   }
 
   private boolean isEmergencyExit(MarketConditions conditions) {
-    // Condições para saída emergencial mesmo abaixo do limite mínimo de lucro
-    return conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.15)) < 0 && // Queda abrupta
-      conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;     // Alta volatilidade
+    return conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.15)) < 0 &&
+      conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;
   }
 
   private boolean hasRecentTrade(Status status, int secondsAgo) {
     return status.getLastPurchaseTime() != null &&
       status.getLastPurchaseTime().plusSeconds(secondsAgo).isAfter(LocalDateTime.now());
   }
-
 
 }
