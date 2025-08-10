@@ -32,6 +32,9 @@ public class BotResource {
   @ConfigProperty(name = "bot.symbol.list")
   private String workingSymbols;
 
+  @ConfigProperty(name = "bot.file.path")
+  private String botFilePath;
+
   @GET
   public TemplateInstance allBots(@QueryParam("message") String message) {
     return Templates.allBots()
@@ -47,6 +50,25 @@ public class BotResource {
       .data("workingSymbols", workingSymbols.split(","))
       .data("botId", null)
       .data("pageTitle", "Create Bot");
+  }
+
+  @GET
+  @Path("/create-from-file")
+  public Response createFromFile() {
+    try {
+      botOrchestratorService.createAllFromFile(java.nio.file.Path.of(botFilePath));
+    } catch (Exception e) {
+      return Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Error creating bots from file: " + e.getMessage())
+          .build())
+        .build();
+    }
+    return Response
+      .seeOther(UriBuilder.fromPath("/bots")
+        .queryParam("message", "\uD83D\uDE80 Bots created successfully!")
+        .build())
+      .build();
   }
 
   @POST
@@ -153,13 +175,37 @@ public class BotResource {
   }
 
   @GET
-  @Path("/deleteAll")
+  @Path("/delete-all")
   public Response deleteAll() {
     botOrchestratorService.deleteAll();
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")
           .queryParam("message", "All bots deleted successfully!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/run-all")
+  public Response runsAll() {
+    botOrchestratorService.runAll();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "\uD83D\uDE80 Started idle bot(s)!")
+          .build())
+        .build();
+  }
+
+  @GET
+  @Path("/stop-all")
+  public Response stopAll() {
+    botOrchestratorService.stopAllBots();
+    return
+      Response
+        .seeOther(UriBuilder.fromPath("/bots")
+          .queryParam("message", "Stop running bot(s)!")
           .build())
         .build();
   }

@@ -3,6 +3,7 @@ package dev.prjbtrad001.app.service;
 import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.BotTask;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
+import dev.prjbtrad001.app.utils.CriptoUtils;
 import dev.prjbtrad001.domain.repository.BotRepository;
 import dev.prjbtrad001.infra.exception.BotOperationException;
 import jakarta.annotation.PreDestroy;
@@ -11,6 +12,8 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.extern.jbosslog.JBossLog;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -52,6 +55,14 @@ public class BotOrchestratorService {
   }
 
   @Transactional
+  public void createAllFromFile(Path filePath) throws IOException {
+    List<SimpleTradeBot> bots = CriptoUtils.readFromCsv(filePath);
+    log.debugf("Creating %s bots from file: %s", bots.size(), filePath.getFileName());
+
+    botRepository.persist(bots);
+  }
+
+  @Transactional
   public List<SimpleTradeBot> getAllBots() {
     List<SimpleTradeBot> bots = botRepository.getAllBots();
     BotOrchestratorService.log.debug("Getting all " + bots.size() + " bots.");
@@ -85,7 +96,6 @@ public class BotOrchestratorService {
         .getBotById(botId)
         .orElseThrow(() -> new NoSuchElementException("Bot not found with ID: " + botId));
   }
-
 
   @Transactional
   public void startBot(UUID botId) {
@@ -127,6 +137,31 @@ public class BotOrchestratorService {
     log.debugf("All bots deleted successfully");
   }
 
+  @Transactional
+  public void runAll() {
+    try {
+      List<UUID> botIds = SimpleTradeBot
+        .find("running", false)
+        .stream()
+        .map(entity -> (SimpleTradeBot) entity)
+        .map(SimpleTradeBot::getId)
+        .toList();
+
+      botIds.forEach(b -> {
+        try {
+          startBot(b);
+          Thread.sleep(1000);
+        } catch (Exception e) {
+          log.errorf("Failed to start bot %s: %s", b, e.getMessage());
+        }
+      });
+
+    } catch (Exception e) {
+      log.errorf("Failed to run all bots: %s", e.getMessage());
+      throw new BotOperationException("Failed to run all bots", e);
+    }
+  }
+
   @PreDestroy
   @Transactional
   public void shutdownAll() {
@@ -140,7 +175,7 @@ public class BotOrchestratorService {
     }
   }
 
-  private void stopAllBots() {
+  public void stopAllBots() {
     runningBots.keySet().forEach(this::stopBot);
     runningBots.clear();
   }
