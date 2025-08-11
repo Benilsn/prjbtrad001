@@ -161,6 +161,9 @@ public class TradingService {
     boolean volumeSpike = conditions.currentVolume().compareTo(
       conditions.averageVolume().multiply(BigDecimal.valueOf(1.5))) >= 0;
 
+    boolean volumeSpikeWithoutReversal = volumeSpike &&
+      conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0;
+
     // Verificações de momentum mais detalhadas
     boolean potentialBounce = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
     boolean priceRejection = isPriceRejection(conditions, lastKline); // Implementar para detectar sombras longas
@@ -176,6 +179,10 @@ public class TradingService {
       (potentialBounce ? 1 : 0) +
       (priceRejection ? 2 : 0) + // Peso maior para rejeição de preço
       (fastDrop && oversold ? 1 : 0); // Combinação de queda rápida e sobrevenda
+
+    if (volumeSpikeWithoutReversal) {
+      signals -= 2;
+    }
 
     if (signals >= 3) { // Mantém o limite em 3, mas agora com pesos diferentes
       BigDecimal signalStrength = calculateScalpingSignalStrength(conditions);
@@ -271,14 +278,21 @@ public class TradingService {
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
 
-    // Fator de volatilidade mais agressivo para scalping em downtrend
+    boolean isNewPosition = status.getLastPurchaseTime() != null &&
+      status.getLastPurchaseTime().plusMinutes(3).isAfter(LocalDateTime.now());
+
+    if (isNewPosition && priceChangePercent.compareTo(BigDecimal.valueOf(-1.5)) > 0) {
+      log(botTypeName + "⏳ Very recent position, awaiting a minimum of 3 minutes before considering exit.");
+      return;
+    }
+
     BigDecimal volatilityFactor;
     if (conditions.volatility().compareTo(BigDecimal.valueOf(3)) > 0) {
-      volatilityFactor = BigDecimal.valueOf(0.3); // 30% em vez de 40%
+      volatilityFactor = BigDecimal.valueOf(0.4);
     } else if (conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) > 0) {
-      volatilityFactor = BigDecimal.valueOf(0.5); // 50% em vez de 60%
+      volatilityFactor = BigDecimal.valueOf(0.6);
     } else {
-      volatilityFactor = BigDecimal.valueOf(0.7); // 70% em vez de 80%
+      volatilityFactor = BigDecimal.valueOf(0.8);
     }
 
     // Take profit mais agressivo para scalping
@@ -297,23 +311,29 @@ public class TradingService {
     boolean reversalPattern = hasRecentReversalPattern(klines);
 
     // Níveis de saída
+    boolean strongMomentumNegativeTendency = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
     boolean tinyProfit = priceChangePercent.compareTo(BigDecimal.valueOf(0.15)) >= 0;
     boolean fullTakeProfit = priceChangePercent.compareTo(adjustedTP) >= 0;
-    boolean stopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0;
+    boolean stopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0 &&
+      (strongMomentumNegativeTendency || checkConsistentDowntrend(klines, 3));
 
-    // Sinais adicionais de saída mais sensíveis
     boolean rsiReversal = conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0 && // 50 em vez de 55
       priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0; // 0.2% em vez de 0.3%
 
-    // Timeout mais agressivo para scalping
     boolean timeout = checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS / 4) &&
       priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
 
     // Saída completa
-    if (fullTakeProfit || stopLoss || rsiReversal || timeout || reversalPattern || (tinyProfit && strongDowntrend)) {
+    if (fullTakeProfit ||
+      (stopLoss && !isAtSupportLevel(conditions)) ||
+      rsiReversal ||
+      timeout ||
+      reversalPattern ||
+      (tinyProfit && strongDowntrend)) {
 
+      // Aumente a preferência por saídas em momentum negativo
       String reason = fullTakeProfit ? "Take Profit" :
-        (stopLoss ? "Stop Loss" :
+        (stopLoss ? "Stop Loss" + (strongMomentumNegativeTendency ? " (momentum forte)" : "") :
           (timeout ? "Timeout" :
             (reversalPattern ? "Padrão de Reversão" :
               (rsiReversal ? "RSI Reversal" : "Tiny Profit in Strong Downtrend"))));
@@ -685,6 +705,26 @@ public class TradingService {
         new BigDecimal(previousCandle.getOpenPrice())) < 0;
 
     return morningStar || hammer || bearishEngulfing;
+  }
+
+  private boolean checkConsistentDowntrend(List<KlineDto> klines, int periods) {
+    if (klines.size() < periods + 1) return false;
+
+    int downtrendCount = 0;
+    for (int i = klines.size() - periods; i < klines.size(); i++) {
+      BigDecimal currentClose = new BigDecimal(klines.get(i).getClosePrice());
+      BigDecimal previousClose = new BigDecimal(klines.get(i - 1).getClosePrice());
+      if (currentClose.compareTo(previousClose) < 0) {
+        downtrendCount++;
+      }
+    }
+
+    return downtrendCount >= periods * 0.7; // 70% das velas são de queda
+  }
+
+  private boolean isAtSupportLevel(MarketConditions conditions) {
+    BigDecimal priceToSupport = conditions.currentPrice().divide(conditions.support(), 8, RoundingMode.HALF_UP);
+    return priceToSupport.compareTo(BigDecimal.valueOf(1.01)) <= 0;
   }
 
 }

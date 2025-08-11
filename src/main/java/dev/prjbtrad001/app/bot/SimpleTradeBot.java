@@ -34,16 +34,12 @@ public class SimpleTradeBot extends PanacheEntityBase {
 
   private boolean running = false;
 
-  @Transient
   private int consecutiveLosses = 0;
 
-  @Transient
   private boolean tradingPaused = false;
 
-  @Transient
   private LocalDateTime pauseUntil = LocalDateTime.now();
 
-  @Transient
   private BigDecimal positionSizeMultiplier = BigDecimal.ONE;
 
   public SimpleTradeBot(BotParameters parameters) {
@@ -72,7 +68,7 @@ public class SimpleTradeBot extends PanacheEntityBase {
   public boolean isTradingPaused() {
     if (tradingPaused && pauseUntil.isBefore(LocalDateTime.now())) {
       tradingPaused = false;
-      // Começa com posições menores após uma pausa
+      pauseUntil = LocalDateTime.now();
       positionSizeMultiplier = BigDecimal.valueOf(0.6);
     }
     return tradingPaused;
