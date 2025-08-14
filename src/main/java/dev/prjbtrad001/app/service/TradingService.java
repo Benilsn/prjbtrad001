@@ -17,8 +17,10 @@ import lombok.extern.jbosslog.JBossLog;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import static dev.prjbtrad001.app.core.MarketAnalyzer.calculateRSI;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
@@ -36,6 +38,7 @@ public class TradingService {
   public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
+    String botTypeName = "[" + parameters.getBotType() + "] - ";
 
     List<KlineDto> klines =
       tradingExecutor.getCandles(
@@ -45,18 +48,18 @@ public class TradingService {
       );
 
     if (bot.isTradingPaused()) {
-      log("[" + parameters.getBotType() + "] - ⛔ Trading paused until: " + bot.getPauseUntil() + " due to consecutive losses: (" + bot.getConsecutiveLosses() + ")");
+      log(botTypeName + "⛔ Trading paused until: " + bot.getPauseUntil() + " due to consecutive losses: (" + bot.getConsecutiveLosses() + ")", true);
       return;
     }
 
     MarketAnalyzer marketAnalyzer = new MarketAnalyzer();
     MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
-    boolean isDownTrend = isDownTrendMarket(conditions);
+    boolean isDownTrend = isDownTrendMarket(conditions, klines, botTypeName);
 
     logService.logSignals(bot, conditions, isDownTrend);
     if (!status.isLong()) {
       if (isDownTrend) {
-        evaluateBuySignalInDownTrend(bot, conditions, klines.getLast());
+        evaluateBuySignalInDownTrend(bot, conditions, klines);
       } else {
         evaluateBuySignal(bot, conditions);
       }
@@ -73,7 +76,6 @@ public class TradingService {
     BotParameters parameters = bot.getParameters();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-
     BigDecimal totalFees = BigDecimal.valueOf(0.2);
     BigDecimal potentialProfit = estimatePotentialProfit(conditions);
 
@@ -87,17 +89,16 @@ public class TradingService {
     boolean ema8AboveEma21 = conditions.ema8().compareTo(conditions.ema21()) > 0;
     boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 && ema8AboveEma21;
 
-    boolean touchedSupport =
-      conditions.currentPrice()
-        .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.005)))) <= 0;
+    boolean touchedSupport = conditions.currentPrice()
+      .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.003)))) <= 0;
 
     boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower()
-      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.02)))) <= 0;
+      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.01)))) <= 0;
 
     boolean strongVolume = conditions.currentVolume()
       .compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
 
-    boolean positiveMonentum = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
+    boolean acceleratingMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.05)) > 0;
 
     boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
 
@@ -106,7 +107,7 @@ public class TradingService {
       .trendCondition(bullishTrend)
       .volumeCondition(strongVolume)
       .priceCondition(touchedSupport || touchedBollingerLower)
-      .momentumCondition(positiveMonentum)
+      .momentumCondition(acceleratingMomentum)
       .volatilityCondition(lowVolatility)
       .extremeRsi(conditions.rsi().compareTo(parameters.getRsiPurchase()) > 0)
       .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
@@ -127,7 +128,7 @@ public class TradingService {
         reason = "RSI + Bollinger";
       } else if (bullishTrend && touchedSupport) {
         reason = "Bullish + Support";
-      } else if (rsiOversold && positiveMonentum) {
+      } else if (rsiOversold && acceleratingMomentum) {
         reason = "RSI + Momentum";
       } else if (bullishTrend && strongVolume) {
         reason = "Bullish + Volume";
@@ -144,48 +145,54 @@ public class TradingService {
     logService.processBuySignalLogs(bot, conditions, botTypeName);
   }
 
-  private void evaluateBuySignalInDownTrend(SimpleTradeBot bot, MarketConditions conditions, KlineDto lastKline) {
+  private void evaluateBuySignalInDownTrend(SimpleTradeBot bot, MarketConditions conditions, List<KlineDto> klines) {
     BotParameters parameters = bot.getParameters();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-    boolean oversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
+    boolean extremeDrop = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.002)) < 0 &&
+      conditions.volatility().compareTo(BigDecimal.valueOf(4.0)) > 0;
 
-    // Verificação mais sensível de suporte
-    BigDecimal supportFactor = BigDecimal.ONE.subtract(BigDecimal.valueOf(0.01)); // 1% em vez de 1.5%
-    boolean nearSupport = conditions.currentPrice().compareTo(
-      conditions.support().multiply(supportFactor)) <= 0;
-
-    // Verificação de volume com picos de interesse
-    boolean adequateVolume = conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(0.8))) >= 0;
-    boolean volumeSpike = conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(1.5))) >= 0;
-
-    boolean volumeSpikeWithoutReversal = volumeSpike &&
-      conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0;
-
-    // Verificações de momentum mais detalhadas
-    boolean potentialBounce = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
-    boolean priceRejection = isPriceRejection(conditions, lastKline); // Implementar para detectar sombras longas
-
-    // Verificação da velocidade da queda (sobrevenda rápida)
-    boolean fastDrop = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.001)) < 0;
-
-    // Sinais ponderados para scalping (mais sensível)
-    int signals = (oversold ? 1 : 0) +
-      (nearSupport ? 2 : 0) + // Peso maior para suporte
-      (adequateVolume ? 1 : 0) +
-      (volumeSpike ? 2 : 0) + // Peso maior para picos de volume
-      (potentialBounce ? 1 : 0) +
-      (priceRejection ? 2 : 0) + // Peso maior para rejeição de preço
-      (fastDrop && oversold ? 1 : 0); // Combinação de queda rápida e sobrevenda
-
-    if (volumeSpikeWithoutReversal) {
-      signals -= 2;
+    if (extremeDrop) {
+      log(botTypeName + "⚠️ Extreme drop detected. Avoiding buying during crash.");
+      return;
     }
 
-    if (signals >= 3) { // Mantém o limite em 3, mas agora com pesos diferentes
-      BigDecimal signalStrength = calculateScalpingSignalStrength(conditions);
+    boolean oversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
+    boolean nearSupport = conditions.currentPrice().compareTo(
+      conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.005)))) <= 0;
+
+    boolean volumeSignal = conditions.currentVolume().compareTo(
+      conditions.averageVolume().multiply(BigDecimal.valueOf(1.2))) >= 0;
+
+    boolean strongRejection = isPriceRejection(klines.getLast());
+    boolean potentialBounce = conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) > 0 &&
+      conditions.momentum().compareTo(BigDecimal.valueOf(0.1)) < 0;
+    boolean rsiDivergence = hasRsiDivergence(klines, conditions);
+
+    int signals = 0;
+    if (oversold) signals += 2;
+    if (nearSupport) signals += 3;
+    if (volumeSignal) signals += 2;
+    if (strongRejection) signals += 3;
+    if (potentialBounce) signals += 1;
+    if (rsiDivergence) signals += 3;
+
+    boolean highVolumeWithoutReversal =
+      volumeSignal && conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0;
+
+    if (highVolumeWithoutReversal) signals -= 3;
+
+    BigDecimal bandPosition = calculatePositionInBollingerBand(conditions);
+    if (bandPosition.compareTo(BigDecimal.valueOf(0.1)) <= 0) signals += 2;
+
+    int requiredSignals = 4;
+
+    log(botTypeName + "Signs of purchase in Downtrend: " + signals + "/" + requiredSignals);
+
+    if (signals >= requiredSignals) {
+      BigDecimal signalStrength = calculateScalpingSignalStrength(conditions)
+        .multiply(BigDecimal.valueOf(0.5));
+
       BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions)
         .multiply(signalStrength);
 
@@ -223,7 +230,6 @@ public class TradingService {
 
     boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
 
-    // Minimum profit considering fees
     BigDecimal minProfitThreshold = BigDecimal.valueOf(0.3);
 
     log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, minProfitThreshold));
@@ -277,6 +283,7 @@ public class TradingService {
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
+    log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, 0.3));
 
     boolean isNewPosition = status.getLastPurchaseTime() != null &&
       status.getLastPurchaseTime().plusMinutes(3).isAfter(LocalDateTime.now());
@@ -295,35 +302,33 @@ public class TradingService {
       volatilityFactor = BigDecimal.valueOf(0.8);
     }
 
-    // Take profit mais agressivo para scalping
     BigDecimal adjustedTP = parameters.getTakeProfitPercent().multiply(volatilityFactor);
     BigDecimal adjustedSL = parameters.getStopLossPercent().multiply(volatilityFactor);
 
-    // Redução adicional para downtrend forte
-    boolean priceWeakening = conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0; // Mais sensível
+    boolean priceWeakening = conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0;
     boolean strongDowntrend = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.05)) < 0;
 
-    if (priceWeakening || strongDowntrend) { // OR em vez de AND para ser mais sensível
-      adjustedTP = adjustedTP.multiply(BigDecimal.valueOf(0.6)); // 60% em vez de 70%
+    if (priceWeakening || strongDowntrend) {
+      adjustedTP = adjustedTP.multiply(BigDecimal.valueOf(0.6));
     }
 
-    // Detecta padrão de reversão nas últimas velas
     boolean reversalPattern = hasRecentReversalPattern(klines);
 
-    // Níveis de saída
     boolean strongMomentumNegativeTendency = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
     boolean tinyProfit = priceChangePercent.compareTo(BigDecimal.valueOf(0.15)) >= 0;
     boolean fullTakeProfit = priceChangePercent.compareTo(adjustedTP) >= 0;
-    boolean stopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0 &&
-      (strongMomentumNegativeTendency || checkConsistentDowntrend(klines, 3));
+    boolean stopLoss =
+      priceChangePercent.compareTo(adjustedSL.negate()) <= 0
+        && (strongMomentumNegativeTendency || checkConsistentDowntrend(klines, 3));
 
-    boolean rsiReversal = conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0 && // 50 em vez de 55
-      priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0; // 0.2% em vez de 0.3%
+    boolean rsiReversal =
+      conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0 &&
+        priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0;
 
-    boolean timeout = checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS / 4) &&
-      priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
+    boolean timeout =
+      checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS)
+        && priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
 
-    // Saída completa
     if (fullTakeProfit ||
       (stopLoss && !isAtSupportLevel(conditions)) ||
       rsiReversal ||
@@ -331,11 +336,10 @@ public class TradingService {
       reversalPattern ||
       (tinyProfit && strongDowntrend)) {
 
-      // Aumente a preferência por saídas em momentum negativo
       String reason = fullTakeProfit ? "Take Profit" :
-        (stopLoss ? "Stop Loss" + (strongMomentumNegativeTendency ? " (momentum forte)" : "") :
+        (stopLoss ? "Stop Loss" + (strongMomentumNegativeTendency ? " (strong momentum)" : "") :
           (timeout ? "Timeout" :
-            (reversalPattern ? "Padrão de Reversão" :
+            (reversalPattern ? "Reversal pattern" :
               (rsiReversal ? "RSI Reversal" : "Tiny Profit in Strong Downtrend"))));
 
       log(botTypeName + "🔴 SELL signal in downtrend! Reason: " + reason);
@@ -502,36 +506,48 @@ public class TradingService {
       .multiply(BigDecimal.valueOf(100));
   }
 
-  private boolean isDownTrendMarket(MarketConditions conditions) {
-    // Indicadores mais sensíveis para scalping
+  private boolean isDownTrendMarket(MarketConditions conditions, List<KlineDto> klines, String botTypeName) {
     boolean emaFastDown = conditions.ema8().compareTo(conditions.ema21()) < 0;
     boolean veryShortTermDown = conditions.currentPrice().compareTo(conditions.sma9()) < 0;
 
-    // Análise de intensidade da queda
     BigDecimal slopeIntensity = conditions.priceSlope().abs();
     boolean steepDecline = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 &&
       slopeIntensity.compareTo(BigDecimal.valueOf(0.0005)) > 0;
 
-    // Posição relativa nas bandas (mais sensível)
     BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
     BigDecimal positionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
       .divide(bandWidth, 8, RoundingMode.HALF_UP);
     boolean movingDownInBand = positionInBand.compareTo(BigDecimal.valueOf(0.5)) < 0 &&
       conditions.currentPrice().compareTo(conditions.bollingerMiddle()) < 0;
 
-    // Momentum negativo recente (curto prazo)
+    boolean strongVolume =
+      conditions.currentVolume().compareTo(
+        conditions.averageVolume()
+          .multiply(BigDecimal.valueOf(1.2))) > 0;
+
     boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) < 0;
 
-    // Sistema de pontuação ponderado
     int score = 0;
+    if (strongVolume) score += 2;
     if (emaFastDown) score += 2;
-    if (veryShortTermDown) score += 3;  // Maior peso para indicador mais rápido
-    if (steepDecline) score += 4;       // Alto peso para quedas intensas
+    if (veryShortTermDown) score += 3;
+    if (steepDecline) score += 4;
     if (movingDownInBand) score += 2;
     if (negativeMomentum) score += 3;
+    if (hasConsistentDownCandles(klines, 5)) score += 2;
 
-    // Limiar mais sensível para scalping
-    return score >= 5;  // Ajuste este valor conforme necessário
+    log(botTypeName + "Downtrend score: " + score + " (threshold: 5)", true);
+    return score >= 5;
+  }
+
+  private boolean hasConsistentDownCandles(List<KlineDto> klines, int periods) {
+    int downCount = 0;
+    for (int i = klines.size() - periods; i < klines.size(); i++) {
+      BigDecimal close = new BigDecimal(klines.get(i).getClosePrice());
+      BigDecimal prevClose = new BigDecimal(klines.get(i - 1).getClosePrice());
+      if (close.compareTo(prevClose) < 0) downCount++;
+    }
+    return downCount >= periods * 0.7; // 70% das velas de baixa
   }
 
   private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
@@ -540,13 +556,11 @@ public class TradingService {
     BigDecimal taxCost = BigDecimal.valueOf(0.2);
     String botTypeName = "[" + bot.getParameters().getBotType() + "] - ";
 
-    // Ajuste de ativação mais rápido para scalping
-    BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.15)); // Reduzido para ativar mais cedo
+    BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.12));
 
-    // Fator de ajuste baseado na volatilidade
-    BigDecimal volatilityFactor = BigDecimal.ONE;
+    BigDecimal volatilityFactor;
     if (conditions.volatility().compareTo(BigDecimal.valueOf(2.0)) > 0) {
-      volatilityFactor = BigDecimal.valueOf(0.95); // Stop mais apertado em alta volatilidade
+      volatilityFactor = BigDecimal.valueOf(0.95);
     } else if (conditions.volatility().compareTo(BigDecimal.valueOf(1.0)) > 0) {
       volatilityFactor = BigDecimal.valueOf(0.9);
     } else {
@@ -554,7 +568,6 @@ public class TradingService {
     }
 
     if (currentProfit.compareTo(activationThreshold) > 0) {
-      // Stop mais agressivo (85-95% do lucro em vez de 80%)
       BigDecimal trailingLevel = currentProfit.multiply(volatilityFactor);
       trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.05)));
 
@@ -565,16 +578,15 @@ public class TradingService {
       }
     }
 
-    // Verificação de momentum negativo para saída antecipada
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0 &&
-      currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.1))) > 0;
+    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.08)) < 0 &&
+      currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.08))) > 0;
 
     if ((status.getTrailingStopLevel() != null &&
       currentProfit.compareTo(status.getTrailingStopLevel()) < 0 &&
       currentProfit.compareTo(taxCost) > 0) || strongNegativeMomentum) {
 
-      String reason = strongNegativeMomentum ? "momentum negativo" : "nível de stop";
-      log(botTypeName + "🔴 Trailing Stop executado por " + reason + ": " + currentProfit + "%");
+      String reason = strongNegativeMomentum ? "negative momentum" : "stop level";
+      log(botTypeName + "🔴 Trailing Stop executed for " + reason + ": " + currentProfit + "%");
       executeSellOrder(bot);
       return true;
     }
@@ -587,9 +599,7 @@ public class TradingService {
       conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0;
   }
 
-  private boolean isPriceRejection(MarketConditions conditions, KlineDto lastKline) {
-
-    // Calcula o tamanho do corpo e das sombras
+  private boolean isPriceRejection(KlineDto lastKline) {
     BigDecimal openPrice = new BigDecimal(lastKline.getOpenPrice()).setScale(8, RoundingMode.HALF_UP);
     BigDecimal closePrice = new BigDecimal(lastKline.getClosePrice()).setScale(8, RoundingMode.HALF_UP);
     BigDecimal highPrice = new BigDecimal(lastKline.getHighPrice()).setScale(8, RoundingMode.HALF_UP);
@@ -615,33 +625,31 @@ public class TradingService {
 
   private BigDecimal calculateScalpingSignalStrength(MarketConditions conditions) {
     int positiveSignals = 0;
-    int totalSignals = 7; // Mais sinais para análise detalhada
+    int totalSignals = 8; // Mais sinais para análise detalhada
 
-    // Avalia RSI - mais sensível para scalping
+    // RSI - mais sensível para scalping
     if (conditions.rsi().compareTo(BigDecimal.valueOf(40)) <= 0) positiveSignals++;
     if (conditions.rsi().compareTo(BigDecimal.valueOf(30)) <= 0) positiveSignals++;
     if (conditions.rsi().compareTo(BigDecimal.valueOf(20)) <= 0) positiveSignals++;
 
-    // Avalia proximidade ao suporte - mais sensível
+    // Proximidade ao suporte
     BigDecimal priceToSupport = conditions.currentPrice().divide(conditions.support(), 8, RoundingMode.HALF_UP);
-    if (priceToSupport.compareTo(BigDecimal.valueOf(1.005)) <= 0) positiveSignals++; // Extremamente próximo
+    if (priceToSupport.compareTo(BigDecimal.valueOf(1.005)) <= 0) positiveSignals += 2; // Peso maior para suporte
 
-    // Avalia momentum positivo com maior sensibilidade
-    if (conditions.momentum().compareTo(BigDecimal.valueOf(0)) > 0) positiveSignals++;
-    if (conditions.momentum().compareTo(BigDecimal.valueOf(0.1)) > 0) positiveSignals++;
+    // Momentum positivo recente (comparado ao cenário anterior)
+    if (conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) > 0) positiveSignals++;
+    if (conditions.momentum().compareTo(BigDecimal.valueOf(0.0)) > 0) positiveSignals++;
 
-    // Avalia posição nas bandas de Bollinger
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal positionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP);
-    if (positionInBand.compareTo(BigDecimal.valueOf(0.2)) <= 0) positiveSignals++;
+    // Posição nas bandas de Bollinger
+    BigDecimal bandPosition = calculatePositionInBollingerBand(conditions);
+    if (bandPosition.compareTo(BigDecimal.valueOf(0.2)) <= 0) positiveSignals++;
+    if (bandPosition.compareTo(BigDecimal.valueOf(0.1)) <= 0) positiveSignals++;
 
-    // Calcula força do sinal entre 0.3 e 1.0 (mais amplo para scalping)
+    // Cálculo da força (entre 0.3 e 1.0)
     BigDecimal signalRatio = BigDecimal.valueOf(positiveSignals)
       .divide(BigDecimal.valueOf(totalSignals), 8, RoundingMode.HALF_UP);
 
-    return BigDecimal.valueOf(0.3)
-      .add(signalRatio.multiply(BigDecimal.valueOf(0.7)));
+    return BigDecimal.valueOf(0.3).add(signalRatio.multiply(BigDecimal.valueOf(0.7)));
   }
 
   private BigDecimal estimatePotentialProfit(MarketConditions conditions) {
@@ -687,12 +695,12 @@ public class TradingService {
 
     // Padrão de estrela da manhã (morning star)
     boolean morningStar = !thirdBullish && !previousBullish && currentBullish &&
-      isPriceRejection(null, previousCandle) &&
+      isPriceRejection(previousCandle) &&
       new BigDecimal(currentCandle.getClosePrice()).compareTo(
         new BigDecimal(thirdCandle.getOpenPrice())) > 0;
 
     // Padrão de martelo (hammer) - vela com sombra inferior longa
-    boolean hammer = isPriceRejection(null, currentCandle) &&
+    boolean hammer = isPriceRejection(currentCandle) &&
       new BigDecimal(currentCandle.getLowPrice()).compareTo(
         new BigDecimal(previousCandle.getLowPrice())) < 0 &&
       currentBullish;
@@ -725,6 +733,30 @@ public class TradingService {
   private boolean isAtSupportLevel(MarketConditions conditions) {
     BigDecimal priceToSupport = conditions.currentPrice().divide(conditions.support(), 8, RoundingMode.HALF_UP);
     return priceToSupport.compareTo(BigDecimal.valueOf(1.01)) <= 0;
+  }
+
+  private boolean hasRsiDivergence(List<KlineDto> klines, MarketConditions conditions) {
+    if (klines.size() < 10) return false;
+
+    // Verifica se preço faz mínimos mais baixos enquanto RSI faz mínimos mais altos
+    BigDecimal currentPrice = conditions.currentPrice();
+    BigDecimal previousLow = new BigDecimal(klines.get(klines.size() - 3).getLowPrice());
+
+    // Precisamos calcular o RSI anterior para comparar
+    List<BigDecimal> previousPrices = new ArrayList<>();
+    for (int i = 0; i < klines.size() - 2; i++) {
+      previousPrices.add(new BigDecimal(klines.get(i).getClosePrice()));
+    }
+
+    BigDecimal previousRsi = calculateRSI(previousPrices, 14);
+
+    return currentPrice.compareTo(previousLow) < 0 && conditions.rsi().compareTo(previousRsi) > 0;
+  }
+
+  private BigDecimal calculatePositionInBollingerBand(MarketConditions conditions) {
+    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
+    return conditions.currentPrice().subtract(conditions.bollingerLower())
+      .divide(bandWidth, 8, RoundingMode.HALF_UP);
   }
 
 }

@@ -65,7 +65,7 @@ public class MarketAnalyzer {
     );
   }
 
-  private BigDecimal calculateRSI(List<BigDecimal> closePrices, int period) {
+  public static BigDecimal calculateRSI(List<BigDecimal> closePrices, int period) {
     if (closePrices.size() <= period) {
       throw new IllegalArgumentException("Insufficient data for RSI calculation");
     }
