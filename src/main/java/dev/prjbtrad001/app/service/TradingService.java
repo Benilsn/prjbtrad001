@@ -90,21 +90,17 @@ public class TradingService {
     boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 && ema8AboveEma21;
 
     boolean touchedSupport = conditions.currentPrice()
-      .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.006)))) <= 0;
+      .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.003)))) <= 0;
 
     boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower()
-      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.02)))) <= 0;
+      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.01)))) <= 0;
 
     boolean strongVolume = conditions.currentVolume()
       .compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
 
-    boolean acceleratingMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.01)) > 0;
+    boolean acceleratingMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.05)) > 0;
 
-    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(4)) < 0;
-
-    boolean extremeRsi =
-      conditions.rsi().compareTo(BigDecimal.valueOf(10)) < 0
-      || conditions.rsi().compareTo(BigDecimal.valueOf(90)) > 0;
+    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
 
     TradingSignals buySignals = TradingSignals.builder()
       .rsiCondition(rsiOversold)
@@ -113,9 +109,9 @@ public class TradingService {
       .priceCondition(touchedSupport || touchedBollingerLower)
       .momentumCondition(acceleratingMomentum)
       .volatilityCondition(lowVolatility)
-      .extremeRsi(extremeRsi)
+      .extremeRsi(conditions.rsi().compareTo(parameters.getRsiPurchase()) > 0)
       .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
-      .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0002)) < 0 && !ema8AboveEma21)
+      .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
       //Sell only signals
       .stopLoss(false)
       .positionTimeout(false)
@@ -215,7 +211,10 @@ public class TradingService {
     boolean isVeryNewPosition =
       status.getLastPurchaseTime() != null
         && status.getLastPurchaseTime()
-        .plusSeconds(Math.max(bot.getIntervalInSeconds(), (int) (bot.getIntervalInSeconds() * (1.5 / conditions.volatility().doubleValue()))))
+        .plusSeconds(Math.max(
+          bot.getIntervalInSeconds() * 2,
+          (int) (bot.getIntervalInSeconds() * Math.min(5.0, 2.5 * Math.max(0.8, conditions.volatility().doubleValue())))
+        ))
         .isAfter(LocalDateTime.now());
 
     if (isVeryNewPosition) {
@@ -258,7 +257,6 @@ public class TradingService {
       .emergencyExit(isEmergencyExit(conditions))
       .minimumProfitReached(priceChangePercent.compareTo(minProfitThreshold) >= 0)
 
-      //Buy only signals
       .volumeCondition(false)
       .volatilityCondition(false)
       .build();
@@ -301,7 +299,10 @@ public class TradingService {
     boolean isVeryNewPosition =
       status.getLastPurchaseTime() != null
         && status.getLastPurchaseTime()
-        .plusSeconds(Math.max(bot.getIntervalInSeconds() * 2, (int) (bot.getIntervalInSeconds() * (2.5 / conditions.volatility().doubleValue()))))
+        .plusSeconds(Math.max(
+          bot.getIntervalInSeconds() * 2,
+          (int) (bot.getIntervalInSeconds() * Math.min(5.0, 2.5 * Math.max(0.8, conditions.volatility().doubleValue())))
+        ))
         .isAfter(LocalDateTime.now());
 
     if (isVeryNewPosition) {
@@ -549,16 +550,21 @@ public class TradingService {
 
     boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) < 0;
 
+    boolean lastCandleBearish =
+      new BigDecimal(klines.getLast().getClosePrice())
+        .compareTo(new BigDecimal(klines.getLast().getOpenPrice())) < 0;
+
     int score = 0;
-    if (strongVolume) score += 2;
-    if (emaFastDown) score += 2;
+    if (strongVolume) score += 1;
+    if (emaFastDown) score += 3;
     if (veryShortTermDown) score += 3;
-    if (steepDecline) score += 4;
+    if (steepDecline) score += 3;
     if (movingDownInBand) score += 2;
     if (negativeMomentum) score += 3;
-    if (hasConsistentDownCandles(klines, 5)) score += 2;
+    if (hasConsistentDownCandles(klines, 3)) score += 3;
+    if (lastCandleBearish) score += 2;
 
-    return score >= 5;
+    return score >= 6;
   }
 
   private boolean hasConsistentDownCandles(List<KlineDto> klines, int periods) {
