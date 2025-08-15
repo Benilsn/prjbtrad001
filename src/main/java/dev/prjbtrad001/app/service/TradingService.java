@@ -90,17 +90,21 @@ public class TradingService {
     boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 && ema8AboveEma21;
 
     boolean touchedSupport = conditions.currentPrice()
-      .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.003)))) <= 0;
+      .compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.006)))) <= 0;
 
     boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower()
-      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.01)))) <= 0;
+      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.02)))) <= 0;
 
     boolean strongVolume = conditions.currentVolume()
       .compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
 
-    boolean acceleratingMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.05)) > 0;
+    boolean acceleratingMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.01)) > 0;
 
-    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
+    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(4)) < 0;
+
+    boolean extremeRsi =
+      conditions.rsi().compareTo(BigDecimal.valueOf(10)) < 0
+      || conditions.rsi().compareTo(BigDecimal.valueOf(90)) > 0;
 
     TradingSignals buySignals = TradingSignals.builder()
       .rsiCondition(rsiOversold)
@@ -109,9 +113,9 @@ public class TradingService {
       .priceCondition(touchedSupport || touchedBollingerLower)
       .momentumCondition(acceleratingMomentum)
       .volatilityCondition(lowVolatility)
-      .extremeRsi(conditions.rsi().compareTo(parameters.getRsiPurchase()) > 0)
+      .extremeRsi(extremeRsi)
       .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
-      .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
+      .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0002)) < 0 && !ema8AboveEma21)
       //Sell only signals
       .stopLoss(false)
       .positionTimeout(false)
@@ -185,7 +189,7 @@ public class TradingService {
     BigDecimal bandPosition = calculatePositionInBollingerBand(conditions);
     if (bandPosition.compareTo(BigDecimal.valueOf(0.1)) <= 0) signals += 2;
 
-    int requiredSignals = 4;
+    int requiredSignals = 7;
 
     log(botTypeName + "Signs of purchase in Downtrend: " + signals + "/" + requiredSignals);
 
@@ -208,6 +212,17 @@ public class TradingService {
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
+    boolean isVeryNewPosition =
+      status.getLastPurchaseTime() != null
+        && status.getLastPurchaseTime()
+        .plusSeconds(Math.max(bot.getIntervalInSeconds(), (int) (bot.getIntervalInSeconds() * (1.5 / conditions.volatility().doubleValue()))))
+        .isAfter(LocalDateTime.now());
+
+    if (isVeryNewPosition) {
+      log(botTypeName + "⏳ Very recent position, awaiting before considering exit.");
+      return;
+    }
+
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
 
     if (applyTrailingStop(bot, conditions)) {
@@ -224,9 +239,7 @@ public class TradingService {
 
     boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
-    boolean positionTimeout =
-      checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS) &&
-        priceChangePercent.compareTo(BigDecimal.valueOf(0.3)) >= 0;
+    boolean positionTimeout = checkPositionTimeout(bot, conditions);
 
     boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
 
@@ -285,11 +298,14 @@ public class TradingService {
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
     log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, 0.3));
 
-    boolean isNewPosition = status.getLastPurchaseTime() != null &&
-      status.getLastPurchaseTime().plusMinutes(3).isAfter(LocalDateTime.now());
+    boolean isVeryNewPosition =
+      status.getLastPurchaseTime() != null
+        && status.getLastPurchaseTime()
+        .plusSeconds(Math.max(bot.getIntervalInSeconds() * 2, (int) (bot.getIntervalInSeconds() * (2.5 / conditions.volatility().doubleValue()))))
+        .isAfter(LocalDateTime.now());
 
-    if (isNewPosition && priceChangePercent.compareTo(BigDecimal.valueOf(-1.5)) > 0) {
-      log(botTypeName + "⏳ Very recent position, awaiting a minimum of 3 minutes before considering exit.");
+    if (isVeryNewPosition) {
+      log(botTypeName + "⏳  Very recent position, awaiting before considering exit.");
       return;
     }
 
@@ -325,20 +341,18 @@ public class TradingService {
       conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0 &&
         priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0;
 
-    boolean timeout =
-      checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS)
-        && priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
+    boolean positionTimeout = checkPositionTimeout(bot, conditions);
 
     if (fullTakeProfit ||
       (stopLoss && !isAtSupportLevel(conditions)) ||
       rsiReversal ||
-      timeout ||
+      positionTimeout ||
       reversalPattern ||
       (tinyProfit && strongDowntrend)) {
 
       String reason = fullTakeProfit ? "Take Profit" :
         (stopLoss ? "Stop Loss" + (strongMomentumNegativeTendency ? " (strong momentum)" : "") :
-          (timeout ? "Timeout" :
+          (positionTimeout ? "Timeout" :
             (reversalPattern ? "Reversal pattern" :
               (rsiReversal ? "RSI Reversal" : "Tiny Profit in Strong Downtrend"))));
 
@@ -485,8 +499,16 @@ public class TradingService {
     log(botTypeName + "✅ Sale executed successfully");
   }
 
-  private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, int timeoutSeconds) {
+  private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions) {
     if (!bot.getStatus().isLong()) return false;
+
+    int timeoutSeconds =
+      switch (bot.getParameters().getInterval()) {
+        case "1m" -> 600;
+        case "3m" -> 1200;
+        case "5m" -> 1800;
+        default -> 900;
+      };
 
     double volatilityFactor = Math.min(2.0, Math.max(0.5, conditions.volatility().doubleValue() / 2.0));
     int adjustedTimeout = (int) (timeoutSeconds / volatilityFactor);
@@ -536,7 +558,6 @@ public class TradingService {
     if (negativeMomentum) score += 3;
     if (hasConsistentDownCandles(klines, 5)) score += 2;
 
-    log(botTypeName + "Downtrend score: " + score + " (threshold: 5)", true);
     return score >= 5;
   }
 

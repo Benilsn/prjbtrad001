@@ -89,38 +89,41 @@ public record TradingSignals(
   }
 
   private boolean hasMinimumRequiredConditions() {
-    int positiveSignals = (rsiCondition ? 1 : 0) +
-      (trendCondition ? 1 : 0) +
-      (volumeCondition ? 1 : 0) +
-      (priceCondition ? 1 : 0) +
-      (momentumCondition ? 1 : 0);
+    int positiveSignals =
+      (rsiCondition ? 1 : 0) +
+        (trendCondition ? 1 : 0) +
+        (volumeCondition ? 1 : 0) +
+        (priceCondition ? 1 : 0) +
+        (momentumCondition ? 1 : 0);
 
-    return priceCondition && positiveSignals >= 3;
+    return positiveSignals >= 2;
   }
 
   private double calculateBuyPoints() {
-    double basePoints = (rsiCondition ? 1.3 : 0)
-      + (trendCondition ? 1.0 : 0)
-      + (volumeCondition ? 0.6 : 0)
-      + (priceCondition ? 0.8 : 0)
-      + (momentumCondition ? 0.5 : 0)
-      + (volatilityCondition ? 0.3 : 0);
+    double basePoints =
+      (rsiCondition ? 1.3 : 0)
+        + (trendCondition ? 1.0 : 0)
+        + (volumeCondition ? 0.6 : 0)
+        + (priceCondition ? 0.8 : 0)
+        + (momentumCondition ? 0.5 : 0)
+        + (volatilityCondition ? 0.3 : 0);
 
     double penalties = 0;
 
-    if (rsiCondition && !trendCondition) penalties += 0.4;
-    if (trendCondition && !volumeCondition) penalties += 0.3;
-    if (!momentumCondition) penalties += 0.3;
+    if (rsiCondition && !trendCondition) penalties += 0.2;
+    if (trendCondition && !volumeCondition) penalties += 0.1;
+    if (!momentumCondition) penalties += 0.1;
 
     return Math.max(0, basePoints - penalties);
   }
 
   private double calculateSellPoints() {
-    return (rsiCondition ? 1.0 : 0)
-      + (trendCondition ? 1.2 : 0)
-      + (volumeCondition ? 0.3 : 0)
-      + (priceCondition ? 0.6 : 0)
-      + (momentumCondition ? 0.5 : 0)
-      + (volatilityCondition ? 0.4 : 0);
+    return
+      (rsiCondition ? 1.0 : 0)
+        + (trendCondition ? 1.2 : 0)
+        + (volumeCondition ? 0.3 : 0)
+        + (priceCondition ? 0.6 : 0)
+        + (momentumCondition ? 0.5 : 0)
+        + (volatilityCondition ? 0.4 : 0);
   }
 }
