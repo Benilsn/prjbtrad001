@@ -89,13 +89,22 @@ public record TradingSignals(
   }
 
   private boolean hasMinimumRequiredConditions() {
-    int positiveSignals = (rsiCondition ? 1 : 0) +
-      (trendCondition ? 1 : 0) +
-      (volumeCondition ? 1 : 0) +
-      (priceCondition ? 1 : 0) +
-      (momentumCondition ? 1 : 0);
+    if (priceCondition && volumeCondition) {
+      return true;
+    }
 
-    return priceCondition && positiveSignals >= 3;
+    if (rsiCondition && trendCondition) {
+      return true;
+    }
+
+    int positiveSignals =
+      (rsiCondition ? 1 : 0) +
+        (trendCondition ? 1 : 0) +
+        (volumeCondition ? 1 : 0) +
+        (priceCondition ? 1 : 0) +
+        (momentumCondition ? 1 : 0);
+
+    return positiveSignals >= 2;
   }
 
   private double calculateBuyPoints() {
@@ -109,8 +118,8 @@ public record TradingSignals(
     double penalties = 0;
 
     if (rsiCondition && !trendCondition) penalties += 0.4;
-    if (trendCondition && !volumeCondition) penalties += 0.3;
-    if (!momentumCondition) penalties += 0.3;
+    if (trendCondition && !volumeCondition) penalties += 0.2;
+    if (!momentumCondition) penalties += 0.2;
 
     return Math.max(0, basePoints - penalties);
   }

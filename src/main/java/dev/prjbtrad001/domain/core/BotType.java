@@ -8,7 +8,8 @@ public enum BotType {
   XRPBRL,
   DOGEBRL,
   MATICBRL,
-  LTCBRL;
+  LTCBRL,
+  ADABRL;
 
   public boolean isValid(String symbol) {
     for (BotType type : BotType.values()) {
