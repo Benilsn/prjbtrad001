@@ -166,7 +166,7 @@ public class TradingService {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
-    String trend = isDownTrend ? "downtrend" : "normal";
+    String trend = isDownTrend ? "downtrend" : "normal trend ";
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
 
@@ -207,7 +207,7 @@ public class TradingService {
           && priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0;
 
       boolean timeout =
-        checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS / 4)
+        checkPositionTimeout(bot, conditions, priceChangePercent)
           && priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
 
       if (fullTakeProfit ||
@@ -239,7 +239,7 @@ public class TradingService {
       boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
       boolean positionTimeout =
-        checkPositionTimeout(bot, conditions, TradingConstants.POSITION_TIMEOUT_SECONDS) &&
+        checkPositionTimeout(bot, conditions, priceChangePercent) &&
           priceChangePercent.compareTo(BigDecimal.valueOf(0.3)) >= 0;
 
       boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
@@ -429,24 +429,38 @@ public class TradingService {
     log(botTypeName + "✅ Sale executed successfully");
   }
 
-  private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, int timeoutSeconds) {
+  private boolean checkPositionTimeout(SimpleTradeBot bot, MarketConditions conditions, BigDecimal priceChangePercent) {
     if (!bot.getStatus().isLong()) return false;
 
-    boolean strongPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.2)) > 0;
-    boolean significantProfit =
-      calculatePriceChangePercent(bot.getStatus(), conditions.currentPrice())
-        .compareTo(BigDecimal.valueOf(0.8)) > 0;
+    boolean absoluteMaximumTimeReached =
+      bot.getStatus().getLastPurchaseTime()
+        .plusMinutes(120)
+        .isBefore(LocalDateTime.now());
 
-    if (strongPositiveMomentum && significantProfit) {
-      return false;
+    if (absoluteMaximumTimeReached) {
+      return true;
+    }
+
+    boolean strongPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.2)) > 0;
+
+    boolean significantProfit = priceChangePercent.compareTo(BigDecimal.valueOf(0.8)) > 0;
+
+    boolean extendedTimeReached =
+      bot.getStatus().getLastPurchaseTime()
+        .plusMinutes(90)
+        .isBefore(LocalDateTime.now());
+
+    if (extendedTimeReached && (strongPositiveMomentum && significantProfit)) {
+      return true;
     }
 
     double volatilityFactor = Math.min(2.0, Math.max(0.5, conditions.volatility().doubleValue() / 2.0));
-    int adjustedTimeout = (int) (timeoutSeconds / volatilityFactor);
+    int adjustedTimeout = (int) (TradingConstants.POSITION_TIMEOUT_SECONDS / volatilityFactor);
 
-    return bot.getStatus().getLastPurchaseTime()
-      .plusSeconds(adjustedTimeout)
-      .isBefore(LocalDateTime.now());
+    return
+      bot.getStatus().getLastPurchaseTime()
+        .plusSeconds(adjustedTimeout)
+        .isBefore(LocalDateTime.now());
   }
 
   public static BigDecimal calculatePriceChangePercent(Status status, BigDecimal currentPrice) {
@@ -464,8 +478,13 @@ public class TradingService {
     boolean veryShortTermDown = conditions.currentPrice().compareTo(conditions.sma9()) < 0;
 
     BigDecimal slopeIntensity = conditions.priceSlope().abs();
-    boolean steepDecline = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 &&
-      slopeIntensity.compareTo(BigDecimal.valueOf(0.0005)) > 0;
+    boolean steepDecline = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.00015)) < 0 &&
+      slopeIntensity.compareTo(BigDecimal.valueOf(0.0003)) > 0;
+
+    boolean volumeDecline = conditions.currentVolume().compareTo(
+      conditions.averageVolume().multiply(BigDecimal.valueOf(0.8))) < 0;
+    boolean volumeSpike = conditions.currentVolume().compareTo(
+      conditions.averageVolume().multiply(BigDecimal.valueOf(1.5))) > 0;
 
     BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
     BigDecimal positionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
@@ -481,11 +500,13 @@ public class TradingService {
     if (veryShortTermDown) score += 3;
     if (steepDecline) score += 4;
     if (movingDownInBand) score += 2;
-    if (negativeMomentum) score += 3;
-    if (strongNegativeMomentum) score += 2;
+    if (negativeMomentum) score += 2;
+    if (strongNegativeMomentum) score += 3;
+    if (volumeDecline) score += 2;
+    if (volumeSpike && negativeMomentum) score += 3;
 
     if (conditions.ema8().compareTo(conditions.ema21().multiply(new BigDecimal("0.9990"))) < 0) {
-      score += 3;
+      return score >= 6;
     }
 
     log(botTypeName + "Downtrend score: " + score + " (threshold: 5)", true);
@@ -498,15 +519,25 @@ public class TradingService {
     BigDecimal taxCost = BigDecimal.valueOf(0.2);
     String botTypeName = "[" + bot.getParameters().getBotType() + "] - ";
 
-    BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.15));
+    BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.05));
 
-    BigDecimal volatilityFactor = BigDecimal.ONE;
+    LocalDateTime purchaseTime = status.getLastPurchaseTime();
+    long minutesHeld =
+      purchaseTime != null
+        ? java.time.Duration.between(purchaseTime, LocalDateTime.now()).toMinutes()
+        : 0;
+
+    BigDecimal timeAdjustment =
+      minutesHeld > 30 ? BigDecimal.valueOf(0.95)
+        : BigDecimal.valueOf(0.98);
+
+    BigDecimal volatilityFactor;
     if (conditions.volatility().compareTo(BigDecimal.valueOf(2.0)) > 0) {
-      volatilityFactor = BigDecimal.valueOf(0.80);
+      volatilityFactor = BigDecimal.valueOf(0.75).multiply(timeAdjustment);
     } else if (conditions.volatility().compareTo(BigDecimal.valueOf(1.0)) > 0) {
-      volatilityFactor = BigDecimal.valueOf(0.85);
+      volatilityFactor = BigDecimal.valueOf(0.80).multiply(timeAdjustment);
     } else {
-      volatilityFactor = BigDecimal.valueOf(0.90);
+      volatilityFactor = BigDecimal.valueOf(0.85).multiply(timeAdjustment);
     }
 
     if (currentProfit.compareTo(activationThreshold) > 0) {
@@ -520,16 +551,21 @@ public class TradingService {
       }
     }
 
-    // Verificação de momentum negativo para saída antecipada
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0 &&
+    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) < 0 &&
+      currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.05))) > 0;
+
+    boolean highRsi = conditions.rsi().compareTo(BigDecimal.valueOf(65)) > 0 &&
       currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.1))) > 0;
 
     if ((status.getTrailingStopLevel() != null &&
       currentProfit.compareTo(status.getTrailingStopLevel()) < 0 &&
-      currentProfit.compareTo(taxCost) > 0) || strongNegativeMomentum) {
+      currentProfit.compareTo(taxCost) > 0) || strongNegativeMomentum || highRsi) {
 
-      String reason = strongNegativeMomentum ? "momentum negativo" : "nível de stop";
-      log(botTypeName + "🔴 Trailing Stop executado por " + reason + ": " + currentProfit + "%");
+      String reason = strongNegativeMomentum ? "negative momentum" :
+        highRsi ? "High RSI": "Stop level";
+
+      log(botTypeName + "🔴 Trailing Stop executed by" +
+        " " + reason + ": " + currentProfit + "%");
       executeSellOrder(bot);
       return true;
     }
