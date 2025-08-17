@@ -506,11 +506,11 @@ public class TradingService {
     if (volumeSpike && negativeMomentum) score += 3;
 
     if (conditions.ema8().compareTo(conditions.ema21().multiply(new BigDecimal("0.9990"))) < 0) {
-      return score >= 6;
+      score += 3;
     }
 
-    log(botTypeName + "Downtrend score: " + score + " (threshold: 5)", true);
-    return score >= 5;
+    log(botTypeName + "Downtrend score: " + score + " (threshold: 6)", true);
+    return score >= 6;
   }
 
   private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
