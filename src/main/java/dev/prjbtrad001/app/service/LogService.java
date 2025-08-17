@@ -39,20 +39,14 @@ public class LogService {
     }
   }
 
-  private void captureMarketSnapshot(SimpleTradeBot bot, MarketConditions conditions,
-                                     boolean isDownTrend) {
+  private void captureMarketSnapshot(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
     String botId = bot.getParameters().getBotType().toString();
-    latestConditions.put(botId, new MarketConditionsSnapshot(
-      bot, conditions, isDownTrend));
+    latestConditions.put(botId, new MarketConditionsSnapshot(bot, conditions, isDownTrend));
   }
 
-  // Chamado dos métodos evaluateBuySignal e evaluateSellSignal
-  public void logSignals(SimpleTradeBot bot, MarketConditions conditions,
-                         boolean isDownTrend) {
-    // Captura snapshot thread-safe das condições atuais
+  public void logSignals(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
     captureMarketSnapshot(bot, conditions, isDownTrend);
 
-    // Enviar para processamento assíncrono
     CompletableFuture.runAsync(() ->
         processLogsAsync(bot.getParameters().getBotType().toString()),
       logExecutor);
@@ -70,7 +64,6 @@ public class LogService {
       BotParameters parameters = bot.getParameters();
       String botTypeName = "[" + parameters.getBotType() + "] - ";
 
-      // Informações de preço e médias móveis
       log(botTypeName + "📊 Current Price: " + conditions.currentPrice().setScale(5, RoundingMode.HALF_UP) +
         " | SMA9: " + conditions.sma9().setScale(5, RoundingMode.HALF_UP) +
         " | SMA21: " + conditions.sma21().setScale(5, RoundingMode.HALF_UP) +
