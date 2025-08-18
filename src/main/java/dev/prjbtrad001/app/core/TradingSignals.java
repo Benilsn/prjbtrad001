@@ -2,10 +2,6 @@ package dev.prjbtrad001.app.core;
 
 import lombok.Builder;
 
-import java.math.BigDecimal;
-
-import static dev.prjbtrad001.app.utils.LogUtils.log;
-
 /**
  * Represents trading signals based on technical analysis conditions.
  * Uses a point-based system to determine buy and sell decisions.
@@ -41,6 +37,7 @@ public record TradingSignals(
   boolean volatilityCondition,
   boolean stopLoss,
   boolean takeProfit,
+  boolean positionTimeout,
   boolean extremeRsi,
   boolean extremeLowVolume,
   boolean strongDowntrend,
@@ -58,11 +55,12 @@ public record TradingSignals(
     boolean volatilityCondition,
     boolean stopLoss,
     boolean takeProfit,
+    boolean positionTimeout,
     boolean emergencyExit,
     boolean minimumProfitReached
   ) {
     this(rsiCondition, trendCondition, volumeCondition, priceCondition,
-      momentumCondition, volatilityCondition, stopLoss, takeProfit,
+      momentumCondition, volatilityCondition, stopLoss, takeProfit, positionTimeout,
       false, false, false, emergencyExit, minimumProfitReached);
   }
 
@@ -76,7 +74,7 @@ public record TradingSignals(
   }
 
   public boolean shouldSell() {
-    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit;
+    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit || positionTimeout;
 
     if (!emergencyCondition && !minimumProfitReached) {
       return false;
@@ -91,13 +89,22 @@ public record TradingSignals(
   }
 
   private boolean hasMinimumRequiredConditions() {
-    int positiveSignals = (rsiCondition ? 1 : 0) +
-      (trendCondition ? 1 : 0) +
-      (volumeCondition ? 1 : 0) +
-      (priceCondition ? 1 : 0) +
-      (momentumCondition ? 1 : 0);
+    if (priceCondition && volumeCondition) {
+      return true;
+    }
 
-    return priceCondition && positiveSignals >= 3;
+    if (rsiCondition && trendCondition) {
+      return true;
+    }
+
+    int positiveSignals =
+      (rsiCondition ? 1 : 0) +
+        (trendCondition ? 1 : 0) +
+        (volumeCondition ? 1 : 0) +
+        (priceCondition ? 1 : 0) +
+        (momentumCondition ? 1 : 0);
+
+    return positiveSignals >= 2;
   }
 
   private double calculateBuyPoints() {
@@ -111,8 +118,8 @@ public record TradingSignals(
     double penalties = 0;
 
     if (rsiCondition && !trendCondition) penalties += 0.4;
-    if (trendCondition && !volumeCondition) penalties += 0.3;
-    if (!momentumCondition) penalties += 0.3;
+    if (trendCondition && !volumeCondition) penalties += 0.2;
+    if (!momentumCondition) penalties += 0.2;
 
     return Math.max(0, basePoints - penalties);
   }

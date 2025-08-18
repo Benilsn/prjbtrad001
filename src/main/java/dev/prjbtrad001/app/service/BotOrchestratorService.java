@@ -106,7 +106,7 @@ public class BotOrchestratorService {
         return;
       }
 
-      int interval = calculateInterval(bot.getParameters().getInterval());
+      int interval = bot.getIntervalInSeconds();
       scheduleNewBotTask(bot, interval);
 
       updateBotStatus(bot, true);
@@ -199,10 +199,6 @@ public class BotOrchestratorService {
 
   private boolean isAlreadyRunning(UUID botId) {
     return runningBots.containsKey(botId);
-  }
-
-  private int calculateInterval(String intervalStr) {
-    return (Integer.parseInt(intervalStr.replaceAll("[mhd]", "")) * 60) + 1;
   }
 
   private void scheduleNewBotTask(SimpleTradeBot bot, int interval) {

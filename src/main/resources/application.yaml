@@ -24,13 +24,12 @@ quarkus:
     database:
         generation: update
   log:
-    level: ERROR
+    level: ${ROOT_LOG_LEVEL:INFO}
     console:
       color: true
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
-  limit: 4
   mock-trading: true
   file:
     path: ${BOT_FILE_PATH}
@@ -49,3 +48,4 @@ bot:
       - DOGEBRL
       - MATICBRL
       - LTCBRL
+      - ADABRL
