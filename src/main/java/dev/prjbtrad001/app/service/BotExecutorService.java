@@ -18,7 +18,7 @@ public class BotExecutorService {
 
   @Transactional
   public void executeById(UUID botId) {
-    SimpleTradeBot bot = SimpleTradeBot.find("id", botId).firstResult(); // now it's managed
+    SimpleTradeBot bot = SimpleTradeBot.find("id", botId).firstResult();
 
     if (bot == null || !bot.isRunning()) return;
 

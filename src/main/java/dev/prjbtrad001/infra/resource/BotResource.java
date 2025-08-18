@@ -205,7 +205,7 @@ public class BotResource {
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")
-          .queryParam("message", "Stop running bot(s)!")
+          .queryParam("message", "Stopped running bot(s)!")
           .build())
         .build();
   }
