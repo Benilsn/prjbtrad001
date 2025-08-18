@@ -19,6 +19,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static dev.prjbtrad001.app.core.TradingConstants.MIN_PROFIT_THRESHOLD;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
@@ -169,6 +170,7 @@ public class TradingService {
     String trend = isDownTrend ? "downtrend" : "normal trend ";
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
+    log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, MIN_PROFIT_THRESHOLD));
 
     if (applyTrailingStop(bot, conditions)) {
       return;
@@ -244,9 +246,6 @@ public class TradingService {
 
       boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
       boolean isEmergencyExit = isEmergencyExit(conditions);
-      BigDecimal minProfitThreshold = BigDecimal.valueOf(0.3);
-
-      log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, minProfitThreshold));
 
       TradingSignals sellSignals = TradingSignals.builder()
         .rsiCondition(rsiOverbought)
@@ -257,7 +256,7 @@ public class TradingService {
         .takeProfit(reachedTakeProfit)
         .positionTimeout(positionTimeout)
         .emergencyExit(isEmergencyExit)
-        .minimumProfitReached(priceChangePercent.compareTo(minProfitThreshold) >= 0)
+        .minimumProfitReached(priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0)
         //Buy only signals
         .volumeCondition(false)
         .volatilityCondition(false)
