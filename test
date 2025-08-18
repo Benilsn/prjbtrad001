@@ -1,0 +1,35 @@
+[17-08-2025 23:52:30] - [SOLBRL - 5ad9eab2-fe37-40ca-8f9b-15fd5c0c571b] Checking market data...
+[17-08-2025 23:52:30] - [SOLBRL] - Downtrend score: 16 (threshold: 6)
+[17-08-2025 23:52:30] - [SOLBRL] - 🔵 BUY in Downtrend! Signals: 3 Strength: 0.600000001 Value: 199.92771334319163450066009722004799680000000
+[17-08-2025 23:52:30] - [SOLBRL] - 💰 Executing buy order: 199.92771334319163450066009722004799680000000
+[17-08-2025 23:52:30] - [SOLBRL] - 📊 Current Price: 1000.00000 | SMA9: 999.41429 | SMA21: 1002.87222 | Ratio: 0.9966
+[17-08-2025 23:52:30] - [SOLBRL] - 📈 RSI: 23.16 🔵 Oversold | Volatility: 3.0791 | Momentum: -0.50
+[17-08-2025 23:52:30] - [SOLBRL] - 🔍 Market Trend: 🔻 BEARISH | Slope: ↘️ -0.27750
+[17-08-2025 23:52:30] - [SOLBRL] - 📉 Bollinger Bands: Upper=1009.00 (0.90% away) | Middle=1002.89 | Lower=996.78 (0.32% away)
+[17-08-2025 23:52:30] - [SOLBRL] - 🧲 Band Position: 26.36% - ⚪ Middle Band (Neutral)
+[17-08-2025 23:52:30] - [SOLBRL] - 📊 Volume: Current=13.32100 | Average=9.47798 | Ratio=1.40547 🔊 High
+[17-08-2025 23:52:30] - [SOLBRL] - 🔻 BEARISH TREND - Additional Details:
+[17-08-2025 23:52:30] - [SOLBRL] - 📉 Price Slope: -0.27750 | Bearish strength: 27.75
+[17-08-2025 23:52:30] - [SOLBRL] - 📉 EMA Short-Term Downtrend: true (EMA8/EMA21: 0.9982 - Bearish when < 1.0)
+[17-08-2025 23:52:30] - [SOLBRL] - 💰 Trading fee: R$0.00
+[17-08-2025 23:52:30] - [SOLBRL] - ✅ Purchase executed successfully
+[17-08-2025 23:52:30] - [SOLBRL] - 🛡️ Touched Support: true (Price: 1000.00 | Support: 998.20)
+[17-08-2025 23:52:30] - [SOLBRL] - 📏 Distance to Support: 0.18% | To Lower Band: 0.32%
+[17-08-2025 23:52:30] - [SOLBRL] - Took 557ms to process bot: 5ad9eab2-fe37-40ca-8f9b-15fd5c0c571b
+
+[18-08-2025 04:59:30] - [SOLBRL - 5ad9eab2-fe37-40ca-8f9b-15fd5c0c571b] Checking market data...
+[18-08-2025 04:59:30] - [SOLBRL] - Downtrend score: 2 (threshold: 6)
+[18-08-2025 04:59:30] - [SOLBRL] - 📉 Current variation: -1,76% (least for profit: 0,30%)
+[18-08-2025 04:59:30] - [SOLBRL] - 🔴 SELL signal detected! Reason: Stop Loss
+[18-08-2025 04:59:30] - [SOLBRL] - 💰 Executing sell order
+[18-08-2025 04:59:30] - [SOLBRL] - 📊 Current Price: 983.40000 | SMA9: 981.81429 | SMA21: 981.58333 | Ratio: 1.0002
+[18-08-2025 04:59:30] - [SOLBRL] - 📈 RSI: 100.00 🔴 Overbought | Volatility: 0.7743 | Momentum: 0.21
+[18-08-2025 04:59:30] - [SOLBRL] - 🔍 Market Trend: 🔺 BULLISH | Slope: ↗️ 0.00625
+[18-08-2025 04:59:30] - [SOLBRL] - 📉 Bollinger Bands: Upper=983.31 (-0.01% away) | Middle=981.70 | Lower=980.09 (0.34% away)
+[18-08-2025 04:59:30] - [SOLBRL] - 🧲 Band Position: 102.76% - 🔴 Upper Band (Sell Zone)
+[18-08-2025 04:59:30] - [SOLBRL] - 📊 Volume: Current=0.00000 | Average=2.98743 | Ratio=0.00000 🔈 Low
+[18-08-2025 04:59:30] - [SOLBRL] - 💰 Trading fee: R$0.20
+[18-08-2025 04:59:30] - [SOLBRL] - 💰 Profit after fees: R$-3,52 (-1,76%)
+[18-08-2025 04:59:30] - [SOLBRL] - 💰 Accumulated profit: R$-3,52
+[18-08-2025 04:59:30] - [SOLBRL] - ✅ Sale executed successfully
+[18-08-2025 04:59:30] - [SOLBRL] - Took 632ms to process bot: 5ad9eab2-fe37-40ca-8f9b-15fd5c0c571b

@@ -178,31 +178,44 @@ public class TradingService {
 
     if (isDownTrend) {
       BigDecimal volatilityFactor;
-      if (conditions.volatility().compareTo(BigDecimal.valueOf(3)) > 0) {
-        volatilityFactor = BigDecimal.valueOf(0.4);
+      if (conditions.volatility().compareTo(BigDecimal.valueOf(3.5)) > 0) {
+        volatilityFactor = BigDecimal.valueOf(0.35);
+      } else if (conditions.volatility().compareTo(BigDecimal.valueOf(2.5)) > 0) {
+        volatilityFactor = BigDecimal.valueOf(0.5);
       } else if (conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) > 0) {
-        volatilityFactor = BigDecimal.valueOf(0.6);
-      } else {
+        volatilityFactor = BigDecimal.valueOf(0.65);
+      } else if (conditions.volatility().compareTo(BigDecimal.valueOf(0.8)) > 0) {
         volatilityFactor = BigDecimal.valueOf(0.8);
+      } else if (conditions.volatility().compareTo(BigDecimal.valueOf(0.4)) > 0) {
+        volatilityFactor = BigDecimal.valueOf(0.9);
+      } else {
+        volatilityFactor = BigDecimal.valueOf(1.0);
       }
 
-      BigDecimal adjustedTP = parameters.getTakeProfitPercent().multiply(volatilityFactor);
-      BigDecimal adjustedSL = parameters.getStopLossPercent().multiply(volatilityFactor);
+      BigDecimal tpFactor = volatilityFactor;
+      BigDecimal slFactor = volatilityFactor;
 
       boolean priceWeakening = conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0;
       boolean strongDowntrend = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.05)) < 0;
 
       if (priceWeakening || strongDowntrend) {
-        adjustedTP = adjustedTP.multiply(BigDecimal.valueOf(0.6));
+        tpFactor = tpFactor.multiply(BigDecimal.valueOf(0.6));
+        slFactor = slFactor.multiply(BigDecimal.valueOf(0.7));
       }
 
-      boolean reversalPattern = hasRecentReversalPattern(klines);
+      BigDecimal adjustedTP = parameters.getTakeProfitPercent().multiply(tpFactor);
+      BigDecimal adjustedSL = parameters.getStopLossPercent().multiply(slFactor);
 
+      boolean reversalPattern = hasRecentReversalPattern(klines);
       boolean strongMomentumNegativeTendency = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
-      boolean tinyProfit = priceChangePercent.compareTo(BigDecimal.valueOf(0.15)) >= 0;
+      boolean tinyProfit = priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0;
       boolean fullTakeProfit = priceChangePercent.compareTo(adjustedTP) >= 0;
-      boolean stopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0 &&
-        (strongMomentumNegativeTendency || checkConsistentDowntrend(klines, 3));
+      boolean enhancedSellSignal =
+        strongMomentumNegativeTendency
+          && checkConsistentDowntrend(klines, 3)
+          && !isAtSupportLevel(conditions);
+
+      boolean stopLoss = priceChangePercent.compareTo(adjustedSL.negate()) <= 0;
 
       boolean rsiReversal =
         conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0
@@ -212,18 +225,21 @@ public class TradingService {
         checkPositionTimeout(bot, conditions, priceChangePercent)
           && priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
 
-      if (fullTakeProfit ||
-        (stopLoss && !isAtSupportLevel(conditions)) ||
-        rsiReversal ||
-        timeout ||
-        reversalPattern ||
-        (tinyProfit && strongDowntrend)) {
+      if (fullTakeProfit
+        || stopLoss
+        || rsiReversal
+        || timeout
+        || reversalPattern
+        || (tinyProfit && strongDowntrend)
+        || enhancedSellSignal) {
 
         String reason = fullTakeProfit ? "Take Profit" :
-          (stopLoss ? "Stop Loss" + (strongMomentumNegativeTendency ? " (momentum forte)" : "") :
-            (timeout ? "Timeout" :
-              (reversalPattern ? "Padrão de Reversão" :
-                (rsiReversal ? "RSI Reversal" : "Tiny Profit in Strong Downtrend"))));
+          stopLoss ? "Stop Loss" :
+            timeout ? "Timeout" :
+              reversalPattern ? "Reversal Pattern" :
+                rsiReversal ? "RSI Reversal" :
+                  enhancedSellSignal ? "Enhanced Sell Signal" :
+                    "Tiny Profit in Strong Downtrend";
 
         log(botTypeName + "🔴 SELL signal in downtrend! Reason: " + reason);
         executeSellOrder(bot);
@@ -240,27 +256,26 @@ public class TradingService {
 
       boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
 
-      boolean positionTimeout =
-        checkPositionTimeout(bot, conditions, priceChangePercent) &&
-          priceChangePercent.compareTo(BigDecimal.valueOf(0.3)) >= 0;
+      boolean positionTimeout = checkPositionTimeout(bot, conditions, priceChangePercent);
 
       boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
       boolean isEmergencyExit = isEmergencyExit(conditions);
 
-      TradingSignals sellSignals = TradingSignals.builder()
-        .rsiCondition(rsiOverbought)
-        .trendCondition(bearishTrend)
-        .priceCondition(touchedResistance || touchedBollingerUpper)
-        .momentumCondition(negativeMomentum)
-        .stopLoss(reachedStopLoss)
-        .takeProfit(reachedTakeProfit)
-        .positionTimeout(positionTimeout)
-        .emergencyExit(isEmergencyExit)
-        .minimumProfitReached(priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0)
-        //Buy only signals
-        .volumeCondition(false)
-        .volatilityCondition(false)
-        .build();
+      TradingSignals sellSignals =
+        TradingSignals.builder()
+          .rsiCondition(rsiOverbought)
+          .trendCondition(bearishTrend)
+          .priceCondition(touchedResistance || touchedBollingerUpper)
+          .momentumCondition(negativeMomentum)
+          .stopLoss(reachedStopLoss)
+          .takeProfit(reachedTakeProfit)
+          .positionTimeout(positionTimeout)
+          .emergencyExit(isEmergencyExit)
+          .minimumProfitReached(priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0)
+          //Buy only signals
+          .volumeCondition(false)
+          .volatilityCondition(false)
+          .build();
 
       if (sellSignals.shouldSell()) {
         String reason;
@@ -561,7 +576,7 @@ public class TradingService {
       currentProfit.compareTo(taxCost) > 0) || strongNegativeMomentum || highRsi) {
 
       String reason = strongNegativeMomentum ? "negative momentum" :
-        highRsi ? "High RSI": "Stop level";
+        highRsi ? "High RSI" : "Stop level";
 
       log(botTypeName + "🔴 Trailing Stop executed by" +
         " " + reason + ": " + currentProfit + "%");
@@ -686,12 +701,10 @@ public class TradingService {
       return false;
     }
 
-    // Obtém as últimas 3 velas para análise de padrões
     KlineDto currentCandle = klines.getLast();
     KlineDto previousCandle = klines.get(klines.size() - 2);
     KlineDto thirdCandle = klines.get(klines.size() - 3);
 
-    // Calcula propriedades das velas
     boolean currentBullish = new BigDecimal(currentCandle.getClosePrice()).compareTo(
       new BigDecimal(currentCandle.getOpenPrice())) > 0;
     boolean previousBullish = new BigDecimal(previousCandle.getClosePrice()).compareTo(
@@ -733,7 +746,7 @@ public class TradingService {
       }
     }
 
-    return downtrendCount >= periods * 0.7; // 70% das velas são de queda
+    return downtrendCount >= periods * 0.7;
   }
 
   private boolean isAtSupportLevel(MarketConditions conditions) {
