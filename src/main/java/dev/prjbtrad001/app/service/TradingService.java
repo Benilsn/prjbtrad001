@@ -19,7 +19,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static dev.prjbtrad001.app.core.TradingConstants.MIN_PROFIT_THRESHOLD;
+import static dev.prjbtrad001.app.core.TradingConstants.*;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
@@ -102,8 +102,9 @@ public class TradingService {
           (fastDrop && rsiOversold ? 1 : 0);
 
       if (volumeSpikeWithoutReversal) signals -= 2;
-      if (conditions.rsi().compareTo(BigDecimal.valueOf(70)) >= 0
-        || (conditions.rsi().compareTo(BigDecimal.valueOf(10)) <= 0 && conditions.momentum().compareTo(BigDecimal.valueOf(-0.2)) < 0))
+      if (conditions.rsi().compareTo(EXTREME_RSI_UP) >= 0
+        || (conditions.rsi().compareTo(EXTREME_RSI_DOWN) <= 0
+        && conditions.momentum().compareTo(BigDecimal.valueOf(-0.2)) < 0))
         signals -= 2;
 
       if (signals >= 3) {
@@ -120,23 +121,24 @@ public class TradingService {
       boolean strongVolume = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
       boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
 
-      TradingSignals buySignals = TradingSignals.builder()
-        .rsiCondition(rsiOversold)
-        .trendCondition(bullishTrend)
-        .volumeCondition(strongVolume)
-        .priceCondition(touchedSupport || touchedBollingerLower)
-        .momentumCondition(positiveMomentum)
-        .volatilityCondition(lowVolatility)
-        .extremeRsi(conditions.rsi().compareTo(parameters.getRsiPurchase()) > 0)
-        .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
-        .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
-        //Sell only signals
-        .stopLoss(false)
-        .positionTimeout(false)
-        .takeProfit(false)
-        .emergencyExit(false)
-        .minimumProfitReached(false)
-        .build();
+      TradingSignals buySignals =
+        TradingSignals.builder()
+          .rsiCondition(rsiOversold)
+          .trendCondition(bullishTrend)
+          .volumeCondition(strongVolume)
+          .priceCondition(touchedSupport || touchedBollingerLower)
+          .momentumCondition(positiveMomentum)
+          .volatilityCondition(lowVolatility)
+          .extremeRsi(conditions.rsi().compareTo(EXTREME_RSI_UP) >= 0)
+          .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
+          .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
+          //Sell only signals
+          .stopLoss(false)
+          .positionTimeout(false)
+          .takeProfit(false)
+          .emergencyExit(false)
+          .minimumProfitReached(false)
+          .build();
 
       if (buySignals.shouldBuy()) {
         String reason;
@@ -221,9 +223,7 @@ public class TradingService {
         conditions.rsi().compareTo(BigDecimal.valueOf(50)) > 0
           && priceChangePercent.compareTo(BigDecimal.valueOf(0.2)) > 0;
 
-      boolean timeout =
-        checkPositionTimeout(bot, conditions, priceChangePercent)
-          && priceChangePercent.compareTo(BigDecimal.ZERO) >= 0;
+      boolean timeout = checkPositionTimeout(bot, conditions, priceChangePercent);
 
       if (fullTakeProfit
         || stopLoss

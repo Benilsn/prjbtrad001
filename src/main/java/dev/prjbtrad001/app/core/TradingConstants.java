@@ -7,4 +7,8 @@ public class TradingConstants {
   public static final double SELL_THRESHOLD = 2.0;
   public static final BigDecimal MIN_PROFIT_THRESHOLD = BigDecimal.valueOf(0.3);
   public static final int POSITION_TIMEOUT_SECONDS = 3600;
+
+  public static final BigDecimal EXTREME_RSI_UP = BigDecimal.valueOf(70);
+  public static final BigDecimal EXTREME_RSI_DOWN = BigDecimal.valueOf(10);
+
 }

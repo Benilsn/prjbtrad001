@@ -8,56 +8,12 @@
 <body>
 
 <div class="d-flex flex-column align-items-center my-5">
-
-    <div class="cyber-filter-container mb-3 p-3 border border-primary rounded"
-         style="background-color: rgba(13, 25, 42, 0.8);">
-        <div class="row g-3 align-items-end">
-            <!-- Crypto Filter -->
-            <div class="col-md-3">
-                <label for="crypto-filter" class="form-label text-info">Crypto</label>
-                <select id="crypto-filter" class="form-select bg-dark text-light border-primary">
-                    <option value="">All</option>
-                    <option value="BTCBRL">BTCBRL</option>
-                    <option value="ETHBRL">ETHBRL</option>
-                    <option value="BNBBRL">BNBBRL</option>
-                    <option value="XRPBRL">XRPBRL</option>
-                    <option value="SOLBRL">SOLBRL</option>
-                    <option value="DOGEBRL">DOGEBRL</option>
-                </select>
-            </div>
-            <!-- Operation Filter -->
-            <div class="col-md-3">
-                <label for="operation-filter" class="form-label text-info">Operation</label>
-                <div class="btn-group w-100" role="group" id="operation-filter">
-                    <input type="radio" class="btn-check" name="operation" id="all-ops" value="" checked>
-                    <label class="btn btn-outline-primary" for="all-ops">All</label>
-                    <input type="radio" class="btn-check" name="operation" id="buy-ops" value="BUY">
-                    <label class="btn btn-outline-success" for="buy-ops">Buy</label>
-                    <input type="radio" class="btn-check" name="operation" id="sell-ops" value="SELL">
-                    <label class="btn btn-outline-danger" for="sell-ops">Sell</label>
-                </div>
-            </div>
-            <!-- Time Filter -->
-            <div class="col-md-3">
-                <label for="time-filter" class="form-label text-info">Period</label>
-                <select id="time-filter" class="form-select bg-dark text-light border-primary">
-                    <option value="">All time</option>
-                    <option value="1">Last hour</option>
-                    <option value="24">Last 24 hours</option>
-                    <option value="7">Last 7 days</option>
-                </select>
-            </div>
-            <!-- Clear Filters Button aligned right -->
-            <div class="col-md-3 text-end d-flex align-items-end">
-                <button id="clear-filters" class="btn btn-clean-filters-neon me-3">Clean all filters</button>
-                <a href="/clear-trade-log" id="clear-log-btn" class="btn btn-clean-log-neon">Clean all logs</a >
-            </div>
-            <input type="text" id="log-filter" class="form-control neon-input w-80" placeholder="🔎 Log filter..."/>
-        </div>
+    <div class="d-flex justify-content-between mb-3">
+        <input type="text" id="log-filter" class="form-control neon-input flex-grow-1 me-2"
+               placeholder="🔎 Log filter..."/>
+        <a href="/clear-trade-log" id="clear-log-btn" class="btn btn-clean-log-neon">Clean all logs</a>
     </div>
-
-    <!-- Caixa de log -->
-    <div class="trade-log-box p-4 mb-5" style="width: 80%; height: 120vh; overflow-y: auto;">
+    <div class="trade-log-box p-4 mb-5" style="width: 80%; overflow-y: auto;">
         <h4 class="neon-text text-center mb-5">Trade Log</h4>
         <div id="trade-log-content">
             {#for item in data.orEmpty}
@@ -67,122 +23,6 @@
     </div>
 </div>
 
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const cryptoFilter = document.getElementById('crypto-filter');
-      const operationRadios = document.querySelectorAll('input[name="operation"]');
-      const timeFilter = document.getElementById('time-filter');
-      const clearFiltersBtn = document.getElementById('clear-filters');
-
-      function applyFilters() {
-        const cryptoValue = cryptoFilter.value.toLowerCase();
-        const operationValue = document.querySelector('input[name="operation"]:checked').value.toLowerCase();
-        const timeValue = timeFilter.value;
-
-        const logEntries = document.querySelectorAll('#trade-log-content .log-entry');
-
-        logEntries.forEach(entry => {
-          const text = entry.textContent.toLowerCase();
-          let showEntry = true;
-
-          // Filtro de criptomoeda
-          if (cryptoValue && !text.includes(cryptoValue.toLowerCase())) {
-            showEntry = false;
-          }
-
-          // Filtro de operação
-          if (operationValue === 'buy' && !text.includes('buy') && !text.includes('purchase')) {
-            showEntry = false;
-          } else if (operationValue === 'sell' && !text.includes('sell') && !text.includes('venda')) {
-            showEntry = false;
-          }
-
-          // Filtro de tempo
-          if (timeValue) {
-            const timestamp = extractTimestamp(text);
-            if (timestamp) {
-              const hoursDiff = getHoursDifference(timestamp, new Date());
-              if (timeValue === '1' && hoursDiff > 1) showEntry = false;
-              else if (timeValue === '24' && hoursDiff > 24) showEntry = false;
-              else if (timeValue === '7' && hoursDiff > 168) showEntry = false;
-            }
-          }
-
-          entry.classList.toggle('hidden-log', !showEntry);
-        });
-      }
-
-      function extractTimestamp(text) {
-        const match = text.match(/\[(\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2})\]/);
-    if (match && match[1]) {
-      const parts = match[1].split(' ');
-      const dateParts = parts[0].split('-');
-      const timeParts = parts[1].split(':');
-
-      // Formato: DD-MM-YYYY HH:MM:SS
-      return new Date(
-        parseInt(dateParts[2]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[0]),
-        parseInt(timeParts[0]),
-        parseInt(timeParts[1]),
-        parseInt(timeParts[2])
-      );
-    }
-    return null;
-  }
-
-  function getHoursDifference(date1, date2) {
-    return Math.abs(date2 - date1) / 36e5; // 36e5 é o número de milissegundos em uma hora
-  }
-
-  function clearAllFilters() {
-    cryptoFilter.value = '';
-    document.getElementById('all-ops').checked = true;
-    timeFilter.value = '';
-    applyFilters();
-  }
-
-  // Adicionar event listeners
-  cryptoFilter.addEventListener('change', applyFilters);
-  timeFilter.addEventListener('change', applyFilters);
-  clearFiltersBtn.addEventListener('click', clearAllFilters);
-
-  operationRadios.forEach(radio => {
-    radio.addEventListener('change', applyFilters);
-  });
-
-  // Aplicar estilização adicional
-  document.head.insertAdjacentHTML('beforeend', `
-    <style>
-      .cyber-filter-container {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-      }
-
-      .hidden-log {
-        display: none;
-      }
-
-      .btn-outline-primary:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-warning:hover {
-        box-shadow: 0 0 15px currentColor;
-      }
-
-      .btn-check:checked + .btn {
-        box-shadow: 0 0 10px currentColor;
-      }
-
-      select.form-select {
-        transition: all 0.3s ease;
-      }
-
-      select.form-select:focus {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
-      }
-    </style>
-  `);
-});
-</script>
 </body>
 
 {#include 'fragments/footer.html'/}
