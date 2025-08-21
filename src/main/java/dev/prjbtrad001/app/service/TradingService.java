@@ -208,7 +208,7 @@ public class TradingService {
       BigDecimal adjustedTP = parameters.getTakeProfitPercent().multiply(tpFactor);
       BigDecimal adjustedSL = parameters.getStopLossPercent().multiply(slFactor);
 
-      boolean reversalPattern = hasRecentReversalPattern(klines);
+      boolean reversalPattern = hasRecentReversalPattern(klines, conditions);
       boolean strongMomentumNegativeTendency = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
       boolean tinyProfit = priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0;
       boolean fullTakeProfit = priceChangePercent.compareTo(adjustedTP) >= 0;
@@ -506,6 +506,10 @@ public class TradingService {
     boolean movingDownInBand = positionInBand.compareTo(BigDecimal.valueOf(0.5)) < 0 &&
       conditions.currentPrice().compareTo(conditions.bollingerMiddle()) < 0;
 
+    // Verifica quão abaixo da banda média está (mais relevante para scalping)
+    boolean farBelowMiddleBand = conditions.currentPrice().compareTo(
+      conditions.bollingerMiddle().multiply(BigDecimal.valueOf(0.998))) < 0;
+
     boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) < 0;
     boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0;
 
@@ -514,6 +518,7 @@ public class TradingService {
     if (veryShortTermDown) score += 3;
     if (steepDecline) score += 4;
     if (movingDownInBand) score += 2;
+    if (farBelowMiddleBand) score += 2;
     if (negativeMomentum) score += 2;
     if (strongNegativeMomentum) score += 3;
     if (volumeDecline) score += 2;
@@ -523,8 +528,15 @@ public class TradingService {
       score += 3;
     }
 
-    log(botTypeName + "Downtrend score: " + score + " (threshold: 6)", true);
-    return score >= 6;
+    int threshold = 6;
+    if (conditions.volatility().compareTo(BigDecimal.valueOf(2.0)) > 0) {
+      threshold = 7;
+    } else if (conditions.volatility().compareTo(BigDecimal.valueOf(0.5)) < 0) {
+      threshold = 5;
+    }
+
+    log(botTypeName + "Downtrend score: " + score + " (threshold: " + threshold + ")", true);
+    return score >= threshold;
   }
 
   private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
@@ -696,42 +708,100 @@ public class TradingService {
         .add(BigDecimal.valueOf(0.85)));
   }
 
-  private boolean hasRecentReversalPattern(List<KlineDto> klines) {
-    if (klines == null || klines.size() < 3) {
-      return false;
+  private boolean hasRecentReversalPattern(List<KlineDto> klines, MarketConditions conditions) {
+    if (klines == null || klines.size() < 3) return false;
+
+    boolean patternDetected = checkPatternFormations(klines);
+    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
+    BigDecimal bandPosition = conditions.currentPrice().subtract(conditions.bollingerLower())
+      .divide(bandWidth, 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
+
+    if (patternDetected) {
+      if (conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.9))) < 0) {
+        return false;
+      }
+
+      if (conditions.momentum().compareTo(BigDecimal.valueOf(-0.05)) < 0) {
+        return false;
+      }
+
+      if (bandPosition.compareTo(BigDecimal.valueOf(0.3)) < 0) {
+        return false;
+      }
     }
 
-    KlineDto currentCandle = klines.getLast();
-    KlineDto previousCandle = klines.get(klines.size() - 2);
-    KlineDto thirdCandle = klines.get(klines.size() - 3);
+    return patternDetected;
+  }
 
-    boolean currentBullish = new BigDecimal(currentCandle.getClosePrice()).compareTo(
-      new BigDecimal(currentCandle.getOpenPrice())) > 0;
-    boolean previousBullish = new BigDecimal(previousCandle.getClosePrice()).compareTo(
-      new BigDecimal(previousCandle.getOpenPrice())) > 0;
-    boolean thirdBullish = new BigDecimal(thirdCandle.getClosePrice()).compareTo(
-      new BigDecimal(thirdCandle.getOpenPrice())) > 0;
+  private boolean checkPatternFormations(List<KlineDto> klines) {
+    if (klines.size() < 4) return false;
 
-    // Padrão de estrela da manhã (morning star)
-    boolean morningStar = !thirdBullish && !previousBullish && currentBullish &&
-      isPriceRejection(previousCandle) &&
-      new BigDecimal(currentCandle.getClosePrice()).compareTo(
-        new BigDecimal(thirdCandle.getOpenPrice())) > 0;
+    KlineDto current = klines.get(klines.size() - 1);
+    KlineDto previous = klines.get(klines.size() - 2);
+    KlineDto prePrevious = klines.get(klines.size() - 3);
+    KlineDto prePre = klines.get(klines.size() - 4);
 
-    // Padrão de martelo (hammer) - vela com sombra inferior longa
-    boolean hammer = isPriceRejection(currentCandle) &&
-      new BigDecimal(currentCandle.getLowPrice()).compareTo(
-        new BigDecimal(previousCandle.getLowPrice())) < 0 &&
-      currentBullish;
+    BigDecimal currentOpen = new BigDecimal(current.getOpenPrice());
+    BigDecimal currentClose = new BigDecimal(current.getClosePrice());
+    BigDecimal currentHigh = new BigDecimal(current.getHighPrice());
+    BigDecimal currentLow = new BigDecimal(current.getLowPrice());
 
-    // Padrão de engolfo de baixa (bearish engulfing)
-    boolean bearishEngulfing = !currentBullish && previousBullish &&
-      new BigDecimal(currentCandle.getOpenPrice()).compareTo(
-        new BigDecimal(previousCandle.getClosePrice())) > 0 &&
-      new BigDecimal(currentCandle.getClosePrice()).compareTo(
-        new BigDecimal(previousCandle.getOpenPrice())) < 0;
+    BigDecimal prevOpen = new BigDecimal(previous.getOpenPrice());
+    BigDecimal prevClose = new BigDecimal(previous.getClosePrice());
+    BigDecimal prevHigh = new BigDecimal(previous.getHighPrice());
+    BigDecimal prevLow = new BigDecimal(previous.getLowPrice());
 
-    return morningStar || hammer || bearishEngulfing;
+    BigDecimal ppOpen = new BigDecimal(prePrevious.getOpenPrice());
+    BigDecimal ppClose = new BigDecimal(prePrevious.getClosePrice());
+    BigDecimal ppHigh = new BigDecimal(prePrevious.getHighPrice());
+    BigDecimal ppLow = new BigDecimal(prePrevious.getLowPrice());
+
+    BigDecimal pppOpen = new BigDecimal(prePre.getOpenPrice());
+    BigDecimal pppClose = new BigDecimal(prePre.getClosePrice());
+
+    BigDecimal currentBody = currentClose.subtract(currentOpen).abs();
+    BigDecimal prevBody = prevClose.subtract(prevOpen).abs();
+    BigDecimal ppBody = ppClose.subtract(ppOpen).abs();
+
+    BigDecimal currentUpperShadow = currentHigh.subtract(currentClose.max(currentOpen));
+    BigDecimal currentLowerShadow = currentOpen.min(currentClose).subtract(currentLow);
+    BigDecimal prevUpperShadow = prevHigh.subtract(prevClose.max(prevOpen));
+    BigDecimal prevLowerShadow = prevOpen.min(prevClose).subtract(prevLow);
+
+    boolean isBullishCurrent = currentClose.compareTo(currentOpen) > 0;
+    boolean isBullishPrev = prevClose.compareTo(prevOpen) > 0;
+    boolean isBullishPP = ppClose.compareTo(ppOpen) > 0;
+    boolean isBullishPPP = pppClose.compareTo(pppOpen) > 0;
+
+    boolean isHammer = !isBullishPrev && isBullishCurrent &&
+      currentLowerShadow.compareTo(currentBody.multiply(BigDecimal.valueOf(2.5))) > 0 &&
+      currentUpperShadow.compareTo(currentBody.multiply(BigDecimal.valueOf(0.3))) < 0 &&
+      currentBody.compareTo(prevBody.multiply(BigDecimal.valueOf(0.8))) > 0;
+
+    boolean isMorningStar = !isBullishPP && ppBody.compareTo(BigDecimal.valueOf(0)) > 0 &&
+      prevBody.compareTo(ppBody.multiply(BigDecimal.valueOf(0.5))) < 0 &&
+      isBullishCurrent &&
+      currentClose.compareTo(ppOpen.add(ppBody.multiply(BigDecimal.valueOf(0.5)))) > 0;
+
+    boolean isBullishEngulfing = !isBullishPrev && isBullishCurrent &&
+      currentBody.compareTo(prevBody.multiply(BigDecimal.valueOf(1.8))) > 0 &&
+      currentOpen.compareTo(prevClose) < 0 &&
+      currentClose.compareTo(prevOpen) > 0;
+
+    boolean isThreeBarReversal = !isBullishPPP && !isBullishPP && !isBullishPrev &&
+      isBullishCurrent &&
+      currentBody.compareTo(prevBody.add(ppBody).divide(BigDecimal.valueOf(2), 8, RoundingMode.HALF_UP)) > 0;
+
+    boolean isDragonFlyDoji = currentBody.compareTo(currentHigh.subtract(currentLow).multiply(BigDecimal.valueOf(0.05))) < 0 &&
+      currentLowerShadow.compareTo(currentHigh.subtract(currentLow).multiply(BigDecimal.valueOf(0.7))) > 0;
+
+    boolean isPriceRejection = currentLowerShadow.compareTo(currentBody.multiply(BigDecimal.valueOf(3.0))) > 0 &&
+      prevLowerShadow.compareTo(prevBody) > 0 &&
+      currentLow.compareTo(prevLow.multiply(BigDecimal.valueOf(0.999))) < 0 &&
+      isBullishCurrent;
+
+    return isHammer || isMorningStar || isBullishEngulfing || isThreeBarReversal || isDragonFlyDoji || isPriceRejection;
   }
 
   private boolean checkConsistentDowntrend(List<KlineDto> klines, int periods) {
