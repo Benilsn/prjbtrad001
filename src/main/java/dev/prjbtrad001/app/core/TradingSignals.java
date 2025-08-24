@@ -2,31 +2,6 @@ package dev.prjbtrad001.app.core;
 
 import lombok.Builder;
 
-/**
- * Represents trading signals based on technical analysis conditions.
- * Uses a point-based system to determine buy and sell decisions.
- * <p>
- * Points System:
- * - RSI condition: 1.0 point
- * - Trend condition: 1.0 point
- * - Volume condition: 0.4 point
- * - Price condition: 0.4 point
- * <p>
- * Buy Signal:
- * - Triggered when total points >= BUY_THRESHOLD
- * <p>
- * Sell Signal:
- * - Triggered when total points >= SELL_THRESHOLD
- * - OR when stopLoss is true
- * - OR when takeProfit is true
- *
- * @param rsiCondition    Relative Strength Index condition (oversold/overbought)
- * @param trendCondition  Market trend condition (bullish/bearish)
- * @param volumeCondition Trading volume condition
- * @param priceCondition  Price level condition (support/resistance)
- * @param stopLoss        Stop loss trigger
- * @param takeProfit      Take profit trigger
- */
 @Builder
 public record TradingSignals(
   boolean rsiCondition,
@@ -42,27 +17,11 @@ public record TradingSignals(
   boolean extremeLowVolume,
   boolean strongDowntrend,
   boolean emergencyExit,
-  boolean minimumProfitReached
+  boolean minimumProfitReached,
+  boolean priceRejection,
+  boolean bollBandPressure,
+  boolean consecutiveCandles
 ) {
-
-  @Builder
-  public TradingSignals(
-    boolean rsiCondition,
-    boolean trendCondition,
-    boolean volumeCondition,
-    boolean priceCondition,
-    boolean momentumCondition,
-    boolean volatilityCondition,
-    boolean stopLoss,
-    boolean takeProfit,
-    boolean positionTimeout,
-    boolean emergencyExit,
-    boolean minimumProfitReached
-  ) {
-    this(rsiCondition, trendCondition, volumeCondition, priceCondition,
-      momentumCondition, volatilityCondition, stopLoss, takeProfit, positionTimeout,
-      false, false, false, emergencyExit, minimumProfitReached);
-  }
 
   public boolean shouldBuy() {
     if (extremeRsi || extremeLowVolume || strongDowntrend) {
@@ -70,66 +29,69 @@ public record TradingSignals(
     }
 
     double points = calculateBuyPoints();
-    return points >= TradingConstants.BUY_THRESHOLD && hasMinimumRequiredConditions();
+
+    // Requer no mínimo 3 sinais positivos
+    int positiveSignals = countPositiveSignals();
+
+    return points >= TradingConstants.BUY_THRESHOLD && positiveSignals >= 3;
   }
 
   public boolean shouldSell() {
-    boolean emergencyCondition = stopLoss || emergencyExit || takeProfit || positionTimeout;
-
-    if (!emergencyCondition && !minimumProfitReached) {
-      return false;
+    // Condições de emergência são prioritárias
+    if (stopLoss || emergencyExit || takeProfit || positionTimeout) {
+      return true;
     }
 
-    if (emergencyCondition) {
-      return true;
+    // Se não alcançou lucro mínimo, não vender por sinais técnicos
+    if (!minimumProfitReached) {
+      return false;
     }
 
     double points = calculateSellPoints();
     return points >= TradingConstants.SELL_THRESHOLD;
   }
 
-  private boolean hasMinimumRequiredConditions() {
-    if (priceCondition && volumeCondition) {
-      return true;
-    }
-
-    if (rsiCondition && trendCondition) {
-      return true;
-    }
-
-    int positiveSignals =
-      (rsiCondition ? 1 : 0) +
-        (trendCondition ? 1 : 0) +
-        (volumeCondition ? 1 : 0) +
-        (priceCondition ? 1 : 0) +
-        (momentumCondition ? 1 : 0);
-
-    return positiveSignals >= 2;
+  private int countPositiveSignals() {
+    return (rsiCondition ? 1 : 0) +
+      (trendCondition ? 1 : 0) +
+      (volumeCondition ? 1 : 0) +
+      (priceCondition ? 1 : 0) +
+      (momentumCondition ? 1 : 0) +
+      (priceRejection ? 1 : 0) +
+      (bollBandPressure ? 1 : 0) +
+      (consecutiveCandles ? 1 : 0);
   }
 
   private double calculateBuyPoints() {
-    double basePoints = (rsiCondition ? 1.3 : 0)
-      + (trendCondition ? 1.0 : 0)
-      + (volumeCondition ? 0.6 : 0)
-      + (priceCondition ? 0.8 : 0)
-      + (momentumCondition ? 0.5 : 0)
-      + (volatilityCondition ? 0.3 : 0);
+    double basePoints = (rsiCondition ? 1.5 : 0)                // Aumentado peso do RSI
+      + (trendCondition ? 1.2 : 0)                            // Aumentado peso da tendência
+      + (volumeCondition ? 0.8 : 0)                           // Aumentado peso do volume
+      + (priceCondition ? 0.9 : 0)                            // Aumentado peso do preço
+      + (momentumCondition ? 0.7 : 0)                         // Aumentado peso do momentum
+      + (volatilityCondition ? 0.4 : 0)                       // Aumentado peso da volatilidade
+      + (priceRejection ? 0.8 : 0)                            // Novo indicador
+      + (bollBandPressure ? 0.6 : 0)                          // Novo indicador
+      + (consecutiveCandles ? 0.5 : 0);                       // Novo indicador
 
+    // Penalidades mais severas para condições ausentes
     double penalties = 0;
-
-    if (rsiCondition && !trendCondition) penalties += 0.4;
-    if (trendCondition && !volumeCondition) penalties += 0.2;
-    if (!momentumCondition) penalties += 0.2;
+    if (rsiCondition && !trendCondition) penalties += 0.6;
+    if (trendCondition && !volumeCondition) penalties += 0.4;
+    if (!momentumCondition) penalties += 0.3;
+    if (!priceCondition && !priceRejection) penalties += 0.5;
 
     return Math.max(0, basePoints - penalties);
   }
 
   private double calculateSellPoints() {
-    return (rsiCondition ? 1.0 : 0)
-      + (trendCondition ? 1.2 : 0)
-      + (volumeCondition ? 0.3 : 0)
-      + (priceCondition ? 0.6 : 0)
-      + (momentumCondition ? 0.5 : 0)
-      + (volatilityCondition ? 0.4 : 0);
+    return (rsiCondition ? 1.3 : 0)                             // Aumentado
+      + (trendCondition ? 1.4 : 0)                            // Aumentado
+      + (volumeCondition ? 0.5 : 0)                           // Aumentado
+      + (priceCondition ? 0.8 : 0)                            // Aumentado
+      + (momentumCondition ? 0.7 : 0)                         // Aumentado
+      + (volatilityCondition ? 0.5 : 0)                       // Aumentado
+      + (priceRejection ? 0.6 : 0)                            // Novo
+      + (bollBandPressure ? 0.5 : 0)                          // Novo
+      + (consecutiveCandles ? 0.7 : 0);                       // Novo
   }
 }

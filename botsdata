@@ -1,0 +1,10 @@
+| Crypto  | Interval | Stop Loss % | Take Profit % | RSI Purchase | RSI Sale | Volume Multiplier | SMA Short | SMA Long | Candles Analyzed | Purchase Strategy | Purchase Amount |
+| ------- | -------- | ----------- | ------------- | ------------ | -------- | ----------------- | --------- | -------- | ---------------- | ----------------- | --------------- |
+| BTCBRL  | 3m       | 0.90        | 1.30          | 30           | 72       | 1.0               | 12        | 26       | 100              | AMOUNT            | 300             |
+| ETHBRL  | 3m       | 1.00        | 1.40          | 29           | 73       | 1.1               | 11        | 24       | 90               | AMOUNT            | 280             |
+| LTCBRL  | 3m       | 1.20        | 1.70          | 28           | 74       | 1.2               | 10        | 22       | 80               | AMOUNT            | 250             |
+| XRPBRL  | 3m       | 1.40        | 1.80          | 27           | 75       | 1.5               | 10        | 21       | 100              | AMOUNT            | 220             |
+| BNBBRL  | 1m       | 1.50        | 1.20          | 28           | 74       | 1.3               | 8         | 18       | 140              | AMOUNT            | 230             |
+| SOLBRL  | 1m       | 2.20        | 1.80          | 27           | 75       | 1.4               | 7         | 17       | 160              | AMOUNT            | 200             |
+| DOGEBRL | 1m       | 2.60        | 2.00          | 26           | 76       | 1.8               | 6         | 16       | 180              | AMOUNT            | 180             |
+| ADABRL  | 1m       | 1.80        | 1.50          | 27           | 75       | 1.6               | 7         | 17       | 140              | AMOUNT            | 200             |
