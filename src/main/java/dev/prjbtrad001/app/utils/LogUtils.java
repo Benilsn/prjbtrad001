@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -21,17 +22,26 @@ public class LogUtils {
   public final Queue<String> LOG_DATA = new ConcurrentLinkedQueue<>();
   private final ExecutorService executor = Executors.newSingleThreadExecutor();
   public static final String LINE_SEPARATOR = "--------------------------------------------------------------------------------------------------";
-  private final String logFilePath = "C:\\Users\\benil\\Desktop\\trade-log\\" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".log";
-  private final File file = new File(logFilePath);
+  private final String defaultLogFilePath = "C:\\Users\\benil\\Desktop\\trade-log\\" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".log";
+  private final File defautlFile = new File(defaultLogFilePath);
 
   public static void log(String message) {
     log.info(message);
 
-    String timestamp = "[" +java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + "] - ";
+    String timestamp = "[" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + "] - ";
     String finalMessage = timestamp.concat(message);
 
     LOG_DATA.add(finalMessage);
-    executor.submit(() -> writeToFile(finalMessage));
+    executor.submit(() -> writeToFile(finalMessage, defautlFile));
+  }
+
+  public static void log(Queue<String> message) {
+    log.info(message);
+
+    message.forEach(msg -> {
+      LOG_DATA.add(msg);
+      executor.submit(() -> writeToFile(msg, defautlFile));
+    });
   }
 
   public static void log(String message, boolean includeTimestamp) {
@@ -39,25 +49,45 @@ public class LogUtils {
 
     String timestamp = "";
     if (includeTimestamp) {
-      timestamp = "[" +java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + "] - ";
+      timestamp = "[" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + "] - ";
     }
     String finalMessage = timestamp.concat(message);
 
     LOG_DATA.add(finalMessage);
-    executor.submit(() -> writeToFile(finalMessage));
+    executor.submit(() -> writeToFile(finalMessage, defautlFile));
   }
 
-  private void writeToFile(String message) {
-    if (file.getParentFile() != null) {
-      file.getParentFile().mkdirs();
+  public static void logCripto(Queue<String> message, String cripto) {
+    log.info(message);
+    message.add(LINE_SEPARATOR);
+    final String criptoLogFilePath = "C:\\Users\\benil\\Desktop\\trade-log\\" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "-" + cripto + ".log";
+    final File cryptoFile = new File(criptoLogFilePath);
+
+    message.forEach(msg -> {
+      LOG_DATA.add(msg);
+      executor.submit(() -> writeToFile(msg, cryptoFile));
+    });
+  }
+
+  private void writeToFile(String data, File fileToWrite) {
+    if (fileToWrite.getParentFile() != null) {
+      fileToWrite.getParentFile().mkdirs();
     }
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))) {
-      writer.write(message);
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileToWrite, true))) {
+      writer.write(data);
       writer.newLine();
     } catch (IOException e) {
       log.error("Failed to write log to file: " + e.getMessage());
     }
+  }
+
+  public static String buildLog(String message, boolean includeTimestamp) {
+    String timestamp = "";
+    if (includeTimestamp) {
+      timestamp = "[" + java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + "] - ";
+    }
+    return timestamp.concat(message);
   }
 
   public static void shutdown() {
