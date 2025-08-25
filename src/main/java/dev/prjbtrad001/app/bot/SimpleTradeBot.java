@@ -78,6 +78,10 @@ public class SimpleTradeBot extends PanacheEntityBase {
     return baseAmount.multiply(positionSizeMultiplier);
   }
 
+  public Integer getIntervalInMinutes() {
+    return Integer.parseInt(parameters.getInterval().replaceAll("[mhd]", ""));
+  }
+
   public Integer getIntervalInSeconds() {
     return Integer.parseInt(parameters.getInterval().replaceAll("[mhd]", "")) * 60;
   }
