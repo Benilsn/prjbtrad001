@@ -6,6 +6,7 @@ import dev.prjbtrad001.infra.exception.TradeException;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.extern.jbosslog.JBossLog;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class MarketAnalyzer {
       lowPrices.add(new BigDecimal(kline.getLowPrice()));
     });
 
-    // Indicadores básicos
     BigDecimal rsi = calculateRSI(last(closePrices, 15), 14);
     SMAValues sma = calculateSMAs(closePrices, parameters);
     BigDecimal currentVolume = volumes.getLast();
@@ -43,8 +43,6 @@ public class MarketAnalyzer {
     BigDecimal support = identifySupport(lowPrices, closePrices);
     BigDecimal resistance = identifyResistance(highPrices, closePrices);
     BigDecimal currentPrice = closePrices.getLast();
-
-    // Indicadores avançados
     BigDecimal ema8 = calculateEMA(closePrices, 8);
     BigDecimal ema21 = calculateEMA(closePrices, 21);
     BigDecimal ema50 = calculateEMA(closePrices, 50);
@@ -53,8 +51,6 @@ public class MarketAnalyzer {
     BigDecimal volatility = calculateVolatility(closePrices, 14);
     BigDecimal[] bollinger = calculateBollingerBands(closePrices, 20, 2);
     BigDecimal priceSlope = calculatePriceSlope(closePrices);
-
-    // Novos indicadores
     BigDecimal macd = calculateMACD(closePrices);
     BigDecimal[] stochastic = calculateStochastic(closePrices, highPrices, lowPrices, 14, 3);
     BigDecimal atr = calculateATR(highPrices, lowPrices, closePrices, 14);

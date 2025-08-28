@@ -5,6 +5,7 @@ import dev.prjbtrad001.app.bot.PurchaseStrategy;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.bot.Status;
 import dev.prjbtrad001.app.core.*;
+import dev.prjbtrad001.app.core.TradingSignals;
 import dev.prjbtrad001.app.dto.KlineDto;
 import dev.prjbtrad001.app.dto.TradeOrderDto;
 import dev.prjbtrad001.domain.core.TradingExecutor;
@@ -57,13 +58,13 @@ public class TradingService {
 
     logService.logSignals(bot, conditions, isDownTrend);
     if (!status.isLong()) {
-      evaluateBuySignal(bot, conditions, klines.getLast(), isDownTrend);
+      evaluateBuySignal(bot, conditions, isDownTrend);
     } else {
-      evaluateSellSignal(bot, conditions, klines, isDownTrend);
+      evaluateSellSignal(bot, conditions, isDownTrend);
     }
   }
 
-  private void evaluateBuySignal(SimpleTradeBot bot, MarketConditions conditions, KlineDto lastKline, boolean isDownTrend) {
+  private void evaluateBuySignal(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
     BotParameters parameters = bot.getParameters();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
 
@@ -75,128 +76,62 @@ public class TradingService {
       return;
     }
 
+    // 🔹 Rsi condition
     boolean rsiOversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
+
+    // 🔹 Trend condition
     boolean ema8AboveEma21 = conditions.ema8().compareTo(conditions.ema21()) > 0;
-    boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower()
-      .multiply(BigDecimal.ONE.add(BigDecimal.valueOf(isDownTrend ? 0.01 : 0.02)))) <= 0;
-    boolean positiveMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
-    boolean touchedSupport =
-      !isDownTrend
-        ? conditions.currentPrice().compareTo(conditions.support().multiply(BigDecimal.ONE.add(BigDecimal.valueOf(0.005)))) <= 0
-        : conditions.currentPrice().compareTo(conditions.support().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.01)))) <= 0;
+    boolean sma9AboveSma21 = conditions.sma9().compareTo(conditions.sma21()) > 0;
+    boolean bullishTrend = sma9AboveSma21 && ema8AboveEma21;
 
-    boolean macdPositiveCrossover = conditions.macd() != null &&
-      conditions.macd().compareTo(BigDecimal.ZERO) > 0 ||
-      (conditions.macd().compareTo(BigDecimal.valueOf(-0.5)) > 0 &&
-        conditions.macd().compareTo(conditions.macd().subtract(BigDecimal.valueOf(0.2))) > 0);
+    // 🔹 Volume condition
+    boolean strongVolume = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
 
-    boolean stochasticBullish = conditions.stochasticK() != null &&
-      conditions.stochasticD() != null &&
+    // 🔹 Price condition
+    boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower().multiply(BigDecimal.valueOf(1.01))) <= 0;
+    boolean touchedSupport = conditions.currentPrice().compareTo(conditions.support().multiply(BigDecimal.valueOf(1.01))) <= 0;
+
+    // 🔹 MacD condition
+    boolean macdPositive = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) > 0;
+
+    // 🔹 Stochastic condition
+    boolean stochasticBull = conditions.stochasticK() != null && conditions.stochasticD() != null &&
       conditions.stochasticK().compareTo(BigDecimal.valueOf(25)) < 0 &&
       conditions.stochasticK().compareTo(conditions.stochasticD()) > 0;
 
-    boolean lowVolatilityExpansion = conditions.atr() != null &&
-      conditions.atr().compareTo(conditions.atr().multiply(BigDecimal.valueOf(0.8))) > 0;
+    // 🔹 Momentum condition
+    boolean positiveMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
 
-    boolean positiveMoney = conditions.obv() != null &&
-      conditions.obv().compareTo(BigDecimal.ZERO) > 0;
+    // 🔹 Volatility condition
+    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
 
-    if (isDownTrend) {
-      boolean adequateVolume = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.8))) >= 0;
-      boolean volumeSpike = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(1.5))) >= 0;
-      boolean volumeSpikeWithoutReversal = volumeSpike && conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0;
-      boolean priceRejection = isPriceRejection(lastKline, conditions.averageVolume(), conditions.atr());
-      boolean fastDrop = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.001)) < 0;
+    TradingSignals.Bullish tradingSignals =
+      TradingSignals.Bullish.builder()
+        .rsiCondition(rsiOversold)
+        .trendCondition(bullishTrend)
+        .volumeCondition(strongVolume)
+        .priceCondition(touchedSupport || touchedBollingerLower)
+        .macdCondition(macdPositive)
+        .stochCondition(stochasticBull)
+        .momentumCondition(positiveMomentum)
+        .volatilityCondition(lowVolatility)
+        .build();
 
-      int signals =
-        (rsiOversold ? 1 : 0) +
-          (touchedSupport ? 2 : 0) +
-          (adequateVolume ? 1 : 0) +
-          (volumeSpike ? 2 : 0) +
-          (positiveMomentum ? 1 : 0) +
-          (priceRejection ? 2 : 0) +
-          (fastDrop && rsiOversold ? 1 : 0) +
-          (macdPositiveCrossover ? 2 : 0) +
-          (stochasticBullish ? 2 : 0) +
-          (lowVolatilityExpansion ? 1 : 0) +
-          (positiveMoney ? 1 : 0);
-
-      if (volumeSpikeWithoutReversal) signals -= 2;
-      if (conditions.rsi().compareTo(EXTREME_RSI_UP) >= 0
-        || (conditions.rsi().compareTo(EXTREME_RSI_DOWN) <= 0
-        && conditions.momentum().compareTo(BigDecimal.valueOf(-0.2)) < 0))
-        signals -= 2;
-
-      if (signals >= 4) {
-        BigDecimal signalStrength = calculateScalpingSignalStrength(conditions);
-        BigDecimal reducedAmount = calculateOptimalBuyAmount(bot, conditions).multiply(signalStrength);
-
-        log(botTypeName + "🔵 BUY in Downtrend! Signals: " + signals + " Strength: " + signalStrength + " Value: " + reducedAmount);
-        executeBuyOrder(bot, reducedAmount);
-      } else {
-        log(botTypeName + "⚪ NO BUY signal in Downtrend! Signal strength: " + signals);
-      }
+    // 🔹 TODO Incluir 'Reason' no log
+    if (tradingSignals.shouldBuy()) {
+      log(botTypeName + "🔵 BUY signal in " + (isDownTrend ? "Down" : "Normal") + " trend detected!");
+      executeBuyOrder(bot, calculateOptimalBuyAmount(bot, conditions));
     } else {
-      boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
-      boolean bullishTrend = conditions.sma9().compareTo(conditions.sma21()) > 0 && ema8AboveEma21;
-      boolean strongVolume = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
-
-      TradingSignals buySignals =
-        TradingSignals.builder()
-          .rsiCondition(rsiOversold)
-          .trendCondition(bullishTrend)
-          .volumeCondition(strongVolume)
-          .priceCondition(touchedSupport || touchedBollingerLower)
-          .momentumCondition(positiveMomentum)
-          .volatilityCondition(lowVolatility)
-          .extremeRsi(conditions.rsi().compareTo(EXTREME_RSI_UP) >= 0)
-          .extremeLowVolume(conditions.currentVolume().compareTo(conditions.averageVolume().multiply(BigDecimal.valueOf(0.2))) < 0)
-          .strongDowntrend(conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0001)) < 0 && ema8AboveEma21)
-          .priceRejection(macdPositiveCrossover)
-          .bollBandPressure(stochasticBullish)
-          .consecutiveCandles(lowVolatilityExpansion || positiveMoney)
-          //Sell only signals
-          .stopLoss(false)
-          .positionTimeout(false)
-          .takeProfit(false)
-          .emergencyExit(false)
-          .minimumProfitReached(false)
-          .build();
-
-      if (buySignals.shouldBuy()) {
-        String reason;
-        if (rsiOversold && touchedSupport) {
-          reason = "RSI + Support";
-        } else if (rsiOversold && touchedBollingerLower) {
-          reason = "RSI + Bollinger";
-        } else if (bullishTrend && touchedSupport) {
-          reason = "Bullish + Support";
-        } else if (rsiOversold && positiveMomentum) {
-          reason = "RSI + Momentum";
-        } else if (bullishTrend && strongVolume) {
-          reason = "Bullish + Volume";
-        } else if (macdPositiveCrossover && stochasticBullish) {
-          reason = "MACD + Stochastic";
-        } else if (stochasticBullish && touchedSupport) {
-          reason = "Stochastic + Support";
-        } else {
-          reason = "Signal Score";
-        }
-
-        log(botTypeName + "🔵 BUY signal detected! Reason: " + reason);
-        executeBuyOrder(bot, calculateOptimalBuyAmount(bot, conditions));
-      } else {
-        log(botTypeName + "⚪ Insufficient conditions for purchase.");
-      }
+      log(botTypeName + "⚪ Insufficient conditions for purchase.");
     }
+
     logService.processBuySignalLogs(bot, conditions, botTypeName);
   }
 
-  private void evaluateSellSignal(SimpleTradeBot bot, MarketConditions conditions, List<KlineDto> klines, boolean isDownTrend) {
+  private void evaluateSellSignal(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
     String botTypeName = "[" + parameters.getBotType() + "] - ";
-    String trend = isDownTrend ? "downtrend" : "normal trend ";
 
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
     log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, MIN_PROFIT_THRESHOLD));
@@ -205,124 +140,65 @@ public class TradingService {
       return;
     }
 
-    boolean macdNegativeCrossover = conditions.macd() != null &&
-      (conditions.macd().compareTo(BigDecimal.ZERO) < 0 ||
-        (conditions.macd().compareTo(BigDecimal.valueOf(0.5)) < 0 &&
-          conditions.macd().compareTo(conditions.macd().add(BigDecimal.valueOf(0.2))) < 0));
+    // 🔹 Rsi condition
+    boolean rsiOverbought = conditions.rsi().compareTo(parameters.getRsiSale()) >= 0;
 
+    // 🔹 Trend condition
+    boolean sma9BelowSma21 = conditions.sma9().compareTo(conditions.sma21()) < 0;
+    boolean ema8BelowEma21 = conditions.ema8().compareTo(conditions.ema21()) < 0;
+    boolean bearishTrend = sma9BelowSma21 && ema8BelowEma21;
+
+    // 🔹 Price condition
+    boolean touchedResistance = conditions.currentPrice().compareTo(conditions.resistance().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.005)))) >= 0;
+    boolean touchedBollingerUpper = conditions.currentPrice().compareTo(conditions.bollingerUpper().multiply(BigDecimal.valueOf(0.99))) >= 0;
+
+    // 🔹 MacD condition
+    boolean macdNegative = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) < 0;
+
+    // 🔹 Stochastic condition
     boolean stochasticOverbought =
       conditions.stochasticK() != null
         && conditions.stochasticD() != null
         && conditions.stochasticK().compareTo(BigDecimal.valueOf(75)) > 0
         && conditions.stochasticK().compareTo(conditions.stochasticD()) < 0;
 
-    boolean highVolatility =
-      conditions.atr() != null
-        && conditions.atr().compareTo(conditions.atr().multiply(BigDecimal.valueOf(1.5))) > 0;
-
-    boolean negativeMoney = conditions.obv() != null &&
-      conditions.obv().compareTo(BigDecimal.ZERO) < 0;
-
-    boolean rsiOverbought = conditions.rsi().compareTo(parameters.getRsiSale()) >= 0;
-    boolean bearishTrend = conditions.sma9().compareTo(conditions.sma21()) < 0;
-    boolean touchedResistance = conditions.currentPrice().compareTo(
-      conditions.resistance().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.005)))) >= 0;
-    boolean touchedBollingerUpper = conditions.currentPrice().compareTo(
-      conditions.bollingerUpper().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.01)))) >= 0;
+    // 🔹 Momentum condition
     boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
+
+    // 🔹 Volatility condition
+    boolean highVolatility =
+      conditions.atr().compareTo(BigDecimal.valueOf(1.0)) >= 0 &&
+        conditions.atr().compareTo(BigDecimal.valueOf(3.0)) <= 0 &&
+        conditions.volatility().compareTo(BigDecimal.valueOf(20)) > 0;
+
+    // 🔹 Take Profit / Stop Loss conditions
     boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
-    boolean positionTimeout = hasTimeoutExpired(bot, conditions);
     boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
+    boolean minimumProfit = priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0;
 
-    if (isDownTrend) {
-      boolean strongDowntrend = conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.05)) < 0;
-      boolean reversalPattern = hasRecentReversalPattern(klines, conditions);
-      boolean strongMomentumNegativeTendency = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
+    TradingSignals.Bearish tradingSignals =
+      TradingSignals.Bearish.builder()
+        .rsiCondition(rsiOverbought)
+        .trendCondition(bearishTrend)
+        .priceCondition(touchedResistance || touchedBollingerUpper)
+        .macdCondition(macdNegative)
+        .stochCondition(stochasticOverbought)
+        .momentumCondition(negativeMomentum)
+        .volumeCondition(highVolatility)
+        .stopLoss(reachedStopLoss)
+        .takeProfit(reachedTakeProfit)
+        .minimumProfitReached(minimumProfit)
+        .build();
 
-      boolean tinyProfit = priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0;
-
-      boolean enhancedSellSignal =
-        strongMomentumNegativeTendency
-          && checkConsistentDowntrend(conditions, klines, 3)
-          && !isAtSupportLevel(conditions);
-
-      boolean strongTechnicalSellSignal =
-        (macdNegativeCrossover && stochasticOverbought) ||
-          (highVolatility && negativeMoney) ||
-          (stochasticOverbought && conditions.rsi().compareTo(BigDecimal.valueOf(65)) > 0);
-
-      if (reachedTakeProfit
-        || reachedStopLoss
-        || rsiOverbought
-        || positionTimeout
-        || reversalPattern
-        || (tinyProfit && strongDowntrend)
-        || enhancedSellSignal
-        || (tinyProfit && strongTechnicalSellSignal)) {
-
-        String reason = reachedTakeProfit ? "Take Profit" :
-          reachedStopLoss ? "Stop Loss" :
-            positionTimeout ? "Timeout" :
-              reversalPattern ? "Reversal Pattern" :
-                rsiOverbought ? "RSI Overbought" :
-                  strongTechnicalSellSignal ? "Technical Sell Signals" :
-                    enhancedSellSignal ? "Enhanced Sell Signal" :
-                      "Tiny Profit in Strong Downtrend";
-
-        log(botTypeName + "🔴 SELL signal in downtrend! Reason: " + reason);
-        executeSellOrder(bot);
-        return;
-      }
+    //TODO Incluir 'Reason' no log
+    if (tradingSignals.shouldSell()) {
+      log(botTypeName + "🔴 SELL signal detected!");
+      executeSellOrder(bot);
+      return;
     } else {
-      boolean isEmergencyExit = isEmergencyExit(conditions);
-
-      TradingSignals sellSignals =
-        TradingSignals.builder()
-          .rsiCondition(rsiOverbought)
-          .trendCondition(bearishTrend)
-          .priceCondition(touchedResistance || touchedBollingerUpper)
-          .momentumCondition(negativeMomentum)
-          .stopLoss(reachedStopLoss)
-          .takeProfit(reachedTakeProfit)
-          .positionTimeout(positionTimeout)
-          .emergencyExit(isEmergencyExit)
-          .minimumProfitReached(priceChangePercent.compareTo(MIN_PROFIT_THRESHOLD) >= 0)
-          .priceRejection(macdNegativeCrossover)
-          .bollBandPressure(stochasticOverbought)
-          .consecutiveCandles(highVolatility || negativeMoney)
-          //Buy only signals
-          .volumeCondition(false)
-          .volatilityCondition(false)
-          .build();
-
-      if (sellSignals.shouldSell()) {
-        String reason;
-        if (reachedStopLoss) {
-          reason = "Stop Loss";
-        } else if (reachedTakeProfit) {
-          reason = "Take Profit";
-        } else if (positionTimeout) {
-          reason = "Timeout";
-        } else if (isEmergencyExit) {
-          reason = "Emergency Exit";
-        } else if (rsiOverbought && macdNegativeCrossover) {
-          reason = "RSI + MACD";
-        } else if (stochasticOverbought && touchedResistance) {
-          reason = "Stochastic + Resistance";
-        } else if (rsiOverbought) {
-          reason = "RSI Overbought";
-        } else if (bearishTrend && (touchedResistance || touchedBollingerUpper)) {
-          reason = "Bearish + Resistance";
-        } else {
-          reason = "Signal Score";
-        }
-
-        log(botTypeName + "🔴 SELL signal detected! Reason: " + reason);
-        executeSellOrder(bot);
-        return;
-      }
+      log(botTypeName + "⚪ No SELL signal in " + (isDownTrend ? "Down" : "Normal") + " trend, maintaining current position.", true);
     }
-    log(botTypeName + "⚪ No SELL signal in " + trend + ", maintaining current position.", true);
+
     logService.processSellSignalLogs(bot, conditions, botTypeName);
   }
 
@@ -453,40 +329,6 @@ public class TradingService {
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
     log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
     log(botTypeName + "✅ Sale executed successfully");
-  }
-
-  private boolean hasTimeoutExpired(SimpleTradeBot bot, MarketConditions conditions) {
-    if (!bot.getStatus().isLong()) return false;
-
-    int intervalValue = bot.getIntervalInMinutes();
-
-    BigDecimal k = BigDecimal.valueOf(0.2);
-    BigDecimal factor = BigDecimal.ONE.divide(
-      BigDecimal.ONE.add(conditions.volatility().multiply(k)),
-      RoundingMode.HALF_UP
-    );
-
-    BigDecimal minFactor = BigDecimal.valueOf(0.35);
-    if (factor.compareTo(minFactor) < 0) factor = minFactor;
-
-    int absoluteMaxMinutes = (int) (20 * intervalValue * factor.doubleValue());
-    int shortExtendedMinutes = (int) (10 * intervalValue * factor.doubleValue());
-
-    boolean absoluteMaximumTimeReached =
-      bot.getStatus().getLastPurchaseTime()
-        .plusMinutes(absoluteMaxMinutes)
-        .isBefore(LocalDateTime.now());
-
-    if (absoluteMaximumTimeReached) {
-      return true;
-    }
-
-    boolean shortExtendedTimeReached =
-      bot.getStatus().getLastPurchaseTime()
-        .plusMinutes(shortExtendedMinutes)
-        .isBefore(LocalDateTime.now());
-
-    return shortExtendedTimeReached;
   }
 
   public static BigDecimal calculatePriceChangePercent(Status status, BigDecimal currentPrice) {
@@ -633,39 +475,6 @@ public class TradingService {
     return false;
   }
 
-  private boolean isEmergencyExit(MarketConditions conditions) {
-    int riskScore = 0;
-
-    // Severe down slope (fast price drop)
-    if (conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.08)) < 0) {
-      riskScore += 2; // strong signal
-    }
-
-    // High volatility spike
-    if (conditions.volatility().compareTo(BigDecimal.valueOf(2.2)) > 0) {
-      riskScore += 2;
-    }
-
-    // Unusual volume surge (panic selling)
-    if (conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(2.5))) > 0) {
-      riskScore += 1;
-    }
-
-    // Rapid momentum shift (bearish acceleration)
-    if (conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0) {
-      riskScore += 1;
-    }
-
-    // Negative MACD (trend confirmation)
-    if (conditions.macd() != null && conditions.macd().compareTo(BigDecimal.valueOf(-0.05)) < 0) {
-      riskScore += 1;
-    }
-
-    // Exit if risk score is high enough
-    return riskScore >= 3;
-  }
-
   private boolean isPriceRejection(KlineDto lastKline, BigDecimal averageVolume, BigDecimal atr) {
     BigDecimal open = new BigDecimal(lastKline.getOpenPrice());
     BigDecimal close = new BigDecimal(lastKline.getClosePrice());
@@ -695,25 +504,6 @@ public class TradingService {
 
     return bullishRejection || bearishRejection;
   }
-
-
-  private BigDecimal calculateScalpingSignalStrength(MarketConditions c) {
-    int score = 0, total = 5;
-
-    if (c.rsi().compareTo(BigDecimal.valueOf(35)) < 0) score++;
-    if (c.currentPrice().divide(c.support(), 8, RoundingMode.HALF_UP).compareTo(BigDecimal.valueOf(1.01)) <= 0) score++;
-    if (c.momentum().compareTo(BigDecimal.ZERO) > 0) score++;
-    if (c.ema8().compareTo(c.ema21()) > 0) score++;
-
-    BigDecimal bandWidth = c.bollingerUpper().subtract(c.bollingerLower());
-    BigDecimal posInBand = c.currentPrice().subtract(c.bollingerLower()).divide(bandWidth, 8, RoundingMode.HALF_UP);
-
-    if (posInBand.compareTo(BigDecimal.valueOf(0.25)) < 0) score++;
-
-    BigDecimal ratio = BigDecimal.valueOf(score).divide(BigDecimal.valueOf(total), 8, RoundingMode.HALF_UP);
-    return BigDecimal.valueOf(0.3).add(ratio.multiply(BigDecimal.valueOf(0.7)));
-  }
-
 
   private BigDecimal estimatePotentialProfit(MarketConditions c) {
     BigDecimal rsiWeight =
@@ -830,33 +620,6 @@ public class TradingService {
         cClose.compareTo(ppOpen.add(ppBody.multiply(BigDecimal.valueOf(0.5)))) > 0;
 
     return isHammer || isBullishEngulfing || isMorningStar;
-  }
-
-  private boolean checkConsistentDowntrend(MarketConditions c, List<KlineDto> klines, int periods) {
-    if (klines.size() < periods + 1) return false;
-
-    int downtrendCount = 0;
-    for (int i = klines.size() - periods; i < klines.size(); i++) {
-      BigDecimal currentClose = new BigDecimal(klines.get(i).getClosePrice());
-      BigDecimal previousClose = new BigDecimal(klines.get(i - 1).getClosePrice());
-
-      if (currentClose.compareTo(previousClose) < 0) downtrendCount++;
-    }
-
-    boolean emaBearish = c.ema8().compareTo(c.ema21()) < 0 && c.ema21().compareTo(c.ema50()) < 0;
-    return downtrendCount >= periods * 0.7 && emaBearish;
-  }
-
-  private boolean isAtSupportLevel(MarketConditions c) {
-    BigDecimal tolerance =
-      c.volatility().compareTo(BigDecimal.ONE) > 0
-        ? BigDecimal.valueOf(1.015)
-        : BigDecimal.valueOf(1.005);
-
-    return
-      c.currentPrice()
-        .divide(c.support(), 8, RoundingMode.HALF_UP)
-        .compareTo(tolerance) <= 0;
   }
 
 
