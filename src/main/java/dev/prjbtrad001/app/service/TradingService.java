@@ -4,7 +4,9 @@ import dev.prjbtrad001.app.bot.BotParameters;
 import dev.prjbtrad001.app.bot.PurchaseStrategy;
 import dev.prjbtrad001.app.bot.SimpleTradeBot;
 import dev.prjbtrad001.app.bot.Status;
-import dev.prjbtrad001.app.core.*;
+import dev.prjbtrad001.app.core.MarketAnalyzer;
+import dev.prjbtrad001.app.core.MarketConditions;
+import dev.prjbtrad001.app.core.TradingConstants;
 import dev.prjbtrad001.app.core.TradingSignals;
 import dev.prjbtrad001.app.dto.KlineDto;
 import dev.prjbtrad001.app.dto.TradeOrderDto;
@@ -20,8 +22,8 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static dev.prjbtrad001.app.core.TradingConstants.*;
-import static dev.prjbtrad001.app.utils.LogUtils.*;
+import static dev.prjbtrad001.app.core.TradingConstants.MIN_PROFIT_THRESHOLD;
+import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
 @JBossLog
@@ -30,9 +32,6 @@ public class TradingService {
 
   @Inject
   TradingExecutor tradingExecutor;
-
-  @Inject
-  LogService logService;
 
   @Transactional
   public void analyzeMarket(SimpleTradeBot bot) {
@@ -56,7 +55,6 @@ public class TradingService {
     MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
     boolean isDownTrend = isDownTrendMarket(conditions, botTypeName);
 
-    logService.logSignals(bot, conditions, isDownTrend);
     if (!status.isLong()) {
       evaluateBuySignal(bot, conditions, isDownTrend);
     } else {
@@ -125,7 +123,6 @@ public class TradingService {
       log(botTypeName + "⚪ Insufficient conditions for purchase.");
     }
 
-    logService.processBuySignalLogs(bot, conditions, botTypeName);
   }
 
   private void evaluateSellSignal(SimpleTradeBot bot, MarketConditions conditions, boolean isDownTrend) {
@@ -199,7 +196,6 @@ public class TradingService {
       log(botTypeName + "⚪ No SELL signal in " + (isDownTrend ? "Down" : "Normal") + " trend, maintaining current position.", true);
     }
 
-    logService.processSellSignalLogs(bot, conditions, botTypeName);
   }
 
   private BigDecimal calculateOptimalBuyAmount(SimpleTradeBot bot, MarketConditions conditions) {
