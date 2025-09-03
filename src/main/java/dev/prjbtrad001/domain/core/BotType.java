@@ -9,6 +9,9 @@ public enum BotType {
   DOGEBRL,
   MATICBRL,
   LTCBRL,
+  LINKBRL,
+  ENABRL,
+  AVAXBRL,
   ADABRL;
 
   public boolean isValid(String symbol) {

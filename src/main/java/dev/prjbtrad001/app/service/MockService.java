@@ -186,7 +186,7 @@ public class MockService implements TradingExecutor {
 
   @Getter
   private static class MockWallet {
-    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(2000.00);
+    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(4000.00);
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
 
     public MockWallet() {

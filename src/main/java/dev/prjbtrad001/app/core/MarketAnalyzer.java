@@ -9,10 +9,7 @@ import lombok.extern.jbosslog.JBossLog;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Builder
 @JBossLog
@@ -317,7 +314,6 @@ public class MarketAnalyzer {
     return obv;
   }
 
-  // Melhoria na identificação de suporte e resistência
   private BigDecimal identifySupport(List<BigDecimal> lowPrices, List<BigDecimal> closePrices) {
     int lookbackPeriod = Math.min(20, lowPrices.size());
     List<BigDecimal> recentLows = last(lowPrices, lookbackPeriod);
