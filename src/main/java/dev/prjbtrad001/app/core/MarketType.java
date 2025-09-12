@@ -20,9 +20,10 @@ public enum MarketType {
     boolean priceAboveEma50 = conditions.currentPrice().compareTo(conditions.ema50()) > 0;
 
     // Distância do preço às médias (em %)
-    BigDecimal priceToEma50Distance = conditions.currentPrice().subtract(conditions.ema50())
-      .divide(conditions.ema50(), 8, RoundingMode.HALF_UP)
-      .multiply(BigDecimal.valueOf(100)).abs();
+    BigDecimal priceToEma50Distance =
+      conditions.currentPrice().subtract(conditions.ema50())
+        .divide(conditions.ema50(), 8, RoundingMode.HALF_UP)
+        .multiply(BigDecimal.valueOf(100)).abs();
 
     boolean priceExtendedFromEma50 = priceToEma50Distance.compareTo(BigDecimal.valueOf(1.2)) > 0;
 
@@ -31,10 +32,10 @@ public enum MarketType {
     boolean strongDowntrend = !ema8AboveEma21 && !ema21AboveEma50 && !ema50AboveEma100 && !priceAboveEma50;
 
     // ANÁLISE DE MOMENTUM
-    boolean strongPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.15)) > 0;
-    boolean weakPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.05)) > 0;
+    boolean strongPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.25)) > 0;
+    boolean weakPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.10)) > 0;
+    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
     boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.15)) < 0;
     boolean momentumDivergenceUp = !weakPositiveMomentum && !strongNegativeMomentum;
     boolean momentumDivergenceDown = !negativeMomentum && !strongPositiveMomentum;
 
@@ -49,7 +50,9 @@ public enum MarketType {
       conditions.rsi().compareTo(BigDecimal.valueOf(55)) < 0;
 
     // ANÁLISE DE BANDAS DE BOLLINGER
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower())
+    BigDecimal bandRange = conditions.bollingerUpper().subtract(conditions.bollingerLower());
+
+    BigDecimal bandWidth = bandRange
       .divide(conditions.bollingerMiddle(), 8, RoundingMode.HALF_UP)
       .multiply(BigDecimal.valueOf(100));
 
@@ -58,8 +61,6 @@ public enum MarketType {
     boolean wideBands = bandWidth.compareTo(BigDecimal.valueOf(4.0)) > 0;
     boolean veryWideBands = bandWidth.compareTo(BigDecimal.valueOf(6.0)) > 0;
 
-    // Posição do preço nas bandas
-    BigDecimal bandRange = conditions.bollingerUpper().subtract(conditions.bollingerLower());
     BigDecimal relativePosition = conditions.currentPrice().subtract(conditions.bollingerLower())
       .divide(bandRange, 8, RoundingMode.HALF_UP);
 
@@ -68,20 +69,20 @@ public enum MarketType {
     boolean atLowerBand = relativePosition.compareTo(BigDecimal.valueOf(0.05)) < 0;
     boolean nearLowerBand = relativePosition.compareTo(BigDecimal.valueOf(0.20)) < 0;
 
-    // Preço em torno da banda média (consolidação)
-    boolean nearMiddleBand = relativePosition.compareTo(BigDecimal.valueOf(0.40)) > 0 &&
-      relativePosition.compareTo(BigDecimal.valueOf(0.60)) < 0;
+    boolean nearMiddleBand =
+      relativePosition.compareTo(BigDecimal.valueOf(0.40)) > 0
+        && relativePosition.compareTo(BigDecimal.valueOf(0.60)) < 0;
 
-    // VOLATILIDADE
     boolean moderateVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) > 0;
     boolean highVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3.0)) > 0;
     boolean extremeVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(5.0)) > 0;
 
     // DETECÇÃO DE REVERSÃO REFINADA PARA INTRADAY
     // Reversão de baixa para alta (compra)
-    boolean potentialReversalUp = (!ema8AboveEma21 || !priceAboveEma50) && // Preço abaixo de médias importantes
-      (rsiOversold || atLowerBand || nearLowerBand) &&                   // Indicador em zona de sobrevenda
-      conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0005)) > 0; // Inclinação deixando de ser negativa
+    boolean potentialReversalUp =
+      (!ema8AboveEma21 || !priceAboveEma50)
+        && (rsiOversold || atLowerBand || nearLowerBand)
+        && conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0005)) > 0;
 
     // Reversão de alta para baixa (venda)
     boolean potentialReversalDown = (ema8AboveEma21 || priceAboveEma50) && // Preço acima de médias importantes

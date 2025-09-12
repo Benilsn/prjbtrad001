@@ -20,6 +20,20 @@ public record TradingSignals() {
   ) {
 
     public boolean shouldBuy() {
+      if (marketType == MarketType.HIGH_VOLATILITY || marketType == MarketType.STRONG_DOWNTREND) {
+        return false;
+      }
+
+      int significantPositiveSignals = 0;
+      if (rsiCondition) significantPositiveSignals++;
+      if (volumeCondition) significantPositiveSignals++;
+      if (priceCondition) significantPositiveSignals++;
+      if (momentumCondition) significantPositiveSignals++;
+
+      if (significantPositiveSignals < 3) {
+        return false;
+      }
+
       return calculateBuyPoints() >= getBuyThreshold();
     }
 
@@ -39,28 +53,13 @@ public record TradingSignals() {
       double points = 0;
 
       switch (marketType) {
-        case STRONG_DOWNTREND:
-          // Em tendência forte de baixa, priorize sobrevendido e rejeição
-          points += rsiCondition ? 1.8 : -1.0;
-          points += bullishRejection ? 1.8 : -0.6;
-          points += volumeCondition ? 1.6 : -0.5;
-          points += priceCondition ? 1.5 : -0.4;
-          points += patternsCondition ? 1.4 : -0.3;
-          // Menos relevante em downtrend
-          points += trendCondition ? 0.4 : 0;
-          points += macdCondition ? 0.5 : 0;
-          points += stochCondition ? 0.6 : 0;
-          points += momentumCondition ? 0.7 : 0;
-          points += volatilityCondition ? 0.3 : 0;
-          break;
-
         case RANGE_BOUND:
           // Em mercado lateral, priorize suporte/resistência e volume
           points += priceCondition ? 2.0 : -1.0;
           points += rsiCondition ? 1.5 : -0.5;
-          points += volumeCondition ? 1.3 : -0.3;
+          points += volumeCondition ? 1.3 : -0.6;
           points += stochCondition ? 1.2 : 0;
-          points += bullishRejection ? 1.0 : -0.2;
+          points += bullishRejection ? 1.3 : -0.2;
           // Menos relevante em mercado lateral
           points += trendCondition ? 0.3 : 0;
           points += macdCondition ? 0.4 : 0;
@@ -96,7 +95,6 @@ public record TradingSignals() {
           points += patternsCondition ? 1.3 : 0;
           points += bullishRejection ? 1.2 : -0.4;
       }
-
 
       return points;
     }

@@ -34,12 +34,6 @@ public class TradingService {
   public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
-
-    if (bot.isTradingPaused()) {
-      log(botTypeName + "⛔ Trading paused until: " + bot.getPauseUntil() + " due to consecutive losses: (" + bot.getConsecutiveLosses() + ")", true);
-      return;
-    }
 
     List<KlineDto> klines =
       tradingExecutor.getCandles(
@@ -50,7 +44,6 @@ public class TradingService {
 
     MarketAnalyzer marketAnalyzer = new MarketAnalyzer();
     MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
-    boolean isDownTrend = isDownTrendMarket(conditions, botTypeName);
 
     if (!status.isLong()) {
       evaluateBuySignal(bot, conditions, klines);
@@ -90,9 +83,11 @@ public class TradingService {
     boolean macdPositive = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) > 0;
 
     // 🔹 Stochastic condition
-    boolean stochasticBull = conditions.stochasticK() != null && conditions.stochasticD() != null &&
-      conditions.stochasticK().compareTo(BigDecimal.valueOf(25)) < 0 &&
-      conditions.stochasticK().compareTo(conditions.stochasticD()) > 0;
+    boolean stochasticBull =
+      conditions.stochasticK() != null
+        && conditions.stochasticD() != null
+        && conditions.stochasticK().compareTo(BigDecimal.valueOf(25)) < 0
+        && conditions.stochasticK().compareTo(conditions.stochasticD()) > 0;
 
     // 🔹 Momentum condition
     boolean positiveMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
@@ -103,36 +98,28 @@ public class TradingService {
     boolean isPatternsAlignedForBuy = isPatternsAligned(klines, conditions, true);
     boolean bullishRejection = isBullishPriceRejection(klines.getLast(), conditions.averageVolume(), conditions.atr());
 
-    log(botTypeName + "RSI Oversold: " + (rsiOversold ? "🟢" : "🔴") +
-      " (RSI=" + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + ", Threshold=" + parameters.getRsiPurchase().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Bullish Trend: " + (bullishTrend ? "🟢" : "🔴") +
-      " (EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) + ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) +
-      " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) + ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Strong Volume: " + (strongVolume ? "🟢" : "🔴") +
-      " (Current=" + conditions.currentVolume().setScale(3, RoundingMode.HALF_UP) + ", Avg*Mult=" +
-      conditions.averageVolume().multiply(parameters.getVolumeMultiplier()) + ")", true);
-    log(botTypeName + "Touched Support: " + (touchedSupport ? "🟢" : "🔴") +
-      " (Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) + ", Support=" + conditions.support().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "MACD Positive: " + (macdPositive ? "🟢" : "🔴") +
-      " (MACD=" + conditions.macd().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Stochastic Bull: " + (stochasticBull ? "🟢" : "🔴") +
-      " (K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) + ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Low Volatility: " + (lowVolatility ? "🟢" : "🔴") +
-      " (Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Patterns Aligned: " + (isPatternsAlignedForBuy ? "🟢" : "🔴") +
-      " (Aligned with bullish setup = true)", true);
-    log(botTypeName + "Positive Momentum: " + (positiveMomentum ? "🟢" : "🔴") +
-      " (Momentum=" + conditions.momentum().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Touched BollingerLower: " + (touchedBollingerLower ? "🟢" : "🔴") +
-      " (Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) + ", Lower=" + conditions.bollingerLower().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Bullish Price Rejection:" + (bullishRejection ? "🟢" : "🔴"), true);
+    log(botTypeName + (rsiOversold ? "🟢" : "🔴") + " RSI Oversold: " + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + " (Threshold: " + parameters.getRsiPurchase().setScale(3, RoundingMode.HALF_UP) + ")", true);
+    log(botTypeName + (bullishTrend ? "🟢" : "🔴") + " Bullish Trend: EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) +
+      ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) + " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) +
+      ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (strongVolume ? "🟢" : "🔴") + " Strong Volume: Current=" + conditions.currentVolume().setScale(3, RoundingMode.HALF_UP) +
+      ", Avg*Mult=" + conditions.averageVolume().multiply(parameters.getVolumeMultiplier()), true);
+    log(botTypeName + (touchedSupport ? "🟢" : "🔴") + " Touched Support: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
+      ", Support=" + conditions.support().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (macdPositive ? "🟢" : "🔴") + " MACD Positive: " + conditions.macd().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (stochasticBull ? "🟢" : "🔴") + " Stochastic Bull: K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) +
+      ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (lowVolatility ? "🟢" : "🔴") + " Low Volatility: Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (isPatternsAlignedForBuy ? "🟢" : "🔴") + " Patterns Aligned: Bullish setup", true);
+    log(botTypeName + (positiveMomentum ? "🟢" : "🔴") + " Positive Momentum: " + conditions.momentum().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (touchedBollingerLower ? "🟢" : "🔴") + " Touched BollingerLower: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
+      ", Lower=" + conditions.bollingerLower().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (bullishRejection ? "🟢" : "🔴") + " Bullish Price Rejection", true);
 
     MarketType marketType = MarketType.classifyMarket(conditions);
 
-    // Log do tipo de mercado
     log(botTypeName + "📊 Current market type: " + marketType, true);
 
-    // Construir o objeto Bullish incluindo o tipo de mercado
     TradingSignals.Bullish tradingSignals =
       TradingSignals.Bullish.builder()
         .rsiCondition(rsiOversold)
@@ -148,17 +135,8 @@ public class TradingService {
         .marketType(marketType)
         .build();
 
-    // Incluir razão da compra
-    String buyReason = "";
     if (tradingSignals.shouldBuy()) {
-      if (bullishRejection) buyReason = "Bullish price rejection";
-      else if (touchedSupport || touchedBollingerLower) buyReason = "Price touched support";
-      else if (rsiOversold) buyReason = "RSI oversold";
-      else if (bullishTrend) buyReason = "Bullish trend confirmed";
-      else if (positiveMomentum) buyReason = "Positive momentum";
-      else buyReason = "Combination of buy signals";
-
-      log(botTypeName + "🔵 BUY signal detected! Reason: " + buyReason);
+      log(botTypeName + "🔵 BUY signal detected!");
       executeBuyOrder(bot, calculateOptimalBuyAmount(bot, conditions));
     } else {
       log(botTypeName + "⚪ Insufficient conditions for BUY.");
@@ -173,7 +151,9 @@ public class TradingService {
     BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
     log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, MIN_PROFIT_THRESHOLD));
 
-    if (applyTrailingStop(bot, conditions)) {
+    MarketType marketType = MarketType.classifyMarket(conditions);
+
+    if (applyTrailingStop(bot, conditions, marketType)) {
       return;
     }
 
@@ -214,34 +194,25 @@ public class TradingService {
     boolean isPatternsAlignedForSell = isPatternsAligned(klines, conditions, false);
     boolean bearishRejection = isBearishPriceRejection(klines.getLast(), conditions.averageVolume(), conditions.atr());
 
-    log(botTypeName + "RSI Overbought: " + (rsiOverbought ? "🟢" : "🔴") +
-      " (RSI=" + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + ", Threshold=" + parameters.getRsiSale().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Bearish Trend: " + (bearishTrend ? "🟢" : "🔴") +
-      " (EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) + ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) +
-      " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) + ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Touched Resistance: " + (touchedResistance ? "🟢" : "🔴") +
-      " (Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) + ", Resistance=" + conditions.resistance().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "MACD Negative: " + (macdNegative ? "🟢" : "🔴") +
-      " (MACD=" + conditions.macd().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Negative Momentum: " + (negativeMomentum ? "🟢" : "🔴") +
-      " (Momentum=" + conditions.momentum().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "High Volatility: " + (highVolatility ? "🟢" : "🔴") +
-      " (ATR=" + conditions.atr().setScale(3, RoundingMode.HALF_UP) + ", Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Reached Take Profit: " + (reachedTakeProfit ? "🟢" : "🔴") +
-      " (PriceChange%=" + priceChangePercent + ", TP=" + parameters.getTakeProfitPercent().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Reached Stop Loss : " + (reachedStopLoss ? "🟢" : "🔴") +
-      " (PriceChange%=" + priceChangePercent + ", SL=" + parameters.getStopLossPercent().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Patterns Aligned: " + (isPatternsAlignedForSell ? "🟢" : "🔴") +
-      " (Aligned with bearish setup = false)", true);
-    log(botTypeName + "Stochastic Overbought: " + (stochasticOverbought ? "🟢" : "🔴") +
-      " (K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) + ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Touched BollingerUpper: " + (touchedBollingerUpper ? "🟢" : "🔴") +
-      " (Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) + ", Upper=" + conditions.bollingerUpper().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + "Bearish Price Rejection: " + (bearishRejection ? "🟢" : "🔴"), true);
+    log(botTypeName + (rsiOverbought ? "🟢" : "🔴") + " RSI Overbought: " + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + " (Threshold: " + parameters.getRsiSale().setScale(3, RoundingMode.HALF_UP) + ")", true);
+    log(botTypeName + (bearishTrend ? "🟢" : "🔴") + " Bearish Trend: EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) +
+      ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) + " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) +
+      ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (touchedResistance ? "🟢" : "🔴") + " Touched Resistance: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
+      ", Resistance=" + conditions.resistance().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (macdNegative ? "🟢" : "🔴") + " MACD Negative: " + conditions.macd().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (negativeMomentum ? "🟢" : "🔴") + " Negative Momentum: " + conditions.momentum().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (highVolatility ? "🟢" : "🔴") + " High Volatility: ATR=" + conditions.atr().setScale(3, RoundingMode.HALF_UP) +
+      ", Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (reachedTakeProfit ? "🟢" : "🔴") + " Reached Take Profit: " + parameters.getTakeProfitPercent().setScale(2, RoundingMode.HALF_UP) + "%", true);
+    log(botTypeName + (reachedStopLoss ? "🟢" : "🔴") + " Reached Stop Loss: " + parameters.getStopLossPercent().setScale(2, RoundingMode.HALF_UP) + "%", true);
+    log(botTypeName + (isPatternsAlignedForSell ? "🟢" : "🔴") + " Patterns Aligned: Bearish setup", true);
+    log(botTypeName + (stochasticOverbought ? "🟢" : "🔴") + " Stochastic Overbought: K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) +
+      ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (touchedBollingerUpper ? "🟢" : "🔴") + " Touched BollingerUpper: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
+      ", Upper=" + conditions.bollingerUpper().setScale(3, RoundingMode.HALF_UP), true);
+    log(botTypeName + (bearishRejection ? "🟢" : "🔴") + " Bearish Price Rejection", true);
 
-    MarketType marketType = MarketType.classifyMarket(conditions);
-
-    // Log do tipo de mercado
     log(botTypeName + "📊 Current market type: " + marketType, true);
 
     TradingSignals.Bearish tradingSignals =
@@ -262,23 +233,8 @@ public class TradingService {
         .build();
 
 
-    String sellReason = "";
     if (tradingSignals.shouldSell()) {
-      if (reachedTakeProfit) {
-        sellReason = "Take Profit reached";
-      } else if (reachedStopLoss) {
-        sellReason = "Stop Loss reached";
-      } else {
-        // Determine the main reason for selling
-        if (bearishRejection) sellReason = "Bearish price rejection";
-        else if (touchedResistance || touchedBollingerUpper) sellReason = "Price touched resistance";
-        else if (rsiOverbought) sellReason = "RSI overbought";
-        else if (bearishTrend) sellReason = "Downtrend confirmed";
-        else if (negativeMomentum) sellReason = "Negative momentum";
-        else sellReason = "Combination of sell signals";
-      }
-
-      log(botTypeName + "🔴 SELL signal detected! Reason: " + sellReason);
+      log(botTypeName + "🔴 SELL signal detected!");
       executeSellOrder(bot);
     } else {
       log(botTypeName + "⚪ No SELL signal, maintaining current position.", true);
@@ -328,7 +284,7 @@ public class TradingService {
       adjustmentFactor.max(BigDecimal.valueOf(0.2)).min(BigDecimal.valueOf(1.3))
     );
 
-    return bot.getAdjustedPositionSize(marketBasedAmount);
+    return marketBasedAmount;
   }
 
   private void executeBuyOrder(SimpleTradeBot bot, BigDecimal purchaseAmount) {
@@ -407,7 +363,6 @@ public class TradingService {
     status.setAveragePrice(BigDecimal.ZERO);
     status.setLastPurchaseTime(null);
     status.setLong(false);
-    bot.addTradeResult(profit.compareTo(BigDecimal.ZERO) > 0);
 
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
     log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
@@ -424,73 +379,13 @@ public class TradingService {
       .multiply(BigDecimal.valueOf(100));
   }
 
-  private boolean isDownTrendMarket(MarketConditions conditions, String botTypeName) {
-    boolean emaFastDown = conditions.ema8().compareTo(conditions.ema21()) < 0;
-    boolean emaSlowDown = conditions.ema21().compareTo(conditions.ema50()) < 0;
-    boolean veryShortTermDown = conditions.currentPrice().compareTo(conditions.sma9()) < 0;
-
-    BigDecimal slopeIntensity = conditions.priceSlope().abs();
-    boolean steepDecline = conditions.priceSlope().compareTo(
-      TradingConstants.DOWNTREND_THRESHOLD.negate()) < 0 &&
-      slopeIntensity.compareTo(TradingConstants.DOWNTREND_THRESHOLD.multiply(BigDecimal.valueOf(2))) > 0;
-
-    boolean volumeDecline = conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(0.7))) < 0;
-    boolean volumeSpike = conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(1.8))) > 0;
-
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal positionInBand = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP);
-    boolean movingDownInBand = positionInBand.compareTo(BigDecimal.valueOf(0.4)) < 0 &&
-      conditions.currentPrice().compareTo(conditions.bollingerMiddle()) < 0;
-
-    boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.08)) < 0;
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.18)) < 0;
-    boolean macdNegative = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) < 0;
-
-    boolean stochasticOversold = conditions.stochasticK() != null &&
-      conditions.stochasticK().compareTo(BigDecimal.valueOf(20)) < 0;
-
-    int score = 0;
-    if (emaFastDown) score += 2;
-    if (emaSlowDown) score += 2;
-    if (veryShortTermDown) score += 3;
-    if (steepDecline) score += 4;
-    if (movingDownInBand) score += 2;
-    if (conditions.currentPrice().compareTo(conditions.bollingerMiddle().multiply(
-      BigDecimal.valueOf(0.995))) < 0) score += 2;
-    if (negativeMomentum) score += 2;
-    if (strongNegativeMomentum) score += 3;
-    if (volumeDecline) score += 1;
-    if (volumeSpike && negativeMomentum) score += 3;
-    if (macdNegative) score += 2;
-    if (stochasticOversold) score -= 1; // Potencial reversão
-
-    if (conditions.ema8().compareTo(conditions.ema21().multiply(new BigDecimal("0.998"))) < 0) {
-      score += 3;
-    }
-
-    int threshold = TradingConstants.DOWNTREND_SCORE_THRESHOLD;
-    if (conditions.volatility().compareTo(BigDecimal.valueOf(2.5)) > 0) {
-      threshold += 2;
-    } else if (conditions.volatility().compareTo(BigDecimal.valueOf(0.5)) < 0) {
-      threshold -= 1;
-    }
-
-    log(botTypeName + "Downtrend score: " + score + " (threshold: " + threshold + ")", true);
-    return score >= threshold;
-  }
-
-  private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions) {
+  private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions, MarketType marketType) {
     Status status = bot.getStatus();
     BigDecimal currentProfit = calculatePriceChangePercent(status, conditions.currentPrice());
     BigDecimal taxCost = BigDecimal.valueOf(0.25);
     String botTypeName = "[" + bot.getParameters().getBotType() + "] - ";
 
     BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.15));
-
-    MarketType marketType = MarketType.classifyMarket(conditions);
 
     BigDecimal volatilityFactor = switch (marketType) {
       case HIGH_VOLATILITY -> BigDecimal.valueOf(0.55);
@@ -519,8 +414,7 @@ public class TradingService {
       BigDecimal trailingLevel = currentProfit.multiply(volatilityFactor);
       trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.1)));
 
-      if (status.getTrailingStopLevel() == null ||
-        trailingLevel.compareTo(status.getTrailingStopLevel()) > 0) {
+      if (status.getTrailingStopLevel() == null || trailingLevel.compareTo(status.getTrailingStopLevel()) > 0) {
         status.setTrailingStopLevel(trailingLevel);
         log(botTypeName + "🔄 Trailing stop: " + trailingLevel.setScale(2, RoundingMode.HALF_UP) + "%");
       }
@@ -536,9 +430,12 @@ public class TradingService {
       conditions.averageVolume().multiply(BigDecimal.valueOf(0.5))) < 0 &&
       minimumProfitGreaterThanTax;
 
-    if ((status.getTrailingStopLevel() != null &&
-      currentProfit.compareTo(status.getTrailingStopLevel()) < 0 &&
-      currentProfit.compareTo(taxCost) > 0) || strongNegativeMomentum || highRsi || volumeDropOff) {
+    if ((
+      status.getTrailingStopLevel() != null && currentProfit.compareTo(status.getTrailingStopLevel()) < 0 && currentProfit.compareTo(taxCost) > 0)
+      || strongNegativeMomentum
+      || highRsi
+      || volumeDropOff
+    ) {
 
       String reason = strongNegativeMomentum
         ? "negative momentum"

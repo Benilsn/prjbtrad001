@@ -9,11 +9,11 @@ public class TradingConstants {
   // Thresholds de compra por tipo de mercado
   public static final double BUY_THRESHOLD_STRONG_UPTREND = 4.5;  // Mais seletivo em alta forte
   public static final double BUY_THRESHOLD_WEAK_UPTREND = 3.8;    // Moderado em alta fraca
-  public static final double BUY_THRESHOLD_RANGE_BOUND = 3.5;     // Mais permissivo em mercado lateral
+  public static final double BUY_THRESHOLD_RANGE_BOUND = 4.0;     // Mais permissivo em mercado lateral
   public static final double BUY_THRESHOLD_WEAK_DOWNTREND = 4.8;  // Mais seletivo em baixa fraca
   public static final double BUY_THRESHOLD_STRONG_DOWNTREND = 5.5; // Muito seletivo em baixa forte
   public static final double BUY_THRESHOLD_HIGH_VOLATILITY = 5.0;  // Cuidadoso em alta volatilidade
-  public static final double BUY_THRESHOLD_TREND_REVERSAL = 3.3;   // Mais permissivo em reversão
+  public static final double BUY_THRESHOLD_TREND_REVERSAL = 3.8;   // Mais permissivo em reversão
 
   // Thresholds de venda por tipo de mercado
   public static final double SELL_THRESHOLD_STRONG_UPTREND = 3.5;  // Mais seletivo para vender em alta forte
