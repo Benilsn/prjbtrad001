@@ -16,14 +16,33 @@
                 </li>
             </ul>
 
-            <div class="ms-5 neon-link ">
-                <span id="wallet-balance" class="text-glow-green fs-4">
-                  R$0,00
-                </span>
+            <div class="ms-5 cyber-wallet-container" data-bs-toggle="tooltip" data-bs-html="true"
+                 data-bs-placement="bottom"
+                 data-bs-title="<div class='text-start cyber-tooltip'><strong class='text-glow-green'>Profit:</strong> R$0,00<br><strong class='text-glow-red'>Fees:</strong> R$0,00</div>">
+                <div class="cyber-wallet-frame">
+                    <i class="bi bi-currency-exchange me-2"></i>
+                    <span id="wallet-balance" class="text-glow-green fs-4">R$0,00</span>
+                    <div class="cyber-wallet-scanner"></div>
+                    <div class="corner-top-right"></div>
+                    <div class="corner-bottom-left"></div>
+                    <div class="cyber-wallet-coins">
+                        <div class="coin"></div>
+                        <div class="coin"></div>
+                        <div class="coin"></div>
+                        <div class="coin"></div>
+                        <div class="coin"></div>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </nav>
 
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+         [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+     });
+</script>
 {/fragment}

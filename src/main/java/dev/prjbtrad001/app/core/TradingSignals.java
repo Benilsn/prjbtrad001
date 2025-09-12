@@ -207,7 +207,7 @@ public record TradingSignals() {
           points += trendCondition ? 0.7 : 0;
           points += stochCondition ? 0.6 : 0;
           points += patternsCondition ? 0.5 : 0;
-          points += volumeCondition ? 0.4 : 0;
+          points += volumeCondition ? 0.8 : -0.2;
           break;
 
         case TREND_REVERSAL:

@@ -34,6 +34,12 @@ public class TradingService {
   public void analyzeMarket(SimpleTradeBot bot) {
     BotParameters parameters = bot.getParameters();
     Status status = bot.getStatus();
+    String botTypeName = "[" + parameters.getBotType() + "] - ";
+
+    if (bot.isTradingPaused()) {
+      log(botTypeName + "⛔ Trading paused until: " + bot.getPauseUntil() + " due to consecutive losses: (" + bot.getConsecutiveLosses() + ")", true);
+      return;
+    }
 
     List<KlineDto> klines =
       tradingExecutor.getCandles(
@@ -284,7 +290,7 @@ public class TradingService {
       adjustmentFactor.max(BigDecimal.valueOf(0.2)).min(BigDecimal.valueOf(1.3))
     );
 
-    return marketBasedAmount;
+    return bot.getAdjustedPositionSize(marketBasedAmount);
   }
 
   private void executeBuyOrder(SimpleTradeBot bot, BigDecimal purchaseAmount) {
@@ -363,6 +369,7 @@ public class TradingService {
     status.setAveragePrice(BigDecimal.ZERO);
     status.setLastPurchaseTime(null);
     status.setLong(false);
+    bot.addTradeResult(profit.compareTo(BigDecimal.ZERO) > 0);
 
     log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
     log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
