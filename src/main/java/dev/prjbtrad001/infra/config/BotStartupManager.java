@@ -32,7 +32,7 @@ public class BotStartupManager {
 
     botIds
       .forEach(b -> {
-        botOrchestratorService.startBot(b);
+        botOrchestratorService.startBot(b, 1L);
         try {
           Thread.sleep(1500);
         } catch (InterruptedException e) {

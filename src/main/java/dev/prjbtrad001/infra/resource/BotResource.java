@@ -153,7 +153,7 @@ public class BotResource {
   @GET
   @Path("/start/{botId}")
   public Response startBot(@PathParam("botId") UUID botId) {
-    botOrchestratorService.startBot(botId);
+    botOrchestratorService.startBot(botId, 1L);
     return
       Response
         .seeOther(UriBuilder.fromPath("/bots")

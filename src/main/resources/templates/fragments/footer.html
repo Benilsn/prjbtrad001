@@ -9,26 +9,11 @@
        * 1. Initialize Bootstrap Tooltips
        * ---------------------------------- */
       fetchWallet();
-      setInterval(fetchWallet, 5000);
+      setInterval(fetchWallet, 20000);
       const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
       tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
       });
-
-    async function fetchWallet() {
-      try {
-        const response = await fetch('/refresh-wallet');
-        if (!response.ok) throw new Error("Failed to fetch wallet balance");
-
-        const data = await response.text();
-        console.log("Fetched wallet:", data);
-
-        const walletElement = document.getElementById('wallet-balance');
-        walletElement.textContent = data;
-      } catch (error) {
-        console.error('Error fetching wallet:', error);
-      }
-    }
 
       /* ----------------------------------
        * 2. Fetch and Update Prices
@@ -166,11 +151,55 @@
         }
     }
 
+function fetchWallet() {
+    fetch('/refresh-wallet-data')
+        .then(response => {
+            if (!response.ok) {
+                console.warn("⚠️ Resposta do servidor com status:", response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.info("💰 Carteira:", {
+                saldo: data.balance,
+                lucro: data.profit,
+                taxas: data.fees
+            });
 
+            // Atualizar saldo
+            const walletBalance = document.getElementById('wallet-balance');
+            if (walletBalance) {
+                walletBalance.textContent = "R$" + data.balance;
+            } else {
+                console.warn("⚠️ Elemento wallet-balance não encontrado");
+            }
 
+            // Atualizar tooltip com lucro e taxas
+            const walletContainer = document.querySelector('.cyber-wallet-container');
+            if (walletContainer) {
+                const tooltipContent = "<div class='text-start cyber-tooltip'>" +
+                    "<strong class='text-glow-green'>Lucro:</strong> R$" + data.profit + "<br>" +
+                    "<strong class='text-glow-red'>Taxas:</strong> R$" + data.fees + "</div>";
+
+                walletContainer.setAttribute('data-bs-title', tooltipContent);
+
+                // Recriar tooltip para refletir as mudanças
+                const tooltip = bootstrap.Tooltip.getInstance(walletContainer);
+                if (tooltip) {
+                    tooltip.dispose();
+                    new bootstrap.Tooltip(walletContainer);
+                } else {
+                    console.warn("⚠️ Não foi possível obter instância do tooltip");
+                }
+            } else {
+                console.warn("⚠️ Elemento cyber-wallet-container não encontrado");
+            }
+        })
+        .catch(error => {
+            console.error("❌ Erro ao atualizar carteira:", error);
+        });
+}
 </script>
-
-
 
 
 <footer class="cyber-footer mt-5 fixed-bottom">

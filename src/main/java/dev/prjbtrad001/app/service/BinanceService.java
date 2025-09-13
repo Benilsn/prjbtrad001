@@ -588,4 +588,14 @@ public class BinanceService implements TradingExecutor {
     return Optional.empty();
   }
 
+  @Override
+  public BigDecimal getAccumulatedProfit() {
+    return BigDecimal.ZERO;
+  }
+
+  @Override
+  public BigDecimal getAccumulatedFees() {
+    return BigDecimal.ZERO;
+  }
+
 }

@@ -22,7 +22,7 @@ quarkus:
     log:
       sql: false
     database:
-        generation: update
+        generation: create-drop
   log:
     level: ${ROOT_LOG_LEVEL:INFO}
     console:
@@ -49,3 +49,6 @@ bot:
       - MATICBRL
       - LTCBRL
       - ADABRL
+      - LINKBRL
+      - ENABRL
+      - AVAXBRL

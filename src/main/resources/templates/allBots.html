@@ -19,8 +19,8 @@
         });
     </script>
     <div class="modal fade" id="botModal" tabindex="-1" aria-labelledby="botModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
-            <div class="modal-content neon-glow border-0 rounded-4 px-3 py-2" style="background-color: #101010;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-neon" style="background:#101010;">
 
                 <div class="modal-header border-0 pb-0">
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="modal-body text-center pt-2 pb-1">
-                    <p class="neon-text fs-5">{message}</p>
+                    <p class="text-glow-green fs-4 mb-2">{message}</p>
                 </div>
 
                 <div class="modal-footer border-0 justify-content-center pt-1">
@@ -43,9 +43,9 @@
     <div class="text-center mb-4">
         <a class="btn btn-create-neon-green mx-2" href="/bots/create">Create</a>
         <a class="btn btn-create-neon-green mx-2" href="/bots/create-from-file">Create from file</a>
-        <a class="btn btn-create-neon mx-2" href="#" id="runAllBotsBtn">Run ALL</a>
-        <a class="btn btn-create-neon-yellow mx-2" href="/bots/stop-all">Stop ALL<i class="fa-solid fa-person-running-fast fs-4"></i></a>
-        <button type="button" class="btn btn-delete-all-neon" data-bs-toggle="modal" data-bs-target="#deleteAllBotsModal">Delete ALL</button>
+        <a class="btn btn-create-neon mx-2" href="#" id="runAllBotsBtn">Run all</a>
+        <a class="btn btn-create-neon-yellow mx-2" href="/bots/stop-all">Stop all<i class="fa-solid fa-person-running-fast fs-4"></i></a>
+        <button type="button" class="btn btn-delete-all-neon" data-bs-toggle="modal" data-bs-target="#deleteAllBotsModal">Delete all</button>
         <!-- Neon Modal -->
         <div class="modal fade" id="deleteAllBotsModal" tabindex="-1" aria-labelledby="deleteAllBotsModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

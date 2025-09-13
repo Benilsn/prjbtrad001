@@ -1,7 +1,10 @@
 package dev.prjbtrad001.app.core;
 
+import lombok.Builder;
+
 import java.math.BigDecimal;
 
+@Builder
 public record MarketConditions(
   BigDecimal rsi,
   BigDecimal sma9,
@@ -20,6 +23,11 @@ public record MarketConditions(
   BigDecimal bollingerUpper,
   BigDecimal bollingerMiddle,
   BigDecimal bollingerLower,
-  BigDecimal priceSlope
+  BigDecimal priceSlope,
+  BigDecimal macd,
+  BigDecimal stochasticK,
+  BigDecimal stochasticD,
+  BigDecimal atr,
+  BigDecimal obv
 ) {
 }

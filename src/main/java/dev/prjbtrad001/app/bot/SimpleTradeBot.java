@@ -1,7 +1,10 @@
 package dev.prjbtrad001.app.bot;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -76,6 +79,10 @@ public class SimpleTradeBot extends PanacheEntityBase {
 
   public BigDecimal getAdjustedPositionSize(BigDecimal baseAmount) {
     return baseAmount.multiply(positionSizeMultiplier);
+  }
+
+  public Integer getIntervalInMinutes() {
+    return Integer.parseInt(parameters.getInterval().replaceAll("[mhd]", ""));
   }
 
   public Integer getIntervalInSeconds() {
