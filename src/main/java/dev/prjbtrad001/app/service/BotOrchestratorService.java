@@ -80,12 +80,11 @@ public class BotOrchestratorService {
   }
 
   @Transactional
-  public SimpleTradeBot updateBot(BotParameters parameters, UUID botId) {
+  public void updateBot(BotParameters parameters, UUID botId) {
     SimpleTradeBot bot = getBotById(botId);
     bot.setParameters(parameters);
     bot.persist();
     BotOrchestratorService.log.debug("Updating bot: " + bot.getParameters().getBotType());
-    return bot;
   }
 
   @Transactional
@@ -98,7 +97,7 @@ public class BotOrchestratorService {
   }
 
   @Transactional
-  public void startBot(UUID botId) {
+  public void startBot(UUID botId, long initialDelayInSeconds) {
     try {
       SimpleTradeBot bot = getBotById(botId);
       if (isAlreadyRunning(bot.getId())) {
@@ -107,7 +106,17 @@ public class BotOrchestratorService {
       }
 
       int interval = bot.getIntervalInSeconds();
-      scheduleNewBotTask(bot, interval);
+
+      BotTask task = new BotTask(bot.getId(), botExecutorService);
+      ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(
+        task,
+        initialDelayInSeconds,
+        interval,
+        TimeUnit.SECONDS
+      );
+
+      runningBots.put(bot.getId(), future);
+      log.debugf("Scheduled new task for bot %s with interval %ds", bot.getId(), interval);
 
       updateBotStatus(bot, true);
       log.infof("Bot %s started with interval of %ds", bot.getId(), interval);
@@ -137,7 +146,6 @@ public class BotOrchestratorService {
     log.debugf("All bots deleted successfully");
   }
 
-  @Transactional
   public void runAll() {
     try {
       List<UUID> botIds = SimpleTradeBot
@@ -147,15 +155,15 @@ public class BotOrchestratorService {
         .map(SimpleTradeBot::getId)
         .toList();
 
-      botIds.forEach(b -> {
+      long waitTime = 1L;
+      for (UUID id : botIds) {
         try {
-          startBot(b);
-          Thread.sleep(1000);
+          startBot(id, waitTime);
+          waitTime += 1L;
         } catch (Exception e) {
-          log.errorf("Failed to start bot %s: %s", b, e.getMessage());
+          log.errorf("Failed to start bot %s: %s", id, e.getMessage());
         }
-      });
-
+      }
     } catch (Exception e) {
       log.errorf("Failed to run all bots: %s", e.getMessage());
       throw new BotOperationException("Failed to run all bots", e);
@@ -201,16 +209,5 @@ public class BotOrchestratorService {
     return runningBots.containsKey(botId);
   }
 
-  private void scheduleNewBotTask(SimpleTradeBot bot, int interval) {
-    BotTask task = new BotTask(bot.getId(), botExecutorService);
-    ScheduledFuture<?> future = scheduler.scheduleAtFixedRate(
-      task,
-      2,
-      interval,
-      TimeUnit.SECONDS
-    );
-    runningBots.put(bot.getId(), future);
-    log.debugf("Scheduled new task for bot %s with interval %ds", bot.getId(), interval);
-  }
 
 }

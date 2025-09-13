@@ -7,182 +7,124 @@
 
 <body>
 
-<div class="d-flex flex-column align-items-center my-5">
+<div class="container-fluid p-0" style="height: calc(100vh - 140px); margin-top: 30px; margin-bottom: 100px;">
+    <div class="row justify-content-center mx-0 w-100" style="height: 90%;">
+        <div class="col-11 col-xl-10 h-100">
+            <div class="trade-log-container h-100 d-flex flex-column">
+                <div class="log-header d-flex justify-content-between align-items-center mb-3">
+                    <div class="log-title text-center w-100">
+                        <h4 class="neon-text mb-0"><i class="bi bi-terminal me-2"></i>TRADE LOG</h4>
+                    </div>
+                </div>
 
-    <div class="cyber-filter-container mb-3 p-3 border border-primary rounded"
-         style="background-color: rgba(13, 25, 42, 0.8);">
-        <div class="row g-3 align-items-end">
-            <!-- Crypto Filter -->
-            <div class="col-md-3">
-                <label for="crypto-filter" class="form-label text-info">Crypto</label>
-                <select id="crypto-filter" class="form-select bg-dark text-light border-primary">
-                    <option value="">All</option>
-                    <option value="BTCBRL">BTCBRL</option>
-                    <option value="ETHBRL">ETHBRL</option>
-                    <option value="BNBBRL">BNBBRL</option>
-                    <option value="XRPBRL">XRPBRL</option>
-                    <option value="SOLBRL">SOLBRL</option>
-                    <option value="DOGEBRL">DOGEBRL</option>
-                </select>
-            </div>
-            <!-- Operation Filter -->
-            <div class="col-md-3">
-                <label for="operation-filter" class="form-label text-info">Operation</label>
-                <div class="btn-group w-100" role="group" id="operation-filter">
-                    <input type="radio" class="btn-check" name="operation" id="all-ops" value="" checked>
-                    <label class="btn btn-outline-primary" for="all-ops">All</label>
-                    <input type="radio" class="btn-check" name="operation" id="buy-ops" value="BUY">
-                    <label class="btn btn-outline-success" for="buy-ops">Buy</label>
-                    <input type="radio" class="btn-check" name="operation" id="sell-ops" value="SELL">
-                    <label class="btn btn-outline-danger" for="sell-ops">Sell</label>
+                <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+                    <div class="position-relative flex-grow-1 me-md-3 mb-3 mb-md-0">
+                        <input type="text" id="log-filter" class="form-control neon-input w-100"
+                               placeholder="🔎 What are you looking for?"/>
+                        <div class="position-absolute bottom-0 start-0 w-0" id="search-underline"
+                             style="height: 1px; background: #00fff7; transition: width 0.3s ease;"></div>
+                    </div>
+                    <a href="/clear-trade-log" id="clear-log-btn" class="btn btn-clean-log-neon">
+                        <i class="bi bi-trash-fill me-2"></i>Clean all logs
+                    </a>
+                </div>
+
+                <!-- Conteúdo dos logs -->
+                <div class="log-content-container flex-grow-1">
+                    <div id="trade-log-content" class="h-100 p-3">
+                        {#for item in data.orEmpty}
+                        <p class="log-entry">{item}</p>
+                        {/for}
+                    </div>
+                </div>
+
+                <div class="log-footer text-center mt-3">
+                    <span class="me-1">SYSTEM</span>
+                    <span class="text-neon-cyan me-1">•</span>
+                    <span class="text-neon-cyan me-1">STATUS</span>
+                    <span class="text-glow-green">ONLINE</span>
                 </div>
             </div>
-            <!-- Time Filter -->
-            <div class="col-md-3">
-                <label for="time-filter" class="form-label text-info">Period</label>
-                <select id="time-filter" class="form-select bg-dark text-light border-primary">
-                    <option value="">All time</option>
-                    <option value="1">Last hour</option>
-                    <option value="24">Last 24 hours</option>
-                    <option value="7">Last 7 days</option>
-                </select>
-            </div>
-            <!-- Clear Filters Button aligned right -->
-            <div class="col-md-3 text-end d-flex align-items-end">
-                <button id="clear-filters" class="btn btn-clean-filters-neon me-3">Clean all filters</button>
-                <a href="/clear-trade-log" id="clear-log-btn" class="btn btn-clean-log-neon">Clean all logs</a >
-            </div>
-            <input type="text" id="log-filter" class="form-control neon-input w-80" placeholder="🔎 Log filter..."/>
-        </div>
-    </div>
-
-    <!-- Caixa de log -->
-    <div class="trade-log-box p-4 mb-5" style="width: 80%; height: 120vh; overflow-y: auto;">
-        <h4 class="neon-text text-center mb-5">Trade Log</h4>
-        <div id="trade-log-content">
-            {#for item in data.orEmpty}
-            <p class="log-entry">{item}</p>
-            {/for}
         </div>
     </div>
 </div>
 
+<style>
+    .trade-log-container {
+        border: 1px solid #00fff7;
+        border-radius: 2px;
+        background-color: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 0 15px rgba(0, 255, 247, 0.5);
+        padding: 20px;
+        position: relative;
+    }
+
+    .log-content-container {
+        border: 1px solid rgba(0, 255, 247, 0.3);
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #trade-log-content {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #00fff7 #111;
+    }
+
+    .log-entry {
+        padding: 4px 0;
+        font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    .log-footer {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    .neon-input {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 1px solid #00fff7;
+        color: #e6e6e6;
+    }
+
+    .btn-clean-log-neon {
+        padding: 8px 16px;
+    }
+</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const cryptoFilter = document.getElementById('crypto-filter');
-      const operationRadios = document.querySelectorAll('input[name="operation"]');
-      const timeFilter = document.getElementById('time-filter');
-      const clearFiltersBtn = document.getElementById('clear-filters');
+        const searchInput = document.getElementById('log-filter');
+        const searchUnderline = document.getElementById('search-underline');
 
-      function applyFilters() {
-        const cryptoValue = cryptoFilter.value.toLowerCase();
-        const operationValue = document.querySelector('input[name="operation"]:checked').value.toLowerCase();
-        const timeValue = timeFilter.value;
-
-        const logEntries = document.querySelectorAll('#trade-log-content .log-entry');
-
-        logEntries.forEach(entry => {
-          const text = entry.textContent.toLowerCase();
-          let showEntry = true;
-
-          // Filtro de criptomoeda
-          if (cryptoValue && !text.includes(cryptoValue.toLowerCase())) {
-            showEntry = false;
-          }
-
-          // Filtro de operação
-          if (operationValue === 'buy' && !text.includes('buy') && !text.includes('purchase')) {
-            showEntry = false;
-          } else if (operationValue === 'sell' && !text.includes('sell') && !text.includes('venda')) {
-            showEntry = false;
-          }
-
-          // Filtro de tempo
-          if (timeValue) {
-            const timestamp = extractTimestamp(text);
-            if (timestamp) {
-              const hoursDiff = getHoursDifference(timestamp, new Date());
-              if (timeValue === '1' && hoursDiff > 1) showEntry = false;
-              else if (timeValue === '24' && hoursDiff > 24) showEntry = false;
-              else if (timeValue === '7' && hoursDiff > 168) showEntry = false;
-            }
-          }
-
-          entry.classList.toggle('hidden-log', !showEntry);
+        searchInput.addEventListener('focus', function() {
+            searchUnderline.style.width = '100%';
         });
-      }
 
-      function extractTimestamp(text) {
-        const match = text.match(/\[(\d{2}-\d{2}-\d{4} \d{2}:\d{2}:\d{2})\]/);
-    if (match && match[1]) {
-      const parts = match[1].split(' ');
-      const dateParts = parts[0].split('-');
-      const timeParts = parts[1].split(':');
+        searchInput.addEventListener('blur', function() {
+            if (this.value === '') {
+                searchUnderline.style.width = '0';
+            }
+        });
 
-      // Formato: DD-MM-YYYY HH:MM:SS
-      return new Date(
-        parseInt(dateParts[2]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[0]),
-        parseInt(timeParts[0]),
-        parseInt(timeParts[1]),
-        parseInt(timeParts[2])
-      );
-    }
-    return null;
-  }
+        searchInput.addEventListener('input', function() {
+            const filterText = this.value.toLowerCase();
+            const logEntries = document.querySelectorAll('.log-entry');
 
-  function getHoursDifference(date1, date2) {
-    return Math.abs(date2 - date1) / 36e5; // 36e5 é o número de milissegundos em uma hora
-  }
-
-  function clearAllFilters() {
-    cryptoFilter.value = '';
-    document.getElementById('all-ops').checked = true;
-    timeFilter.value = '';
-    applyFilters();
-  }
-
-  // Adicionar event listeners
-  cryptoFilter.addEventListener('change', applyFilters);
-  timeFilter.addEventListener('change', applyFilters);
-  clearFiltersBtn.addEventListener('click', clearAllFilters);
-
-  operationRadios.forEach(radio => {
-    radio.addEventListener('change', applyFilters);
-  });
-
-  // Aplicar estilização adicional
-  document.head.insertAdjacentHTML('beforeend', `
-    <style>
-      .cyber-filter-container {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-      }
-
-      .hidden-log {
-        display: none;
-      }
-
-      .btn-outline-primary:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-warning:hover {
-        box-shadow: 0 0 15px currentColor;
-      }
-
-      .btn-check:checked + .btn {
-        box-shadow: 0 0 10px currentColor;
-      }
-
-      select.form-select {
-        transition: all 0.3s ease;
-      }
-
-      select.form-select:focus {
-        box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
-      }
-    </style>
-  `);
-});
+            logEntries.forEach(entry => {
+                const text = entry.textContent.toLowerCase();
+                if (text.includes(filterText)) {
+                    entry.classList.remove('hidden-log');
+                } else {
+                    entry.classList.add('hidden-log');
+                }
+            });
+        });
+    });
 </script>
+
 </body>
 
 {#include 'fragments/footer.html'/}

@@ -123,6 +123,7 @@ public class MockService implements TradingExecutor {
         }
 
         BigDecimal tradingFee = grossQuantity.multiply(feeRate);
+        wallet.recordFee(symbol, tradingFee);
         log("[" + symbol + "] - " + "💰 Trading fee: R$" + tradingFee.setScale(2, RoundingMode.HALF_UP), true);
 
         BigDecimal netQuantity = grossQuantity.subtract(tradingFee);
@@ -149,11 +150,19 @@ public class MockService implements TradingExecutor {
         BigDecimal totalInReais = price.multiply(quantity);
 
         BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
+        wallet.recordFee(symbol, tradingFee);
+
         log("[" + symbol + "] - " + "💰 Trading fee: R$" + tradingFee.setScale(2, RoundingMode.HALF_UP), true);
         BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
 
         wallet.updateBalance(asset, quantity.negate());
         wallet.updateBalance("BRL", totalAfterFee);
+
+        BigDecimal estimatedProfit = totalAfterFee.subtract(quantity.multiply(price).multiply(BigDecimal.valueOf(0.95)));
+        if (estimatedProfit.compareTo(BigDecimal.ZERO) > 0) {
+          wallet.recordProfit(symbol, estimatedProfit);
+          log("[" + symbol + "] - " + "💹 Profit: R$" + estimatedProfit.setScale(2, RoundingMode.HALF_UP), true);
+        }
 
         log.infof("Mock sell: %s quantity=%s price=%s total=%s",
           symbol, quantity, price, totalInReais);
@@ -183,11 +192,26 @@ public class MockService implements TradingExecutor {
     );
   }
 
+  @Override
+  public BigDecimal getAccumulatedProfit() {
+    return wallet.getAccumulatedProfit().values().stream()
+      .reduce(BigDecimal.ZERO, BigDecimal::add)
+      .setScale(2, RoundingMode.HALF_UP);
+  }
+
+  @Override
+  public BigDecimal getAccumulatedFees() {
+    return wallet.getAccumulatedFees().values().stream()
+      .reduce(BigDecimal.ZERO, BigDecimal::add)
+      .setScale(2, RoundingMode.HALF_UP);
+  }
 
   @Getter
   private static class MockWallet {
-    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(3000.00);
+    private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(4000.00);
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
+    private final Map<String, BigDecimal> accumulatedProfit = new ConcurrentHashMap<>();
+    private final Map<String, BigDecimal> accumulatedFees = new ConcurrentHashMap<>();
 
     public MockWallet() {
       balances.put("BRL", INITIAL_BALANCE);
@@ -199,6 +223,14 @@ public class MockService implements TradingExecutor {
 
     public synchronized void updateBalance(String symbol, BigDecimal amount) {
       balances.merge(symbol, amount.setScale(8, RoundingMode.HALF_UP), BigDecimal::add);
+    }
+
+    public synchronized void recordProfit(String symbol, BigDecimal profit) {
+      accumulatedProfit.merge(symbol, profit.setScale(2, RoundingMode.HALF_UP), BigDecimal::add);
+    }
+
+    public synchronized void recordFee(String symbol, BigDecimal fee) {
+      accumulatedFees.merge(symbol, fee.setScale(2, RoundingMode.HALF_UP), BigDecimal::add);
     }
   }
 }
