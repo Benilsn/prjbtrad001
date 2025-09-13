@@ -18,7 +18,7 @@
 
             <div class="ms-5 cyber-wallet-container" data-bs-toggle="tooltip" data-bs-html="true"
                  data-bs-placement="bottom"
-                 data-bs-title="<div class='text-start cyber-tooltip'><strong class='text-glow-green'>Profit:</strong> R$0,00<br><strong class='text-glow-red'>Fees:</strong> R$0,00</div>">
+                 data-bs-title="<div class='text-start cyber-tooltip'><strong class='text-glow-green'>Lucro:</strong> R$0,00<br><strong class='text-glow-red'>Taxas:</strong> R$0,00</div>">
                 <div class="cyber-wallet-frame">
                     <i class="bi bi-currency-exchange me-2"></i>
                     <span id="wallet-balance" class="text-glow-green fs-4">R$0,00</span>
@@ -40,9 +40,34 @@
 </nav>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-         [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-     });
+    function fetchWallet() {
+    fetch('/refresh-wallet-data')
+        .then(response => response.json())
+        .then(data => {
+            // Atualizar saldo
+            const walletBalance = document.getElementById('wallet-balance');
+            if (walletBalance) {
+                walletBalance.textContent = "R$" + data.balance;
+            }
+
+            // Atualizar tooltip com lucro e taxas
+            const walletContainer = document.querySelector('.cyber-wallet-container');
+            if (walletContainer) {
+                const tooltipContent = "<div class='text-start cyber-tooltip'>" +
+                    "<strong class='text-glow-green'>Lucro:</strong> R$" + data.profit + "<br>" +
+                    "<strong class='text-glow-red'>Taxas:</strong> R$" + data.fees + "</div>";
+
+                walletContainer.setAttribute('data-bs-title', tooltipContent);
+
+                // Recriar tooltip para refletir as mudanças
+                const tooltip = bootstrap.Tooltip.getInstance(walletContainer);
+                if (tooltip) {
+                    tooltip.dispose();
+                    new bootstrap.Tooltip(walletContainer);
+                }
+            }
+        })
+        .catch(error => console.error('Erro ao atualizar carteira:', error));
+}
 </script>
 {/fragment}

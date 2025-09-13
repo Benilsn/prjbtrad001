@@ -17,4 +17,7 @@ public interface TradingExecutor {
   List<KlineDto> getCandles(String symbol, String interval, int limit);
   Optional<TradeOrderDto> placeBuyOrder(String symbol, BigDecimal quantity);
 
+  BigDecimal getAccumulatedProfit();
+  BigDecimal getAccumulatedFees();
+
 }

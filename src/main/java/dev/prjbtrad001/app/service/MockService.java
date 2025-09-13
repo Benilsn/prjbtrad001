@@ -35,6 +35,11 @@ public class MockService implements TradingExecutor {
   private final MockWallet wallet = new MockWallet();
   private final HttpClient httpClient = HttpClient.newHttpClient();
 
+  private BigDecimal accumulatedProfit = BigDecimal.ZERO;
+  private BigDecimal accumulatedFees = BigDecimal.ZERO;
+
+  private final Map<String, BigDecimal> purchasePriceMap = new ConcurrentHashMap<>();
+
   @Override
   public CriptoDto getPrice(String symbol) {
     try {
@@ -123,10 +128,12 @@ public class MockService implements TradingExecutor {
         }
 
         BigDecimal tradingFee = grossQuantity.multiply(feeRate);
+        accumulatedFees = accumulatedFees.add(tradingFee);
         log("[" + symbol + "] - " + "💰 Trading fee: R$" + tradingFee.setScale(2, RoundingMode.HALF_UP), true);
 
         BigDecimal netQuantity = grossQuantity.subtract(tradingFee);
 
+        purchasePriceMap.put(asset, price);
         wallet.updateBalance(asset, netQuantity);
 
         return Optional.of(createMockOrder(symbol, netQuantity, price, purchaseAmountInReais));
@@ -149,8 +156,18 @@ public class MockService implements TradingExecutor {
         BigDecimal totalInReais = price.multiply(quantity);
 
         BigDecimal tradingFee = totalInReais.multiply(BigDecimal.valueOf(0.001));
+        accumulatedFees = accumulatedFees.add(tradingFee);
+
         log("[" + symbol + "] - " + "💰 Trading fee: R$" + tradingFee.setScale(2, RoundingMode.HALF_UP), true);
         BigDecimal totalAfterFee = totalInReais.subtract(tradingFee);
+
+        BigDecimal purchasePrice = purchasePriceMap.getOrDefault(asset, BigDecimal.ZERO);
+        if (purchasePrice.compareTo(BigDecimal.ZERO) > 0) {
+          BigDecimal purchaseTotal = purchasePrice.multiply(quantity);
+          BigDecimal profit = totalAfterFee.subtract(purchaseTotal);
+          accumulatedProfit = accumulatedProfit.add(profit);
+          log("[" + symbol + "] - " + "💹 Profit: R$" + profit.setScale(2, RoundingMode.HALF_UP), true);
+        }
 
         wallet.updateBalance(asset, quantity.negate());
         wallet.updateBalance("BRL", totalAfterFee);
@@ -183,6 +200,15 @@ public class MockService implements TradingExecutor {
     );
   }
 
+  @Override
+  public BigDecimal getAccumulatedProfit() {
+    return accumulatedProfit.setScale(2, RoundingMode.HALF_UP);
+  }
+
+  @Override
+  public BigDecimal getAccumulatedFees() {
+    return accumulatedFees.setScale(2, RoundingMode.HALF_UP);
+  }
 
   @Getter
   private static class MockWallet {

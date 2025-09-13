@@ -18,7 +18,9 @@ import lombok.extern.jbosslog.JBossLog;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import static dev.prjbtrad001.app.utils.FormatterUtils.FORMATTER2;
@@ -52,10 +54,24 @@ public class HomeResource {
   }
 
   @GET()
-  @Path("/refresh-wallet")
-  public String refreshWallet() {
-    log.info("Refreshing wallet data...");
-    return String.format("R$%s", FORMATTER2.format(tradingExecutor.getBalance().orElse(new BalanceDto(null, BigDecimal.ZERO, null)).balance()));
+  @Path("/refresh-wallet-data")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response refreshWalletData() {
+    log.info("Refreshing complete wallet data...");
+
+    BigDecimal balance = tradingExecutor.getBalance()
+      .orElse(new BalanceDto(null, BigDecimal.ZERO, null))
+      .balance();
+
+    BigDecimal profit = tradingExecutor.getAccumulatedProfit();
+    BigDecimal fees = tradingExecutor.getAccumulatedFees();
+
+    Map<String, String> walletData = new HashMap<>();
+    walletData.put("balance", FORMATTER2.format(balance));
+    walletData.put("profit", FORMATTER2.format(profit));
+    walletData.put("fees", FORMATTER2.format(fees));
+
+    return Response.ok(walletData).build();
   }
 
   @GET
