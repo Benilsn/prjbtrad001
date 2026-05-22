@@ -1,55 +1,68 @@
 {#fragment id=botCard}
 
 {#for bot in allBots}
-<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-    <div class="bot-card p-3 h-100 position-relative">
+<div class="col-xl-3 col-lg-4 col-md-6 card-animate">
+    <div class="bot-card p-3 h-100 d-flex flex-column position-relative">
 
         <!-- Delete -->
-        <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2">
+        <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2" style="z-index:2">
             <input type="hidden" name="botId" value="{bot.id}">
-            <button type="submit" class="btn-delete-x" title="Delete bot">✕</button>
+            <button type="submit" class="btn-delete-x" title="Delete">✕</button>
         </form>
 
         <!-- Header -->
         <div class="d-flex align-items-center gap-2 mb-3">
-            <span class="mono text-cyan fw-bold" style="font-size:1.05rem;letter-spacing:2px">{bot.parameters.botType}</span>
+            <span class="mono text-cyan fw-bold" style="font-size:1rem;letter-spacing:2px;">
+                {bot.parameters.botType}
+            </span>
             <span class="status-pill {bot.running ? 'status-running animate-running' : 'status-idle'}">
-                {bot.running ? 'Running' : 'Idle'}
+                <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;"></span>
+                {bot.running ? 'RUNNING' : 'IDLE'}
             </span>
         </div>
 
         <hr class="neon-divider my-2">
 
         <!-- Key stats -->
-        <div class="d-flex flex-column gap-2 mb-3">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column gap-2 flex-grow-1 mb-3">
+
+            <div class="d-flex justify-content-between align-items-baseline">
                 <span class="label">Position</span>
-                <span class="{bot.status.isLong ? 'text-green' : 'text-dim'} mono" style="font-size:0.85rem">
-                    {bot.status.isLong ? 'LONG' : 'NONE'}
+                <span class="mono {bot.status.isLong ? 'text-green' : 'text-dim'}" style="font-size:0.82rem;">
+                    {bot.status.isLong ? 'LONG ▲' : 'NONE —'}
                 </span>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+
+            <div class="d-flex justify-content-between align-items-baseline">
                 <span class="label">Profit</span>
                 {#if bot.status.isProfitPositive == 0 || bot.status.isProfitPositive == null}
-                <span class="profit-zero mono" style="font-size:0.85rem">R${bot.status.profit ?: '0,00'}</span>
+                <span class="profit-zero mono" style="font-size:0.82rem;">R${bot.status.profit ?: '0,00'}</span>
                 {#else}
                 {#if bot.status.isProfitPositive < 0}
-                <span class="profit-negative mono" style="font-size:0.85rem">R${bot.status.profit ?: '0,00'}</span>
+                <span class="profit-negative mono" style="font-size:0.82rem;">R${bot.status.profit ?: '0,00'}</span>
                 {#else}
-                <span class="profit-positive mono" style="font-size:0.85rem">R${bot.status.profit ?: '0,00'}</span>
+                <span class="profit-positive mono" style="font-size:0.82rem;">R${bot.status.profit ?: '0,00'}</span>
                 {/if}
                 {/if}
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+
+            <div class="d-flex justify-content-between align-items-baseline">
                 <span class="label">Invested</span>
-                <span class="mono text-dim" style="font-size:0.85rem">R${bot.status.totalPurchased ?: '0,00'}</span>
+                <span class="mono text-dim" style="font-size:0.82rem;">R${bot.status.totalPurchased ?: '0,00'}</span>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+
+            <div class="d-flex justify-content-between align-items-baseline">
                 <span class="label">Entry</span>
-                <span class="mono text-dim" style="font-size:0.78rem">
+                <span class="mono text-dim" style="font-size:0.75rem;">
                     {bot.status.lastPurchaseTime ? bot.status.lastPurchaseTime.format('dd/MM HH:mm') : '—'}
                 </span>
             </div>
+
+            <div class="d-flex justify-content-between align-items-baseline">
+                <span class="label">Interval</span>
+                <span class="mono text-dim" style="font-size:0.78rem;">{bot.parameters.interval}</span>
+            </div>
+
         </div>
 
         <hr class="neon-divider my-2">
@@ -57,83 +70,105 @@
         <!-- Actions -->
         <div class="d-flex gap-2 justify-content-end">
             <a href="/bots/{bot.running ? 'stop' : 'start'}/{bot.id}"
-               class="btn btn-neon {bot.running ? 'btn-neon-red' : 'btn-neon-green'} btn-sm">
-                {bot.running ? 'Stop' : 'Run'}
+               class="btn btn-neon {bot.running ? 'btn-neon-red' : 'btn-neon-green'}" style="font-size:0.75rem;padding:4px 12px;">
+                {bot.running ? '◼ Stop' : '▶ Run'}
             </a>
-            <a href="/bots/edit/{bot.id}" class="btn btn-neon btn-neon-yellow btn-sm">Edit</a>
-            <button class="btn btn-neon btn-sm" data-bs-toggle="modal" data-bs-target="#botDetail-{bot.id}">
-                Info
+            <a href="/bots/edit/{bot.id}" class="btn btn-neon btn-neon-yellow" style="font-size:0.75rem;padding:4px 12px;">
+                ✎ Edit
+            </a>
+            <button class="btn btn-neon" style="font-size:0.75rem;padding:4px 12px;"
+                    data-bs-toggle="modal" data-bs-target="#botDetail-{bot.id}">
+                ⊞ Info
             </button>
         </div>
+
     </div>
 </div>
 
-<!-- Detail modal -->
+<!-- Detail Modal -->
 <div class="modal fade" id="botDetail-{bot.id}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <span class="mono text-cyan" style="letter-spacing:2px">{bot.parameters.botType} — Details</span>
+                <span class="mono text-cyan" style="letter-spacing:3px;font-size:0.9rem;">
+                    {bot.parameters.botType} · DETAILS
+                </span>
                 <button type="button" class="btn-delete-x ms-auto" data-bs-dismiss="modal">✕</button>
             </div>
             <div class="modal-body p-4">
                 <div class="row g-4">
-                    <!-- Settings -->
+
                     <div class="col-6 col-md-3">
                         <p class="section-title">Settings</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div><div class="label">Interval</div><div class="value">{bot.parameters.interval}</div></div>
-                            <div><div class="label">Strategy</div><div class="value">{bot.parameters.purchaseStrategy}</div></div>
-                            <div><div class="label">Amount</div><div class="value">R$ {bot.parameters.purchaseAmount}</div></div>
-                            <div><div class="label">Vol. Mult.</div><div class="value">{bot.parameters.volumeMultiplier}x</div></div>
-                            <div><div class="label">Candles</div><div class="value">{bot.parameters.candlesAnalyzed}</div></div>
+                        <div class="d-flex flex-column gap-3">
+                            <div><span class="label">Interval</span><span class="value">{bot.parameters.interval}</span></div>
+                            <div><span class="label">Strategy</span><span class="value">{bot.parameters.purchaseStrategy}</span></div>
+                            <div><span class="label">Amount</span><span class="value">R$ {bot.parameters.purchaseAmount}</span></div>
+                            <div><span class="label">Vol. Mult.</span><span class="value">{bot.parameters.volumeMultiplier}×</span></div>
+                            <div><span class="label">Candles</span><span class="value">{bot.parameters.candlesAnalyzed}</span></div>
                         </div>
                     </div>
-                    <!-- Indicators -->
+
                     <div class="col-6 col-md-3">
                         <p class="section-title">Indicators</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div><div class="label">RSI Buy ≤</div><div class="value">{bot.parameters.rsiPurchase}</div></div>
-                            <div><div class="label">RSI Sell ≥</div><div class="value">{bot.parameters.rsiSale}</div></div>
-                            <div><div class="label">SMA Short</div><div class="value">{bot.parameters.smaShort}</div></div>
-                            <div><div class="label">SMA Long</div><div class="value">{bot.parameters.smaLong}</div></div>
-                            <div><div class="label">Stop Loss</div><div class="value text-red">{bot.parameters.stopLossPercent}%</div></div>
-                            <div><div class="label">Take Profit</div><div class="value text-green">{bot.parameters.takeProfitPercent}%</div></div>
+                        <div class="d-flex flex-column gap-3">
+                            <div><span class="label">RSI Buy ≤</span><span class="value">{bot.parameters.rsiPurchase}</span></div>
+                            <div><span class="label">RSI Sell ≥</span><span class="value">{bot.parameters.rsiSale}</span></div>
+                            <div><span class="label">SMA Short</span><span class="value">{bot.parameters.smaShort}</span></div>
+                            <div><span class="label">SMA Long</span><span class="value">{bot.parameters.smaLong}</span></div>
+                            <div><span class="label">Stop Loss</span><span class="value text-red">{bot.parameters.stopLossPercent}%</span></div>
+                            <div><span class="label">Take Profit</span><span class="value text-green">{bot.parameters.takeProfitPercent}%</span></div>
                         </div>
                     </div>
-                    <!-- Position -->
+
                     <div class="col-6 col-md-3">
                         <p class="section-title">Position</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div><div class="label">Long</div><div class="value">{bot.status.isLong ?: false}</div></div>
-                            <div><div class="label">Invested</div><div class="value">R$ {bot.status.totalPurchased ?: '0,00'}</div></div>
-                            <div><div class="label">Avg. Price</div><div class="value">R$ {bot.status.averagePrice ?: '0,00'}</div></div>
-                            <div><div class="label">Quantity</div><div class="value">{bot.status.quantity ?: '0,00'}</div></div>
-                            <div><div class="label">Consec. Losses</div><div class="value {bot.consecutiveLosses > 0 ? 'text-red' : ''}">{bot.consecutiveLosses ?: 0}</div></div>
-                            <div><div class="label">Paused Until</div><div class="value text-yellow">{bot.pauseUntil ? bot.pauseUntil.format('dd/MM HH:mm') : '—'}</div></div>
-                        </div>
-                    </div>
-                    <!-- P&L -->
-                    <div class="col-6 col-md-3">
-                        <p class="section-title">P&L</p>
-                        <div class="d-flex flex-column gap-2">
-                            <div><div class="label">Total Profit</div>
-                                <div class="value {bot.status.isProfitPositive > 0 ? 'text-green' : bot.status.isProfitPositive < 0 ? 'text-red' : 'text-yellow'}">
-                                    R$ {bot.status.profit ?: '0,00'}
-                                </div>
+                        <div class="d-flex flex-column gap-3">
+                            <div><span class="label">Long</span>
+                                <span class="value {bot.status.isLong ? 'text-green' : 'text-dim'}">{bot.status.isLong ?: false}</span>
                             </div>
-                            <div><div class="label">Entry Time</div><div class="value">{bot.status.lastPurchaseTime ? bot.status.lastPurchaseTime.format('dd/MM/yyyy HH:mm') : '—'}</div></div>
-                            <div><div class="label">Size Mult.</div><div class="value">{bot.positionSizeMultiplier ?: '1,00'}x</div></div>
+                            <div><span class="label">Invested</span><span class="value">R$ {bot.status.totalPurchased ?: '0,00'}</span></div>
+                            <div><span class="label">Avg Price</span><span class="value">R$ {bot.status.averagePrice ?: '0,00'}</span></div>
+                            <div><span class="label">Quantity</span><span class="value">{bot.status.quantity ?: '0,00'}</span></div>
+                            <div><span class="label">Consec. Losses</span>
+                                <span class="value {bot.consecutiveLosses > 0 ? 'text-red' : ''}">{bot.consecutiveLosses ?: 0}</span>
+                            </div>
+                            <div><span class="label">Paused Until</span>
+                                <span class="value text-yellow">{bot.pauseUntil ? bot.pauseUntil.format('dd/MM HH:mm') : '—'}</span>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-6 col-md-3">
+                        <p class="section-title">P &amp; L</p>
+                        <div class="d-flex flex-column gap-3">
+                            <div>
+                                <span class="label">Total Profit</span>
+                                <span class="value {bot.status.isProfitPositive > 0 ? 'text-green' : bot.status.isProfitPositive < 0 ? 'text-red' : 'text-yellow'}">
+                                    R$ {bot.status.profit ?: '0,00'}
+                                </span>
+                            </div>
+                            <div><span class="label">Entry Time</span>
+                                <span class="value" style="font-size:0.78rem;">
+                                    {bot.status.lastPurchaseTime ? bot.status.lastPurchaseTime.format('dd/MM/yyyy HH:mm') : '—'}
+                                </span>
+                            </div>
+                            <div><span class="label">Size Mult.</span>
+                                <span class="value">{bot.positionSizeMultiplier ?: '1,00'}×</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-neon btn-sm" data-bs-dismiss="modal">Close</button>
+            <div class="modal-footer justify-content-between">
+                <a href="/bots" class="btn btn-neon" style="font-size:0.8rem;">← Back</a>
+                <button class="btn btn-neon" data-bs-dismiss="modal" style="font-size:0.8rem;">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 {/for}
+
 {/fragment}

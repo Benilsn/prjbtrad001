@@ -69,6 +69,7 @@ public class BotOrchestratorService {
     return
       bots.stream()
         .sorted(Comparator.comparing(tradeBot -> !tradeBot.isRunning()))
+        .sorted(Comparator.comparing(tradeBot -> !tradeBot.getStatus().isLong()))
         .toList();
   }
 

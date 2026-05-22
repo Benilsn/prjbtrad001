@@ -1,5 +1,4 @@
 {#fragment id=head}
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,219 +6,422 @@
     <link rel="icon" href="/images/btc-neon.png" type="image"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* ── Base ── */
+        /* ═══════════════════════════════════════
+           TOKENS
+        ═══════════════════════════════════════ */
         :root {
-            --cyan:   #00e5ff;
-            --green:  #00e676;
-            --red:    #ff1744;
-            --yellow: #ffd740;
-            --dim:    #8899aa;
-            --bg:     #080c10;
-            --surface:#0e1318;
-            --border: rgba(0, 229, 255, 0.2);
+            --cyan:    #00e5ff;
+            --cyan-dim: rgba(0,229,255,0.15);
+            --green:   #00e676;
+            --red:     #ff1744;
+            --yellow:  #ffd740;
+            --dim:     #546e7a;
+            --text:    #b0bec5;
+            --bg:      #05080d;
+            --surface: #0b0f15;
+            --border:  rgba(0,229,255,0.18);
+            --border-glow: rgba(0,229,255,0.5);
+            --card-bg: rgba(11,15,21,0.92);
         }
+
+        /* ═══════════════════════════════════════
+           BASE
+        ═══════════════════════════════════════ */
+        *, *::before, *::after { box-sizing: border-box; }
 
         body {
             background-color: var(--bg);
-            color: #ccd6e0;
+            color: var(--text);
             font-family: 'Rajdhani', sans-serif;
             font-size: 15px;
+            min-height: 100vh;
+            position: relative;
         }
+
+        /* Subtle dot-grid background overlay */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(0,229,255,0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* All content above the bg overlay */
+        .navbar, main, .container, .container-fluid, footer,
+        #bot-grid, #crypto-grid, #log-screen, .log-hud { position: relative; z-index: 1; }
 
         code, .mono { font-family: 'Share Tech Mono', monospace; }
 
-        /* ── Navbar ── */
-        .cyber-navbar {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+        /* ═══════════════════════════════════════
+           FLOATING PARTICLE BACKGROUND
+           (added via JS in footer — styles live here)
+        ═══════════════════════════════════════ */
+        #bg-particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .bg-particle {
+            position: absolute;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--cyan);
+            line-height: 1;
+            animation: floatUp linear infinite;
+            user-select: none;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: var(--op); }
+            to   { transform: translateY(-110vh) rotate(180deg); opacity: 0; }
         }
 
+        /* ═══════════════════════════════════════
+           NAVBAR
+        ═══════════════════════════════════════ */
+        .cyber-navbar {
+            background: rgba(5,8,13,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
         .neon-text-logo {
             font-family: 'Share Tech Mono', monospace;
             color: var(--cyan);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-size: 1.1rem;
+            text-decoration: none;
         }
-
-        .neon-link { color: #ccd6e0; transition: color 0.2s; text-decoration: none; }
+        .neon-link { color: var(--text); transition: color 0.2s; text-decoration: none; font-weight: 500; }
         .neon-link:hover { color: var(--cyan); }
 
-        /* ── Utility colors ── */
-        .text-cyan   { color: var(--cyan); }
-        .text-green  { color: var(--green); }
-        .text-red    { color: var(--red); }
-        .text-yellow { color: var(--yellow); }
-        .text-dim    { color: var(--dim); }
+        /* ═══════════════════════════════════════
+           CARD — BOT CARDS
+        ═══════════════════════════════════════ */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .card-animate {
+            animation: slideUp 0.45s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        /* Stagger delays */
+        .card-animate:nth-child(1)  { animation-delay: 0.04s; }
+        .card-animate:nth-child(2)  { animation-delay: 0.09s; }
+        .card-animate:nth-child(3)  { animation-delay: 0.14s; }
+        .card-animate:nth-child(4)  { animation-delay: 0.19s; }
+        .card-animate:nth-child(5)  { animation-delay: 0.24s; }
+        .card-animate:nth-child(6)  { animation-delay: 0.29s; }
+        .card-animate:nth-child(7)  { animation-delay: 0.34s; }
+        .card-animate:nth-child(8)  { animation-delay: 0.39s; }
+        .card-animate:nth-child(9)  { animation-delay: 0.44s; }
+        .card-animate:nth-child(10) { animation-delay: 0.49s; }
+        .card-animate:nth-child(11) { animation-delay: 0.54s; }
+        .card-animate:nth-child(12) { animation-delay: 0.59s; }
 
-        /* ── Card ── */
         .bot-card {
-            background: var(--surface);
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 8px;
-            transition: border-color 0.2s, transform 0.15s;
+            transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
         }
         .bot-card:hover {
-            border-color: var(--cyan);
-            transform: translateY(-2px);
+            border-color: var(--border-glow);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0,229,255,0.1), 0 0 1px var(--cyan);
         }
 
-        /* ── Labels / values ── */
-        .label {
-            font-size: 0.7rem;
-            color: var(--dim);
+        /* ═══════════════════════════════════════
+           CARD — CRYPTO PRICE CARDS
+        ═══════════════════════════════════════ */
+        .crypto-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 18px;
+            transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+            position: relative;
+            overflow: hidden;
+        }
+        .crypto-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .crypto-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(0,229,255,0.08);
+        }
+        .crypto-card:hover::before { opacity: 1; }
+
+        .crypto-symbol {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--cyan);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        .crypto-price {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--green);
+            margin: 0 0 6px;
+            transition: color 0.3s;
+        }
+        .crypto-last-updated {
+            font-size: 0.72rem;
+            color: var(--dim);
+            margin: 0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        .green-text { color: var(--green); }
+
+        /* Flash on price update */
+        @keyframes priceFlash {
+            0%   { background: rgba(0,230,118,0.18); }
+            100% { background: transparent; }
+        }
+        .price-flash { animation: priceFlash 0.8s ease-out; border-radius: 4px; }
+
+        /* ═══════════════════════════════════════
+           STATUS BADGES
+        ═══════════════════════════════════════ */
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .status-running {
+            background: rgba(0,230,118,0.1); color: var(--green);
+            border: 1px solid rgba(0,230,118,0.3);
+        }
+        .status-idle {
+            background: rgba(84,110,122,0.1); color: var(--dim);
+            border: 1px solid rgba(84,110,122,0.25);
+        }
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,230,118,0.4); }
+            50%       { opacity: 0.7; box-shadow: 0 0 0 4px rgba(0,230,118,0); }
+        }
+        .animate-running { animation: statusPulse 1.8s ease-in-out infinite; }
+
+        /* ═══════════════════════════════════════
+           LABELS / VALUES
+        ═══════════════════════════════════════ */
+        .label {
+            font-size: 0.68rem; color: var(--dim);
+            text-transform: uppercase; letter-spacing: 0.1em;
+            display: block; margin-bottom: 1px;
         }
         .value {
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.95rem;
-            color: var(--cyan);
+            font-size: 0.92rem; color: var(--cyan);
         }
-
-        /* ── Status pill ── */
-        .status-pill {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .status-running { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.35); }
-        .status-idle    { background: rgba(255,23,68,0.08);  color: var(--red);   border: 1px solid rgba(255,23,68,0.25); }
-
-        /* ── Buttons ── */
-        .btn-neon {
-            background: transparent;
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            padding: 4px 14px;
-            border-radius: 4px;
-            transition: all 0.15s;
-        }
-        .btn-neon:hover { background: var(--cyan); color: var(--bg); }
-
-        .btn-neon-green { border-color: var(--green); color: var(--green); }
-        .btn-neon-green:hover { background: var(--green); color: var(--bg); }
-
-        .btn-neon-red { border-color: var(--red); color: var(--red); }
-        .btn-neon-red:hover { background: var(--red); color: var(--bg); }
-
-        .btn-neon-yellow { border-color: var(--yellow); color: var(--yellow); }
-        .btn-neon-yellow:hover { background: var(--yellow); color: var(--bg); }
-
-        /* ── Divider ── */
-        .neon-divider { border-color: var(--border); }
-
-        /* ── Modal ── */
-        .modal-content {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: #ccd6e0;
-        }
-        .modal-header { border-bottom: 1px solid var(--border); }
-        .modal-footer { border-top: 1px solid var(--border); }
-
-        /* ── Trade log ── */
-        .trade-log-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            max-height: 520px;
-            overflow-y: auto;
-        }
-        .log-entry {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.82rem;
-            color: var(--green);
-            padding: 2px 0;
-        }
-        .trade-log-box::-webkit-scrollbar { width: 6px; }
-        .trade-log-box::-webkit-scrollbar-track { background: var(--bg); }
-        .trade-log-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-        /* ── Neon input ── */
-        .neon-input {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--cyan);
-            font-family: 'Share Tech Mono', monospace;
-            border-radius: 6px;
-            padding: 8px 12px;
-            transition: border-color 0.2s;
-        }
-        .neon-input:focus { border-color: var(--cyan); outline: none; box-shadow: none; }
-        .neon-input::placeholder { color: var(--dim); }
-
-        /* ── Footer ── */
-        .cyber-footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            color: var(--dim);
-            font-size: 0.82rem;
-        }
-        .cyber-footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
-        .cyber-footer a:hover { color: var(--cyan); }
-
-        /* ── Section title ── */
-        .section-title {
-            font-size: 0.72rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--dim);
-            margin-bottom: 1rem;
-            padding-bottom: 6px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* ── Page title ── */
-        .page-title {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--cyan);
-            font-size: 1.4rem;
-            letter-spacing: 3px;
-        }
-
-        /* ── Profit colors ── */
+        .text-cyan    { color: var(--cyan); }
+        .text-green   { color: var(--green); }
+        .text-red     { color: var(--red); }
+        .text-yellow  { color: var(--yellow); }
+        .text-dim     { color: var(--dim); }
         .profit-positive { color: var(--green); }
         .profit-negative { color: var(--red); }
         .profit-zero     { color: var(--yellow); }
 
-        /* ── Running pulse ── */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50%       { opacity: 0.5; }
-        }
-        .animate-running { animation: pulse 1.6s ease-in-out infinite; }
-
-        /* ── Delete x button ── */
-        .btn-delete-x {
+        /* ═══════════════════════════════════════
+           BUTTONS
+        ═══════════════════════════════════════ */
+        .btn-neon {
             background: transparent;
-            border: none;
-            color: rgba(255,23,68,0.5);
-            font-size: 1rem;
-            line-height: 1;
-            padding: 2px 6px;
-            transition: color 0.2s;
+            border: 1px solid var(--cyan); color: var(--cyan);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem; padding: 5px 16px; border-radius: 4px;
+            transition: all 0.15s; cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .btn-neon:hover { background: var(--cyan); color: var(--bg); box-shadow: 0 0 12px rgba(0,229,255,0.4); }
+
+        .btn-neon-green { border-color: var(--green); color: var(--green); }
+        .btn-neon-green:hover { background: var(--green); color: var(--bg); box-shadow: 0 0 12px rgba(0,230,118,0.4); }
+
+        .btn-neon-red { border-color: var(--red); color: var(--red); }
+        .btn-neon-red:hover { background: var(--red); color: #fff; box-shadow: 0 0 12px rgba(255,23,68,0.4); }
+
+        .btn-neon-yellow { border-color: var(--yellow); color: var(--yellow); }
+        .btn-neon-yellow:hover { background: var(--yellow); color: var(--bg); }
+
+        .btn-delete-x {
+            background: transparent; border: none;
+            color: rgba(255,23,68,0.4); font-size: 0.9rem;
+            padding: 2px 6px; line-height: 1; transition: color 0.2s; cursor: pointer;
         }
         .btn-delete-x:hover { color: var(--red); }
 
-        /* ── Wallet display ── */
-        #wallet-balance {
+        /* ═══════════════════════════════════════
+           FORM ELEMENTS
+        ═══════════════════════════════════════ */
+        .neon-input {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border); color: var(--cyan);
             font-family: 'Share Tech Mono', monospace;
-            color: var(--green);
-            font-size: 1rem;
+            border-radius: 5px; padding: 9px 13px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+        .neon-input:focus {
+            border-color: var(--cyan); outline: none;
+            box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
+            color: var(--cyan);
+        }
+        .neon-input::placeholder { color: var(--dim); }
+
+        .form-control, .form-select {
+            background-color: rgba(0,0,0,0.5) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+            border-radius: 5px !important;
+            transition: border-color 0.2s, box-shadow 0.2s !important;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--cyan) !important;
+            box-shadow: 0 0 0 3px rgba(0,229,255,0.1) !important;
+            color: var(--cyan) !important;
+        }
+        .form-select option { background: #0b0f15; color: var(--text); }
+        .input-group-text {
+            background: rgba(0,229,255,0.08) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--cyan) !important;
         }
 
-        /* ── hidden log ── */
+        /* ═══════════════════════════════════════
+           MODAL
+        ═══════════════════════════════════════ */
+        .modal-content {
+            background: #0b0f15; border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text);
+        }
+        .modal-header { border-bottom: 1px solid var(--border); }
+        .modal-footer { border-top: 1px solid var(--border); }
+        .modal-backdrop { backdrop-filter: blur(4px); }
+
+        /* ═══════════════════════════════════════
+           PAGE TITLE
+        ═══════════════════════════════════════ */
+        .page-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--cyan); font-size: 1.3rem; letter-spacing: 4px;
+        }
+        .section-title {
+            font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--dim); padding-bottom: 6px;
+            border-bottom: 1px solid var(--border); margin-bottom: 1rem;
+        }
+        hr.neon-divider { border-color: var(--border); }
+
+        /* ═══════════════════════════════════════
+           TRADE LOG — FULLSCREEN TERMINAL
+        ═══════════════════════════════════════ */
+        #log-screen {
+            position: fixed; inset: 0;
+            padding: 70px 0 0;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+        }
+        #log-scroll {
+            flex: 1; overflow-y: auto;
+            padding: 16px 32px 80px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,229,255,0.2) transparent;
+            /* Fade older entries toward the top */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 8%, black 18%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 8%, black 18%);
+        }
+        #log-scroll::-webkit-scrollbar { width: 4px; }
+        #log-scroll::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.15); border-radius: 2px; }
+        .log-entry {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.82rem; color: rgba(0,230,118,0.85);
+            padding: 2px 0; margin: 0; line-height: 1.6;
+            animation: logAppear 0.3s ease-out both;
+        }
+        @keyframes logAppear {
+            from { opacity: 0; transform: translateX(-8px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        .log-entry.hidden-log { display: none; }
+        .log-cursor {
+            display: inline-block; width: 8px; height: 14px;
+            background: var(--cyan); vertical-align: middle;
+            animation: blink 1.1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* HUD overlay bar on log page */
+        .log-hud {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: 60px;
+            background: rgba(5,8,13,0.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 16px;
+            padding: 0 24px; z-index: 100;
+        }
+        .log-hud-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--cyan); font-size: 0.85rem; letter-spacing: 3px;
+            white-space: nowrap;
+        }
+        .log-status-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 6px var(--green);
+            animation: statusPulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           WALLET BALANCE
+        ═══════════════════════════════════════ */
+        #wallet-balance {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--green); font-size: 0.95rem; letter-spacing: 1px;
+        }
+
+        /* ═══════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════ */
+        .cyber-footer {
+            background: rgba(5,8,13,0.9);
+            border-top: 1px solid var(--border);
+            color: var(--dim); font-size: 0.78rem;
+        }
+        .cyber-footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+        .cyber-footer a:hover { color: var(--cyan); }
+
+        /* ═══════════════════════════════════════
+           ALERT / ERROR BANNERS
+        ═══════════════════════════════════════ */
+        .alert-danger {
+            background: rgba(255,23,68,0.08) !important;
+            border: 1px solid rgba(255,23,68,0.3) !important;
+            color: #ff6b8a !important; border-radius: 6px !important;
+        }
+
+        /* ═══════════════════════════════════════
+           MISC
+        ═══════════════════════════════════════ */
+        .text-neon { color: var(--cyan); }
         .hidden-log { display: none; }
+        ::selection { background: rgba(0,229,255,0.2); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,229,255,0.15); border-radius: 3px; }
     </style>
 </head>
-
 {/fragment}

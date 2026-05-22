@@ -1,13 +1,15 @@
 {#fragment id=navbar}
-
-<nav class="navbar navbar-expand-lg cyber-navbar">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg cyber-navbar sticky-top">
+    <div class="container-fluid px-4">
         <a class="navbar-brand neon-text-logo" href="/">btrad001</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon text-neon"></span>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                style="color:var(--cyan)">
+            <span style="font-family:'Share Tech Mono',monospace;font-size:1.2rem;">☰</span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
                 <li class="nav-item">
                     <a class="nav-link neon-link" href="/bots">Active bots</a>
                 </li>
@@ -15,59 +17,11 @@
                     <a class="nav-link neon-link" href="/trade-log">Trade log</a>
                 </li>
             </ul>
-
-            <div class="ms-5 cyber-wallet-container" data-bs-toggle="tooltip" data-bs-html="true"
-                 data-bs-placement="bottom"
-                 data-bs-title="<div class='text-start cyber-tooltip'><strong class='text-glow-green'>Profit:</strong> R$0,00<br><strong class='text-glow-red'>Fees:</strong> R$0,00</div>">
-                <div class="cyber-wallet-frame">
-                    <i class="bi bi-currency-exchange me-2"></i>
-                    <span id="wallet-balance" class="text-glow-green fs-4">R$0,00</span>
-                    <div class="cyber-wallet-scanner"></div>
-                    <div class="corner-top-right"></div>
-                    <div class="corner-bottom-left"></div>
-                    <div class="cyber-wallet-coins">
-                        <div class="coin"></div>
-                        <div class="coin"></div>
-                        <div class="coin"></div>
-                        <div class="coin"></div>
-                        <div class="coin"></div>
-                    </div>
-                </div>
+            <div class="ms-lg-4 mt-2 mt-lg-0 d-flex align-items-center gap-2">
+                <span style="color:var(--dim);font-size:0.7rem;font-family:'Share Tech Mono',monospace;">BAL</span>
+                <span id="wallet-balance">R$0,00</span>
             </div>
-
         </div>
     </div>
 </nav>
-
-<script>
-    function fetchWallet() {
-    fetch('/refresh-wallet-data')
-        .then(response => response.json())
-        .then(data => {
-            // Atualizar saldo
-            const walletBalance = document.getElementById('wallet-balance');
-            if (walletBalance) {
-                walletBalance.textContent = "R$" + data.balance;
-            }
-
-            // Atualizar tooltip com lucro e taxas
-            const walletContainer = document.querySelector('.cyber-wallet-container');
-            if (walletContainer) {
-                const tooltipContent = "<div class='text-start cyber-tooltip'>" +
-                    "<strong class='text-glow-green'>Lucro:</strong> R$" + data.profit + "<br>" +
-                    "<strong class='text-glow-red'>Taxas:</strong> R$" + data.fees + "</div>";
-
-                walletContainer.setAttribute('data-bs-title', tooltipContent);
-
-                // Recriar tooltip para refletir as mudanças
-                const tooltip = bootstrap.Tooltip.getInstance(walletContainer);
-                if (tooltip) {
-                    tooltip.dispose();
-                    new bootstrap.Tooltip(walletContainer);
-                }
-            }
-        })
-        .catch(error => console.error('Erro ao atualizar carteira:', error));
-}
-</script>
 {/fragment}
