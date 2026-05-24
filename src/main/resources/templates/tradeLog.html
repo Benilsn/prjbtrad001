@@ -3,8 +3,11 @@
 {#include 'fragments/head.html'/}
 <body style="overflow:hidden;">
 
-<!-- ── HUD Overlay Bar ── -->
 <div class="log-hud">
+
+    <!-- Back arrow -->
+    <a href="/" class="btn-neon" style="padding:4px 10px;font-size:2rem;margin-right:4px;border:1px">←</a>
+
     <div class="log-status-dot"></div>
     <span class="log-hud-title">TRADE LOG</span>
 
@@ -22,14 +25,12 @@
         </a>
     </div>
 
-    <!-- Wallet in HUD -->
     <div class="d-flex align-items-center gap-2 ms-3">
         <span style="color:var(--dim);font-size:0.7rem;font-family:'Share Tech Mono',monospace;">BAL</span>
         <span id="wallet-balance" style="font-size:0.85rem;">R$0,00</span>
     </div>
 </div>
 
-<!-- ── Fullscreen Log Terminal ── -->
 <div id="log-screen">
     <div id="log-scroll">
         {#for item in data.orEmpty}
@@ -39,8 +40,9 @@
     </div>
 </div>
 
+<button id="btn-log-bottom" title="Jump to bottom">↓</button>
+
 <script>
-    // Count visible entries
     function updateCount() {
         const total   = document.querySelectorAll('#log-scroll .log-entry').length;
         const visible = document.querySelectorAll('#log-scroll .log-entry:not(.hidden-log)').length;
@@ -65,8 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Override refreshTradeLog to also update count
-const _origRefresh = window.refreshTradeLog;
 window._afterLogRefresh = updateCount;
 </script>
 

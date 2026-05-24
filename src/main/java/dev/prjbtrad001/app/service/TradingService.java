@@ -78,7 +78,8 @@ public class TradingService {
     String tag = "[" + params.getBotType() + "] ";
 
     // ── Pre-flight: is potential profit worth the fees? ──────────
-    BigDecimal distanceToResistance = c.resistance().subtract(c.currentPrice())
+    BigDecimal distanceToResistance =
+      c.resistance().subtract(c.currentPrice())
       .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
       .multiply(BigDecimal.valueOf(100));
 
