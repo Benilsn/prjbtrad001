@@ -34,9 +34,9 @@
                 opacity:.35"></div>
 
     {#if message}
-    <div class="alert-danger p-3 mb-3 card-animate">
-        <span class="mono" style="font-size:.83rem">{message}</span>
-    </div>
+        <div id="action-message" class="alert-cyan p-3 mb-3 card-animate">
+            <span class="mono" style="font-size:.83rem">{message}</span>
+        </div>
     {/if}
 
     <!-- Bot grid -->
@@ -90,11 +90,35 @@
 </div>
 
 <script>
-document.getElementById('runAllBtn')?.addEventListener('click', e => {
-    e.preventDefault();
-    new bootstrap.Modal(document.getElementById('loadingModal')).show();
-    setTimeout(() => window.location.href = '/bots/run-all', 250);
-});
+    window.addEventListener('DOMContentLoaded', () => {
+
+        document.getElementById('runAllBtn')?.addEventListener('click', e => {
+            e.preventDefault();
+
+            new bootstrap.Modal(
+                document.getElementById('loadingModal')
+            ).show();
+
+            setTimeout(() => {
+                window.location.href = '/bots/run-all';
+            }, 250);
+        });
+
+        const msg = document.getElementById('action-message');
+
+        if (msg) {
+
+            msg.style.transition = 'opacity 2.5s ease';
+
+            setTimeout(() => {
+                msg.style.opacity = '0';
+            }, 1800);
+
+            setTimeout(() => {
+                msg.remove();
+            }, 4500);
+        }
+    });
 </script>
 
 </body>
