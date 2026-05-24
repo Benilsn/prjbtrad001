@@ -3,166 +3,96 @@ package dev.prjbtrad001.app.core;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Market classification for swing trading.
+ *
+ * Simplified from the original 7-state model.
+ * The primary filter is EMA200 (macro trend), then momentum overlays.
+ */
 public enum MarketType {
+
+  /** All EMAs aligned up, price above EMA200 — ride the trend */
   STRONG_UPTREND,
+
+  /** Price above EMA200 but momentum slowing or correcting */
   WEAK_UPTREND,
+
+  /** Price roughly flat, bounded between clear support and resistance */
   RANGE_BOUND,
+
+  /** Price below EMA200, selling pressure — avoid long entries */
   WEAK_DOWNTREND,
+
+  /** All EMAs aligned down, price below EMA200 — do not buy */
   STRONG_DOWNTREND,
-  HIGH_VOLATILITY,
-  TREND_REVERSAL;
 
-  public static MarketType classifyMarket(MarketConditions conditions) {
-    // ANÁLISE DE TENDÊNCIA COM MÚLTIPLOS TIMEFRAMES
-    boolean ema8AboveEma21 = conditions.ema8().compareTo(conditions.ema21()) > 0;
-    boolean ema21AboveEma50 = conditions.ema21().compareTo(conditions.ema50()) > 0;
-    boolean ema50AboveEma100 = conditions.ema50().compareTo(conditions.ema100()) > 0;
-    boolean priceAboveEma50 = conditions.currentPrice().compareTo(conditions.ema50()) > 0;
+  /** ATR spike / wide Bollinger bands — wait for calm */
+  HIGH_VOLATILITY;
 
-    // Distância do preço às médias (em %)
-    BigDecimal priceToEma50Distance =
-      conditions.currentPrice().subtract(conditions.ema50())
-        .divide(conditions.ema50(), 8, RoundingMode.HALF_UP)
-        .multiply(BigDecimal.valueOf(100)).abs();
-
-    boolean priceExtendedFromEma50 = priceToEma50Distance.compareTo(BigDecimal.valueOf(1.2)) > 0;
-
-    // Indicadores de força da tendência
-    boolean strongUptrend = ema8AboveEma21 && ema21AboveEma50 && ema50AboveEma100 && priceAboveEma50;
-    boolean strongDowntrend = !ema8AboveEma21 && !ema21AboveEma50 && !ema50AboveEma100 && !priceAboveEma50;
-
-    // ANÁLISE DE MOMENTUM
-    boolean strongPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.25)) > 0;
-    boolean weakPositiveMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(0.10)) > 0;
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.25)) < 0;
-    boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
-    boolean momentumDivergenceUp = !weakPositiveMomentum && !strongNegativeMomentum;
-    boolean momentumDivergenceDown = !negativeMomentum && !strongPositiveMomentum;
-
-    // ANÁLISE DE RSI
-    boolean rsiOverbought = conditions.rsi().compareTo(BigDecimal.valueOf(70)) > 0;
-    boolean rsiStronglyOverbought = conditions.rsi().compareTo(BigDecimal.valueOf(80)) > 0;
-    boolean rsiOversold = conditions.rsi().compareTo(BigDecimal.valueOf(30)) < 0;
-    boolean rsiStronglyOversold = conditions.rsi().compareTo(BigDecimal.valueOf(20)) < 0;
-
-    // RSI em zona média (indicando possível consolidação)
-    boolean rsiNeutral = conditions.rsi().compareTo(BigDecimal.valueOf(45)) > 0 &&
-      conditions.rsi().compareTo(BigDecimal.valueOf(55)) < 0;
-
-    // ANÁLISE DE BANDAS DE BOLLINGER
-    BigDecimal bandRange = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-
-    BigDecimal bandWidth = bandRange
-      .divide(conditions.bollingerMiddle(), 8, RoundingMode.HALF_UP)
+  public static MarketType classifyMarket(MarketConditions c) {
+    // ── 1. Volatility gate (always first) ────────────────────────
+    BigDecimal pricePercent = c.volatility()
+      .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
       .multiply(BigDecimal.valueOf(100));
-
-    boolean veryTightBands = bandWidth.compareTo(BigDecimal.valueOf(1.5)) < 0;
-    boolean tightBands = bandWidth.compareTo(BigDecimal.valueOf(2.5)) < 0;
-    boolean wideBands = bandWidth.compareTo(BigDecimal.valueOf(4.0)) > 0;
-    boolean veryWideBands = bandWidth.compareTo(BigDecimal.valueOf(6.0)) > 0;
-
-    BigDecimal relativePosition = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandRange, 8, RoundingMode.HALF_UP);
-
-    boolean atUpperBand = relativePosition.compareTo(BigDecimal.valueOf(0.95)) > 0;
-    boolean nearUpperBand = relativePosition.compareTo(BigDecimal.valueOf(0.80)) > 0;
-    boolean atLowerBand = relativePosition.compareTo(BigDecimal.valueOf(0.05)) < 0;
-    boolean nearLowerBand = relativePosition.compareTo(BigDecimal.valueOf(0.20)) < 0;
-
-    boolean nearMiddleBand =
-      relativePosition.compareTo(BigDecimal.valueOf(0.40)) > 0
-        && relativePosition.compareTo(BigDecimal.valueOf(0.60)) < 0;
-
-    boolean moderateVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) > 0;
-    boolean highVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3.0)) > 0;
-    boolean extremeVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(5.0)) > 0;
-
-    // DETECÇÃO DE REVERSÃO REFINADA PARA INTRADAY
-    // Reversão de baixa para alta (compra)
-    boolean potentialReversalUp =
-      (!ema8AboveEma21 || !priceAboveEma50)
-        && (rsiOversold || atLowerBand || nearLowerBand)
-        && conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.0005)) > 0;
-
-    // Reversão de alta para baixa (venda)
-    boolean potentialReversalDown = (ema8AboveEma21 || priceAboveEma50) && // Preço acima de médias importantes
-      (rsiOverbought || atUpperBand || nearUpperBand) &&                 // Indicador em zona de sobrecompra
-      conditions.priceSlope().compareTo(BigDecimal.valueOf(0.0005)) < 0; // Inclinação deixando de ser positiva
-
-    // Confirmação de reversão (temporário até implementar previousMomentum)
-    boolean confirmingReversalUp = potentialReversalUp && momentumDivergenceUp;
-    boolean confirmingReversalDown = potentialReversalDown && momentumDivergenceDown;
-
-    // DETECÇÃO DE SQUEEZE E BREAKOUT
-    boolean priceSqueezing = veryTightBands && rsiNeutral && Math.abs(conditions.momentum().doubleValue()) < 0.03;
-
-    // Breakout potencial após squeeze
-    boolean potentialBreakoutUp = tightBands && weakPositiveMomentum &&
-      conditions.priceSlope().compareTo(BigDecimal.valueOf(0.001)) > 0;
-    boolean potentialBreakoutDown = tightBands && negativeMomentum &&
-      conditions.priceSlope().compareTo(BigDecimal.valueOf(-0.001)) < 0;
-
-    // CLASSIFICAÇÃO DO MERCADO (PRIORIZADA PARA SWING TRADING INTRADAY)
-
-    if (extremeVolatility) {
-      return MarketType.HIGH_VOLATILITY;
+    if (pricePercent.compareTo(BigDecimal.valueOf(3.0)) > 0) {
+      return HIGH_VOLATILITY;
     }
 
-    // 2. Reversões confirmadas com sinais extremos - maior prioridade
-    if ((confirmingReversalUp && rsiStronglyOversold) ||
-      (confirmingReversalDown && rsiStronglyOverbought)) {
-      return MarketType.TREND_REVERSAL;
+    BigDecimal bandWidth = c.bollingerUpper().subtract(c.bollingerLower())
+      .divide(c.bollingerMiddle(), 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
+    if (bandWidth.compareTo(BigDecimal.valueOf(8.0)) > 0) {
+      return HIGH_VOLATILITY;
     }
 
-    // 3. Reversões confirmadas normais
-    if (confirmingReversalUp || confirmingReversalDown) {
-      return MarketType.TREND_REVERSAL;
+    // ── 2. Primary trend: EMA200 (the swing trader's north star) ─
+    boolean aboveEma200 = c.currentPrice().compareTo(c.ema200()) > 0;
+    boolean ema50AboveEma200 = c.ema50().compareTo(c.ema200()) > 0;
+
+    // ── 3. Medium-term structure ──────────────────────────────────
+    boolean ema21AboveEma50 = c.ema21().compareTo(c.ema50()) > 0;
+    boolean ema8AboveEma21  = c.ema8().compareTo(c.ema21()) > 0;
+
+    // ── 4. Momentum ───────────────────────────────────────────────
+    boolean positiveMacdHistogram = c.macdHistogram().compareTo(BigDecimal.ZERO) > 0;
+    boolean strongPositiveMomentum = c.momentum().compareTo(BigDecimal.valueOf(1.5)) > 0;
+    boolean strongNegativeMomentum = c.momentum().compareTo(BigDecimal.valueOf(-1.5)) < 0;
+
+    // ── 5. Classification ─────────────────────────────────────────
+
+    // Strong uptrend: everything aligned bullish
+    if (aboveEma200 && ema50AboveEma200 && ema21AboveEma50 && ema8AboveEma21
+      && (positiveMacdHistogram || strongPositiveMomentum)) {
+      return STRONG_UPTREND;
     }
 
-    // 4. Volatilidade muito alta com bandas muito largas - risco elevado
-    if (highVolatility && veryWideBands) {
-      return MarketType.HIGH_VOLATILITY;
+    // Strong downtrend: everything aligned bearish
+    if (!aboveEma200 && !ema50AboveEma200 && !ema21AboveEma50 && !ema8AboveEma21
+      && (!positiveMacdHistogram || strongNegativeMomentum)) {
+      return STRONG_DOWNTREND;
     }
 
-    // 5. Breakouts após consolidação
-    if (potentialBreakoutUp || potentialBreakoutDown) {
-      return priceAboveEma50 ? MarketType.WEAK_UPTREND : MarketType.WEAK_DOWNTREND;
+    // Weak uptrend: above EMA200 but mixed short-term signals
+    if (aboveEma200 && ema50AboveEma200) {
+      return WEAK_UPTREND;
     }
 
-    // 6. Squeeze - período de acumulação/preparação
-    if (priceSqueezing) {
-      return MarketType.RANGE_BOUND;
+    // Weak downtrend: below EMA200 but not in free-fall
+    if (!aboveEma200 && !ema50AboveEma200) {
+      return WEAK_DOWNTREND;
     }
 
-    // 7. Tendências fortes com sinais claros
-    if (strongUptrend && strongPositiveMomentum && priceExtendedFromEma50) {
-      return MarketType.STRONG_UPTREND;
-    }
+    // Mixed — EMAs not aligned, price chopping
+    return RANGE_BOUND;
+  }
 
-    if (strongDowntrend && strongNegativeMomentum && priceExtendedFromEma50) {
-      return MarketType.STRONG_DOWNTREND;
-    }
+  /** Returns true if the market state permits new long entries */
+  public boolean allowsLongEntry() {
+    return this == STRONG_UPTREND || this == WEAK_UPTREND || this == RANGE_BOUND;
+  }
 
-    // 8. Tendências moderadas
-    if (ema8AboveEma21 && ema21AboveEma50 && (weakPositiveMomentum || moderateVolatility)) {
-      return MarketType.WEAK_UPTREND;
-    }
-
-    if (!ema8AboveEma21 && !ema21AboveEma50 && (negativeMomentum || moderateVolatility)) {
-      return MarketType.WEAK_DOWNTREND;
-    }
-
-    // 9. Mercado com bandas largas mas não em tendência clara - cautela
-    if (wideBands && !strongUptrend && !strongDowntrend) {
-      return MarketType.HIGH_VOLATILITY;
-    }
-
-    // 10. Mercado em consolidação
-    if ((tightBands || nearMiddleBand) && Math.abs(conditions.momentum().doubleValue()) < 0.05) {
-      return MarketType.RANGE_BOUND;
-    }
-
-    // Default: mercado sem padrão claro
-    return MarketType.RANGE_BOUND;
+  /** Returns true if we should not open positions (risk too high) */
+  public boolean isNoTrade() {
+    return this == HIGH_VOLATILITY || this == STRONG_DOWNTREND;
   }
 }

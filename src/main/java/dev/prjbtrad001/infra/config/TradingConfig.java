@@ -6,7 +6,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @ApplicationScoped
 public class TradingConfig {
 
-  @ConfigProperty(name = "bot.mock-trading", defaultValue = "true")
+  @ConfigProperty(name = "bot.trading.mock", defaultValue = "true")
   private boolean mockTrading;
 
   public boolean isMockTrading() {

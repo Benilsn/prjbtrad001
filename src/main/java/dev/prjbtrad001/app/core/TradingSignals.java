@@ -1,245 +1,108 @@
 package dev.prjbtrad001.app.core;
 
-import lombok.Builder;
-
+/**
+ * Swing-trade signal evaluation.
+ *
+ * Design principles:
+ *  - Fewer, higher-quality conditions rather than a floating-point scoring soup
+ *  - Mandatory conditions (must all pass) + bonus conditions for confidence
+ *  - Market type acts as a primary gate, not just a weight modifier
+ */
 public record TradingSignals() {
 
-  @Builder
+  // ────────────────────────────────────────────────────────────────
+  //  BUY signal
+  // ────────────────────────────────────────────────────────────────
   public record Bullish(
-    boolean rsiCondition,
-    boolean trendCondition,
-    boolean volumeCondition,
-    boolean priceCondition,
-    boolean macdCondition,
-    boolean stochCondition,
-    boolean momentumCondition,
-    boolean volatilityCondition,
-    boolean patternsCondition,
-    boolean bullishRejection,
+    /** EMA200 above — macro uptrend confirmed */
+    boolean trendAboveEma200,
+    /** RSI in the buy window (30–55): pulled back, not exhausted */
+    boolean rsiInBuyWindow,
+    /** MACD histogram flipped positive (momentum turning up) */
+    boolean macdTurningUp,
+    /** Price near a support level (EMA50, Bollinger lower, or structural low) */
+    boolean priceAtSupport,
+    /** Volume at least average — confirms the move */
+    boolean volumeConfirmed,
+    /** Candlestick pattern aligned bullish (hammer, engulf, morning star) */
+    boolean bullishPattern,
+    /** Risk/reward ratio looks favourable based on ATR and distance to resistance */
+    boolean favourableRiskReward,
     MarketType marketType
   ) {
 
     public boolean shouldBuy() {
-      if (marketType == MarketType.HIGH_VOLATILITY || marketType == MarketType.STRONG_DOWNTREND) {
-        return false;
-      }
+      // ── Hard gates: never buy into these ──────────────────────────
+      if (marketType.isNoTrade()) return false;
 
-      int significantPositiveSignals = 0;
-      if (rsiCondition) significantPositiveSignals++;
-      if (volumeCondition) significantPositiveSignals++;
-      if (priceCondition) significantPositiveSignals++;
-      if (momentumCondition) significantPositiveSignals++;
+      // ── Mandatory conditions (all required for a swing entry) ─────
+      boolean mandatory = trendAboveEma200 && rsiInBuyWindow && favourableRiskReward;
+      if (!mandatory) return false;
 
-      if (significantPositiveSignals < 3) {
-        return false;
-      }
+      // ── Need at least 2 of the 4 confirming signals ───────────────
+      int confirmations = 0;
+      if (macdTurningUp)   confirmations++;
+      if (priceAtSupport)  confirmations++;
+      if (volumeConfirmed) confirmations++;
+      if (bullishPattern)  confirmations++;
 
-      return calculateBuyPoints() >= getBuyThreshold();
+      return confirmations >= 2;
     }
 
-    private double getBuyThreshold() {
-      return switch (marketType) {
-        case STRONG_UPTREND -> TradingConstants.BUY_THRESHOLD_STRONG_UPTREND;
-        case WEAK_UPTREND -> TradingConstants.BUY_THRESHOLD_WEAK_UPTREND;
-        case RANGE_BOUND -> TradingConstants.BUY_THRESHOLD_RANGE_BOUND;
-        case WEAK_DOWNTREND -> TradingConstants.BUY_THRESHOLD_WEAK_DOWNTREND;
-        case STRONG_DOWNTREND -> TradingConstants.BUY_THRESHOLD_STRONG_DOWNTREND;
-        case HIGH_VOLATILITY -> TradingConstants.BUY_THRESHOLD_HIGH_VOLATILITY;
-        case TREND_REVERSAL -> TradingConstants.BUY_THRESHOLD_TREND_REVERSAL;
-      };
-    }
-
-    public double calculateBuyPoints() {
-      double points = 0;
-
-      switch (marketType) {
-        case RANGE_BOUND:
-          // Em mercado lateral, priorize suporte/resistência e volume
-          points += priceCondition ? 2.0 : -1.0;
-          points += rsiCondition ? 1.5 : -0.5;
-          points += volumeCondition ? 1.3 : -0.6;
-          points += stochCondition ? 1.2 : 0;
-          points += bullishRejection ? 1.3 : -0.2;
-          // Menos relevante em mercado lateral
-          points += trendCondition ? 0.3 : 0;
-          points += macdCondition ? 0.4 : 0;
-          points += momentumCondition ? 0.5 : 0;
-          points += volatilityCondition ? 0.6 : 0;
-          points += patternsCondition ? 0.8 : 0;
-          break;
-
-        case TREND_REVERSAL:
-          // Em reversão, priorize divergências e rejeição
-          points += bullishRejection ? 2.0 : -0.8;
-          points += rsiCondition ? 1.7 : -0.6;
-          points += momentumCondition ? 1.6 : -0.5;
-          points += patternsCondition ? 1.5 : -0.4;
-          points += volumeCondition ? 1.4 : -0.3;
-          points += volatilityCondition ? 0.9 : 0;
-          points += stochCondition ? 0.8 : 0;
-          points += priceCondition ? 0.7 : 0;
-          points += macdCondition ? 0.6 : 0;
-          points += trendCondition ? 0.5 : 0;
-          break;
-
-        default: // Uptrend ou padrão
-          // Manter pesos originais
-          points += rsiCondition ? 1.2 : -0.5;
-          points += trendCondition ? 0.8 : -0.5;
-          points += volumeCondition ? 1.5 : 0;
-          points += priceCondition ? 1.3 : 0;
-          points += macdCondition ? 1.1 : 0;
-          points += stochCondition ? 1.0 : 0;
-          points += momentumCondition ? 1.4 : 0;
-          points += volatilityCondition ? 0.7 : 0;
-          points += patternsCondition ? 1.3 : 0;
-          points += bullishRejection ? 1.2 : -0.4;
-      }
-
-      return points;
+    public int confidenceScore() {
+      if (!shouldBuy()) return 0;
+      int score = 40; // base for passing mandatory gate
+      if (macdTurningUp)   score += 15;
+      if (priceAtSupport)  score += 20;
+      if (volumeConfirmed) score += 15;
+      if (bullishPattern)  score += 10;
+      if (marketType == MarketType.STRONG_UPTREND) score += 10;
+      return Math.min(score, 100);
     }
   }
 
-  @Builder
+  // ────────────────────────────────────────────────────────────────
+  //  SELL signal
+  // ────────────────────────────────────────────────────────────────
   public record Bearish(
-    boolean rsiCondition,
-    boolean trendCondition,
-    boolean volumeCondition,
-    boolean priceCondition,
-    boolean macdCondition,
-    boolean stochCondition,
-    boolean momentumCondition,
-    boolean volatilityCondition,
+    /** Hard stop loss — always sell regardless of other signals */
     boolean stopLoss,
+    /** Hard take profit target reached */
     boolean takeProfit,
-    boolean patternsCondition,
-    boolean bearishRejection,
+    /** RSI entered overbought territory (≥ 68) */
+    boolean rsiOverbought,
+    /** MACD histogram flipped negative (momentum turning down) */
+    boolean macdTurningDown,
+    /** Price touched or exceeded the identified resistance level */
+    boolean priceAtResistance,
+    /** Price at Bollinger upper band */
+    boolean priceAtUpperBand,
+    /** Bearish candlestick pattern (shooting star, engulf, evening star) */
+    boolean bearishPattern,
+    /** Trailing stop level was breached */
+    boolean trailingStopHit,
     MarketType marketType
   ) {
 
     public boolean shouldSell() {
-      if (stopLoss || takeProfit) return true;
+      // ── Hard exits: always execute ─────────────────────────────────
+      if (stopLoss || takeProfit || trailingStopHit) return true;
 
-      return calculateSellPoints() >= getSellThreshold();
-    }
-
-    private double getSellThreshold() {
-      return switch (marketType) {
-        case STRONG_UPTREND -> TradingConstants.SELL_THRESHOLD_STRONG_UPTREND;
-        case WEAK_UPTREND -> TradingConstants.SELL_THRESHOLD_WEAK_UPTREND;
-        case RANGE_BOUND -> TradingConstants.SELL_THRESHOLD_RANGE_BOUND;
-        case WEAK_DOWNTREND -> TradingConstants.SELL_THRESHOLD_WEAK_DOWNTREND;
-        case STRONG_DOWNTREND -> TradingConstants.SELL_THRESHOLD_STRONG_DOWNTREND;
-        case HIGH_VOLATILITY -> TradingConstants.SELL_THRESHOLD_HIGH_VOLATILITY;
-        case TREND_REVERSAL -> TradingConstants.SELL_THRESHOLD_TREND_REVERSAL;
-      };
-    }
-
-    public double calculateSellPoints() {
-      double points = 0;
-
-      switch (marketType) {
-        case STRONG_UPTREND:
-          // Em uptrend forte, priorize resistência e rejeição de preço
-          points += priceCondition ? 1.8 : -0.8;
-          points += bearishRejection ? 1.6 : -0.6;
-          points += rsiCondition ? 1.5 : -0.5;
-          points += stochCondition ? 1.4 : -0.4;
-          points += momentumCondition ? 1.2 : -0.3;
-          points += volatilityCondition ? 0.8 : 0;
-          points += trendCondition ? 0.6 : 0;
-          points += macdCondition ? 0.5 : 0;
-          points += volumeCondition ? 0.7 : 0;
-          points += patternsCondition ? 1.0 : 0;
-          break;
-
-        case WEAK_UPTREND:
-          // Em uptrend fraco, equilibre os indicadores
-          points += momentumCondition ? 1.5 : -0.6;
-          points += priceCondition ? 1.4 : -0.5;
-          points += rsiCondition ? 1.3 : -0.4;
-          points += trendCondition ? 1.2 : -0.3;
-          points += stochCondition ? 1.1 : -0.2;
-          points += bearishRejection ? 1.0 : -0.2;
-          points += patternsCondition ? 0.9 : 0;
-          points += macdCondition ? 0.8 : 0;
-          points += volumeCondition ? 0.7 : 0;
-          points += volatilityCondition ? 0.6 : 0;
-          break;
-
-        case RANGE_BOUND:
-          // Em mercado lateral, priorize suporte/resistência
-          points += priceCondition ? 1.8 : -0.8;
-          points += stochCondition ? 1.6 : -0.6;
-          points += rsiCondition ? 1.4 : -0.4;
-          points += patternsCondition ? 1.2 : -0.2;
-          points += bearishRejection ? 1.0 : 0;
-          points += volumeCondition ? 0.8 : 0;
-          points += macdCondition ? 0.6 : 0;
-          points += momentumCondition ? 0.5 : 0;
-          points += volatilityCondition ? 0.4 : 0;
-          points += trendCondition ? 0.3 : 0;
-          break;
-
-        case STRONG_DOWNTREND:
-        case WEAK_DOWNTREND:
-          // Em downtrend, seja mais ágil para vender
-          points += momentumCondition ? 1.6 : -0.4;
-          points += trendCondition ? 1.5 : -0.3;
-          points += macdCondition ? 1.4 : -0.2;
-          points += volatilityCondition ? 1.3 : -0.1;
-          points += rsiCondition ? 1.2 : 0;
-          points += volumeCondition ? 1.1 : 0;
-          points += priceCondition ? 1.0 : 0;
-          points += stochCondition ? 0.9 : 0;
-          points += patternsCondition ? 0.8 : 0;
-          points += bearishRejection ? 0.7 : 0;
-          break;
-
-        case HIGH_VOLATILITY:
-          // Em alta volatilidade, priorize proteção do capital
-          points += volatilityCondition ? 1.8 : -0.6;
-          points += momentumCondition ? 1.6 : -0.5;
-          points += rsiCondition ? 1.4 : -0.4;
-          points += bearishRejection ? 1.2 : -0.3;
-          points += priceCondition ? 1.0 : -0.2;
-          points += macdCondition ? 0.8 : 0;
-          points += trendCondition ? 0.7 : 0;
-          points += stochCondition ? 0.6 : 0;
-          points += patternsCondition ? 0.5 : 0;
-          points += volumeCondition ? 0.8 : -0.2;
-          break;
-
-        case TREND_REVERSAL:
-          // Em reversão, priorize indicadores de momentum e padrões
-          points += bearishRejection ? 1.8 : -0.7;
-          points += patternsCondition ? 1.6 : -0.6;
-          points += momentumCondition ? 1.4 : -0.5;
-          points += rsiCondition ? 1.2 : -0.4;
-          points += stochCondition ? 1.0 : -0.3;
-          points += macdCondition ? 0.9 : -0.2;
-          points += priceCondition ? 0.8 : -0.1;
-          points += trendCondition ? 0.7 : 0;
-          points += volatilityCondition ? 0.6 : 0;
-          points += volumeCondition ? 0.5 : 0;
-          break;
-
-        default:
-          // Configuração padrão
-          points += rsiCondition ? 1.0 : -0.5;
-          points += trendCondition ? 0.7 : -0.5;
-          points += volumeCondition ? 0.6 : 0;
-          points += priceCondition ? 0.7 : 0;
-          points += macdCondition ? 0.5 : 0;
-          points += stochCondition ? 0.5 : 0;
-          points += momentumCondition ? 1.2 : 0;
-          points += volatilityCondition ? 1.0 : 0;
-          points += patternsCondition ? 1.1 : 0;
-          points += bearishRejection ? 1.0 : -0.4;
+      // ── Soft exits: need a combination ────────────────────────────
+      // In downtrend, be more aggressive about exiting
+      if (marketType == MarketType.STRONG_DOWNTREND || marketType == MarketType.WEAK_DOWNTREND) {
+        return macdTurningDown || rsiOverbought || priceAtResistance;
       }
 
-      return points;
+      // In uptrend, need at least 2 signals (let winners run)
+      int signals = 0;
+      if (rsiOverbought)      signals++;
+      if (macdTurningDown)    signals++;
+      if (priceAtResistance)  signals++;
+      if (priceAtUpperBand)   signals++;
+      if (bearishPattern)     signals++;
+
+      return signals >= 2;
     }
   }
-
 }

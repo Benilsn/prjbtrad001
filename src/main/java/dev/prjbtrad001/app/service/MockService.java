@@ -1,20 +1,26 @@
 package dev.prjbtrad001.app.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.prjbtrad001.app.core.Trading;
 import dev.prjbtrad001.app.dto.*;
 import dev.prjbtrad001.app.utils.CriptoUtils;
 import dev.prjbtrad001.domain.core.BotType;
 import dev.prjbtrad001.domain.core.TradingExecutor;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.jbosslog.JBossLog;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -28,11 +34,14 @@ import static dev.prjbtrad001.infra.config.GenericConfig.MAPPER;
 
 @JBossLog
 @ApplicationScoped
+@RequiredArgsConstructor
 @Trading(Trading.Type.MOCK)
 public class MockService implements TradingExecutor {
 
+  @Inject
+  private final ObjectMapper objectMapper;
   private static final String BASE_URL = "https://api.binance.com/api/v3";
-  private final MockWallet wallet = new MockWallet();
+  public final MockWallet wallet = new MockWallet();
   private final HttpClient httpClient = HttpClient.newHttpClient();
 
   @Override
@@ -60,9 +69,29 @@ public class MockService implements TradingExecutor {
     return Optional.empty();
   }
 
-  @Override
   public List<CriptoDto> getPrices(String symbolsJson) {
-    return List.of();
+    HttpRequest request =
+      HttpRequest.newBuilder()
+        .uri(URI.create(BASE_URL + "/ticker/price?symbols=" + URLEncoder.encode(symbolsJson, StandardCharsets.UTF_8)))
+        .GET()
+        .build();
+
+    List<CriptoDto> criptos = new ArrayList<>();
+
+    try {
+      HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+      if (response.statusCode() == 200) {
+        criptos = objectMapper.readerForListOf(CriptoDto.class).readValue(response.body());
+        criptos.forEach(c -> c.setLastUpdated(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))));
+      } else {
+        log("Error: HTTP " + response.statusCode());
+      }
+    } catch (IOException | InterruptedException e) {
+      log(e.getMessage());
+    }
+
+    return criptos;
   }
 
   @Override
@@ -207,7 +236,7 @@ public class MockService implements TradingExecutor {
   }
 
   @Getter
-  private static class MockWallet {
+  public static class MockWallet {
     private static final BigDecimal INITIAL_BALANCE = BigDecimal.valueOf(4000.00);
     private final Map<String, BigDecimal> balances = new ConcurrentHashMap<>();
     private final Map<String, BigDecimal> accumulatedProfit = new ConcurrentHashMap<>();

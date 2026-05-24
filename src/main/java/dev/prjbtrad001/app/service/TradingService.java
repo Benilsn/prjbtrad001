@@ -19,10 +19,21 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static dev.prjbtrad001.app.core.TradingConstants.MIN_PROFIT_THRESHOLD;
+import static dev.prjbtrad001.app.core.TradingConstants.*;
 import static dev.prjbtrad001.app.utils.LogUtils.log;
 import static dev.prjbtrad001.infra.exception.ErrorCode.*;
 
+/**
+ * Swing-trade execution engine.
+ *
+ * Strategy summary:
+ *  - Only enter longs above EMA200 (macro trend filter)
+ *  - Wait for RSI pullback to 30–55 before buying
+ *  - Confirm with MACD histogram turn + volume + support proximity
+ *  - ATR-based stop loss (1.5x ATR below entry)
+ *  - Trailing stop activates at +1% profit, keeps 65% of peak
+ *  - Exit when RSI overbought + MACD turning down, or at resistance
+ */
 @JBossLog
 @ApplicationScoped
 public class TradingService {
@@ -32,651 +43,433 @@ public class TradingService {
 
   @Transactional
   public void analyzeMarket(SimpleTradeBot bot) {
-    BotParameters parameters = bot.getParameters();
-    Status status = bot.getStatus();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
+    BotParameters params = bot.getParameters();
+    String tag = "[" + params.getBotType() + "] ";
 
     if (bot.isTradingPaused()) {
-      log(botTypeName + "⛔ Trading paused until: " + bot.getPauseUntil() + " due to consecutive losses: (" + bot.getConsecutiveLosses() + ")", true);
+      log(tag + "⛔ Paused until " + bot.getPauseUntil()
+        + " (consecutive losses: " + bot.getConsecutiveLosses() + ")", true);
       return;
     }
 
-    List<KlineDto> klines =
-      tradingExecutor.getCandles(
-        parameters.getBotType().toString(),
-        parameters.getInterval(),
-        parameters.getCandlesAnalyzed()
-      );
+    List<KlineDto> klines = tradingExecutor.getCandles(
+      params.getBotType().toString(),
+      params.getInterval(),
+      params.getCandlesAnalyzed()
+    );
 
-    MarketAnalyzer marketAnalyzer = new MarketAnalyzer();
-    MarketConditions conditions = marketAnalyzer.analyzeMarket(klines, parameters);
+    MarketAnalyzer analyzer = new MarketAnalyzer();
+    MarketConditions conditions = analyzer.analyzeMarket(klines, params);
 
-    if (!status.isLong()) {
+    if (!bot.getStatus().isLong()) {
       evaluateBuySignal(bot, conditions, klines);
     } else {
       evaluateSellSignal(bot, conditions, klines);
     }
   }
 
-  private void evaluateBuySignal(SimpleTradeBot bot, MarketConditions conditions, List<KlineDto> klines) {
-    BotParameters parameters = bot.getParameters();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
+  // ──────────────────────────────────────────────────────────────
+  //  BUY evaluation
+  // ──────────────────────────────────────────────────────────────
+  private void evaluateBuySignal(SimpleTradeBot bot,
+                                 MarketConditions c,
+                                 List<KlineDto> klines) {
+    BotParameters params = bot.getParameters();
+    String tag = "[" + params.getBotType() + "] ";
 
-    BigDecimal totalFees = BigDecimal.valueOf(0.2);
-    BigDecimal potentialProfit = estimatePotentialProfit(conditions);
+    // ── Pre-flight: is potential profit worth the fees? ──────────
+    BigDecimal distanceToResistance =
+      c.resistance().subtract(c.currentPrice())
+      .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
 
-    if (potentialProfit.compareTo(totalFees) <= 0) {
-      log(botTypeName + "⚠️ Potential profit too low compared to fees. Skipping trade.");
+    if (distanceToResistance.compareTo(MIN_PROFIT_THRESHOLD) <= 0) {
+      log(tag + "⚠️ Distance to resistance (" + distanceToResistance.setScale(2, RoundingMode.HALF_UP)
+        + "%) below threshold. Skipping.");
       return;
     }
 
-    // 🔹 Rsi condition
-    boolean rsiOversold = conditions.rsi().compareTo(parameters.getRsiPurchase()) <= 0;
+    // ── Condition 1: Macro trend — price above EMA200 ─────────────
+    boolean trendAboveEma200 = c.currentPrice().compareTo(c.ema200()) > 0;
 
-    // 🔹 Trend condition
-    boolean ema8AboveEma21 = conditions.ema8().compareTo(conditions.ema21()) > 0;
-    boolean sma9AboveSma21 = conditions.sma9().compareTo(conditions.sma21()) > 0;
-    boolean bullishTrend = sma9AboveSma21 && ema8AboveEma21;
+    // ── Condition 2: RSI in swing buy window (30–55) ─────────────
+    boolean rsiInBuyWindow = c.rsi().compareTo(RSI_SWING_BUY_MIN) >= 0
+      && c.rsi().compareTo(RSI_SWING_BUY_MAX) <= 0;
 
-    // 🔹 Volume condition
-    boolean strongVolume = conditions.currentVolume().compareTo(conditions.averageVolume().multiply(parameters.getVolumeMultiplier())) >= 0;
+    // ── Condition 3: MACD histogram turned positive ───────────────
+    // histogram > 0 means the MACD line is above its signal line (bullish cross)
+    boolean macdTurningUp = c.macdHistogram().compareTo(MACD_HISTOGRAM_MIN) > 0;
 
-    // 🔹 Price condition
-    boolean touchedBollingerLower = conditions.currentPrice().compareTo(conditions.bollingerLower().multiply(BigDecimal.valueOf(1.01))) <= 0;
-    boolean touchedSupport = conditions.currentPrice().compareTo(conditions.support().multiply(BigDecimal.valueOf(1.01))) <= 0;
+    // ── Condition 4: Price at support ────────────────────────────
+    BigDecimal supportZone = c.support().multiply(BigDecimal.valueOf(1.015)); // within 1.5%
+    BigDecimal ema50Zone   = c.ema50().multiply(BigDecimal.valueOf(1.015));
+    BigDecimal lowerBandZone = c.bollingerLower().multiply(BigDecimal.valueOf(1.02));
+    boolean priceAtSupport = c.currentPrice().compareTo(supportZone) <= 0
+      || c.currentPrice().compareTo(ema50Zone) <= 0
+      || c.currentPrice().compareTo(lowerBandZone) <= 0;
 
-    // 🔹 MacD condition
-    boolean macdPositive = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) > 0;
+    // ── Condition 5: Volume confirmation ─────────────────────────
+    boolean volumeConfirmed = c.currentVolume()
+      .compareTo(c.averageVolume().multiply(VOLUME_ENTRY_MULTIPLIER)) >= 0;
 
-    // 🔹 Stochastic condition
-    boolean stochasticBull =
-      conditions.stochasticK() != null
-        && conditions.stochasticD() != null
-        && conditions.stochasticK().compareTo(BigDecimal.valueOf(25)) < 0
-        && conditions.stochasticK().compareTo(conditions.stochasticD()) > 0;
+    // ── Condition 6: Candlestick pattern ─────────────────────────
+    boolean bullishPattern = isBullishPattern(klines, c);
 
-    // 🔹 Momentum condition
-    boolean positiveMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) > 0;
+    // ── Condition 7: R:R check (distance to resist vs ATR-based stop) ─
+    BigDecimal atrStop     = c.atr().multiply(BigDecimal.valueOf(ATR_STOP_MULTIPLIER));
+    BigDecimal distToStop  = atrStop.divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
+    boolean favourableRR   = distanceToResistance.compareTo(BigDecimal.ZERO) > 0
+      && distToStop.compareTo(BigDecimal.ZERO) > 0
+      && distanceToResistance.divide(distToStop, 4, RoundingMode.HALF_UP)
+      .compareTo(BigDecimal.valueOf(1.5)) >= 0; // min 1.5:1 R:R
 
-    // 🔹 Volatility condition
-    boolean lowVolatility = conditions.volatility().compareTo(BigDecimal.valueOf(3)) < 0;
+    MarketType marketType = MarketType.classifyMarket(c);
 
-    boolean isPatternsAlignedForBuy = isPatternsAligned(klines, conditions, true);
-    boolean bullishRejection = isBullishPriceRejection(klines.getLast(), conditions.averageVolume(), conditions.atr());
+    // ── Log summary ───────────────────────────────────────────────
+    log(tag + "📊 Market: " + marketType, true);
+    log(tag + icon(trendAboveEma200) + " Above EMA200: price=" + fmt(c.currentPrice()) + " ema200=" + fmt(c.ema200()), true);
+    log(tag + icon(rsiInBuyWindow)   + " RSI buy window [30–55]: " + c.rsi().setScale(1, RoundingMode.HALF_UP), true);
+    log(tag + icon(macdTurningUp)    + " MACD histogram positive: " + c.macdHistogram().setScale(4, RoundingMode.HALF_UP), true);
+    log(tag + icon(priceAtSupport)   + " Price at support zone", true);
+    log(tag + icon(volumeConfirmed)  + " Volume confirmed: " + fmt(c.currentVolume()) + " vs avg " + fmt(c.averageVolume()), true);
+    log(tag + icon(bullishPattern)   + " Bullish candle pattern", true);
+    log(tag + icon(favourableRR)     + " R:R ratio: " + distanceToResistance.setScale(2, RoundingMode.HALF_UP) + "% / " + distToStop.setScale(2, RoundingMode.HALF_UP) + "%", true);
 
-    log(botTypeName + (rsiOversold ? "🟢" : "🔴") + " RSI Oversold: " + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + " (Threshold: " + parameters.getRsiPurchase().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + (bullishTrend ? "🟢" : "🔴") + " Bullish Trend: EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) +
-      ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) + " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) +
-      ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (strongVolume ? "🟢" : "🔴") + " Strong Volume: Current=" + conditions.currentVolume().setScale(3, RoundingMode.HALF_UP) +
-      ", Avg*Mult=" + conditions.averageVolume().multiply(parameters.getVolumeMultiplier()), true);
-    log(botTypeName + (touchedSupport ? "🟢" : "🔴") + " Touched Support: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
-      ", Support=" + conditions.support().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (macdPositive ? "🟢" : "🔴") + " MACD Positive: " + conditions.macd().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (stochasticBull ? "🟢" : "🔴") + " Stochastic Bull: K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) +
-      ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (lowVolatility ? "🟢" : "🔴") + " Low Volatility: Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (isPatternsAlignedForBuy ? "🟢" : "🔴") + " Patterns Aligned: Bullish setup", true);
-    log(botTypeName + (positiveMomentum ? "🟢" : "🔴") + " Positive Momentum: " + conditions.momentum().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (touchedBollingerLower ? "🟢" : "🔴") + " Touched BollingerLower: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
-      ", Lower=" + conditions.bollingerLower().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (bullishRejection ? "🟢" : "🔴") + " Bullish Price Rejection", true);
-
-    MarketType marketType = MarketType.classifyMarket(conditions);
-
-    log(botTypeName + "📊 Current market type: " + marketType, true);
-
-    TradingSignals.Bullish tradingSignals =
-      TradingSignals.Bullish.builder()
-        .rsiCondition(rsiOversold)
-        .trendCondition(bullishTrend)
-        .volumeCondition(strongVolume)
-        .priceCondition(touchedSupport || touchedBollingerLower)
-        .macdCondition(macdPositive)
-        .stochCondition(stochasticBull)
-        .momentumCondition(positiveMomentum)
-        .volatilityCondition(lowVolatility)
-        .patternsCondition(isPatternsAlignedForBuy)
-        .bullishRejection(bullishRejection)
-        .marketType(marketType)
-        .build();
-
-    if (tradingSignals.shouldBuy()) {
-      log(botTypeName + "🔵 BUY signal detected!");
-      executeBuyOrder(bot, calculateOptimalBuyAmount(bot, conditions));
-    } else {
-      log(botTypeName + "⚪ Insufficient conditions for BUY.");
-    }
-  }
-
-  private void evaluateSellSignal(SimpleTradeBot bot, MarketConditions conditions, List<KlineDto> klines) {
-    BotParameters parameters = bot.getParameters();
-    Status status = bot.getStatus();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
-
-    BigDecimal priceChangePercent = calculatePriceChangePercent(status, conditions.currentPrice());
-    log(botTypeName + String.format("📉 Current variation: %.2f%% (least for profit: %.2f%%)", priceChangePercent, MIN_PROFIT_THRESHOLD));
-
-    MarketType marketType = MarketType.classifyMarket(conditions);
-
-    if (applyTrailingStop(bot, conditions, marketType)) {
-      return;
-    }
-
-    // 🔹 Rsi condition
-    boolean rsiOverbought = conditions.rsi().compareTo(parameters.getRsiSale()) >= 0;
-
-    // 🔹 Trend condition
-    boolean sma9BelowSma21 = conditions.sma9().compareTo(conditions.sma21()) < 0;
-    boolean ema8BelowEma21 = conditions.ema8().compareTo(conditions.ema21()) < 0;
-    boolean bearishTrend = sma9BelowSma21 && ema8BelowEma21;
-
-    // 🔹 Price condition
-    boolean touchedResistance = conditions.currentPrice().compareTo(conditions.resistance().multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(0.005)))) >= 0;
-    boolean touchedBollingerUpper = conditions.currentPrice().compareTo(conditions.bollingerUpper().multiply(BigDecimal.valueOf(0.99))) >= 0;
-
-    // 🔹 MacD condition
-    boolean macdNegative = conditions.macd() != null && conditions.macd().compareTo(BigDecimal.ZERO) < 0;
-
-    // 🔹 Stochastic condition
-    boolean stochasticOverbought =
-      conditions.stochasticK() != null
-        && conditions.stochasticD() != null
-        && conditions.stochasticK().compareTo(BigDecimal.valueOf(75)) > 0
-        && conditions.stochasticK().compareTo(conditions.stochasticD()) < 0;
-
-    // 🔹 Momentum condition
-    boolean negativeMomentum = conditions.momentum().compareTo(BigDecimal.ZERO) < 0;
-
-    // 🔹 Volatility condition
-    boolean highVolatility =
-      conditions.atr().compareTo(BigDecimal.valueOf(1.0)) >= 0 &&
-        conditions.atr().compareTo(BigDecimal.valueOf(3.0)) <= 0 &&
-        conditions.volatility().compareTo(BigDecimal.valueOf(20)) > 0;
-
-    // 🔹 Take Profit / Stop Loss conditions
-    boolean reachedTakeProfit = priceChangePercent.compareTo(parameters.getTakeProfitPercent()) >= 0;
-    boolean reachedStopLoss = priceChangePercent.compareTo(parameters.getStopLossPercent().negate()) <= 0;
-    boolean isPatternsAlignedForSell = isPatternsAligned(klines, conditions, false);
-    boolean bearishRejection = isBearishPriceRejection(klines.getLast(), conditions.averageVolume(), conditions.atr());
-
-    log(botTypeName + (rsiOverbought ? "🟢" : "🔴") + " RSI Overbought: " + conditions.rsi().setScale(3, RoundingMode.HALF_UP) + " (Threshold: " + parameters.getRsiSale().setScale(3, RoundingMode.HALF_UP) + ")", true);
-    log(botTypeName + (bearishTrend ? "🟢" : "🔴") + " Bearish Trend: EMA8=" + conditions.ema8().setScale(3, RoundingMode.HALF_UP) +
-      ", EMA21=" + conditions.ema21().setScale(3, RoundingMode.HALF_UP) + " | SMA9=" + conditions.sma9().setScale(3, RoundingMode.HALF_UP) +
-      ", SMA21=" + conditions.sma21().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (touchedResistance ? "🟢" : "🔴") + " Touched Resistance: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
-      ", Resistance=" + conditions.resistance().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (macdNegative ? "🟢" : "🔴") + " MACD Negative: " + conditions.macd().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (negativeMomentum ? "🟢" : "🔴") + " Negative Momentum: " + conditions.momentum().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (highVolatility ? "🟢" : "🔴") + " High Volatility: ATR=" + conditions.atr().setScale(3, RoundingMode.HALF_UP) +
-      ", Volatility=" + conditions.volatility().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (reachedTakeProfit ? "🟢" : "🔴") + " Reached Take Profit: " + parameters.getTakeProfitPercent().setScale(2, RoundingMode.HALF_UP) + "%", true);
-    log(botTypeName + (reachedStopLoss ? "🟢" : "🔴") + " Reached Stop Loss: " + parameters.getStopLossPercent().setScale(2, RoundingMode.HALF_UP) + "%", true);
-    log(botTypeName + (isPatternsAlignedForSell ? "🟢" : "🔴") + " Patterns Aligned: Bearish setup", true);
-    log(botTypeName + (stochasticOverbought ? "🟢" : "🔴") + " Stochastic Overbought: K=" + conditions.stochasticK().setScale(3, RoundingMode.HALF_UP) +
-      ", D=" + conditions.stochasticD().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (touchedBollingerUpper ? "🟢" : "🔴") + " Touched BollingerUpper: Price=" + conditions.currentPrice().setScale(3, RoundingMode.HALF_UP) +
-      ", Upper=" + conditions.bollingerUpper().setScale(3, RoundingMode.HALF_UP), true);
-    log(botTypeName + (bearishRejection ? "🟢" : "🔴") + " Bearish Price Rejection", true);
-
-    log(botTypeName + "📊 Current market type: " + marketType, true);
-
-    TradingSignals.Bearish tradingSignals =
-      TradingSignals.Bearish.builder()
-        .rsiCondition(rsiOverbought)
-        .trendCondition(bearishTrend)
-        .volumeCondition(highVolatility)
-        .priceCondition(touchedResistance || touchedBollingerUpper)
-        .macdCondition(macdNegative)
-        .stochCondition(stochasticOverbought)
-        .momentumCondition(negativeMomentum)
-        .volatilityCondition(highVolatility)
-        .stopLoss(reachedStopLoss)
-        .takeProfit(reachedTakeProfit)
-        .patternsCondition(isPatternsAlignedForSell)
-        .bearishRejection(bearishRejection)
-        .marketType(marketType)
-        .build();
-
-
-    if (tradingSignals.shouldSell()) {
-      log(botTypeName + "🔴 SELL signal detected!");
-      executeSellOrder(bot);
-    } else {
-      log(botTypeName + "⚪ No SELL signal, maintaining current position.", true);
-    }
-  }
-
-  private BigDecimal calculateOptimalBuyAmount(SimpleTradeBot bot, MarketConditions conditions) {
-    BotParameters parameters = bot.getParameters();
-    BigDecimal baseAmount = parameters.getPurchaseAmount();
-    BigDecimal adjustmentFactor = BigDecimal.ONE;
-
-    if (conditions.volatility().compareTo(BigDecimal.valueOf(1.5)) >= 0) {
-      BigDecimal volatilityFactor =
-        BigDecimal.ONE
-          .subtract(conditions.volatility().multiply(BigDecimal.valueOf(0.06)));
-      volatilityFactor = volatilityFactor.max(BigDecimal.valueOf(0.5));
-      adjustmentFactor = adjustmentFactor.multiply(volatilityFactor);
-    }
-
-    if (conditions.rsi().compareTo(BigDecimal.valueOf(35)) <= 0) {
-      BigDecimal rsiBoost =
-        BigDecimal.valueOf(1.4)
-          .subtract(conditions.rsi().divide(BigDecimal.valueOf(35), 8, RoundingMode.HALF_UP)
-            .multiply(BigDecimal.valueOf(0.4)));
-      adjustmentFactor = adjustmentFactor.multiply(rsiBoost);
-    }
-
-    BigDecimal priceToSupport = conditions.currentPrice().divide(conditions.support(), 8, RoundingMode.HALF_UP);
-    if (priceToSupport.compareTo(BigDecimal.valueOf(1.01)) <= 0) {
-      adjustmentFactor = adjustmentFactor.multiply(BigDecimal.valueOf(1.2));
-    }
-
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal pricePosition = conditions.currentPrice().subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP);
-
-    if (pricePosition.compareTo(BigDecimal.valueOf(0.15)) <= 0) {
-      adjustmentFactor = adjustmentFactor.multiply(BigDecimal.valueOf(1.15));
-    }
-
-    if (conditions.ema50().compareTo(conditions.ema100()) < 0 &&
-      conditions.priceSlope().compareTo(BigDecimal.ZERO) < 0) {
-      adjustmentFactor = adjustmentFactor.multiply(BigDecimal.valueOf(0.5));
-    }
-
-    BigDecimal marketBasedAmount = baseAmount.multiply(
-      adjustmentFactor.max(BigDecimal.valueOf(0.2)).min(BigDecimal.valueOf(1.3))
+    TradingSignals.Bullish signal = new TradingSignals.Bullish(
+      trendAboveEma200, rsiInBuyWindow, macdTurningUp,
+      priceAtSupport, volumeConfirmed, bullishPattern,
+      favourableRR, marketType
     );
 
-    return bot.getAdjustedPositionSize(marketBasedAmount);
+    if (signal.shouldBuy()) {
+      log(tag + "🔵 BUY signal — confidence: " + signal.confidenceScore() + "/100");
+      executeBuyOrder(bot, c, calculateBuyAmount(bot, c));
+    } else {
+      log(tag + "⚪ No buy signal.", true);
+    }
   }
 
-  private void executeBuyOrder(SimpleTradeBot bot, BigDecimal purchaseAmount) {
-    BotParameters parameters = bot.getParameters();
+  // ──────────────────────────────────────────────────────────────
+  //  SELL evaluation
+  // ──────────────────────────────────────────────────────────────
+  private void evaluateSellSignal(SimpleTradeBot bot,
+                                  MarketConditions c,
+                                  List<KlineDto> klines) {
+    BotParameters params = bot.getParameters();
     Status status = bot.getStatus();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
+    String tag = "[" + params.getBotType() + "] ";
 
-    BigDecimal valueToBuy = purchaseAmount;
-    if (parameters.getPurchaseStrategy().equals(PurchaseStrategy.PERCENTAGE)) {
-      valueToBuy = tradingExecutor
-        .getBalance()
+    BigDecimal priceChangePct = calculatePriceChangePercent(status, c.currentPrice());
+    log(tag + String.format("📈 P&L: %.2f%% (take-profit: %.2f%%, stop: -%.2f%%)",
+      priceChangePct.doubleValue(),
+      params.getTakeProfitPercent().doubleValue(),
+      params.getStopLossPercent().doubleValue()), true);
+
+    MarketType marketType = MarketType.classifyMarket(c);
+
+    // ── Trailing stop check ───────────────────────────────────────
+    if (applyTrailingStop(bot, c, tag)) return;
+
+    // ── ATR-based hard stop (overrides the configured stop loss if tighter) ──
+    BigDecimal atrStop = c.atr().multiply(BigDecimal.valueOf(ATR_STOP_MULTIPLIER))
+      .divide(status.getAveragePrice() != null ? status.getAveragePrice() : c.currentPrice(),
+        8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100));
+    boolean stopLoss = priceChangePct.compareTo(params.getStopLossPercent().negate()) <= 0
+      || priceChangePct.compareTo(atrStop.negate()) <= 0;
+
+    boolean takeProfit = priceChangePct.compareTo(params.getTakeProfitPercent()) >= 0;
+
+    // ── RSI overbought ────────────────────────────────────────────
+    boolean rsiOverbought = c.rsi().compareTo(RSI_OVERBOUGHT) >= 0;
+
+    // ── MACD turned negative ──────────────────────────────────────
+    boolean macdTurningDown = c.macdHistogram().compareTo(BigDecimal.ZERO) < 0;
+
+    // ── Price at resistance ───────────────────────────────────────
+    boolean priceAtResistance = c.currentPrice()
+      .compareTo(c.resistance().multiply(BigDecimal.valueOf(0.995))) >= 0;
+    boolean priceAtUpperBand  = c.currentPrice()
+      .compareTo(c.bollingerUpper().multiply(BigDecimal.valueOf(0.99))) >= 0;
+
+    // ── Bearish candle pattern ────────────────────────────────────
+    boolean bearishPattern = isBearishPattern(klines, c);
+
+    log(tag + icon(!stopLoss)         + " Stop loss: " + priceChangePct.setScale(2, RoundingMode.HALF_UP) + "% (ATR stop: " + atrStop.setScale(2, RoundingMode.HALF_UP) + "%)", true);
+    log(tag + icon(takeProfit)        + " Take profit reached", true);
+    log(tag + icon(rsiOverbought)     + " RSI overbought: " + c.rsi().setScale(1, RoundingMode.HALF_UP), true);
+    log(tag + icon(macdTurningDown)   + " MACD histogram negative: " + c.macdHistogram().setScale(4, RoundingMode.HALF_UP), true);
+    log(tag + icon(priceAtResistance) + " Price at resistance: " + fmt(c.currentPrice()) + " vs " + fmt(c.resistance()), true);
+    log(tag + icon(bearishPattern)    + " Bearish candle pattern", true);
+    log(tag + "📊 Market: " + marketType, true);
+
+    TradingSignals.Bearish signal = new TradingSignals.Bearish(
+      stopLoss, takeProfit, rsiOverbought, macdTurningDown,
+      priceAtResistance, priceAtUpperBand, bearishPattern,
+      false, // trailing stop handled separately above
+      marketType
+    );
+
+    if (signal.shouldSell()) {
+      log(tag + "🔴 SELL signal detected");
+      executeSellOrder(bot);
+    } else {
+      log(tag + "⚪ Holding position.", true);
+    }
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  Position sizing
+  // ──────────────────────────────────────────────────────────────
+  private BigDecimal calculateBuyAmount(SimpleTradeBot bot, MarketConditions c) {
+    BotParameters params = bot.getParameters();
+    BigDecimal base = params.getPurchaseAmount();
+
+    // Scale down in high volatility, scale up in low volatility with good RSI
+    double volatilityPct = c.volatility()
+      .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
+      .multiply(BigDecimal.valueOf(100)).doubleValue();
+
+    double factor;
+    if (volatilityPct > 2.5)      factor = 0.5;
+    else if (volatilityPct > 1.5) factor = 0.75;
+    else if (volatilityPct < 0.5) factor = 1.2; // quiet market — slightly more
+    else                           factor = 1.0;
+
+    // RSI deeply oversold → slight boost (better entry)
+    if (c.rsi().compareTo(BigDecimal.valueOf(35)) < 0) factor = Math.min(factor * 1.15, 1.3);
+
+    BigDecimal sized = base.multiply(BigDecimal.valueOf(factor))
+      .max(base.multiply(BigDecimal.valueOf(0.3)))  // never below 30% of base
+      .min(base.multiply(BigDecimal.valueOf(1.3))); // never above 130% of base
+
+    return bot.getAdjustedPositionSize(sized);
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  Trailing stop
+  // ──────────────────────────────────────────────────────────────
+  private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions c, String tag) {
+    Status status = bot.getStatus();
+    BigDecimal profit = calculatePriceChangePercent(status, c.currentPrice());
+
+    // Only activates after the position is up enough to cover fees + margin
+    if (profit.compareTo(TRAILING_ACTIVATION) < 0) return false;
+
+    // Update the high-water mark
+    if (status.getTrailingStopLevel() == null
+      || profit.compareTo(status.getTrailingStopLevel()) > 0) {
+      status.setTrailingStopLevel(profit);
+      log(tag + "🔄 Trailing stop high-water: " + profit.setScale(2, RoundingMode.HALF_UP) + "%", true);
+    }
+
+    // Stop if profit has fallen to KEEP_FRACTION of peak
+    BigDecimal stopLevel = status.getTrailingStopLevel().multiply(TRAILING_KEEP_FRACTION);
+    if (profit.compareTo(stopLevel) < 0) {
+      log(tag + "🔴 Trailing stop hit — peak: " + status.getTrailingStopLevel().setScale(2, RoundingMode.HALF_UP)
+        + "% → now: " + profit.setScale(2, RoundingMode.HALF_UP) + "%");
+      executeSellOrder(bot);
+      return true;
+    }
+    return false;
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  Order execution
+  // ──────────────────────────────────────────────────────────────
+  private void executeBuyOrder(SimpleTradeBot bot, MarketConditions c, BigDecimal amount) {
+    BotParameters params = bot.getParameters();
+    Status status = bot.getStatus();
+    String tag = "[" + params.getBotType() + "] ";
+
+    BigDecimal valueToBuy = amount;
+    if (params.getPurchaseStrategy() == PurchaseStrategy.PERCENTAGE) {
+      valueToBuy = tradingExecutor.getBalance()
         .orElseThrow(() -> new TradeException(BALANCE_NOT_FOUND.getMessage()))
         .balance()
-        .multiply(purchaseAmount)
+        .multiply(amount)
         .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
     }
 
-    log(botTypeName + "💰 Executing buy order: " + valueToBuy);
+    log(tag + "💰 Placing buy order: R$ " + valueToBuy.setScale(2, RoundingMode.HALF_UP));
 
     TradeOrderDto order = tradingExecutor
-      .placeBuyOrder(parameters.getBotType().name(), valueToBuy)
+      .placeBuyOrder(params.getBotType().name(), valueToBuy)
       .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_BUY_ORDER.getMessage()));
 
-    BigDecimal totalQuantityExecuted = order.quantity();
-    BigDecimal totalSpentBRL = order.totalSpentBRL();
+    BigDecimal qty     = order.quantity();
+    BigDecimal spent   = order.totalSpentBRL();
 
-    BigDecimal newTotalQuantity = status.getQuantity() != null ?
-      status.getQuantity().add(totalQuantityExecuted) : totalQuantityExecuted;
-    BigDecimal newTotalPurchased = status.getTotalPurchased() != null ?
-      status.getTotalPurchased().add(totalSpentBRL) : totalSpentBRL;
+    BigDecimal newQty      = status.getQuantity() != null ? status.getQuantity().add(qty) : qty;
+    BigDecimal newPurchased = status.getTotalPurchased() != null ? status.getTotalPurchased().add(spent) : spent;
+    BigDecimal newAvg      = newPurchased.divide(newQty, 8, RoundingMode.HALF_UP);
 
-    BigDecimal newAveragePrice = newTotalPurchased.divide(newTotalQuantity, 8, RoundingMode.HALF_UP);
-
-    status.setQuantity(newTotalQuantity);
-    status.setTotalPurchased(newTotalPurchased);
-    status.setAveragePrice(newAveragePrice);
+    status.setQuantity(newQty);
+    status.setTotalPurchased(newPurchased);
+    status.setAveragePrice(newAvg);
     status.setLastPurchaseTime(LocalDateTime.now());
     status.setLong(true);
+    status.setTrailingStopLevel(null); // reset trailing stop on new position
 
-    log(botTypeName + "✅ Purchase executed successfully");
+    log(tag + "✅ Bought " + qty.setScale(6, RoundingMode.HALF_UP)
+      + " @ avg R$ " + newAvg.setScale(2, RoundingMode.HALF_UP));
   }
 
   private void executeSellOrder(SimpleTradeBot bot) {
-    BotParameters parameters = bot.getParameters();
+    BotParameters params = bot.getParameters();
     Status status = bot.getStatus();
-    String botTypeName = "[" + parameters.getBotType() + "] - ";
+    String tag = "[" + params.getBotType() + "] ";
 
-    if (!status.isLong() || status.getQuantity() == null || status.getQuantity().compareTo(BigDecimal.ZERO) <= 0) {
-      log(botTypeName + "⚠️ Attempted to sell without an open position!");
+    if (!status.isLong()
+      || status.getQuantity() == null
+      || status.getQuantity().compareTo(BigDecimal.ZERO) <= 0) {
+      log(tag + "⚠️ Sell called with no open position — skipping");
       return;
     }
 
-    log(botTypeName + "💰 Executing sell order");
+    log(tag + "💰 Placing sell order");
 
-    TradeOrderDto order = tradingExecutor
-      .placeSellOrder(parameters.getBotType().name())
+    TradeOrderDto order = tradingExecutor.placeSellOrder(params.getBotType().name())
       .orElseThrow(() -> new TradeException(FAILED_TO_PLACE_SELL_ORDER.getMessage()));
 
-    BigDecimal totalReceived = order.trades().stream()
+    BigDecimal received = order.trades().stream()
       .map(t -> t.price().multiply(t.quantity()))
       .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-    BigDecimal investedAmount = status.getTotalPurchased();
-    BigDecimal profit = totalReceived.subtract(investedAmount);
-    BigDecimal totalProfit = status.getProfit() != null ?
-      status.getProfit().add(profit) : profit;
-
-    BigDecimal profitPercent = profit
-      .divide(investedAmount, 8, RoundingMode.HALF_UP)
+    BigDecimal invested     = status.getTotalPurchased();
+    BigDecimal profit       = received.subtract(invested);
+    BigDecimal totalProfit  = status.getProfit() != null ? status.getProfit().add(profit) : profit;
+    BigDecimal profitPct    = profit.divide(invested, 8, RoundingMode.HALF_UP)
       .multiply(BigDecimal.valueOf(100));
 
-    // Reset status after sale
+    // Reset position
     status.setProfit(totalProfit);
     status.setQuantity(BigDecimal.ZERO);
     status.setTotalPurchased(BigDecimal.ZERO);
     status.setAveragePrice(BigDecimal.ZERO);
     status.setLastPurchaseTime(null);
+    status.setTrailingStopLevel(null);
     status.setLong(false);
     bot.addTradeResult(profit.compareTo(BigDecimal.ZERO) > 0);
 
-    log(botTypeName + String.format("💰 Profit after fees: R$%.2f (%.2f%%)", profit, profitPercent));
-    log(botTypeName + String.format("💰 Accumulated profit: R$%.2f", totalProfit));
-    log(botTypeName + "✅ Sale executed successfully");
+    String profitEmoji = profit.compareTo(BigDecimal.ZERO) > 0 ? "💚" : "🔴";
+    log(tag + profitEmoji + String.format(" Trade result: R$ %.2f (%.2f%%)", profit, profitPct));
+    log(tag + "📊 Accumulated profit: R$ " + totalProfit.setScale(2, RoundingMode.HALF_UP));
+    log(tag + "✅ Sell executed");
   }
 
+  // ──────────────────────────────────────────────────────────────
+  //  Candlestick pattern detection
+  // ──────────────────────────────────────────────────────────────
+  private boolean isBullishPattern(List<KlineDto> klines, MarketConditions c) {
+    if (klines.size() < 3) return false;
+
+    KlineDto curr = klines.get(klines.size() - 1);
+    KlineDto prev = klines.get(klines.size() - 2);
+    KlineDto pprev = klines.get(klines.size() - 3);
+
+    BigDecimal cOpen  = new BigDecimal(curr.getOpenPrice());
+    BigDecimal cClose = new BigDecimal(curr.getClosePrice());
+    BigDecimal cHigh  = new BigDecimal(curr.getHighPrice());
+    BigDecimal cLow   = new BigDecimal(curr.getLowPrice());
+    BigDecimal cBody  = cClose.subtract(cOpen).abs();
+    BigDecimal cLowerShadow = cOpen.min(cClose).subtract(cLow);
+    BigDecimal cUpperShadow = cHigh.subtract(cClose.max(cOpen));
+
+    BigDecimal pOpen  = new BigDecimal(prev.getOpenPrice());
+    BigDecimal pClose = new BigDecimal(prev.getClosePrice());
+    BigDecimal pBody  = pClose.subtract(pOpen).abs();
+
+    BigDecimal ppOpen  = new BigDecimal(pprev.getOpenPrice());
+    BigDecimal ppClose = new BigDecimal(pprev.getClosePrice());
+    BigDecimal ppBody  = ppClose.subtract(ppOpen).abs();
+
+    boolean isBullishCurr = cClose.compareTo(cOpen) > 0;
+    boolean isBullishPrev = pClose.compareTo(pOpen) > 0;
+    boolean isBullishPP   = ppClose.compareTo(ppOpen) > 0;
+
+    // Hammer: long lower shadow, small upper shadow, closed bullish
+    boolean hammer = !isBullishPrev && isBullishCurr
+      && cLowerShadow.compareTo(cBody.multiply(BigDecimal.valueOf(2.0))) > 0
+      && cUpperShadow.compareTo(cBody.multiply(BigDecimal.valueOf(0.4))) < 0;
+
+    // Bullish engulfing: current green body engulfs prior red body
+    boolean engulfing = !isBullishPrev && isBullishCurr
+      && cBody.compareTo(pBody.multiply(BigDecimal.valueOf(1.3))) > 0
+      && cOpen.compareTo(pClose) < 0 && cClose.compareTo(pOpen) > 0
+      && new BigDecimal(curr.getVolume()).compareTo(c.averageVolume()) > 0;
+
+    // Morning star: big red, small doji, big green
+    boolean morningStar = !isBullishPP
+      && pBody.compareTo(ppBody.multiply(BigDecimal.valueOf(0.4))) < 0
+      && isBullishCurr
+      && cClose.compareTo(ppOpen.add(ppBody.multiply(BigDecimal.valueOf(0.5)))) > 0;
+
+    return hammer || engulfing || morningStar;
+  }
+
+  private boolean isBearishPattern(List<KlineDto> klines, MarketConditions c) {
+    if (klines.size() < 3) return false;
+
+    KlineDto curr = klines.get(klines.size() - 1);
+    KlineDto prev = klines.get(klines.size() - 2);
+    KlineDto pprev = klines.get(klines.size() - 3);
+
+    BigDecimal cOpen  = new BigDecimal(curr.getOpenPrice());
+    BigDecimal cClose = new BigDecimal(curr.getClosePrice());
+    BigDecimal cHigh  = new BigDecimal(curr.getHighPrice());
+    BigDecimal cBody  = cClose.subtract(cOpen).abs();
+    BigDecimal cUpperShadow = cHigh.subtract(cClose.max(cOpen));
+    BigDecimal cLowerShadow = cOpen.min(cClose).subtract(new BigDecimal(curr.getLowPrice()));
+
+    BigDecimal pOpen  = new BigDecimal(prev.getOpenPrice());
+    BigDecimal pClose = new BigDecimal(prev.getClosePrice());
+    BigDecimal pBody  = pClose.subtract(pOpen).abs();
+
+    BigDecimal ppOpen  = new BigDecimal(pprev.getOpenPrice());
+    BigDecimal ppClose = new BigDecimal(pprev.getClosePrice());
+    BigDecimal ppBody  = ppClose.subtract(ppOpen).abs();
+
+    boolean isBullishPrev = pClose.compareTo(pOpen) > 0;
+    boolean isBullishPP   = ppClose.compareTo(ppOpen) > 0;
+    boolean isBearishCurr = cClose.compareTo(cOpen) < 0;
+
+    // Shooting star: long upper shadow, small lower shadow, closed bearish
+    boolean shootingStar = isBullishPrev && isBearishCurr
+      && cUpperShadow.compareTo(cBody.multiply(BigDecimal.valueOf(2.0))) > 0
+      && cLowerShadow.compareTo(cBody.multiply(BigDecimal.valueOf(0.4))) < 0;
+
+    // Bearish engulfing
+    boolean engulfing = isBullishPrev && isBearishCurr
+      && cBody.compareTo(pBody.multiply(BigDecimal.valueOf(1.3))) > 0
+      && cOpen.compareTo(pClose) > 0 && cClose.compareTo(pOpen) < 0
+      && new BigDecimal(curr.getVolume()).compareTo(c.averageVolume()) > 0;
+
+    // Evening star
+    boolean eveningStar = isBullishPP
+      && pBody.compareTo(ppBody.multiply(BigDecimal.valueOf(0.4))) < 0
+      && isBearishCurr
+      && cClose.compareTo(ppOpen.subtract(ppBody.multiply(BigDecimal.valueOf(0.5)))) < 0;
+
+    return shootingStar || engulfing || eveningStar;
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  //  Helpers
+  // ──────────────────────────────────────────────────────────────
   public static BigDecimal calculatePriceChangePercent(Status status, BigDecimal currentPrice) {
     if (status.getAveragePrice() == null || status.getAveragePrice().compareTo(BigDecimal.ZERO) == 0) {
       return BigDecimal.ZERO;
     }
-
     return currentPrice.subtract(status.getAveragePrice())
       .divide(status.getAveragePrice(), 8, RoundingMode.HALF_UP)
       .multiply(BigDecimal.valueOf(100));
   }
 
-  private boolean applyTrailingStop(SimpleTradeBot bot, MarketConditions conditions, MarketType marketType) {
-    Status status = bot.getStatus();
-    BigDecimal currentProfit = calculatePriceChangePercent(status, conditions.currentPrice());
-    BigDecimal taxCost = BigDecimal.valueOf(0.25);
-    String botTypeName = "[" + bot.getParameters().getBotType() + "] - ";
+  private static String icon(boolean condition) { return condition ? "🟢" : "🔴"; }
 
-    BigDecimal activationThreshold = taxCost.add(BigDecimal.valueOf(0.15));
-
-    BigDecimal volatilityFactor = switch (marketType) {
-      case HIGH_VOLATILITY -> BigDecimal.valueOf(0.55);
-      case STRONG_UPTREND -> BigDecimal.valueOf(0.85);
-      case WEAK_UPTREND -> BigDecimal.valueOf(0.80);
-      case RANGE_BOUND -> BigDecimal.valueOf(0.70);
-      case WEAK_DOWNTREND -> BigDecimal.valueOf(0.65);
-      case STRONG_DOWNTREND -> BigDecimal.valueOf(0.60);
-      case TREND_REVERSAL -> BigDecimal.valueOf(0.75);
-    };
-
-    LocalDateTime purchaseTime = status.getLastPurchaseTime();
-    long minutesHeld = purchaseTime != null
-      ? java.time.Duration.between(purchaseTime, LocalDateTime.now()).toMinutes()
-      : 0;
-
-    BigDecimal timeAdjustment = getTimeAdjustment(minutesHeld);
-    volatilityFactor = volatilityFactor.multiply(timeAdjustment);
-
-    boolean positiveTrend = conditions.ema8().compareTo(conditions.ema21()) > 0;
-    if (positiveTrend) {
-      volatilityFactor = volatilityFactor.multiply(BigDecimal.valueOf(0.95));
-    }
-
-    if (currentProfit.compareTo(activationThreshold) > 0) {
-      BigDecimal trailingLevel = currentProfit.multiply(volatilityFactor);
-      trailingLevel = trailingLevel.max(taxCost.add(BigDecimal.valueOf(0.1)));
-
-      if (status.getTrailingStopLevel() == null || trailingLevel.compareTo(status.getTrailingStopLevel()) > 0) {
-        status.setTrailingStopLevel(trailingLevel);
-        log(botTypeName + "🔄 Trailing stop: " + trailingLevel.setScale(2, RoundingMode.HALF_UP) + "%");
-      }
-    }
-
-    boolean strongNegativeMomentum = conditions.momentum().compareTo(BigDecimal.valueOf(-0.12)) < 0 &&
-      currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.15))) > 0;
-
-    boolean minimumProfitGreaterThanTax = currentProfit.compareTo(taxCost.add(BigDecimal.valueOf(0.2))) > 0;
-    boolean highRsi = conditions.rsi().compareTo(BigDecimal.valueOf(70)) > 0 && minimumProfitGreaterThanTax;
-
-    boolean volumeDropOff = conditions.currentVolume().compareTo(
-      conditions.averageVolume().multiply(BigDecimal.valueOf(0.5))) < 0 &&
-      minimumProfitGreaterThanTax;
-
-    if ((
-      status.getTrailingStopLevel() != null && currentProfit.compareTo(status.getTrailingStopLevel()) < 0 && currentProfit.compareTo(taxCost) > 0)
-      || strongNegativeMomentum
-      || highRsi
-      || volumeDropOff
-    ) {
-
-      String reason = strongNegativeMomentum
-        ? "negative momentum"
-        : highRsi
-        ? "High RSI"
-        : volumeDropOff
-        ? "Volume drop-off" : "Stop level";
-
-      log(botTypeName + "🔴 Trailing Stop executed by" +
-        " " + reason + ": " + currentProfit + "%");
-      executeSellOrder(bot);
-      return true;
-    }
-
-    return false;
+  private static String fmt(BigDecimal v) {
+    return v == null ? "N/A" : v.setScale(4, RoundingMode.HALF_UP).toPlainString();
   }
-
-  private BigDecimal getTimeAdjustment(long minutesHeld) {
-    if (minutesHeld > 240) return BigDecimal.valueOf(0.85);
-    if (minutesHeld > 120) return BigDecimal.valueOf(0.88);
-    if (minutesHeld > 60) return BigDecimal.valueOf(0.92);
-    if (minutesHeld > 30) return BigDecimal.valueOf(0.95);
-    if (minutesHeld > 15) return BigDecimal.valueOf(0.97);
-    return BigDecimal.valueOf(0.99);
-  }
-
-  private boolean isBullishPriceRejection(KlineDto lastKline, BigDecimal averageVolume, BigDecimal atr) {
-    BigDecimal open = new BigDecimal(lastKline.getOpenPrice());
-    BigDecimal close = new BigDecimal(lastKline.getClosePrice());
-    BigDecimal high = new BigDecimal(lastKline.getHighPrice());
-    BigDecimal low = new BigDecimal(lastKline.getLowPrice());
-
-    BigDecimal body = close.subtract(open).abs();
-    BigDecimal lowerShadow = open.min(close).subtract(low);
-    BigDecimal range = high.subtract(low);
-
-    // Verificações básicas
-    boolean isBullish = close.compareTo(open) > 0;
-    boolean hasSignificantVolume = new BigDecimal(lastKline.getVolume())
-      .compareTo(averageVolume.multiply(BigDecimal.valueOf(1.2))) >= 0;
-    boolean hasMinimumBodySize = body.compareTo(atr.multiply(BigDecimal.valueOf(0.2))) >= 0;
-    boolean hasLongLowerShadow = lowerShadow.compareTo(body.multiply(BigDecimal.valueOf(2))) > 0;
-
-
-    boolean bodyToRangeRatio;
-    if (range.compareTo(BigDecimal.ZERO) == 0 || range.compareTo(new BigDecimal("0.000000001")) < 0) {
-      bodyToRangeRatio = false;
-    } else {
-      bodyToRangeRatio = body.divide(range, 8, RoundingMode.HALF_UP)
-        .compareTo(BigDecimal.valueOf(0.3)) <= 0;
-    }
-
-    // Critério principal: vela bullish com sombra inferior longa
-    boolean basicCriteria = isBullish && hasLongLowerShadow && hasSignificantVolume;
-
-    // Para swing trading, queremos rejeições fortes
-    return basicCriteria &&
-      (hasMinimumBodySize || bodyToRangeRatio) &&
-      lowerShadow.compareTo(range.multiply(BigDecimal.valueOf(0.5))) >= 0;
-  }
-
-  private boolean isBearishPriceRejection(KlineDto lastKline, BigDecimal averageVolume, BigDecimal atr) {
-    BigDecimal open = new BigDecimal(lastKline.getOpenPrice());
-    BigDecimal close = new BigDecimal(lastKline.getClosePrice());
-    BigDecimal high = new BigDecimal(lastKline.getHighPrice());
-    BigDecimal low = new BigDecimal(lastKline.getLowPrice());
-
-    BigDecimal body = close.subtract(open).abs();
-    BigDecimal upperShadow = high.subtract(open.max(close));
-    BigDecimal range = high.subtract(low);
-
-    // Verificações básicas
-    boolean isBearish = close.compareTo(open) < 0;
-    boolean hasSignificantVolume = new BigDecimal(lastKline.getVolume())
-      .compareTo(averageVolume.multiply(BigDecimal.valueOf(1.2))) >= 0;
-    boolean hasMinimumBodySize = body.compareTo(atr.multiply(BigDecimal.valueOf(0.2))) >= 0;
-    boolean hasLongUpperShadow = upperShadow.compareTo(body.multiply(BigDecimal.valueOf(2))) > 0;
-
-    boolean bodyToRangeRatio;
-    if (range.compareTo(BigDecimal.ZERO) == 0 || range.compareTo(new BigDecimal("0.000000001")) < 0) {
-      bodyToRangeRatio = false;
-    } else {
-      bodyToRangeRatio = body.divide(range, 8, RoundingMode.HALF_UP)
-        .compareTo(BigDecimal.valueOf(0.3)) <= 0;
-    }
-
-    // Critério principal: vela bearish com sombra superior longa
-    boolean basicCriteria = isBearish && hasLongUpperShadow && hasSignificantVolume;
-
-    // Para swing trading, queremos rejeições fortes
-    return basicCriteria &&
-      (hasMinimumBodySize || bodyToRangeRatio) &&
-      upperShadow.compareTo(range.multiply(BigDecimal.valueOf(0.5))) >= 0;
-  }
-
-  private BigDecimal estimatePotentialProfit(MarketConditions c) {
-    BigDecimal rsiWeight =
-      c.rsi().compareTo(BigDecimal.valueOf(35)) < 0
-        ? BigDecimal.valueOf(0.6)
-        : c.rsi().compareTo(BigDecimal.valueOf(45)) < 0
-        ? BigDecimal.valueOf(0.5)
-        : BigDecimal.valueOf(0.4);
-
-    BigDecimal volatilityFactor = c.volatility().multiply(rsiWeight);
-
-    BigDecimal volumeMultiplier =
-      c.currentVolume()
-        .divide(c.averageVolume(), 8, RoundingMode.HALF_UP)
-        .min(BigDecimal.valueOf(2.5))
-        .max(BigDecimal.valueOf(0.6));
-
-    BigDecimal distanceToResistance =
-      c.resistance().subtract(c.currentPrice())
-        .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
-        .multiply(BigDecimal.valueOf(100))
-        .multiply(volumeMultiplier);
-
-    BigDecimal trendBias =
-      c.ema8().compareTo(c.ema21()) > 0
-        ? BigDecimal.valueOf(0.5)
-        : (c.priceSlope().compareTo(BigDecimal.ZERO) > 0
-        ? BigDecimal.valueOf(0.2)
-        : BigDecimal.valueOf(0.05));
-
-    BigDecimal riskToSupport =
-      c.currentPrice()
-        .subtract(c.support())
-        .divide(c.currentPrice(), 8, RoundingMode.HALF_UP)
-        .multiply(BigDecimal.valueOf(100))
-        .max(BigDecimal.valueOf(0.05));
-
-    BigDecimal riskReturn =
-      distanceToResistance.divide(riskToSupport, 8, RoundingMode.HALF_UP)
-        .min(BigDecimal.valueOf(4.0))
-        .max(BigDecimal.ONE);
-
-    return volatilityFactor
-      .add(distanceToResistance.multiply(BigDecimal.valueOf(0.3)))
-      .add(trendBias)
-      .add(BigDecimal.valueOf(0.1))
-      .multiply(BigDecimal.valueOf(0.7).add(riskReturn.multiply(BigDecimal.valueOf(0.3))));
-  }
-
-  private boolean isPatternsAligned(List<KlineDto> klines, MarketConditions conditions, boolean bullish) {
-    if (klines == null || klines.size() < 3) return false;
-
-    boolean patternDetected = checkPatternFormations(klines, conditions.averageVolume(), bullish);
-
-    BigDecimal bandWidth = conditions.bollingerUpper().subtract(conditions.bollingerLower());
-    BigDecimal bandPosition = conditions.currentPrice()
-      .subtract(conditions.bollingerLower())
-      .divide(bandWidth, 8, RoundingMode.HALF_UP)
-      .multiply(BigDecimal.valueOf(100));
-
-    // additional filter: only accept bullish if momentum not strongly negative
-    if (patternDetected) {
-      if (bullish && conditions.momentum().compareTo(BigDecimal.valueOf(-0.1)) < 0) return false;
-      if (!bullish && conditions.momentum().compareTo(BigDecimal.valueOf(0.1)) > 0) return false;
-
-      // bullish: near lower band, bearish: near upper band
-      if (bullish && bandPosition.compareTo(BigDecimal.valueOf(15)) < 0) return true;
-      if (!bullish && bandPosition.compareTo(BigDecimal.valueOf(85)) > 0) return true;
-    }
-
-    return patternDetected;
-  }
-
-  private boolean checkPatternFormations(List<KlineDto> klines, BigDecimal averageVolume, boolean bullish) {
-    if (klines.size() < 4) return false;
-
-    KlineDto current = klines.get(klines.size() - 1);
-    KlineDto previous = klines.get(klines.size() - 2);
-    KlineDto prePrevious = klines.get(klines.size() - 3);
-
-    BigDecimal cOpen = new BigDecimal(current.getOpenPrice());
-    BigDecimal cClose = new BigDecimal(current.getClosePrice());
-    BigDecimal cHigh = new BigDecimal(current.getHighPrice());
-    BigDecimal cLow = new BigDecimal(current.getLowPrice());
-    BigDecimal cBody = cClose.subtract(cOpen).abs();
-    BigDecimal cUpperShadow = cHigh.subtract(cClose.max(cOpen));
-    BigDecimal cLowerShadow = cOpen.min(cClose).subtract(cLow);
-
-    BigDecimal pOpen = new BigDecimal(previous.getOpenPrice());
-    BigDecimal pClose = new BigDecimal(previous.getClosePrice());
-    BigDecimal pBody = pClose.subtract(pOpen).abs();
-
-    BigDecimal ppOpen = new BigDecimal(prePrevious.getOpenPrice());
-    BigDecimal ppClose = new BigDecimal(prePrevious.getClosePrice());
-    BigDecimal ppBody = ppClose.subtract(ppOpen).abs();
-
-    boolean isBullishCurrent = cClose.compareTo(cOpen) > 0;
-    boolean isBullishPrev = pClose.compareTo(pOpen) > 0;
-    boolean isBullishPP = ppClose.compareTo(ppOpen) > 0;
-
-    if (bullish) {
-      // 🔹 Hammer
-      boolean isHammer = !isBullishPrev && isBullishCurrent &&
-        cLowerShadow.compareTo(cBody.multiply(BigDecimal.valueOf(2.5))) > 0 &&
-        cUpperShadow.compareTo(cBody.multiply(BigDecimal.valueOf(0.3))) < 0;
-
-      // 🔹 Bullish Engulfing
-      boolean isEngulfing = !isBullishPrev && isBullishCurrent &&
-        cBody.compareTo(pBody.multiply(BigDecimal.valueOf(1.5))) > 0 &&
-        cOpen.compareTo(pClose) < 0 && cClose.compareTo(pOpen) > 0 &&
-        new BigDecimal(current.getVolume()).compareTo(averageVolume) > 0;
-
-      // 🔹 Morning Star
-      boolean isMorningStar = !isBullishPP && ppBody.compareTo(BigDecimal.ZERO) > 0 &&
-        pBody.compareTo(ppBody.multiply(BigDecimal.valueOf(0.5))) < 0 &&
-        isBullishCurrent &&
-        cClose.compareTo(ppOpen.add(ppBody.multiply(BigDecimal.valueOf(0.5)))) > 0;
-
-      return isHammer || isEngulfing || isMorningStar;
-    } else {
-      // 🔹 Shooting Star
-      boolean isShootingStar = isBullishPrev && !isBullishCurrent &&
-        cUpperShadow.compareTo(cBody.multiply(BigDecimal.valueOf(2.5))) > 0 &&
-        cLowerShadow.compareTo(cBody.multiply(BigDecimal.valueOf(0.3))) < 0;
-
-      // 🔹 Bearish Engulfing
-      boolean isBearishEngulfing = isBullishPrev && !isBullishCurrent &&
-        cBody.compareTo(pBody.multiply(BigDecimal.valueOf(1.5))) > 0 &&
-        cOpen.compareTo(pClose) > 0 && cClose.compareTo(pOpen) < 0 &&
-        new BigDecimal(current.getVolume()).compareTo(averageVolume) > 0;
-
-      // 🔹 Evening Star
-      boolean isEveningStar = isBullishPP && ppBody.compareTo(BigDecimal.ZERO) > 0 &&
-        pBody.compareTo(ppBody.multiply(BigDecimal.valueOf(0.5))) < 0 &&
-        !isBullishCurrent &&
-        cClose.compareTo(ppOpen.subtract(ppBody.multiply(BigDecimal.valueOf(0.5)))) < 0;
-
-      return isShootingStar || isBearishEngulfing || isEveningStar;
-    }
-  }
-
-
 }

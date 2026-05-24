@@ -30,7 +30,8 @@ quarkus:
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
-  mock-trading: true
+  trading:
+    mock: ${BOT_TRADING_MOCK}
   file:
     path: ${BOT_FILE_PATH}
   credentials:

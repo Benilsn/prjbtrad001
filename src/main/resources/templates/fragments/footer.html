@@ -1,216 +1,176 @@
 {#fragment id=footer}
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
+/* ──────────────────────────────────────────────────────────────
+   Background overlay div + floating particles
+   Using real <div> elements instead of body::before / ::after
+   so Bootstrap modal stacking context is never affected.
+────────────────────────────────────────────────────────────── */
+(function initBg() {
+    // Dot grid
+    const overlay = document.createElement('div');
+    overlay.id = 'bg-overlay';
+    document.body.prepend(overlay);
 
-    document.addEventListener("DOMContentLoaded", function () {
-      /* ----------------------------------
-       * 1. Initialize Bootstrap Tooltips
-       * ---------------------------------- */
-      fetchWallet();
-      setInterval(fetchWallet, 20000);
-      const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-      });
+    // Floating crypto symbols
+    const syms  = ['₿','Ξ','Ł','Ð','◎','⬡','◈','✦','⊕','Ŧ'];
+    const parts = document.createElement('div');
+    parts.id    = 'bg-particles';
+    document.body.insertBefore(parts, overlay.nextSibling);
+    for (let i = 0; i < 22; i++) {
+        const s = document.createElement('span');
+        const op = .014 + Math.random() * .028;
+        s.className   = 'bg-particle';
+        s.textContent = syms[i % syms.length];
+        s.style.cssText = [
+            `left:$\{Math.random()*100}%`,
+            'bottom:-50px',
+            `font-size:$\{12 + Math.random()*34}px`,
+            `--op:$\{op}`,
+            `animation-duration:$\{18 + Math.random()*34}s`,
+            `animation-delay:$\{Math.random()*22}s`
+        ].join(';');
+        parts.appendChild(s);
+    }
+})();
 
-      /* ----------------------------------
-       * 2. Fetch and Update Prices
-       * ---------------------------------- */
-      async function fetchPrices() {
-        try {
-          const symbols = "{workingSymbols ?: ''}".split(',');
-          const params = new URLSearchParams({
-          symbols: JSON.stringify(symbols)
+/* ── Bootstrap tooltips + page init ─────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            .forEach(el => new bootstrap.Tooltip(el));
+
+    /* Active nav link */
+    document.querySelectorAll('.neon-link[href]').forEach(a => {
+        if (a.getAttribute('href') === window.location.pathname) a.classList.add('active');
+    });
+
+    /* Scroll-to-bottom (trade log) */
+    document.getElementById('btn-log-bottom')?.addEventListener('click', () => {
+        document.getElementById('log-scroll')?.scrollTo({ top: 999999, behavior: 'smooth' });
+    });
+
+    /* Purchase strategy symbol toggle */
+    const strat = document.querySelector('select[name="purchaseStrategy"]');
+    const sym   = document.getElementById('amountSymbol');
+    if (strat && sym) {
+        const upd = () => sym.textContent = strat.value === 'PERCENTAGE' ? '%' : 'R$';
+        strat.addEventListener('change', upd);
+        upd();
+    }
+
+    /* Global services */
+    fetchWallet();
+    setInterval(fetchWallet, 20000);
+
+    if (window.location.pathname === '/') {
+        fetchPrices();
+        setInterval(fetchPrices, 3000);
+    }
+
+    if (document.getElementById('log-scroll')) {
+        refreshTradeLog();
+        setInterval(refreshTradeLog, 8000);
+    }
+
+    /* Log filter */
+    document.getElementById('log-filter')?.addEventListener('input', function () {
+        const q = this.value.toLowerCase().trim();
+        let vis = 0;
+        document.querySelectorAll('#log-scroll .log-entry').forEach(e => {
+            const hide = q.length > 0 && !e.textContent.toLowerCase().includes(q);
+            e.classList.toggle('hidden-log', hide);
+            if (!hide) vis++;
         });
+        const cnt = document.getElementById('log-count');
+        if (cnt) cnt.textContent = vis + ' entries';
+    });
+});
 
-        const response = await fetch('/refresh-data?' + params);
-        const data = await response.json();
-        console.log("Fetched data:", data);
-
-        for (const crypto of data) {
-          const symbol = crypto.symbol;
-          const price = crypto.price;
-          const lastUpdated = crypto.lastUpdated;
-
-          const labelEl = document.getElementById(symbol + '-label');
-          const priceEl = document.getElementById(symbol + '-price');
-          const updatedEl = document.getElementById(symbol + '-updated');
-
-          if (labelEl && priceEl && updatedEl) {
-            labelEl.textContent = 'Price for ' + symbol;
-            priceEl.textContent = price;
-            updatedEl.textContent = lastUpdated;
-          } else {
-            console.warn("No element found for symbol: " + symbol);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching prices:', error);
-      }
-    }
-
-    if (window.location.pathname === "/") {
-      fetchPrices();
-      setInterval(fetchPrices, 2000);
-    }
-
-    /* ----------------------------------
-     * 3. Trade Log Handling + Auto-scroll
-     * ---------------------------------- */
-    const logContainer = document.getElementById('log-container');
-    const logContent = document.getElementById('trade-log-content');
-
-    function scrollToBottom() {
-      if (logContainer) {
-        logContainer.scrollTop = logContainer.scrollHeight;
-      }
-    }
-
-
-    async function refreshTradeLog() {
-      try {
-        const response = await fetch('/refresh-log-data');
-        if (!response.ok) throw new Error('Failed to fetch log data');
-
-        const logData = await response.json();
-
-        if (logContent) {
-          logContent.innerHTML = ''; // Clear old entries
-          logData.forEach(item => {
-            const p = document.createElement('p');
-            p.className = 'log-entry';
-            p.textContent = item;
-            logContent.appendChild(p);
-          });
-
-          scrollToBottom();
-        }
-      } catch (error) {
-        console.error('Error fetching trade log:', error);
-      }
-    }
-
-    refreshTradeLog();
-    setInterval(refreshTradeLog, 10000);
-
-    if (logContainer) {
-      const observer = new MutationObserver(scrollToBottom);
-      observer.observe(logContainer, { childList: true, subtree: true });
-    }
-
-    /* ----------------------------------
-     * Trade Log Filter
-     * ---------------------------------- */
-    const logFilter = document.getElementById('log-filter');
-    if (logFilter) {
-      logFilter.addEventListener('input', function () {
-        const query = this.value.toLowerCase();
-        const entries = document.querySelectorAll('#trade-log-content .log-entry');
-
-        entries.forEach(entry => {
-          const text = entry.textContent.toLowerCase();
-          if (text.includes(query)) {
-            entry.classList.remove('hidden-log');
-          } else {
-            entry.classList.add('hidden-log');
-          }
-        });
-      });
-    }
-
-    /* ----------------------------------
-     * Symbol Prefix for Purchase Amount
-     * ---------------------------------- */
-    const strategySelect = document.querySelector('select[name="purchaseStrategy"]');
-    const amountSymbol = document.getElementById('amountSymbol');
-
-    if (strategySelect && amountSymbol) {
-      function updateSymbol() {
-        const strategy = strategySelect.value;
-        amountSymbol.textContent = strategy === 'PERCENTAGE' ? '%' : '$';
-      }
-
-      strategySelect.addEventListener('change', updateSymbol);
-      updateSymbol(); // Initial set
-    }
-  });
-
-    window.onload = function() {
-        if (new URLSearchParams(window.location.search).has('message')) {
-            setTimeout(function() {
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }, 2000);
-        }
-    }
-
-    function confirmDeleteAllBots() {
-        if (confirm('Are you sure you want to delete ALL bots? This action cannot be undone!')) {
-            window.location.href = '/bots/deleteAll';
-        }
-    }
-
+/* ── Wallet ─────────────────────────────────────────────────── */
 function fetchWallet() {
     fetch('/refresh-wallet-data')
-        .then(response => {
-            if (!response.ok) {
-                console.warn("⚠️ Resposta do servidor com status:", response.status);
-            }
-            return response.json();
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(d => {
+            const el = document.getElementById('wallet-balance');
+            if (el) el.textContent = 'R$' + d.balance;
         })
-        .then(data => {
-            console.info("💰 Carteira:", {
-                saldo: data.balance,
-                lucro: data.profit,
-                taxas: data.fees
-            });
+        .catch(() => {});
+}
 
-            // Atualizar saldo
-            const walletBalance = document.getElementById('wallet-balance');
-            if (walletBalance) {
-                walletBalance.textContent = "R$" + data.balance;
-            } else {
-                console.warn("⚠️ Elemento wallet-balance não encontrado");
-            }
+/* ── Live prices ─────────────────────────────────────────────── */
+let _prevPrices = {};
+async function fetchPrices() {
+    try {
+        const symbols = "{workingSymbols ?: ''}".split(',').filter(Boolean);
+        const data    = await fetch('/refresh-data?' + new URLSearchParams({
+            symbols: JSON.stringify(symbols)
+        })).then(r => r.json());
 
-            // Atualizar tooltip com lucro e taxas
-            const walletContainer = document.querySelector('.cyber-wallet-container');
-            if (walletContainer) {
-                const tooltipContent = "<div class='text-start cyber-tooltip'>" +
-                    "<strong class='text-glow-green'>Lucro:</strong> R$" + data.profit + "<br>" +
-                    "<strong class='text-glow-red'>Taxas:</strong> R$" + data.fees + "</div>";
+        const ref = document.getElementById('last-refresh');
+        if (ref) ref.textContent = new Date().toLocaleTimeString('pt-BR');
 
-                walletContainer.setAttribute('data-bs-title', tooltipContent);
+        for (const c of data) {
+            const priceEl   = document.getElementById(c.symbol + '-price');
+            const updatedEl = document.getElementById(c.symbol + '-updated');
+            if (updatedEl) updatedEl.textContent = c.lastUpdated;
+            if (priceEl) {
+                const prev = _prevPrices[c.symbol];
+                priceEl.textContent = c.price;
 
-                // Recriar tooltip para refletir as mudanças
-                const tooltip = bootstrap.Tooltip.getInstance(walletContainer);
-                if (tooltip) {
-                    tooltip.dispose();
-                    new bootstrap.Tooltip(walletContainer);
-                } else {
-                    console.warn("⚠️ Não foi possível obter instância do tooltip");
+                if (prev && prev !== c.price) {
+                    const isUp = parseFloat(c.price.replace(',','.')) > parseFloat(prev.replace(',','.'));
+                    priceEl.classList.remove('price-flash', 'price-down');
+                    void priceEl.offsetWidth; // force reflow
+                    priceEl.classList.add(isUp ? 'price-flash' : 'price-down');
                 }
-            } else {
-                console.warn("⚠️ Elemento cyber-wallet-container não encontrado");
+                _prevPrices[c.symbol] = c.price;
             }
-        })
-        .catch(error => {
-            console.error("❌ Erro ao atualizar carteira:", error);
+        }
+    } catch(e) {}
+}
+
+/* ── Trade log ──────────────────────────────────────────────── */
+async function refreshTradeLog() {
+    try {
+        const data  = await fetch('/refresh-log-data').then(r => r.json());
+        const logEl = document.getElementById('log-scroll');
+        if (!logEl) return;
+
+        const filt   = document.getElementById('log-filter')?.value?.toLowerCase().trim() || '';
+        const isBottom = logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60;
+
+        logEl.innerHTML = '';
+        let vis = 0;
+        data.forEach(item => {
+            const p = document.createElement('p');
+            p.className   = 'log-entry';
+            p.textContent = item;
+            if (filt && !item.toLowerCase().includes(filt)) p.classList.add('hidden-log');
+            else vis++;
+            logEl.appendChild(p);
         });
+
+        const cursor = document.createElement('span');
+        cursor.className = 'log-cursor';
+        logEl.appendChild(cursor);
+
+        const cnt = document.getElementById('log-count');
+        if (cnt) cnt.textContent = vis + ' entries';
+
+        if (isBottom) logEl.scrollTop = logEl.scrollHeight;
+    } catch(e) {}
 }
 </script>
 
-
-<footer class="cyber-footer mt-5 fixed-bottom">
-    <div class="container text-center py-1">
-        <p class="neon-text mb-1">CryptoBot &copy; 2025</p>
-        <div class="social-icons mb-2">
-            <a href="https://github.com/Benilsn" target="_blank" class="neon-link me-3">GitHub</a>
-            <a href="#" target="_blank" class="neon-link me-3">Discord</a>
-            <a href="#" target="_blank" class="neon-link">Contact</a>
-        </div>
+<footer class="cyber-footer py-2 fixed-bottom">
+    <div class="container text-center">
+        <span class="mono">CryptoBot &copy; 2025</span>
+        <span class="mx-2" style="opacity:.25">|</span>
+        <a href="https://github.com/Benilsn" target="_blank">GitHub</a>
+        <span class="mx-1" style="opacity:.25">·</span>
+        <a href="#">Discord</a>
+        <span class="mx-1" style="opacity:.25">·</span>
+        <a href="#">Contact</a>
     </div>
 </footer>
-
 {/fragment}
