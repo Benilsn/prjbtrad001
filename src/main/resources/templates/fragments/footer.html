@@ -1,176 +1,40 @@
 {#fragment id=footer}
+<div id="bg-overlay"></div>
+<div id="bg-particles"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-/* ──────────────────────────────────────────────────────────────
-   Background overlay div + floating particles
-   Using real <div> elements instead of body::before / ::after
-   so Bootstrap modal stacking context is never affected.
-────────────────────────────────────────────────────────────── */
-(function initBg() {
-    // Dot grid
-    const overlay = document.createElement('div');
-    overlay.id = 'bg-overlay';
-    document.body.prepend(overlay);
-
-    // Floating crypto symbols
-    const syms  = ['₿','Ξ','Ł','Ð','◎','⬡','◈','✦','⊕','Ŧ'];
-    const parts = document.createElement('div');
-    parts.id    = 'bg-particles';
-    document.body.insertBefore(parts, overlay.nextSibling);
-    for (let i = 0; i < 22; i++) {
-        const s = document.createElement('span');
-        const op = .014 + Math.random() * .028;
-        s.className   = 'bg-particle';
-        s.textContent = syms[i % syms.length];
-        s.style.cssText = [
-            `left:$\{Math.random()*100}%`,
-            'bottom:-50px',
-            `font-size:$\{12 + Math.random()*34}px`,
-            `--op:$\{op}`,
-            `animation-duration:$\{18 + Math.random()*34}s`,
-            `animation-delay:$\{Math.random()*22}s`
-        ].join(';');
-        parts.appendChild(s);
-    }
-})();
-
-/* ── Bootstrap tooltips + page init ─────────────────────────── */
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            .forEach(el => new bootstrap.Tooltip(el));
-
-    /* Active nav link */
-    document.querySelectorAll('.neon-link[href]').forEach(a => {
-        if (a.getAttribute('href') === window.location.pathname) a.classList.add('active');
-    });
-
-    /* Scroll-to-bottom (trade log) */
-    document.getElementById('btn-log-bottom')?.addEventListener('click', () => {
-        document.getElementById('log-scroll')?.scrollTo({ top: 999999, behavior: 'smooth' });
-    });
-
-    /* Purchase strategy symbol toggle */
-    const strat = document.querySelector('select[name="purchaseStrategy"]');
-    const sym   = document.getElementById('amountSymbol');
-    if (strat && sym) {
-        const upd = () => sym.textContent = strat.value === 'PERCENTAGE' ? '%' : 'R$';
-        strat.addEventListener('change', upd);
-        upd();
-    }
-
-    /* Global services */
-    fetchWallet();
-    setInterval(fetchWallet, 20000);
-
-    if (window.location.pathname === '/') {
-        fetchPrices();
-        setInterval(fetchPrices, 3000);
-    }
-
-    if (document.getElementById('log-scroll')) {
-        refreshTradeLog();
-        setInterval(refreshTradeLog, 8000);
-    }
-
-    /* Log filter */
-    document.getElementById('log-filter')?.addEventListener('input', function () {
-        const q = this.value.toLowerCase().trim();
-        let vis = 0;
-        document.querySelectorAll('#log-scroll .log-entry').forEach(e => {
-            const hide = q.length > 0 && !e.textContent.toLowerCase().includes(q);
-            e.classList.toggle('hidden-log', hide);
-            if (!hide) vis++;
-        });
-        const cnt = document.getElementById('log-count');
-        if (cnt) cnt.textContent = vis + ' entries';
-    });
-});
-
-/* ── Wallet ─────────────────────────────────────────────────── */
-function fetchWallet() {
-    fetch('/refresh-wallet-data')
-        .then(r => r.ok ? r.json() : Promise.reject())
-        .then(d => {
-            const el = document.getElementById('wallet-balance');
-            if (el) el.textContent = 'R$' + d.balance;
-        })
-        .catch(() => {});
-}
-
-/* ── Live prices ─────────────────────────────────────────────── */
-let _prevPrices = {};
-async function fetchPrices() {
-    try {
-        const symbols = "{workingSymbols ?: ''}".split(',').filter(Boolean);
-        const data    = await fetch('/refresh-data?' + new URLSearchParams({
-            symbols: JSON.stringify(symbols)
-        })).then(r => r.json());
-
-        const ref = document.getElementById('last-refresh');
-        if (ref) ref.textContent = new Date().toLocaleTimeString('pt-BR');
-
-        for (const c of data) {
-            const priceEl   = document.getElementById(c.symbol + '-price');
-            const updatedEl = document.getElementById(c.symbol + '-updated');
-            if (updatedEl) updatedEl.textContent = c.lastUpdated;
-            if (priceEl) {
-                const prev = _prevPrices[c.symbol];
-                priceEl.textContent = c.price;
-
-                if (prev && prev !== c.price) {
-                    const isUp = parseFloat(c.price.replace(',','.')) > parseFloat(prev.replace(',','.'));
-                    priceEl.classList.remove('price-flash', 'price-down');
-                    void priceEl.offsetWidth; // force reflow
-                    priceEl.classList.add(isUp ? 'price-flash' : 'price-down');
-                }
-                _prevPrices[c.symbol] = c.price;
-            }
+    {|
+    // Floating hex/binary particles — purely decorative.
+    (function () {
+        const host = document.getElementById('bg-particles');
+        if (!host) return;
+        const glyphs = ['0', '1', '↑', '↓', '◇', '·', 'ƒ', 'Σ'];
+        const count = Math.min(22, Math.floor(window.innerWidth / 70));
+        for (let i = 0; i < count; i++) {
+            const s = document.createElement('span');
+            s.className = 'bg-particle';
+            s.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+            const size = 10 + Math.random() * 14;
+            s.style.left = Math.random() * 100 + 'vw';
+            s.style.top = 100 + Math.random() * 20 + 'vh';
+            s.style.fontSize = size + 'px';
+            s.style.setProperty('--op', (0.05 + Math.random() * 0.15).toFixed(2));
+            s.style.animationDuration = (16 + Math.random() * 26) + 's';
+            s.style.animationDelay = (-Math.random() * 30) + 's';
+            host.appendChild(s);
         }
-    } catch(e) {}
-}
+    })();
 
-/* ── Trade log ──────────────────────────────────────────────── */
-async function refreshTradeLog() {
-    try {
-        const data  = await fetch('/refresh-log-data').then(r => r.json());
-        const logEl = document.getElementById('log-scroll');
-        if (!logEl) return;
-
-        const filt   = document.getElementById('log-filter')?.value?.toLowerCase().trim() || '';
-        const isBottom = logEl.scrollHeight - logEl.scrollTop - logEl.clientHeight < 60;
-
-        logEl.innerHTML = '';
-        let vis = 0;
-        data.forEach(item => {
-            const p = document.createElement('p');
-            p.className   = 'log-entry';
-            p.textContent = item;
-            if (filt && !item.toLowerCase().includes(filt)) p.classList.add('hidden-log');
-            else vis++;
-            logEl.appendChild(p);
-        });
-
-        const cursor = document.createElement('span');
-        cursor.className = 'log-cursor';
-        logEl.appendChild(cursor);
-
-        const cnt = document.getElementById('log-count');
-        if (cnt) cnt.textContent = vis + ' entries';
-
-        if (isBottom) logEl.scrollTop = logEl.scrollHeight;
-    } catch(e) {}
-}
+    // Auto-dismiss flash messages.
+    window.addEventListener('DOMContentLoaded', () => {
+        const msg = document.getElementById('flash-message');
+        if (msg) {
+            msg.style.transition = 'opacity 1.5s ease';
+            setTimeout(() => (msg.style.opacity = '0'), 2600);
+            setTimeout(() => msg.remove(), 4200);
+        }
+    });
+    |}
 </script>
-
-<footer class="cyber-footer py-2 fixed-bottom">
-    <div class="container text-center">
-        <span class="mono">CryptoBot &copy; 2025</span>
-        <span class="mx-2" style="opacity:.25">|</span>
-        <a href="https://github.com/Benilsn" target="_blank">GitHub</a>
-        <span class="mx-1" style="opacity:.25">·</span>
-        <a href="#">Discord</a>
-        <span class="mx-1" style="opacity:.25">·</span>
-        <a href="#">Contact</a>
-    </div>
-</footer>
 {/fragment}

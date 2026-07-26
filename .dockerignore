@@ -1,5 +1,8 @@
-src
-!target/*-runner
-!target/*-runner.jar
-!target/lib/*
-!target/quarkus-app/*
+# The Dockerfile builds from source (multi-stage), so src/ must be sent.
+# Keep out everything that would bust the layer cache or bloat the context.
+target/
+.git/
+.idea/
+*.iml
+data/
+*.log
