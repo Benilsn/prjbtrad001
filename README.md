@@ -147,6 +147,11 @@ O compose publica as portas em `127.0.0.1` de propósito: **a aplicação não t
 autenticação nenhuma**. Num servidor, acesse por túnel SSH
 (`ssh -L 8080:localhost:8080 usuario@servidor`) em vez de expor a porta.
 
+### Deploy automático
+
+Push no `master` dispara build da imagem **arm64** e deploy na Oracle Cloud via
+GitHub Actions. Passo a passo completo em **[DEPLOY.md](DEPLOY.md)**.
+
 ## Histórico de execuções
 
 Cada compra e venda vira uma linha em `trade_record`, com preço, quantidade,
