@@ -22,8 +22,15 @@ import java.util.UUID;
 /**
  * One evaluation tick for a single bot: fetch candles, decide, paper-trade.
  *
- * Decisions are made only on the last CLOSED candle — the still-forming candle
- * is dropped — so the live loop can never act on data that hasn't happened yet.
+ * Two prices, deliberately:
+ *
+ *  - the SIGNAL is derived from the last CLOSED candle (the still-forming one is
+ *    dropped), so the loop can never act on data that hasn't happened yet;
+ *  - the ORDER fills at the LIVE market price, because that is what a real fill
+ *    would cost at the moment the bot acts.
+ *
+ * Using the closed-candle price for both would make paper results systematically
+ * optimistic — and a flattering simulation is worse than no simulation.
  */
 @JBossLog
 @ApplicationScoped
@@ -48,19 +55,33 @@ public class BotRunner {
       return;
     }
 
-    // Drop the in-progress candle: decide on closed data only.
+    // Drop the in-progress candle: the SIGNAL may only ever see closed data.
     List<KlineDto> closed = candles.subList(0, candles.size() - 1);
-    BigDecimal price = closed.getLast().close();
     BotStatus status = bot.getStatus();
 
-    // Safety-net stop-loss, checked against the real average entry price.
+    // Orders fill at the CURRENT market price — never at the candle close the
+    // signal came from. On a daily timeframe those can be a full day apart, and
+    // the gap is not random: entries fire in uptrends (so the real fill is
+    // dearer) and exits in downtrends (so the real fill is cheaper). Filling at
+    // the stale close would flatter every trade in both directions and make
+    // paper results useless as evidence.
+    BigDecimal livePrice = marketData.getPrice(symbol);
+    if (livePrice == null) {
+      // Skip rather than fall back to the stale close: that would silently
+      // reintroduce the bias. The hourly tick retries soon enough.
+      log.warnf("[%s] live price unavailable — skipping tick", symbol);
+      return;
+    }
+
+    // Safety-net stop-loss against the live price, so a sharp drawdown is caught
+    // on the next hourly tick instead of waiting for the next daily close.
     if (status.isOpen() && status.getAvgPrice().signum() > 0) {
       BigDecimal stopPrice = status.getAvgPrice()
         .multiply(BigDecimal.ONE.subtract(bot.getStopLossPercent().movePointLeft(2)));
-      if (price.compareTo(stopPrice) <= 0) {
+      if (livePrice.compareTo(stopPrice) <= 0) {
         log.infof("[%s] ⛔ stop-loss at R$ %s (entry R$ %s)", symbol,
-          price.setScale(2, RoundingMode.HALF_UP), status.getAvgPrice().setScale(2, RoundingMode.HALF_UP));
-        paperExecutor.sell(bot, price, TradeRecord.Reason.STOP_LOSS);
+          livePrice.setScale(2, RoundingMode.HALF_UP), status.getAvgPrice().setScale(2, RoundingMode.HALF_UP));
+        paperExecutor.sell(bot, livePrice, TradeRecord.Reason.STOP_LOSS);
         return;
       }
     }
@@ -69,13 +90,17 @@ public class BotRunner {
     Signal signal = EmaCrossStrategy.evaluateLast(series, bot.getEmaFast(), bot.getEmaSlow(), status.isOpen());
 
     switch (signal) {
-      case ENTER -> paperExecutor.buy(bot, price);
-      case EXIT -> paperExecutor.sell(bot, price, TradeRecord.Reason.EMA_CROSS);
+      case ENTER -> paperExecutor.buy(bot, livePrice);
+      case EXIT -> paperExecutor.sell(bot, livePrice, TradeRecord.Reason.EMA_CROSS);
       // Ticks are hourly at most, so one concise line per evaluation is useful
       // rather than noisy — it is the only live visibility into the loop.
-      case HOLD -> log.infof("[%s] ⚪ hold · %s · R$ %s · closed candle %s",
+      // Both prices are shown: the live one moves, the signal one only changes
+      // when a new candle closes.
+      case HOLD -> log.infof("[%s] ⚪ hold · %s · now R$ %s · signal candle R$ %s @ %s",
         symbol, status.isOpen() ? "LONG" : "flat",
-        price.setScale(2, RoundingMode.HALF_UP), closed.getLast().closeInstant());
+        livePrice.setScale(2, RoundingMode.HALF_UP),
+        closed.getLast().close().setScale(2, RoundingMode.HALF_UP),
+        closed.getLast().closeInstant());
     }
   }
 }
