@@ -47,15 +47,14 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-scheduler</artifactId>
     </dependency>
+
+    <!--    TECHNICAL ANALYSIS + BACKTEST     -->
+    <!-- 0.22.6 is the newest release still compiled for Java 21;
+         0.22.7+ target Java 25 and cannot be read by this build. -->
     <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi</artifactId>
-      <version>5.2.5</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>5.2.5</version>
+      <groupId>org.ta4j</groupId>
+      <artifactId>ta4j-core</artifactId>
+      <version>0.22.6</version>
     </dependency>
 
 
@@ -76,6 +75,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest-jackson</artifactId>
     </dependency>
+    <!-- /q/health/ready — used by the compose healthcheck -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-health</artifactId>
+    </dependency>
 
     <!--    QUARKUS TEMPLATE     -->
     <dependency>
@@ -90,7 +94,7 @@
     <!--    DATABASE     -->
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-h2</artifactId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

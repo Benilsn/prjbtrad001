@@ -1,0 +1,78 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: btrad-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-btrad001}
+      POSTGRES_USER: ${DB_USER:-btrad}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-btrad}
+    volumes:
+      # Named volume — survives `docker compose down` (but not `down -v`).
+      - btrad-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-btrad} -d ${DB_NAME:-btrad001}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    # Not published by default: only the app needs it. Uncomment to inspect
+    # the database from your machine with a SQL client.
+    # ports:
+    #   - "127.0.0.1:5432:5432"
+
+  app:
+    build: .
+    container_name: btrad-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME:-btrad001}
+      DB_USER: ${DB_USER:-btrad}
+      DB_PASSWORD: ${DB_PASSWORD:-btrad}
+      # Paper-trading knobs
+      BOT_PAPER_INITIAL_BALANCE: ${BOT_PAPER_INITIAL_BALANCE:-4000.00}
+      BOT_PAPER_FEE_RATE: ${BOT_PAPER_FEE_RATE:-0.001}
+      ROOT_LOG_LEVEL: ${ROOT_LOG_LEVEL:-INFO}
+      TZ: America/Sao_Paulo
+    ports:
+      # Bound to localhost: the app has NO authentication. Reach it through an
+      # SSH tunnel on a server, or change to "8080:8080" only behind a firewall.
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/q/health/ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  # ── Future: news/sentiment analysis ──────────────────────────
+  # Not started by default. Bring it up with:
+  #     docker compose --profile n8n up -d
+  # From inside n8n, the bot's history is at http://app:8080/trades
+  # and Postgres at db:5432 — both on this network, no ports exposed.
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: btrad-n8n
+    profiles: ["n8n"]
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      GENERIC_TIMEZONE: America/Sao_Paulo
+      TZ: America/Sao_Paulo
+      # n8n keeps its own state in this volume (SQLite by default).
+      N8N_DIAGNOSTICS_ENABLED: "false"
+    volumes:
+      - btrad-n8n-data:/home/node/.n8n
+    ports:
+      - "127.0.0.1:5678:5678"
+
+volumes:
+  btrad-db-data:
+  btrad-n8n-data:

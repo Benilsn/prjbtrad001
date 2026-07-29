@@ -5,24 +5,21 @@ quarkus:
     strict-rendering: false
   http:
     port: 8080
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    db-kind: h2
+    db-kind: postgresql
+    username: ${DB_USER:btrad}
+    password: ${DB_PASSWORD:btrad}
     jdbc:
-      url: jdbc:h2:file:./target/data/h2db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-      driver: org.h2.Driver
-      username: sa
-      password: sa
+      url: ${DB_URL:jdbc:postgresql://localhost:5432/btrad001}
   hibernate-validator:
     fail-fast: false
   hibernate-orm:
     log:
       sql: false
     database:
-        generation: create-drop
+      # 'update' keeps bots across restarts. Use drop-and-create only when the
+      # entity schema changes in a way H2 cannot migrate in place.
+      generation: update
   log:
     level: ${ROOT_LOG_LEVEL:INFO}
     console:
@@ -30,16 +27,19 @@ quarkus:
       format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
 
 bot:
-  trading:
-    mock: ${BOT_TRADING_MOCK}
-  file:
-    path: ${BOT_FILE_PATH}
-  credentials:
-    path:
-      api-key: ${BINANCE_API_KEY}
-      secret-key: ${BINANCE_SECRET_KEY}
+  # Paper-trading wallet (v1 has no real money execution)
+  paper:
+    initial-balance: 4000.00
+    fee-rate: 0.001          # 0.1% per side, matches Binance spot taker
+  strategy:
+    defaults:
+      timeframe: 4h
+      ema-fast: 9
+      ema-slow: 21
+      stop-loss-percent: 5
+      order-size-brl: 100
+  # Trading pairs offered in the create/backtest dropdowns
   symbol:
-    limit: 1
     list:
       - BTCBRL
       - ETHBRL
@@ -47,9 +47,7 @@ bot:
       - BNBBRL
       - XRPBRL
       - DOGEBRL
-      - MATICBRL
       - LTCBRL
       - ADABRL
       - LINKBRL
-      - ENABRL
       - AVAXBRL

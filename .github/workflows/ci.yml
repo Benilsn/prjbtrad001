@@ -1,0 +1,28 @@
+name: CI
+
+# Fast feedback on branches and PRs. Deployment lives in deploy.yml.
+on:
+  pull_request:
+  push:
+    branches-ignore: [master]   # master is covered by deploy.yml
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          # ta4j 0.22.6 targets Java 21 — do not bump without checking its bytecode.
+          java-version: '21'
+          distribution: temurin
+          cache: maven
+
+      - name: Build
+        run: ./mvnw -B -ntp clean package -DskipTests
+
+      - name: Verify Dockerfile builds
+        run: docker build -t btrad001:ci .
