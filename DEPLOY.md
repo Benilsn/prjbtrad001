@@ -186,3 +186,28 @@ troque `APP_IMAGE` no `.env` para uma tag antiga (`:<sha-curto>`) e rode
 | SSH falha no Actions | `OCI_SSH_KEY` incompleta — precisa incluir `BEGIN`/`END` |
 | `Out of host capacity` | Falta de ARM na região — tente outro AD ou mais tarde |
 | App reinicia sem parar | Veja `docker logs btrad-app`; normalmente `.env` sem `DB_PASSWORD` |
+| Bot novo acha o sinal mas o trade não grava | Constraint de símbolos desatualizada — veja abaixo |
+
+### ⚠️ Ao adicionar um par novo ao `BotType`
+
+O Hibernate roda com `generation: update`, que **cria** o que falta mas **não altera
+constraints já existentes**. A tabela `trade_record` tem um `CHECK` gerado a partir
+do enum na primeira criação:
+
+```sql
+CHECK (symbol = ANY (ARRAY['BTCBRL','ETHBRL','SOLBRL', ...]))
+```
+
+Se você **adicionar** um par novo ao enum, essa lista **não é atualizada** — e o
+primeiro trade da moeda nova falha com violação de constraint. O sintoma é
+traiçoeiro: o bot detecta o sinal, executa, mas nada aparece em `trade_record`.
+
+Correção — apague a constraint e deixe o Hibernate recriá-la no próximo start:
+
+```bash
+ssh btrad "docker exec btrad-db psql -U btrad -d btrad001 -c \
+  'ALTER TABLE trade_record DROP CONSTRAINT trade_record_symbol_check;'"
+```
+
+**Remover** pares do enum é seguro: a constraint fica permissiva demais, o que é
+inofensivo.

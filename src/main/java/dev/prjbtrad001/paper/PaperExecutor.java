@@ -38,20 +38,24 @@ public class PaperExecutor {
       return false;
     }
 
+    // Fill a touch above the quote — a market buy lifts the ask.
+    BigDecimal fill = wallet.fillPrice(price, true);
+
     BigDecimal fee = wallet.feeOn(notional);
     wallet.recordFee(fee);
-    BigDecimal quantity = notional.subtract(fee).divide(price, 8, RoundingMode.HALF_UP);
+    BigDecimal quantity = notional.subtract(fee).divide(fill, 8, RoundingMode.HALF_UP);
 
     status.setOpen(true);
     status.setQuantity(quantity);
-    status.setAvgPrice(price);
+    status.setAvgPrice(fill);
     status.setInvestedBrl(notional);
     status.setLastEntryTime(LocalDateTime.now());
 
-    TradeRecord.buy(bot, price, quantity, notional, fee).persist();
+    TradeRecord.buy(bot, fill, quantity, notional, fee).persist();
 
-    log.infof("[%s] 🔵 BUY  %s @ R$ %s (fee R$ %s)",
+    log.infof("[%s] 🔵 BUY  %s @ R$ %s (cotação R$ %s · fee R$ %s)",
       bot.getSymbol(), quantity.setScale(6, RoundingMode.HALF_UP),
+      fill.setScale(2, RoundingMode.HALF_UP),
       price.setScale(2, RoundingMode.HALF_UP), fee.setScale(2, RoundingMode.HALF_UP));
     return true;
   }
@@ -67,7 +71,10 @@ public class PaperExecutor {
     BigDecimal quantity = status.getQuantity();
     BigDecimal invested = status.getInvestedBrl();
 
-    BigDecimal proceeds = quantity.multiply(price);
+    // Fill a touch below the quote — a market sell hits the bid.
+    BigDecimal fill = wallet.fillPrice(price, false);
+
+    BigDecimal proceeds = quantity.multiply(fill);
     BigDecimal fee = wallet.feeOn(proceeds);
     wallet.recordFee(fee);
     BigDecimal net = proceeds.subtract(fee).setScale(2, RoundingMode.HALF_UP);
@@ -80,11 +87,12 @@ public class PaperExecutor {
     status.setRealizedProfit(status.getRealizedProfit().add(profit));
     status.setClosedTrades(status.getClosedTrades() + 1);
 
-    TradeRecord.sell(bot, price, quantity, proceeds.setScale(2, RoundingMode.HALF_UP),
+    TradeRecord.sell(bot, fill, quantity, proceeds.setScale(2, RoundingMode.HALF_UP),
       fee, profit, profitPct, reason).persist();
 
-    log.infof("[%s] %s SELL @ R$ %s → trade P&L R$ %s (%.2f%%) [%s] (total R$ %s)",
+    log.infof("[%s] %s SELL @ R$ %s (cotação R$ %s) → trade P&L R$ %s (%.2f%%) [%s] (total R$ %s)",
       bot.getSymbol(), profit.signum() >= 0 ? "💚" : "🔴",
+      fill.setScale(2, RoundingMode.HALF_UP),
       price.setScale(2, RoundingMode.HALF_UP), profit, profitPct, reason,
       status.getRealizedProfit());
 

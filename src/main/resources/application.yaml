@@ -31,6 +31,9 @@ bot:
   paper:
     initial-balance: 4000.00
     fee-rate: 0.001          # 0.1% per side, matches Binance spot taker
+    # Market orders never fill exactly at the quoted price. Modelling the gap
+    # keeps paper results honest — it makes them slightly worse, on purpose.
+    slippage-rate: 0.0005    # 0.05% adverse per side
   strategy:
     defaults:
       timeframe: 4h

@@ -4,7 +4,20 @@ on:
   push:
     # This repo's default branch is `master`. Change here if you rename it.
     branches: [master]
-  workflow_dispatch:      # lets you re-deploy manually from the Actions tab
+
+  # Manual run: Actions -> Deploy to Oracle Cloud -> Run workflow.
+  # The branch picker in that dialog chooses what gets built, so any branch can
+  # be deployed without merging — useful for trying a change on the VM first.
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Digite DEPLOY para confirmar (evita clique acidental)'
+        required: true
+        default: ''
+      reason:
+        description: 'Motivo (aparece no resumo da execução)'
+        required: false
+        default: 'deploy manual'
 
 concurrency:
   # Never let two deploys race onto the same VM.
@@ -15,6 +28,26 @@ env:
   IMAGE: ghcr.io/${{ github.repository }}
 
 jobs:
+  # Gate for manual runs only — a push to master skips this entirely.
+  guard:
+    name: Confirmar deploy manual
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar confirmação
+        run: |
+          if [ "${{ inputs.confirm }}" != "DEPLOY" ]; then
+            echo "::error::Digite DEPLOY no campo de confirmação para prosseguir."
+            exit 1
+          fi
+          {
+            echo "### Deploy manual"
+            echo ""
+            echo "- **Ref:** \`${{ github.ref_name }}\`"
+            echo "- **Motivo:** ${{ inputs.reason }}"
+            echo "- **Disparado por:** @${{ github.actor }}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
   # ──────────────────────────────────────────────────────────────
   #  Build natively on arm64.
   #
@@ -25,6 +58,10 @@ jobs:
   # ──────────────────────────────────────────────────────────────
   build:
     name: Build arm64 image
+    # `always()` keeps the push path working (guard is skipped there), while a
+    # failed confirmation on a manual run still blocks the deploy.
+    needs: [guard]
+    if: always() && (github.event_name == 'push' || needs.guard.result == 'success')
     runs-on: ubuntu-24.04-arm
     permissions:
       contents: read

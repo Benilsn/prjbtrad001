@@ -22,6 +22,9 @@ public class PaperWallet {
   @ConfigProperty(name = "bot.paper.fee-rate")
   BigDecimal feeRate;
 
+  @ConfigProperty(name = "bot.paper.slippage-rate")
+  BigDecimal slippageRate;
+
   private BigDecimal balance = BigDecimal.ZERO;
   private BigDecimal totalFees = BigDecimal.ZERO;
 
@@ -64,5 +67,21 @@ public class PaperWallet {
   /** Fee charged on a given BRL notional. */
   public BigDecimal feeOn(BigDecimal notional) {
     return notional.multiply(feeRate).setScale(8, RoundingMode.HALF_UP);
+  }
+
+  public BigDecimal getSlippageRate() {
+    return slippageRate;
+  }
+
+  /**
+   * The price a market order would realistically fill at — always adverse:
+   * a little more when buying, a little less when selling. Without this the
+   * paper account gets a fill nobody could actually obtain.
+   */
+  public BigDecimal fillPrice(BigDecimal price, boolean buying) {
+    BigDecimal factor = buying
+      ? BigDecimal.ONE.add(slippageRate)
+      : BigDecimal.ONE.subtract(slippageRate);
+    return price.multiply(factor).setScale(8, RoundingMode.HALF_UP);
   }
 }

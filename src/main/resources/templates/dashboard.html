@@ -4,7 +4,9 @@
 <body>
 {#include fragments/navbar.html /}
 
-<main class="container my-4 pb-5">
+<!-- Capped so a 3-across grid keeps card proportions; header, summary strip and
+     cards all share this measure and stay aligned. -->
+<main class="container my-4 pb-5" style="max-width:1160px">
 
     <!-- Header -->
     <div class="d-flex align-items-end justify-content-between mb-1" style="animation:slideUp .3s ease both">
@@ -63,9 +65,10 @@
         <a class="btn btn-neon btn-neon-green" href="/bots/create">+ Create your first bot</a>
     </div>
     {#else}
-    <div class="row g-3">
+    <!-- Max 3 per row and centred, so an odd bot count still looks deliberate. -->
+    <div class="row g-3 justify-content-center bot-grid">
         {#for bv in bots}
-        <div class="col-xl-3 col-lg-4 col-md-6 card-animate">
+        <div class="col-lg-4 col-md-6 card-animate">
             <div class="bot-card p-3 h-100 d-flex flex-column position-relative">
 
                 <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2" style="z-index:2">
