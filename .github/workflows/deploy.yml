@@ -28,13 +28,28 @@ env:
   IMAGE: ghcr.io/${{ github.repository }}
 
 jobs:
-  # Gate for manual runs only — a push to master skips this entirely.
-  guard:
-    name: Confirmar deploy manual
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
+  # ──────────────────────────────────────────────────────────────
+  #  Build natively on arm64.
+  #
+  #  Oracle's Always Free instances are Ampere (aarch64). An image
+  #  built on a normal x86 runner will NOT run there — it fails with
+  #  "exec format error". Building on ubuntu-24.04-arm avoids both
+  #  that and the very slow QEMU emulation alternative.
+  # ──────────────────────────────────────────────────────────────
+  build:
+    name: Build arm64 image
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image_tag: ${{ steps.meta.outputs.tag }}
     steps:
-      - name: Validar confirmação
+      # Kept as a STEP, not a separate job: a skipped job propagates "skipped"
+      # down the needs chain, which silently skipped the deploy while the run
+      # still reported success.
+      - name: Confirmar deploy manual
+        if: github.event_name == 'workflow_dispatch'
         run: |
           if [ "${{ inputs.confirm }}" != "DEPLOY" ]; then
             echo "::error::Digite DEPLOY no campo de confirmação para prosseguir."
@@ -48,27 +63,6 @@ jobs:
             echo "- **Disparado por:** @${{ github.actor }}"
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # ──────────────────────────────────────────────────────────────
-  #  Build natively on arm64.
-  #
-  #  Oracle's Always Free instances are Ampere (aarch64). An image
-  #  built on a normal x86 runner will NOT run there — it fails with
-  #  "exec format error". Building on ubuntu-24.04-arm avoids both
-  #  that and the very slow QEMU emulation alternative.
-  # ──────────────────────────────────────────────────────────────
-  build:
-    name: Build arm64 image
-    # `always()` keeps the push path working (guard is skipped there), while a
-    # failed confirmation on a manual run still blocks the deploy.
-    needs: [guard]
-    if: always() && (github.event_name == 'push' || needs.guard.result == 'success')
-    runs-on: ubuntu-24.04-arm
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      image_tag: ${{ steps.meta.outputs.tag }}
-    steps:
       - uses: actions/checkout@v4
 
       - name: Lowercase image name
