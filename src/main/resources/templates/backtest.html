@@ -1,157 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 {#include fragments/head.html /}
 <body>
 {#include fragments/navbar.html /}
 
-<main class="container my-4 pb-5">
+<main class="container my-4 pb-5" style="max-width:1180px">
 
-    <div class="d-flex align-items-end justify-content-between mb-1" style="animation:slideUp .3s ease both">
+    <div class="d-flex align-items-end justify-content-between mb-3 fade-in">
         <div>
-            <div class="kicker mb-1">HISTORICAL VALIDATION · FEES INCLUDED</div>
-            <span class="page-title">Backtest</span>
+            <div class="kicker mb-1">Validação histórica · custos incluídos</div>
+            <h1 class="page-title mb-0">Backtest</h1>
         </div>
-        <a class="btn btn-neon" href="/">← Dashboard</a>
+        <a class="btn-app" href="/">Dashboard</a>
     </div>
 
-    <div class="glow-divider" style="margin:14px 0 20px"></div>
-
-    <!-- Form -->
-    <form method="post" action="/backtest/run" class="bot-card p-3 mb-4 card-animate">
-        <div class="row g-3 align-items-end">
-            <div class="col-6 col-md-2">
-                <label class="form-label">Pair</label>
-                <select class="form-select" name="symbol">
-                    {#for s in symbols}
-                    <option value="{s}" {#if form.symbol == s}selected{/if}>{s}</option>
-                    {/for}
-                </select>
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="form-label">Timeframe</label>
-                <select class="form-select" name="timeframe">
-                    {#for opt in timeframes}
-                    <option value="{opt}" {#if form.timeframe == opt}selected{/if}>{opt}</option>
-                    {/for}
-                </select>
-            </div>
-            <div class="col-4 col-md-1">
-                <label class="form-label">Fast</label>
-                <input class="form-control" type="number" name="emaFast" min="2" value="{form.emaFast}">
-            </div>
-            <div class="col-4 col-md-1">
-                <label class="form-label">Slow</label>
-                <input class="form-control" type="number" name="emaSlow" min="3" value="{form.emaSlow}">
-            </div>
-            <div class="col-4 col-md-2">
-                <label class="form-label">Stop %</label>
-                <input class="form-control" type="number" step="0.1" name="stopLossPercent" value="{form.stop}">
-            </div>
-            <div class="col-6 col-md-2">
-                <label class="form-label">Candles</label>
-                <input class="form-control" type="number" name="candles" min="50" max="2000" value="{form.candles}">
-            </div>
-            <div class="col-6 col-md-1">
-                <label class="form-label">Fee %</label>
-                <input class="form-control" type="number" step="0.01" name="feePercent" value="{form.feePercent}">
-            </div>
-            <div class="col-12 col-md-1 d-grid">
-                <button type="submit" class="btn btn-neon btn-neon-green">▶ Run</button>
+    <form method="post" action="/backtest/run" class="card-panel mb-4 fade-in">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Par</label>
+                    <select class="form-select" name="symbol">
+                        {#for s in symbols}
+                        <option value="{s}" {#if form.symbol == s}selected{/if}>{s}</option>
+                        {/for}
+                    </select>
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Timeframe</label>
+                    <select class="form-select" name="timeframe">
+                        {#for opt in timeframes}
+                        <option value="{opt}" {#if form.timeframe == opt}selected{/if}>{opt}</option>
+                        {/for}
+                    </select>
+                </div>
+                <div class="col-4 col-md-1">
+                    <label class="form-label">Rápida</label>
+                    <input class="form-control" type="number" name="emaFast" min="2" value="{form.emaFast}">
+                </div>
+                <div class="col-4 col-md-1">
+                    <label class="form-label">Lenta</label>
+                    <input class="form-control" type="number" name="emaSlow" min="3" value="{form.emaSlow}">
+                </div>
+                <div class="col-4 col-md-2">
+                    <label class="form-label">Stop %</label>
+                    <input class="form-control" type="number" step="0.1" name="stopLossPercent" value="{form.stop}">
+                </div>
+                <div class="col-6 col-md-2">
+                    <label class="form-label">Candles</label>
+                    <input class="form-control" type="number" name="candles" min="50" max="2000" value="{form.candles}">
+                </div>
+                <div class="col-3 col-md-1">
+                    <label class="form-label">Taxa %</label>
+                    <input class="form-control" type="number" step="0.01" name="feePercent" value="{form.feePercent}">
+                </div>
+                <div class="col-3 col-md-1 d-grid">
+                    <button type="submit" class="btn-app btn-primary-app justify-content-center">Rodar</button>
+                </div>
             </div>
         </div>
     </form>
 
     {#if result}
         {#if result.ok}
-        <!-- Verdict -->
-        <div class="d-flex flex-wrap align-items-center gap-3 mb-3 card-animate">
-            <span class="mono text-dim" style="font-size:.75rem">
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-3 fade-in">
+            <span class="mono" style="font-size:.76rem;color:var(--text-3)">
                 {result.symbol} · {result.timeframe} · EMA {result.emaFast}×{result.emaSlow} ·
                 {result.candleCount} candles · {result.fromTime} → {result.toTime}
             </span>
-            {#if result.beatBuyHold}
-            <span class="verdict-chip verdict-win">✓ Beat buy &amp; hold</span>
-            {#else}
-            <span class="verdict-chip verdict-lose">✗ Underperformed buy &amp; hold</span>
-            {/if}
+            <span class="status {#if result.beatBuyHold}status-on{#else}status-off{/if}">
+                <span class="led"></span>{#if result.beatBuyHold}superou buy &amp; hold{#else}abaixo do buy &amp; hold{/if}
+            </span>
         </div>
 
-        <!-- Metrics -->
-        <div class="row g-3 mb-4">
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Strategy return</div>
-                    <div class="v {#if result.netReturnPct >= 0}pl-pos{#else}pl-neg{/if}">{result.netReturnPct.pct}%</div>
-                    <div class="sub">R$ {result.initialEquity.pct} → {result.finalEquity.pct}</div>
-                </div>
+        <div class="metrics mb-4 fade-in">
+            <div class="metric">
+                <div class="k">Estratégia</div>
+                <div class="v {#if result.netReturnPct >= 0}pos{#else}neg{/if}">{result.netReturnPct.pct}%</div>
+                <div class="sub">R$ {result.initialEquity.pct} → {result.finalEquity.pct}</div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Buy &amp; hold</div>
-                    <div class="v {#if result.buyHoldReturnPct >= 0}pl-pos{#else}pl-neg{/if}">{result.buyHoldReturnPct.pct}%</div>
-                    <div class="sub">same window</div>
-                </div>
+            <div class="metric">
+                <div class="k">Buy &amp; hold</div>
+                <div class="v {#if result.buyHoldReturnPct >= 0}pos{#else}neg{/if}">{result.buyHoldReturnPct.pct}%</div>
+                <div class="sub">mesmo período</div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Max drawdown</div>
-                    <div class="v text-red">-{result.maxDrawdownPct.pct}%</div>
-                    <div class="sub">peak → trough</div>
-                </div>
+            <div class="metric">
+                <div class="k">Drawdown máx.</div>
+                <div class="v neg">-{result.maxDrawdownPct.pct}%</div>
+                <div class="sub">pico → vale</div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Trades</div>
-                    <div class="v text-cyan">{result.numTrades}</div>
-                    <div class="sub">round trips</div>
-                </div>
+            <div class="metric">
+                <div class="k">Trades</div>
+                <div class="v">{result.numTrades}</div>
+                <div class="sub">operações fechadas</div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Win rate</div>
-                    <div class="v text-cyan">{result.winRatePct.pct}%</div>
-                    <div class="sub">winners / trades</div>
-                </div>
+            <div class="metric">
+                <div class="k">Acerto</div>
+                <div class="v">{result.winRatePct.pct}%</div>
+                <div class="sub">trades positivos</div>
             </div>
-            <div class="col-6 col-md-3">
-                <div class="metric-tile card-animate">
-                    <div class="k">Profit factor</div>
-                    <div class="v {#if result.profitFactor >= 1}pl-pos{#else}pl-neg{/if}">
-                        {#if result.numTrades == 0}—{#else if result.profitFactor > 999}∞{#else}{result.profitFactor.pct}{/if}
-                    </div>
-                    <div class="sub">gross win / loss</div>
+            <div class="metric">
+                <div class="k">Fator de lucro</div>
+                <div class="v {#if result.profitFactor >= 1}pos{#else}neg{/if}">
+                    {#if result.numTrades == 0}—{#else if result.profitFactor > 999}∞{#else}{result.profitFactor.pct}{/if}
                 </div>
+                <div class="sub">ganhos / perdas</div>
             </div>
         </div>
 
-        <!-- Equity curve -->
-        <div class="chart-wrap mb-4 card-animate">
-            <p class="section-title">Equity curve</p>
+        <div class="chart-panel mb-4 fade-in">
+            <div class="section-label">Curva de capital</div>
             <canvas id="equityChart" height="110"></canvas>
         </div>
 
-        <!-- Trades -->
         {#if result.trades.isEmpty()}
-        <div class="alert-warn p-3 card-animate">
-            <span class="mono" style="font-size:.82rem">No trades were triggered in this window. Try more candles or different EMA periods.</span>
+        <div class="alert-app alert-warn-app fade-in">
+            Nenhuma operação foi disparada nesse período. Tente mais candles ou outros períodos de EMA.
         </div>
         {#else}
-        <p class="section-title">Trades ({result.numTrades})</p>
-        <div class="chart-wrap card-animate p-0">
-            <div class="trades-scroll">
-                <table class="trades-table">
+        <div class="section-label">Operações ({result.numTrades})</div>
+        <div class="card-panel fade-in">
+            <div class="table-scroll">
+                <table class="table-app">
                     <thead>
-                        <tr><th>#</th><th>Entry</th><th>Exit</th><th>Entry R$</th><th>Exit R$</th><th>Result</th></tr>
+                        <tr><th>#</th><th>Entrada</th><th>Saída</th><th>Preço entrada</th><th>Preço saída</th><th>Resultado</th></tr>
                     </thead>
                     <tbody>
                         {#for t in result.trades}
                         <tr>
-                            <td class="text-dim">{t.number}</td>
+                            <td class="dim">{t.number}</td>
                             <td>{t.entryTime}</td>
                             <td>{t.exitTime}</td>
                             <td>{t.entryPrice.pct}</td>
                             <td>{t.exitPrice.pct}</td>
-                            <td class="{#if t.win}pl-pos{#else}pl-neg{/if}">{t.profitPct.pct}%</td>
+                            <td class="{#if t.win}pos{#else}neg{/if}">{t.profitPct.pct}%</td>
                         </tr>
                         {/for}
                     </tbody>
@@ -168,28 +149,42 @@
                 const el = document.getElementById('chartData');
                 const data = el ? JSON.parse(el.textContent) : null;
                 if (!data) return;
-                const ctx = document.getElementById('equityChart');
-                new Chart(ctx, {
+                new Chart(document.getElementById('equityChart'), {
                     type: 'line',
                     data: {
                         labels: data.labels,
                         datasets: [
                             {
-                                label: 'Strategy', data: data.equity, borderColor: '#00e5ff',
-                                backgroundColor: 'rgba(0,229,255,0.08)', borderWidth: 2, pointRadius: 0, fill: true, tension: 0.1
+                                label: 'Estratégia', data: data.equity, borderColor: '#4c8dff',
+                                backgroundColor: 'rgba(76,141,255,.07)', borderWidth: 1.8,
+                                pointRadius: 0, fill: true, tension: .12
                             },
                             {
-                                label: 'Buy & hold', data: data.buyHold, borderColor: '#7a8fa0',
-                                borderWidth: 1.5, pointRadius: 0, borderDash: [5, 4], fill: false, tension: 0.1
+                                label: 'Buy & hold', data: data.buyHold, borderColor: '#6b7481',
+                                borderWidth: 1.2, pointRadius: 0, borderDash: [4, 4], fill: false, tension: .12
                             }
                         ]
                     },
                     options: {
-                        responsive: true, maintainAspectRatio: true, interaction: { mode: 'index', intersect: false },
-                        plugins: { legend: { labels: { color: '#cbd5e1', font: { family: 'Share Tech Mono' } } } },
+                        responsive: true, maintainAspectRatio: true,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#a8b0bb', boxWidth: 10, boxHeight: 10,
+                                    font: { family: 'Inter', size: 11 }
+                                }
+                            }
+                        },
                         scales: {
-                            x: { ticks: { color: '#7a8fa0', maxTicksLimit: 10, font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-                            y: { ticks: { color: '#7a8fa0', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } }
+                            x: {
+                                ticks: { color: '#6b7481', maxTicksLimit: 10, font: { size: 10, family: 'JetBrains Mono' } },
+                                grid: { color: 'rgba(255,255,255,.04)' }
+                            },
+                            y: {
+                                ticks: { color: '#6b7481', font: { size: 10, family: 'JetBrains Mono' } },
+                                grid: { color: 'rgba(255,255,255,.04)' }
+                            }
                         }
                     }
                 });
@@ -198,14 +193,13 @@
         </script>
 
         {#else}
-        <div class="alert-warn p-3 card-animate">
-            <span class="mono" style="font-size:.82rem">⚠ {result.message}</span>
-        </div>
+        <div class="alert-app alert-warn-app fade-in">{result.message}</div>
         {/if}
     {#else}
-    <div class="empty-state card-animate">
-        <div class="mono mb-2" style="font-size:1rem;color:var(--text-soft)">Run a backtest</div>
-        <div style="font-size:.85rem">Pick a pair and EMA periods above. The result shows return, drawdown, trade count and how it compares to simply holding — all net of fees.</div>
+    <div class="empty fade-in">
+        <div style="font-size:.95rem;color:var(--text-2);margin-bottom:6px">Rode um backtest</div>
+        <div style="font-size:.82rem">Escolha o par e os períodos acima. O resultado traz retorno, drawdown,
+        número de operações e a comparação com simplesmente manter o ativo — tudo líquido de taxas.</div>
     </div>
     {/if}
 

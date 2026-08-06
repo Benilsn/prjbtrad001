@@ -1,20 +1,15 @@
 {#fragment id=navbar}
-<nav class="navbar navbar-expand-lg cyber-navbar sticky-top">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand neon-text-logo" href="/">btrad001</a>
+<nav class="topbar sticky-top">
+    <div class="container-fluid px-4 h-100 d-flex align-items-center">
+        <a class="brand me-4" href="/">btrad<span class="dot">001</span></a>
 
-        <button class="navbar-toggler border-0" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                style="color:var(--cyan);font-size:1.1rem">☰</button>
+        <div class="d-flex align-items-center gap-1">
+            <a class="nav-item-link" href="/">Dashboard</a>
+            <a class="nav-item-link" href="/backtest">Backtest</a>
+        </div>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
-                <li class="nav-item"><a class="nav-link neon-link" href="/">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link neon-link" href="/backtest">Backtest</a></li>
-                <li class="nav-item">
-                    <a class="nav-link neon-link" href="/bots/create" style="color:var(--green)">+ New bot</a>
-                </li>
-            </ul>
+        <div class="ms-auto">
+            <a class="btn-app btn-primary-app" href="/bots/create">New bot</a>
         </div>
     </div>
 </nav>

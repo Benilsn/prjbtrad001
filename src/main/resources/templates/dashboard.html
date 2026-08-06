@@ -1,170 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 {#include fragments/head.html /}
 <body>
 {#include fragments/navbar.html /}
 
-<!-- Capped so a 3-across grid keeps card proportions; header, summary strip and
-     cards all share this measure and stay aligned. -->
-<main class="container my-4 pb-5" style="max-width:1160px">
+<main class="container my-4 pb-5" style="max-width:1180px">
 
-    <!-- Header -->
-    <div class="d-flex align-items-end justify-content-between mb-1" style="animation:slideUp .3s ease both">
+    <div class="d-flex align-items-end justify-content-between mb-3 fade-in">
         <div>
-            <div class="kicker mb-1">PAPER TRADING · EMA TREND FOLLOWING</div>
-            <span class="page-title">Dashboard</span>
+            <div class="kicker mb-1">Paper trading · EMA trend following</div>
+            <h1 class="page-title mb-0">Dashboard</h1>
         </div>
-        <div class="d-flex gap-2">
-            <a class="btn btn-neon" href="/backtest">⚡ Backtest</a>
-            <a class="btn btn-neon btn-neon-green" href="/bots/create">+ New bot</a>
-        </div>
+        <a class="btn-app" href="/backtest">Backtest</a>
     </div>
-
-    <div class="glow-divider" style="margin:14px 0 20px"></div>
 
     {#if message}
-    <div id="flash-message" class="alert-cyan p-3 mb-3 card-animate">
-        <span class="mono" style="font-size:.82rem">{message}</span>
-    </div>
+    <div id="flash-message" class="alert-app mb-3 fade-in">{message}</div>
     {/if}
 
-    <!-- Summary -->
-    <div class="summary-strip mb-4">
-        <div class="summary-tile card-animate">
+    <!-- Account summary -->
+    <div class="metrics mb-4 fade-in">
+        <div class="metric">
             <div class="k">Bots</div>
-            <div class="v text-cyan">{summary.total}</div>
+            <div class="v">{summary.total}</div>
+            <div class="sub">{summary.running} em execução</div>
         </div>
-        <div class="summary-tile card-animate">
-            <div class="k">Running</div>
-            <div class="v text-green">{summary.running}</div>
+        <div class="metric">
+            <div class="k">Caixa</div>
+            <div class="v">R$ {summary.balance.brl}</div>
+            <div class="sub">carteira simulada</div>
         </div>
-        <div class="summary-tile card-animate">
-            <div class="k">Paper wallet</div>
-            <div class="v text-cyan">R$ {summary.balance.brl}</div>
+        <div class="metric">
+            <div class="k">Realizado</div>
+            <div class="v {#if summary.realized.signum > 0}pos{#else if summary.realized.signum < 0}neg{#else}neutral{/if}">R$ {summary.realized.brl}</div>
+            <div class="sub">trades fechados</div>
         </div>
-        <div class="summary-tile card-animate">
-            <div class="k">Realized P&amp;L</div>
-            <div class="v {#if summary.realized.signum > 0}pl-pos{#else if summary.realized.signum < 0}pl-neg{#else}pl-zero{/if}">R$ {summary.realized.brl}</div>
+        <div class="metric">
+            <div class="k">Não realizado</div>
+            <div class="v {#if summary.unrealized.signum > 0}pos{#else if summary.unrealized.signum < 0}neg{#else}neutral{/if}">R$ {summary.unrealized.brl}</div>
+            <div class="sub">posições abertas</div>
         </div>
-        <div class="summary-tile card-animate">
-            <div class="k">Unrealized P&amp;L</div>
-            <div class="v {#if summary.unrealized.signum > 0}pl-pos{#else if summary.unrealized.signum < 0}pl-neg{#else}pl-zero{/if}">R$ {summary.unrealized.brl}</div>
-        </div>
-        <div class="summary-tile card-animate">
-            <div class="k">Fees paid</div>
-            <div class="v text-yellow">R$ {summary.fees.brl}</div>
+        <div class="metric">
+            <div class="k">Custos</div>
+            <div class="v neutral">R$ {summary.fees.brl}</div>
+            <div class="sub">taxas pagas</div>
         </div>
     </div>
 
-    <p class="section-title">Bots</p>
+    <div class="section-label">Bots</div>
 
     {#if bots.isEmpty()}
-    <div class="empty-state card-animate">
-        <div class="mono mb-2" style="font-size:1.1rem;color:var(--text-soft)">No bots yet</div>
-        <div class="mb-3" style="font-size:.85rem">Create a trend-following bot, then validate it on the backtest page before running it.</div>
-        <a class="btn btn-neon btn-neon-green" href="/bots/create">+ Create your first bot</a>
+    <div class="empty fade-in">
+        <div style="font-size:.95rem;color:var(--text-2);margin-bottom:6px">Nenhum bot configurado</div>
+        <div style="font-size:.82rem;margin-bottom:18px">Valide a configuração no backtest antes de colocá-la para rodar.</div>
+        <a class="btn-app btn-primary-app" href="/bots/create">Criar bot</a>
     </div>
     {#else}
-    <!-- Max 3 per row and centred, so an odd bot count still looks deliberate. -->
-    <div class="row g-3 justify-content-center bot-grid">
+    <div class="row g-3 justify-content-center">
         {#for bv in bots}
-        <div class="col-lg-4 col-md-6 card-animate">
-            <div class="bot-card p-3 h-100 d-flex flex-column position-relative">
+        <div class="col-lg-4 col-md-6 fade-in">
+            <div class="card-panel h-100 d-flex flex-column">
 
-                <form method="post" action="/bots/delete" class="position-absolute top-0 end-0 m-2" style="z-index:2">
-                    <input type="hidden" name="botId" value="{bv.bot.id}">
-                    <button type="submit" class="btn-delete-x" title="Delete">✕</button>
-                </form>
-
-                <div class="d-flex align-items-center gap-2 mb-2">
-                    <span class="mono text-cyan fw-bold" style="font-size:1rem;letter-spacing:2px;">{bv.bot.symbol}</span>
-                    <span class="status-pill {#if bv.bot.running}status-running animate-running{#else}status-idle{/if}">
-                        <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;"></span>
-                        {#if bv.bot.running}RUNNING{#else}IDLE{/if}
+                <div class="card-head">
+                    <div>
+                        <div class="pair">{bv.bot.symbol}</div>
+                        <div class="pair-meta">EMA {bv.bot.emaLabel} · {bv.bot.timeframe}</div>
+                    </div>
+                    <span class="status {#if bv.bot.running}status-on{#else}status-off{/if}">
+                        <span class="led"></span>{#if bv.bot.running}ativo{#else}parado{/if}
                     </span>
                 </div>
 
-                <div class="mono text-dim mb-2" style="font-size:.72rem;">EMA {bv.bot.emaLabel} · {bv.bot.timeframe}</div>
-
-                <hr class="neon-divider my-2">
-
-                <div class="d-flex flex-column gap-2 flex-grow-1 mb-3">
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="label">Position</span>
-                        <span class="mono {#if bv.bot.status.open}text-green{#else}text-dim{/if}" style="font-size:.82rem;">
-                            {#if bv.bot.status.open}LONG ▲{#else}FLAT —{/if}
-                        </span>
+                <div class="card-body flex-grow-1">
+                    <div class="row-data">
+                        <span class="k">Posição</span>
+                        <span class="v {#if bv.bot.status.open}pos{#else}neutral{/if}">{#if bv.bot.status.open}comprado{#else}—{/if}</span>
                     </div>
                     {#if bv.hasUnrealized}
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="label">Unrealized</span>
-                        <span class="mono {#if bv.unrealizedSign > 0}pl-pos{#else if bv.unrealizedSign < 0}pl-neg{#else}pl-zero{/if}" style="font-size:.82rem;">R$ {bv.unrealized.brl}</span>
+                    <div class="row-data">
+                        <span class="k">Não realizado</span>
+                        <span class="v {#if bv.unrealizedSign > 0}pos{#else if bv.unrealizedSign < 0}neg{/if}">R$ {bv.unrealized.brl}</span>
                     </div>
                     {/if}
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="label">Realized P&amp;L</span>
-                        <span class="mono {#if bv.bot.status.realizedSign > 0}pl-pos{#else if bv.bot.status.realizedSign < 0}pl-neg{#else}pl-zero{/if}" style="font-size:.82rem;">R$ {bv.bot.status.realizedProfit.brl}</span>
+                    <div class="row-data">
+                        <span class="k">Realizado</span>
+                        <span class="v {#if bv.bot.status.realizedSign > 0}pos{#else if bv.bot.status.realizedSign < 0}neg{/if}">R$ {bv.bot.status.realizedProfit.brl}</span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="label">Trades</span>
-                        <span class="mono text-dim" style="font-size:.82rem;">{bv.bot.status.closedTrades}</span>
+                    <div class="row-data">
+                        <span class="k">Trades</span>
+                        <span class="v">{bv.bot.status.closedTrades}</span>
                     </div>
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <span class="label">Order size</span>
-                        <span class="mono text-dim" style="font-size:.82rem;">R$ {bv.bot.orderSizeBrl.brl}</span>
+                    <div class="row-data">
+                        <span class="k">Ordem</span>
+                        <span class="v">R$ {bv.bot.orderSizeBrl.brl}</span>
                     </div>
                 </div>
 
-                <hr class="neon-divider my-2">
-
-                <div class="d-flex gap-2 justify-content-end">
+                <div class="card-foot d-flex align-items-center gap-2">
                     <a href="/bots/{#if bv.bot.running}stop{#else}start{/if}/{bv.bot.id}"
-                       class="btn btn-neon {#if bv.bot.running}btn-neon-red{#else}btn-neon-green{/if}" style="font-size:.72rem;padding:4px 12px;">
-                        {#if bv.bot.running}◼ Stop{#else}▶ Run{/if}
+                       class="btn-app {#if bv.bot.running}btn-neg{#else}btn-pos{/if}">
+                        {#if bv.bot.running}Parar{#else}Iniciar{/if}
                     </a>
-                    <a href="/bots/edit/{bv.bot.id}" class="btn btn-neon btn-neon-yellow" style="font-size:.72rem;padding:4px 12px;">✎ Edit</a>
-                    <button class="btn btn-neon" style="font-size:.72rem;padding:4px 12px;"
-                            data-bs-toggle="modal" data-bs-target="#detail-{bv.bot.id}">⊞ Info</button>
+                    <a href="/bots/edit/{bv.bot.id}" class="btn-app">Editar</a>
+                    <button class="btn-app" data-bs-toggle="modal" data-bs-target="#d-{bv.bot.id}">Detalhes</button>
+                    <form method="post" action="/bots/delete" class="ms-auto">
+                        <input type="hidden" name="botId" value="{bv.bot.id}">
+                        <button type="submit" class="btn-icon" title="Remover">&times;</button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <!-- Detail modal -->
-        <div class="modal fade" id="detail-{bv.bot.id}" tabindex="-1" aria-hidden="true">
+        <div class="modal fade" id="d-{bv.bot.id}" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span class="mono text-cyan" style="letter-spacing:3px;font-size:.9rem;">{bv.bot.symbol} · DETAILS</span>
-                        <button type="button" class="btn-delete-x ms-auto" data-bs-dismiss="modal">✕</button>
+                        <span class="pair">{bv.bot.symbol}</span>
+                        <button type="button" class="btn-icon ms-auto" data-bs-dismiss="modal">&times;</button>
                     </div>
-                    <div class="modal-body p-4">
+                    <div class="modal-body p-3">
                         <div class="row g-4">
                             <div class="col-6">
-                                <p class="section-title">Strategy</p>
-                                <div class="d-flex flex-column gap-3">
-                                    <div><div class="label">Fast EMA</div><span class="value">{bv.bot.emaFast}</span></div>
-                                    <div><div class="label">Slow EMA</div><span class="value">{bv.bot.emaSlow}</span></div>
-                                    <div><div class="label">Timeframe</div><span class="value">{bv.bot.timeframe}</span></div>
-                                    <div><div class="label">Stop-loss</div><span class="value text-red">{bv.bot.stopLossPercent.num2}%</span></div>
-                                    <div><div class="label">Order size</div><span class="value">R$ {bv.bot.orderSizeBrl.brl}</span></div>
-                                </div>
+                                <div class="section-label">Estratégia</div>
+                                <div class="row-data"><span class="k">EMA rápida</span><span class="v">{bv.bot.emaFast}</span></div>
+                                <div class="row-data"><span class="k">EMA lenta</span><span class="v">{bv.bot.emaSlow}</span></div>
+                                <div class="row-data"><span class="k">Timeframe</span><span class="v">{bv.bot.timeframe}</span></div>
+                                <div class="row-data"><span class="k">Stop</span><span class="v neg">{bv.bot.stopLossPercent.num2}%</span></div>
+                                <div class="row-data"><span class="k">Ordem</span><span class="v">R$ {bv.bot.orderSizeBrl.brl}</span></div>
                             </div>
                             <div class="col-6">
-                                <p class="section-title">Position &amp; P&amp;L</p>
-                                <div class="d-flex flex-column gap-3">
-                                    <div><div class="label">Status</div><span class="value {#if bv.bot.status.open}text-green{#else}text-dim{/if}">{#if bv.bot.status.open}LONG{#else}FLAT{/if}</span></div>
-                                    <div><div class="label">Avg price</div><span class="value">R$ {bv.bot.status.avgPrice.brl}</span></div>
-                                    <div><div class="label">Quantity</div><span class="value">{bv.bot.status.quantity}</span></div>
-                                    <div><div class="label">Invested</div><span class="value">R$ {bv.bot.status.investedBrl.brl}</span></div>
-                                    <div><div class="label">Realized</div><span class="value {#if bv.bot.status.realizedSign > 0}pl-pos{#else if bv.bot.status.realizedSign < 0}pl-neg{#else}pl-zero{/if}">R$ {bv.bot.status.realizedProfit.brl}</span></div>
-                                    <div><div class="label">Closed trades</div><span class="value">{bv.bot.status.closedTrades}</span></div>
-                                </div>
+                                <div class="section-label">Posição</div>
+                                <div class="row-data"><span class="k">Estado</span><span class="v {#if bv.bot.status.open}pos{#else}neutral{/if}">{#if bv.bot.status.open}comprado{#else}—{/if}</span></div>
+                                <div class="row-data"><span class="k">Preço médio</span><span class="v">R$ {bv.bot.status.avgPrice.brl}</span></div>
+                                <div class="row-data"><span class="k">Quantidade</span><span class="v">{bv.bot.status.quantity}</span></div>
+                                <div class="row-data"><span class="k">Investido</span><span class="v">R$ {bv.bot.status.investedBrl.brl}</span></div>
+                                <div class="row-data"><span class="k">Realizado</span><span class="v {#if bv.bot.status.realizedSign > 0}pos{#else if bv.bot.status.realizedSign < 0}neg{/if}">R$ {bv.bot.status.realizedProfit.brl}</span></div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <a href="/backtest" class="btn btn-neon" style="font-size:.78rem;">⚡ Backtest this idea</a>
-                        <button class="btn btn-neon" data-bs-dismiss="modal" style="font-size:.78rem;">Close</button>
+                    <div class="modal-footer">
+                        <button class="btn-app ms-auto" data-bs-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

@@ -1,84 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 {#include fragments/head.html /}
 <body>
 {#include fragments/navbar.html /}
 
-<main class="container my-4 pb-5" style="max-width:640px">
+<main class="container my-4 pb-5" style="max-width:620px">
 
-    <div class="d-flex align-items-end justify-content-between mb-1" style="animation:slideUp .3s ease both">
+    <div class="d-flex align-items-end justify-content-between mb-3 fade-in">
         <div>
-            <div class="kicker mb-1">{#if botId}EDIT BOT{#else}NEW BOT{/if}</div>
-            <span class="page-title">{#if botId}Edit{#else}Create{/if} bot</span>
+            <div class="kicker mb-1">{#if botId}Editar{#else}Novo{/if} bot</div>
+            <h1 class="page-title mb-0">{#if botId}Editar configuração{#else}Criar bot{/if}</h1>
         </div>
-        <a class="btn btn-neon" href="/">← Dashboard</a>
+        <a class="btn-app" href="/">Voltar</a>
     </div>
 
-    <div class="glow-divider" style="margin:14px 0 20px"></div>
-
     {#if errors}
-    <div class="alert-warn p-3 mb-3 card-animate">
-        <div class="mono mb-1" style="font-size:.72rem;letter-spacing:1px">⚠ PLEASE FIX</div>
-        <ul class="mb-0" style="font-size:.82rem">
+    <div class="alert-app alert-warn-app mb-3 fade-in">
+        <div style="font-weight:600;margin-bottom:4px">Corrija antes de continuar</div>
+        <ul class="mb-0 ps-3">
             {#for e in errors}<li>{e}</li>{/for}
         </ul>
     </div>
     {/if}
 
-    <form method="post" action="/bots/save" class="bot-card p-4 card-animate">
+    <form method="post" action="/bots/save" class="card-panel fade-in">
         {#if botId}<input type="hidden" name="botId" value="{botId}">{/if}
 
-        <div class="row g-3">
-            <div class="col-md-6">
-                <label class="form-label">Trading pair</label>
-                <select class="form-select" name="symbol" required>
-                    {#for t in types}
-                    <option value="{t}" {#if v.symbol == t.name()}selected{/if}>{t}</option>
-                    {/for}
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Timeframe</label>
-                <select class="form-select" name="timeframe" required>
-                    {#for opt in timeframes}
-                    <option value="{opt}" {#if v.timeframe == opt}selected{/if}>{opt}</option>
-                    {/for}
-                </select>
-            </div>
+        <div class="card-body p-4">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Par</label>
+                    <select class="form-select" name="symbol" required>
+                        {#for t in types}
+                        <option value="{t}" {#if v.symbol == t.name()}selected{/if}>{t}</option>
+                        {/for}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Timeframe</label>
+                    <select class="form-select" name="timeframe" required>
+                        {#for opt in timeframes}
+                        <option value="{opt}" {#if v.timeframe == opt}selected{/if}>{opt}</option>
+                        {/for}
+                    </select>
+                </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Fast EMA period</label>
-                <input class="form-control" type="number" name="emaFast" min="2" value="{v.emaFast}" required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Slow EMA period</label>
-                <input class="form-control" type="number" name="emaSlow" min="3" value="{v.emaSlow}" required>
-            </div>
+                <div class="col-md-6">
+                    <label class="form-label">EMA rápida</label>
+                    <input class="form-control" type="number" name="emaFast" min="2" value="{v.emaFast}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">EMA lenta</label>
+                    <input class="form-control" type="number" name="emaSlow" min="3" value="{v.emaSlow}" required>
+                </div>
 
-            <div class="col-md-6">
-                <label class="form-label">Stop-loss (%)</label>
-                <div class="input-group">
-                    <input class="form-control" type="number" step="0.1" min="0.1" name="stopLossPercent" value="{v.stop}" required>
-                    <span class="input-group-text">%</span>
+                <div class="col-md-6">
+                    <label class="form-label">Stop-loss</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" step="0.1" min="0.1" name="stopLossPercent" value="{v.stop}" required>
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Tamanho da ordem</label>
+                    <div class="input-group">
+                        <span class="input-group-text">R$</span>
+                        <input class="form-control" type="number" step="1" min="1" name="orderSizeBrl" value="{v.orderSize}" required>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <label class="form-label">Order size (BRL)</label>
-                <div class="input-group">
-                    <span class="input-group-text">R$</span>
-                    <input class="form-control" type="number" step="1" min="1" name="orderSizeBrl" value="{v.orderSize}" required>
+
+            <div class="mt-4 pt-3" style="border-top:1px solid var(--border)">
+                <div style="font-size:.78rem;color:var(--text-3);line-height:1.65">
+                    <strong style="color:var(--text-2)">Entrada</strong> quando a EMA rápida cruza acima da lenta ·
+                    <strong style="color:var(--text-2)">saída</strong> no cruzamento inverso ou no stop.<br>
+                    A EMA rápida precisa ser menor que a lenta. A decisão usa apenas candles fechados;
+                    a ordem é registrada no preço de mercado do momento.
                 </div>
             </div>
         </div>
 
-        <div class="mono text-dim mt-3" style="font-size:.72rem;line-height:1.6">
-            Entry: fast EMA crosses above slow EMA · Exit: fast crosses below, or stop-loss hit.
-            Fast EMA must be smaller than slow EMA.
-        </div>
-
-        <div class="d-flex gap-2 justify-content-end mt-4">
-            <a class="btn btn-neon" href="/">Cancel</a>
-            <button type="submit" class="btn btn-neon btn-neon-green">{#if botId}Save changes{#else}Create bot{/if}</button>
+        <div class="card-foot d-flex justify-content-end gap-2">
+            <a class="btn-app" href="/">Cancelar</a>
+            <button type="submit" class="btn-app btn-primary-app">{#if botId}Salvar{#else}Criar bot{/if}</button>
         </div>
     </form>
 
